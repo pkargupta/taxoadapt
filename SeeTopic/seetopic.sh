@@ -1,8 +1,8 @@
 #!/bin/bash
-DATASET=$
-ITER=4
+DATASET=$1
+ITER=$2
 RHO=0.1
-MODEL=bert_full_ft
+MODEL=$3
 
 # if [ "$DATASET" == "scidocs" ]; then
 # 	MODEL=biobert

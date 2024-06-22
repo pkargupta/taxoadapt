@@ -15,29 +15,29 @@ example_parent: Methodology for Reinforcement Learning
 Example Output:
 ---
 example_child_topic_1: 
-  label: Model-Free Methods
+  label: model-free_methods
   description: Approaches in reinforcement learning that do not require a model of the environment, focusing on learning policies directly from interactions with the environment.
-  terms: [Q-learning, SARSA, Temporal Difference, Policy Gradient, Monte Carlo Methods, Actor-Critic, Deep Q-Network, Experience Replay, Target Networks, Off-Policy Learning]
+  terms: [q-learning, sarsa, temporal_difference, policy_gradient, monte_carlo_methods, actor-critic, deep_q-network, experience_replay, target_networks, off-policy_learning]
 
 example_child_topic_2:
-  label: Model-Based Methods
+  label: model-based_methods
   description: Techniques that use a model of the environment to simulate outcomes and make decisions, often leading to more sample-efficient learning.
-  terms: [Planning, Model Predictive Control, Dyna-Q, Bayesian Networks, Transition Models, World Models, Imagination-Augmented Agents, Value Iteration, Policy Iteration, Simulation]
+  terms: [planning, model_predictive_control, dyna-q, bayesian_networks, transition_models, world_models, imagination-augmented_agents, value_iteration, policy_iteration, simulation]
 
 example_child_topic_3:
-  label: Hierarchical Reinforcement Learning
+  label: hierarchical_reinforcement_learning
   description: Methods that involve decomposing tasks into hierarchies of sub-tasks, enabling more scalable and efficient learning for complex problems.
-  terms: [Options Framework, MAXQ, Feudal Reinforcement Learning, Subgoal Discovery, Temporal Abstraction, Skills, Task Decomposition, Hierarchical Policies, Intrinsic Motivation, Multi-Level Learning]
+  terms: [options_framework, maxq, feudal_reinforcement_learning, subgoal_discovery, temporal_abstraction, skills, task_decomposition, hierarchical_policies, intrinsic_motivation, multi-level_learning]
 
 example_child_topic_4:
-  label: Multi-Agent Reinforcement Learning
+  label: multi-agent_reinforcement_learning
   description: Strategies for reinforcement learning where multiple agents interact within the same environment, learning to collaborate or compete.
-  terms: [Cooperative Learning, Competitive Learning, Nash Equilibrium, Joint Policy Learning, Decentralized Control, Communication Protocols, Agent Modeling, Self-Play, Multi-Agent Coordination, Teamwork]
+  terms: [cooperative_learning, competitive_learning, nash_equilibrium, joint_policy_learning, decentralized_control, communication_protocols, agent_modeling, self-play, multi-agent_coordination, teamwork]
 
 example_child_topic_5:
-  label: Meta-Reinforcement Learning
+  label: meta-reinforcement_learning
   description: Techniques aimed at creating agents that can learn how to learn, adapting more quickly to new tasks by leveraging prior experience.
-  terms: [Learning to Learn, Fast Adaptation, Meta-Policy, Few-Shot Learning, Transfer Learning, Contextual Policies, Task Agnostic Learning, Recurrent Neural Networks, Gradient-Based Meta-Learning, Hyperparameter Optimization]
+  terms: [learning_to_learn, fast_adaptation, meta-policy, few-shot_learning, transfer_learning, contextual_policies, task_agnostic_learning, recurrent_neural_networks, gradient-based_meta-learning, hyperparameter_optimization]
 ---
 
 """

@@ -1,40 +1,64 @@
 import os
-from taxonomy import Taxonomy
+from taxonomy import Taxonomy, Paper
 import subprocess
 import shutil
+import argparse
+import re
 
+def main(args):
+    print("########### READING IN PAPERS ###########")
+    collection = []
+    id = 0
+    with open(args.input_file, "r") as f:
+        papers = f.read().strip().splitlines()
+        for p in papers:
+            title = re.findall(r'title\s*:\s*(.*) ; ', p, re.IGNORECASE)
+            abstract = re.findall(r'abstract\s*:\s*(.*)', p, re.IGNORECASE)
+            collection.append(Paper(id, title, abstract))
+            id += 1
 
-def main():
     # input: track, dimension -> get base taxonomy (2 levels) -> Class Tree, Class Node (description, seed words)
-    track = "Text Classification"
-    dim = "Methodology"
-    input_papers = "datasets/sample_1k.txt"
-
     print("########### BASE TAXONOMY ###########")
-    taxo = Taxonomy(track, dim)
+    taxo = Taxonomy(args.track, args.dim)
     base_taxo = taxo.buildBaseTaxo(levels=1)
 
     print(base_taxo)
 
     # format the input keywords file for seetopic -> get phrases -> filter using LLM
-    dir_name = (track + dim).lower().replace(" ", "_")
+    dir_name = (args.track + "_" + args.dim).lower().replace(" ", "_")
 
     if not os.path.exists(f"SeeTopic/{dir_name}"):
         os.makedirs(f"SeeTopic/{dir_name}")
-    
-    shutil.copyfile(input_papers, f"SeeTopic/{dir_name}/{dir_name}.txt")
+
+    if not os.path.exists(f"SeeTopic/{dir_name}/{dir_name}.txt"):
+        shutil.copyfile(args.input_file, f"SeeTopic/{dir_name}/{dir_name}.txt")
     
     ## get first level of children
+    print("########### PHRASE MINING FOR LEVEL 1 ###########")
     children_with_terms = taxo.root.getChildren(terms=True)
     with open(f"SeeTopic/{dir_name}/keywords_0.txt", "w") as f:
         for idx, c in enumerate(children_with_terms):
             str_c = ",".join(c[1])
             f.write(f"{idx}:{c[0]},{str_c}")
     
-    subprocess.check_call(['./SeeTopic/seetopic.sh', 'arg1', 'arg2', arg3])
+    os.chdir("./SeeTopic")
+    subprocess.check_call(['./seetopic.sh', dir_name, str(args.iters), "bert_full_ft"])
+    os.chdir("../")
 
+    with open(f"./SeeTopic/{dir_name}/keywords_seetopic.txt", "r") as f:
+        children_phrases = [i.strip().split(":")[1].split(",") for i in f.readlines()]
+        # filter the child phrases
+        
+        for c_id, c in enumerate(taxo.root.children):
+            c.addTerms(children_phrases[c_id], addToParent=True)
+    
 
     # (initial relevant pool) identify papers which contain exact-matched terms -> class Paper (relevant segments, sentences, phrases)
+    print("########### INITIAL RELEVANT POOL OF PAPERS ###########")
+
+
+
+
 
     # (primary focus pool) identify papers which propose methods involving such topics
 
@@ -51,4 +75,11 @@ def main():
     return
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--track', type=str, default='Text Classification')
+    parser.add_argument('--dim', type=str, default='Methodology')
+    parser.add_argument('--input_file', type=str, default='datasets/sample_1k.txt')
+    parser.add_argument('--iters', type=int, default=4)
+
+    args = parser.parse_args()
+    main(args)

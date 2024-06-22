@@ -1,6 +1,7 @@
 import os
 import re
 from collections import deque
+import json
 from model_definitions import llama_8b_model
 from prompts import depth_expansion_init_prompt, depth_expansion_prompt
 
@@ -21,6 +22,7 @@ class Paper:
 class Node:
     def __init__(self, label, seeds=None, description=None, parent=None):
         self.label = label
+        self.model = llama_8b_model
 
         self.parent = parent
         self.children = []
@@ -31,8 +33,11 @@ class Node:
         self.papers = [] # list of tuples (score, paper)
         self.density = 0
 
-        self.all_node_terms = seeds.copy()
+        self.all_node_terms = [s.lower().replace(" ", "_") for s in seeds] if seeds is not None else []
         self.all_paper_terms = []
+
+    def __repr__(self) -> str:
+        return self.label
 
     def getChildren(self, terms=False):
         if terms:
@@ -112,7 +117,13 @@ class Node:
 class Taxonomy:
     def __init__(self, track=None, dimen=None):
         self.root = Node(f"Types of {dimen} Proposed in {track} Research Papers")
-        self.model = llama_8b_model
+        self.levels = 0
+
+    def __repr__(self) -> str:
+        return json.dumps(self.toDict())
+
+    def __str__(self) -> str:
+        return json.dumps(self.toDict(), indent=2)
     
     def toDict(self, node=None):
         if node is None:
@@ -121,25 +132,28 @@ class Taxonomy:
         if not node:
             return {}
         
-        out = {node.label: {}}
+        out = {node.label: {"description": node.desc, "seeds": node.seeds, "terms": node.all_node_terms}}
         queue = deque([(node, out[node.label])])
         
         while queue:
             current_node, current_dict = queue.popleft()
             
             for child in current_node.children:
-                current_dict[child.label] = {}
+                current_dict[child.label] = {"description": child.desc, "seeds": child.seeds, "terms": child.all_node_terms}
                 queue.append((child, current_dict[child.label]))
         
         return out
     
     def buildBaseTaxo(self, levels=2, k=5):
         children = [self.root.genCommonSenseChildren(k)]
+        levels += 1
 
         for l in range(levels-1):
             children.append([])
+            global_taxo = self.toDict()
             for child in children[l]:
-                children[l+1].extend(child.genCommonSenseChildren(k))
+                children[l+1].extend(child.genCommonSenseChildren(k, global_taxo=global_taxo))
+            level += 1
         
         return self.toDict()
         
