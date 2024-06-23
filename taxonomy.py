@@ -19,6 +19,9 @@ class Paper:
         self.nodes = [] # list of tuples (score, label)
         self.node_terms = {} # key: node label; value: paper-specific terms relevant to node
 
+    def __repr__(self) -> str:
+        return self.text
+
 class Node:
     def __init__(self, label, seeds=None, description=None, parent=None):
         self.label = label
