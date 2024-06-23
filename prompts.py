@@ -1,5 +1,5 @@
-def depth_expansion_init_prompt(global_taxo=None, k=5):
-    init_prompt = f"""You are an assistant that is helping to build a topical taxonomy by identifying {k} children topics given a "parent" topic (tag: "parent"). Your outputted set of child topics should all be (1) specifically relevant to the "parent" topic, and (2) distinct (minimal potential overlap between the sibling topics) and at the same level of depth/complexity."""
+def depth_expansion_init_prompt(global_taxo=None, k=5, num_terms=10):
+    init_prompt = f"""You are an assistant that is helping to build a topical taxonomy by identifying {k} children topics given a "parent" topic (tag: "parent"). Your outputted set of child topics should all be (1) specifically relevant to the "parent" topic, and (2) distinct (minimal potential overlap between the sibling topics) and at the same level of depth/complexity. For each child topic you output, you will also provide a corresponding description of how that topic is relevant to the "parent" topic and a corresponding set of {num_terms} distinct and diverse subtopics that are typically associated with and underneath BOTH the child topic and parent topic. The set of subtopics for a specific child topic should be distinct from the other sets of subtopics you output for the other child topics."""
 
     if global_taxo is not None:
         init_prompt += f"""\n\nYou should also ensure that your outputted children are distinct from the other nodes already present within the existing taxonomy (tag: "existing_taxonomy:"):\n\nexisting_taxonomy:\n{global_taxo}"""
@@ -44,15 +44,37 @@ example_child_topic_5:
     return init_prompt
 
 
-depth_expansion_prompt = lambda parent: f"""For the parent topic below (tag: "parent"), output your answer following the same logic used for the example provided above:
+depth_expansion_prompt = lambda parent, num_terms=10: f"""For the parent topic below (tag: "parent"), output your answer following the same logic used for the example provided above. Each child_topic must have a set of distinct subtopics that are NOT present in any other child_topic's set of subtopics.
+
 parent: {parent}
 
 Output your answer in the following YAML format:
 
 ---
-child_topic_1: <(label (one line), description (one line), list of 10 terms associated with topic (one line)) of child_topic_1; child_topic_1 is under "parent">
-child_topic_2: <(label (one line), description (one line), list of 10 terms associated with topic (one line)) of child_topic_2; child_topic_2 is under "parent">
+child_topic_1: <(label (one line), description (one line), list of {num_terms} subtopics associated with child_topic_1 (distinct from other child_topics' subtopics; one line)) of child_topic_1; child_topic_1 is a subtopic of "parent">
+child_topic_2: <(label (one line), description (one line), list of {num_terms} subtopics associated with child_topic_2 (distinct from other child_topics' subtopics; one line)) of child_topic_2; child_topic_2 is a subtopic of "parent">
 ...
-child_topic_5: <(label (one line), description (one line), list of 10 terms associated with topic (one line)) of child_topic_5; child_topic_5 is under "parent">
+child_topic_5: <(label (one line), description (one line), list of {num_terms} subtopics associated with child_topic_5 (distinct from other child_topics' subtopics; one line)) of child_topic_5; child_topic_5 is a subtopic of "parent">
 ---
 """
+
+phrase_filter_init_prompt = """You are a natural language processing research term list verifier that verifies that each term in a list of topic-specific terms is somehow relevant to the list's parent topic. For each of the following parent topics (before the ":") and their respective lists below (after the ":"), output a filtered version of each list where you have removed all terms that are not relevant to the parent topic. You must ONLY remove terms that are absolutely irrelevant/contradictory to the parent topic, in other words be lenient."""
+
+def phrase_filter_prompt(topics, phrases):
+    prompt = f"""Each line below is in the format, parent_topic: [list of parent_topic terms]. You must verify each of the terms in each list and output their respective filtered list.
+    
+    {phrases}
+    
+    Your output should ONLY be in the following YAML format. Do NOT provide any additional comments, greetings, or explanations:
+    ---
+    """
+
+    if type(topics) == list:
+        for t in topics:
+            prompt += f"{t.label}: [<filtered list of comma-separated topic-RELEVANT terms>]\n"
+        prompt += "---\n"
+    else:
+        prompt += f"{topics.label}: [<filtered list of comma-separated topic-RELEVANT terms>]\n"
+        prompt += "---\n"
+
+    return prompt

@@ -1,5 +1,6 @@
 from transformers import pipeline
 import torch
+import os
 
 llama_8b_model = pipeline("text-generation", 
                     model="meta-llama/Meta-Llama-3-8B-Instruct",

@@ -68,10 +68,10 @@ class Node:
             self.parent.addTerms(terms, addToParent)
 
     
-    def genCommonSenseChildren(self, global_taxo=None, k=5):
+    def genCommonSenseChildren(self, global_taxo=None, k=5, num_terms=10):
         messages = [
-            {"role": "system", "content": depth_expansion_init_prompt(global_taxo, k)},
-            {"role": "user", "content": depth_expansion_prompt(self.label)}]
+            {"role": "system", "content": depth_expansion_init_prompt(global_taxo, k, num_terms)},
+            {"role": "user", "content": depth_expansion_prompt(self.label, num_terms)}]
         
         model_prompt = self.model.tokenizer.apply_chat_template(messages, 
                                                         tokenize=False, 
@@ -86,8 +86,7 @@ class Node:
             model_prompt,
             max_new_tokens=1024,
             eos_token_id=terminators,
-            do_sample=True,
-            temperature=0.3,
+            do_sample=False,
             pad_token_id=self.model.tokenizer.eos_token_id
         )
         message = outputs[0]["generated_text"][len(model_prompt):]
@@ -117,7 +116,7 @@ class Node:
 class Taxonomy:
     def __init__(self, track=None, dimen=None):
         self.root = Node(f"Types of {dimen} Proposed in {track} Research Papers")
-        self.levels = 0
+        self.height = 0
 
     def __repr__(self) -> str:
         return json.dumps(self.toDict())
@@ -144,16 +143,16 @@ class Taxonomy:
         
         return out
     
-    def buildBaseTaxo(self, levels=2, k=5):
-        children = [self.root.genCommonSenseChildren(k)]
-        levels += 1
+    def buildBaseTaxo(self, levels=2, k=5, num_terms=10):
+        children = [self.root.genCommonSenseChildren(k=k, num_terms=num_terms)]
+        self.height += 1
 
         for l in range(levels-1):
             children.append([])
             global_taxo = self.toDict()
             for child in children[l]:
-                children[l+1].extend(child.genCommonSenseChildren(k, global_taxo=global_taxo))
-            level += 1
+                children[l+1].extend(child.genCommonSenseChildren(global_taxo, k, num_terms=num_terms))
+            self.height += 1
         
         return self.toDict()
         

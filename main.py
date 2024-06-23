@@ -1,5 +1,6 @@
 import os
 from taxonomy import Taxonomy, Paper
+from utils import filter_phrases
 import subprocess
 import shutil
 import argparse
@@ -47,20 +48,24 @@ def main(args):
 
     with open(f"./SeeTopic/{dir_name}/keywords_seetopic.txt", "r") as f:
         children_phrases = [i.strip().split(":")[1].split(",") for i in f.readlines()]
-        # filter the child phrases
-        
+        filtered_children_phrases = []
         for c_id, c in enumerate(taxo.root.children):
-            c.addTerms(children_phrases[c_id], addToParent=True)
+            # filter the child phrases
+            child_phrases = filter_phrases(c, f"{c}: {children_phrases[c_id]}\n")
+            filtered_children_phrases.append(child_phrases)
+
+    for c_id, c in enumerate(taxo.root.children):
+        c.addTerms(filtered_children_phrases[c_id], addToParent=True)
     
 
     # (initial relevant pool) identify papers which contain exact-matched terms -> class Paper (relevant segments, sentences, phrases)
     print("########### INITIAL RELEVANT POOL OF PAPERS ###########")
+    
 
 
 
 
-
-    # (primary focus pool) identify papers which propose methods involving such topics
+    # (primary focus pool) identify papers which propose methods involving such topics → utilize class-oriented sentence representations
 
     # fine-tune [to-be hierarchical] entailment model
 
