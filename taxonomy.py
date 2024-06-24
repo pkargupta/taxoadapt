@@ -1,6 +1,7 @@
 import os
 import re
-from collections import deque
+import numpy as np
+from collections import deque, Counter
 import json
 from model_definitions import llama_8b_model
 from prompts import depth_expansion_init_prompt, depth_expansion_prompt
@@ -12,35 +13,72 @@ class Paper:
         self.title = title
         self.abstract = abstract
         self.text = f"title: {title}; abstract: {abstract}"
+        self.split_text = self.text.split(" ")
+        self.length = len(self.split_text)
+        
         
         self.sentences = []
         self.terms = []
 
-        self.nodes = [] # list of tuples (score, label)
+        self.nodes = {} # path: score
         self.node_terms = {} # key: node label; value: paper-specific terms relevant to node
+
+        self.vocabulary = dict(Counter(self.split_text))
 
     def __repr__(self) -> str:
         return self.text
+    
+    def addNodeTerms(self, node, terms):
+        # only consider terms that are in the vocab AND (1) this node has not been added yet OR (2) are not already in the node_terms 
+        filtered_terms = list(filter(lambda w: (w in self.vocabulary.keys()) 
+                                     and ((node.path not in self.node_terms.keys()) 
+                                          or (w not in self.node_terms[node.path])), terms))
+        score = np.sum([self.vocabulary[ele] for ele in filtered_terms])
+        if (node.path in self.node_terms.keys()):
+            self.node_terms[node.path].extend(filtered_terms)
+            self.nodes[node.path] += score
+
+        else:
+            self.node_terms[node.path] = filtered_terms
+            self.nodes[node.path] = score
+        
+        return score
+
 
 class Node:
-    def __init__(self, label, seeds=None, description=None, parent=None):
+    def __init__(self, label, seeds=None, description=None, parent=None, collection=[]):
         self.label = label
         self.model = llama_8b_model
 
         self.parent = parent
+
+        if parent is None:
+            self.path = self.label
+        else:
+            self.path = parent.getPath() + "->" + self.label
+
         self.children = []
 
         self.seeds = seeds
         self.desc = description
 
+        self.collection = collection
         self.papers = [] # list of tuples (score, paper)
         self.density = 0
 
         self.all_node_terms = [s.lower().replace(" ", "_") for s in seeds] if seeds is not None else []
+        for paper in self.collection:
+            freq = paper.addNodeTerms(self, self.all_node_terms)
+            if freq > 0:
+                self.papers.append((freq, paper))
+        
         self.all_paper_terms = []
 
     def __repr__(self) -> str:
         return self.label
+    
+    def getPath(self):
+        return self.path
 
     def getChildren(self, terms=False):
         if terms:
@@ -49,23 +87,30 @@ class Node:
             return [c.label for c in self.children]
     
     def addChild(self, label, seeds, desc):
-        child_node = Node(label, seeds, desc, parent=self)
+        child_node = Node(label, seeds, desc, parent=self, collection=self.collection)
         self.children.append(child_node)
         return child_node
     
     def addChildren(self, labels, seeds, descriptions):
         for l, s, d in zip(labels, seeds, descriptions):
-            child_node = Node(l, s, d, parent=self)
+            child_node = Node(l, s, d, parent=self, collection=self.collection)
             self.children.append(child_node)
             self.addTerms(s, True)
 
         return self.children
     
     def addTerms(self, terms, addToParent=False):
+        new_terms = []
         for t in terms:
             mod_t = t.lower().replace(" ", "_")
             if mod_t not in self.all_node_terms:
                 self.all_node_terms.append(mod_t)
+                new_terms.append(mod_t)
+
+        for paper in self.collection:
+            freq = paper.addNodeTerms(self, new_terms)
+            if freq > 0:
+                self.papers.append((freq, paper))
 
         if addToParent and (self.parent is not None):
             self.parent.addTerms(terms, addToParent)
@@ -117,8 +162,19 @@ class Node:
         return self.all_paper_terms
 
 class Taxonomy:
-    def __init__(self, track=None, dimen=None):
-        self.root = Node(f"Types of {dimen} Proposed in {track} Research Papers")
+    def __init__(self, track=None, dimen=None, input_file=None):
+        self.collection = []
+        if input_file is not None:
+            id = 0
+            with open(input_file, "r") as f:
+                papers = f.read().strip().splitlines()
+                for p in papers:
+                    title = re.findall(r'title\s*:\s*(.*) ; abstract', p, re.IGNORECASE)[0]
+                    abstract = re.findall(r'abstract\s*:\s*(.*)', p, re.IGNORECASE)[0]
+                    self.collection.append(Paper(id, title, abstract))
+                    id += 1
+        
+        self.root = Node(f"Types of {dimen} Proposed in {track} Research Papers", collection=self.collection)
         self.height = 0
 
     def __repr__(self) -> str:

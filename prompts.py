@@ -58,10 +58,10 @@ child_topic_5: <(label (one line), description (one line), list of {num_terms} s
 ---
 """
 
-phrase_filter_init_prompt = """You are a natural language processing research term list verifier that verifies that each term in a list of topic-specific terms is somehow relevant to the list's parent topic. For each of the following parent topics (before the ":") and their respective lists below (after the ":"), output a filtered version of each list where you have removed all terms that are not relevant to the parent topic. You must ONLY remove terms that are absolutely irrelevant/contradictory to the parent topic, in other words be lenient."""
+phrase_filter_init_prompt = """You are a natural language processing research subtopic verifier that verifies that each subtopic in a list is a valid subtopic of the list's parent topic. For each of the following parent topics (specified before the ":" of each line) and their respective lists below (after the ":"), output a filtered version of each list where you have removed all subtopics that are not valid subtopics of the parent topic. You must ONLY remove subtopics that are absolutely irrelevant/invalid to the parent topic."""
 
 def phrase_filter_prompt(topics, phrases):
-    prompt = f"""Each line below is in the format, parent_topic: [list of parent_topic terms]. You must verify each of the terms in each list and output their respective filtered list.
+    prompt = f"""Each line below is in the format, parent_topic: [list of parent_topic terms]. You must verify each of the subtopics in each list and output their respective filtered list.
     
     {phrases}
     
@@ -71,10 +71,10 @@ def phrase_filter_prompt(topics, phrases):
 
     if type(topics) == list:
         for t in topics:
-            prompt += f"{t.label}: [<filtered list of comma-separated topic-RELEVANT terms>]\n"
+            prompt += f"{t.label}: [<filtered list of comma-separated valid subtopics>]\n"
         prompt += "---\n"
     else:
-        prompt += f"{topics.label}: [<filtered list of comma-separated topic-RELEVANT terms>]\n"
+        prompt += f"{topics.label}: [<filtered list of comma-separated valid subtopics>]\n"
         prompt += "---\n"
 
     return prompt
