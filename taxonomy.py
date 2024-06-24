@@ -183,22 +183,29 @@ class Taxonomy:
     def __str__(self) -> str:
         return json.dumps(self.toDict(), indent=2)
     
-    def toDict(self, node=None):
+    def toDict(self, node=None, with_phrases=False):
         if node is None:
             node = self.root
         
         if not node:
             return {}
         
-        out = {node.label: {"description": node.desc, "seeds": node.seeds, "terms": node.all_node_terms}}
-        queue = deque([(node, out[node.label])])
+        if with_phrases:
+            out = {node.label: {"description": node.desc, "seeds": node.seeds, "terms": node.all_node_terms}}
+        else:
+            out = {node.label: {"description": node.desc, "children": {}}}
+        
+        queue = deque([(node, out[node.label]["children"])])
         
         while queue:
             current_node, current_dict = queue.popleft()
             
             for child in current_node.children:
-                current_dict[child.label] = {"description": child.desc, "seeds": child.seeds, "terms": child.all_node_terms}
-                queue.append((child, current_dict[child.label]))
+                if with_phrases:
+                    current_dict[child.label] = {"description": child.desc, "seeds": child.seeds, "terms": child.all_node_terms}
+                else:
+                    current_dict[child.label] = {"description": child.desc, "children": {}}
+                queue.append((child, current_dict[child.label]["children"]))
         
         return out
     

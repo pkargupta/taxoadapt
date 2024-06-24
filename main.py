@@ -8,15 +8,15 @@ import re
 
 def main(args):
     print("########### READING IN PAPERS ###########")
-    collection = []
-    id = 0
-    with open(args.input_file, "r") as f:
-        papers = f.read().strip().splitlines()
-        for p in papers:
-            title = re.findall(r'title\s*:\s*(.*) ; ', p, re.IGNORECASE)
-            abstract = re.findall(r'abstract\s*:\s*(.*)', p, re.IGNORECASE)
-            collection.append(Paper(id, title, abstract))
-            id += 1
+    # collection = []
+    # id = 0
+    # with open(args.input_file, "r") as f:
+    #     papers = f.read().strip().splitlines()
+    #     for p in papers:
+    #         title = re.findall(r'title\s*:\s*(.*) ; ', p, re.IGNORECASE)
+    #         abstract = re.findall(r'abstract\s*:\s*(.*)', p, re.IGNORECASE)
+    #         collection.append(Paper(id, title, abstract))
+    #         id += 1
 
     # input: track, dimension -> get base taxonomy (2 levels) -> Class Tree, Class Node (description, seed words)
     print("########### BASE TAXONOMY ###########")
