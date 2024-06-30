@@ -3,16 +3,17 @@ import re
 import numpy as np
 from collections import deque, Counter
 import json
-from model_definitions import llama_8b_model
+from model_definitions import llama_8b_model, sentence_model
 from prompts import depth_expansion_init_prompt, depth_expansion_prompt
+from utils import average_with_harmonic_series
 
 
 class Paper:
-    def __init__(self, id, title, abstract):
+    def __init__(self, id, title, abstract, text):
         self.id = id
         self.title = title
         self.abstract = abstract
-        self.text = f"title: {title}; abstract: {abstract}"
+        self.text = text # f"title : {title}; abstract: {abstract}"
         self.split_text = self.text.split(" ")
         self.length = len(self.split_text)
         
@@ -46,7 +47,8 @@ class Paper:
 
 
 class Node:
-    def __init__(self, label, seeds=None, description=None, parent=None, collection=[]):
+    def __init__(self, taxo, label, seeds=[], description=None, parent=None):
+        self.taxo = taxo
         self.label = label
         self.model = llama_8b_model
 
@@ -62,17 +64,21 @@ class Node:
         self.seeds = seeds
         self.desc = description
 
-        self.collection = collection
+        self.collection = self.taxo.collection
         self.papers = [] # list of tuples (score, paper)
         self.density = 0
 
-        self.all_node_terms = [s.lower().replace(" ", "_") for s in seeds] if seeds is not None else []
+        self.mined_terms = []
+        self.all_node_terms = [s.lower().replace(" ", "_") for s in [self.label] + seeds]
         for paper in self.collection:
             freq = paper.addNodeTerms(self, self.all_node_terms)
-            if freq > 0:
+            if freq >= self.taxo.min_freq:
                 self.papers.append((freq, paper))
+
+        self.papers = sorted(self.papers, key=lambda x: x[0], reverse=True)
         
         self.all_paper_terms = []
+        self.emb = None
 
     def __repr__(self) -> str:
         return self.label
@@ -86,34 +92,50 @@ class Node:
         else:
             return [c.label for c in self.children]
     
+    def updateNodeEmb(self):
+        # self_repr = average_with_harmonic_series([self.taxo.word2emb[w] for w in [self.label] + self.seeds + self.mined_terms])
+        # child_repr = [c.emb for c in self.children if c.emb is not None]
+        # child_repr = np.mean(child_repr, axis=0) if len(child_repr) > 0 else []
+        # self.emb = average_with_harmonic_series([self_repr] + child_repr)
+        self.emb = average_with_harmonic_series([sentence_model.encode(p[1].title + "[SEP]" + p[1].abstract) 
+                                                 for p in self.papers])
+        return self.emb
+    
     def addChild(self, label, seeds, desc):
-        child_node = Node(label, seeds, desc, parent=self, collection=self.collection)
+        child_node = Node(self.taxo, label, seeds, desc, parent=self)
         self.children.append(child_node)
         return child_node
     
     def addChildren(self, labels, seeds, descriptions):
         for l, s, d in zip(labels, seeds, descriptions):
-            child_node = Node(l, s, d, parent=self, collection=self.collection)
+            child_node = Node(self.taxo, l, s, d, parent=self)
             self.children.append(child_node)
-            self.addTerms(s, True)
+            self.addTerms(s, mined=False, addToParent=True)
 
         return self.children
     
-    def addTerms(self, terms, addToParent=False):
+    def addTerms(self, terms, mined=False, addToParent=False):
         new_terms = []
         for t in terms:
             mod_t = t.lower().replace(" ", "_")
             if mod_t not in self.all_node_terms:
                 self.all_node_terms.append(mod_t)
+                if mined:
+                    self.mined_terms.append(mod_t)
                 new_terms.append(mod_t)
 
         for paper in self.collection:
             freq = paper.addNodeTerms(self, new_terms)
-            if freq > 0:
+            if freq >= self.taxo.min_freq: # min frequency
                 self.papers.append((freq, paper))
 
+        self.papers = sorted(self.papers, key=lambda x: x[0], reverse=True)
+
+        # if (self.taxo.word2emb is not None) and (self.parent is not None):
+        # self.updateNodeEmb()
+
         if addToParent and (self.parent is not None):
-            self.parent.addTerms(terms, addToParent)
+            self.parent.addTerms(terms, addToParent=addToParent)
 
     
     def genCommonSenseChildren(self, global_taxo=None, k=5, num_terms=10):
@@ -140,7 +162,7 @@ class Node:
         message = outputs[0]["generated_text"][len(model_prompt):]
 
         # parse for children
-        labels = re.findall(r'label:\s*(.*)', message, re.IGNORECASE)
+        labels = [i.lower().replace(" ", "_") for i in re.findall(r'label:\s*(.*)', message, re.IGNORECASE)]
         descriptions = re.findall(r'description:\s*(.*)', message, re.IGNORECASE)
         seeds = [i.split(", ") for i in re.findall(r'terms:\s*\[(.*)\]', message, re.IGNORECASE)]
 
@@ -164,6 +186,10 @@ class Node:
 class Taxonomy:
     def __init__(self, track=None, dimen=None, input_file=None):
         self.collection = []
+        self.raw_emb = None
+        self.static_emb = None
+        self.min_freq = 3
+        
         if input_file is not None:
             id = 0
             with open(input_file, "r") as f:
@@ -171,10 +197,10 @@ class Taxonomy:
                 for p in papers:
                     title = re.findall(r'title\s*:\s*(.*) ; abstract', p, re.IGNORECASE)[0]
                     abstract = re.findall(r'abstract\s*:\s*(.*)', p, re.IGNORECASE)[0]
-                    self.collection.append(Paper(id, title, abstract))
+                    self.collection.append(Paper(id, title, abstract, p))
                     id += 1
         
-        self.root = Node(f"Types of {dimen} Proposed in {track} Research Papers", collection=self.collection)
+        self.root = Node(self, f"Types of {dimen} Proposed in {track} Research Papers")
         self.height = 0
 
     def __repr__(self) -> str:

@@ -2,9 +2,51 @@ import numpy as np
 import argparse
 import torch
 import os
+import pickle as pk
 from collections import defaultdict
 from transformers import BertTokenizer, BertModel
 from tqdm import tqdm
+
+# map each term in text to word_id
+
+def get_vocab_idx(split_text: str, tokenizer, tok_lens, count):
+
+	vocab_idx = {}
+
+	for idx, w in enumerate(split_text):
+		if w not in tok_lens:
+			tok_lens[w] = len(tokenizer.tokenize(w.replace("_", " ")))
+
+		if w not in count:
+			count[w] = 1
+		else:
+			count[w] += 1
+
+		if w not in vocab_idx:
+			vocab_idx[w] = []
+
+		vocab_idx[w].extend(np.arange(idx, idx + tok_lens[w]))
+
+
+	return vocab_idx, tok_lens, count
+
+def get_hidden_states(encoded, token_ids_word, model, layers):
+	 """Push input IDs through model. Stack and sum `layers` (last four by default).
+		Select only those subword token outputs that belong to our word of interest
+		and average them."""
+	 with torch.no_grad():
+		 output = model(**encoded)
+ 
+	 # Get all hidden states
+	 states = output.hidden_states
+	 # Stack and sum all requested layers
+	 output = torch.stack([states[i] for i in layers]).sum(0).squeeze()
+	 # Only select the tokens that constitute the requested word
+	 word_tokens_output = output[token_ids_word]
+ 
+	 return word_tokens_output.mean(dim=0).cpu().numpy()
+
+
 
 device = torch.device("cuda")
 
@@ -31,12 +73,50 @@ tokenizer = BertTokenizer.from_pretrained(bert_model)
 model = BertModel.from_pretrained(bert_model, output_hidden_states=True).to(device)
 model.eval()
 
+
+tokenized_docs = []
+tokenized_sents = []
+static_emb = {}
 cnt = defaultdict(int)
-with open(os.path.join(args.dataset, corpus_file)) as fin:
-	for line in fin:
-		data = line.strip().split()
-		for word in data:
-			cnt[word] += 1
+token_lens = {}
+layers = [-4, -3, -2, -1]
+
+print("####### COMPUTING STATIC EMBEDDINGS #######")
+
+if os.path.exists(os.path.join(args.dataset, 'static_emb.pk')):
+	with open(os.path.join(args.dataset, 'static_emb.pk'), "rb") as f:
+		saved_emb = pk.load(f)
+		static_emb = saved_emb["static_emb"]
+		cnt = saved_emb["cnt"]
+		token_lens = saved_emb["token_lens"]
+		tokenized_sents = saved_emb["tokenized_sents"]
+else:
+
+	with open(os.path.join(args.dataset, corpus_file)) as fin:
+		lines = [l.strip() for l in fin]
+		for doc_id, doc in tqdm(enumerate(lines), total=len(lines)):
+			tokenized_docs.append([sent for sent in doc.split(" . ")])
+			tokenized_sents.append([sent.split() for sent in tokenized_docs[doc_id]])
+			for sent_id, sent in enumerate(tokenized_docs[doc_id]):
+				# get indices and frequencies for each term in data
+				data_idx, token_lens, cnt = get_vocab_idx(tokenized_sents[doc_id][sent_id], tokenizer, token_lens, cnt)
+
+				# compute contextualized word embeddings
+				encoded_data = tokenizer.encode_plus(sent.replace("_", " "), return_tensors="pt").to(device)
+
+				for w in tokenized_sents[doc_id][sent_id]:
+					word_embedding = get_hidden_states(encoded_data, data_idx[w], model, layers)
+					# update static word embeddings
+					if w in static_emb:
+						static_emb[w] += word_embedding
+					else:
+						static_emb[w] = word_embedding
+
+	static_emb = {w:w_emb/cnt[w] for w, w_emb in static_emb.items()}
+
+	with open(os.path.join(args.dataset, 'static_emb.pk'), "wb") as f:
+		pk.dump({"static_emb": static_emb, "cnt": cnt, "token_lens": token_lens, "tokenized_sents": tokenized_sents}, f)
+
 
 min_count = 3
 vocabulary = set()
@@ -67,6 +147,11 @@ with torch.no_grad():
 			input_ids = torch.tensor(tokenizer.encode(text, max_length=256, truncation=True)).unsqueeze(0).to(device)
 			outputs = model(input_ids)
 			hidden_states = outputs[2][-1][0]
-			emb = torch.mean(hidden_states, dim=0).cpu()
+
+			# take the average between the static embedding (if it exists) and the raw bert embedding
+			# if word in static_emb:
+			# 	emb = (torch.mean(hidden_states, dim=0).cpu() + static_emb[word].cpu())/2
+			# else:
+			emb = torch.mean(hidden_states, dim=0)
 
 			f.write(f'{word} '+' '.join([str(x.item()) for x in emb])+'\n')

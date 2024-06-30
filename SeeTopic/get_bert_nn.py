@@ -28,6 +28,7 @@ if num_iter > 0:
 			data = line.strip().split(':')[1].split(',')
 			topics[idx].extend(data[1:topk])
 
+# TODO: add in static word embeddings here??
 word2emb = {}
 with open(f'{dataset}/embedding_{model}.txt') as fin:
 	for line in fin:

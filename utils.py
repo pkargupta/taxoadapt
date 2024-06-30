@@ -1,13 +1,14 @@
 import numpy as np
-from scipy.special import softmax
+import torch
+from transformers import AutoTokenizer, AutoModel
 from model_definitions import llama_8b_model
 from prompts import phrase_filter_init_prompt, phrase_filter_prompt
 import re
 
-def filter_phrases(topics, phrases):
+def filter_phrases(topics, phrases, word2emb, other_parents):
     messages = [
             {"role": "system", "content": phrase_filter_init_prompt},
-            {"role": "user", "content": phrase_filter_prompt(topics, phrases)}]
+            {"role": "user", "content": phrase_filter_prompt(topics, phrases, other_parents)}]
         
     model_prompt = llama_8b_model.tokenizer.apply_chat_template(messages, 
                                                     tokenize=False, 
@@ -27,11 +28,26 @@ def filter_phrases(topics, phrases):
     )
     message = outputs[0]["generated_text"][len(model_prompt):]
 
-    phrases = re.findall(r'.*:\s*\[(.*)\]', message, re.IGNORECASE)[0]
+    print(message)
+
+    phrases = re.findall(r'.*_filtered:\s*\[*(.*)\]*', message, re.IGNORECASE)[0]
 
     phrases = re.findall(r'([\w.-]+)[,\'"]*', phrases, re.IGNORECASE)
 
-    return phrases
+    iv_phrases = []
+    vocab = list(word2emb.keys())
+    mod_vocab = [w.replace("-", "_") for w in vocab]
+
+    for p in phrases:
+        if p not in word2emb.keys():
+            if p in mod_vocab:
+                iv_phrases.append(vocab[mod_vocab.index(p)])
+            else:
+                print(p, "not found!")
+        else:
+            iv_phrases.append(p)
+
+    return iv_phrases
 
 ## NODE-ORIENTED SENTENCE REPRESENTATIONS ##
 
@@ -41,7 +57,7 @@ def cosine_similarity_embeddings(emb_a, emb_b):
 
 def rank_by_significance(embeddings, class_embeddings):
     similarities = cosine_similarity_embeddings(embeddings, class_embeddings)
-    significance_score = [np.max(softmax(similarity)) for similarity in similarities]
+    significance_score = [np.max(similarity) for similarity in similarities]
     significance_ranking = {i: r for r, i in enumerate(np.argsort(-np.array(significance_score)))}
     return significance_ranking
 
