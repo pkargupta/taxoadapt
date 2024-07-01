@@ -58,59 +58,59 @@ child_topic_5: <(label (one line), description (one line), list of {num_terms} s
 ---
 """
 
-# phrase_filter_init_prompt = """You are a natural language processing research subtopic verifier that verifies that each subtopic in a list is a valid subtopic of the list's parent topic. For the following parent topic (specified before the ":" of each line) and its respective list below (after the ":"), output a filtered version of the list where you have removed all subtopics that are not valid subtopics of the parent topic. A subtopic, B, of parent topic, A, is invalid if (1) B can also be a parent of A (roles can be reversed), and/or (2) B can be added as a subtopic of a different parent topic (specified under tag: "other_parent_topics"). """
-
-# def phrase_filter_prompt(topics, phrases, other_parents):
-#     prompt = f"""Each line below is in the format, parent_topic: [list of parent_topic subtopics]. You must verify each of the subtopics in each list and output their respective filtered list. Each of the subtopics must be irrelevant to the "other_parent_topics".
-    
-#     other_parent_topics:
-#     {other_parents}
-    
-#     {phrases}
-    
-#     Your output should ONLY be in the following YAML format. Do NOT provide any additional comments, greetings, or explanations. DO NOT MODIFY the punctuation within the original subtopics (e.g., do not replace '-' or '.' with '_'). Remember that a subtopic, B, of parent topic, A, is invalid if (1) B is irrelevant to A, (2) B can also be a parent of A, and/or (3) B can be a subtopic of a different parent topic (specified under tag: "other_parent_topics"). Provide a 1-2 sentence explanation behind the subtopics you choose to filter:
-#     ---
-#     """
-
-#     if type(topics) == list:
-#         for t in topics:
-#             prompt += f"{t.label}_filtering_explanation: <1-2, less than 50 word sentence explanation for why certain subtopics were filtered>\n"
-#             prompt += f"{t.label}_filtered: [<filtered list of comma-separated valid subtopics>]\n"
-#         prompt += "---\n"
-#     else:
-#         prompt += f"{topics.label}_filtering_explanation: <1-2, less than 50 word sentence explanation for why certain subtopics were filtered>\n"
-#         prompt += f"{topics.label}_filtered: [<filtered list of comma-separated valid subtopics>]\n"
-#         prompt += "---\n"
-
-#     return prompt
-
-### FILTER VERSION #2
-
-phrase_filter_init_prompt = """You are a natural language processing research subtopic verifier that verifies that each subtopic in a list is a valid subtopic of the list's parent topic. For the following parent topic (specified before the ":" of each line) and its respective list below (after the ":"), output a list of all subtopics that are not valid subtopics of the parent topic and hence should be filtered/removed. A subtopic, B, of parent topic, A, is invalid if (1) B can also be a parent of A (roles can be reversed), and/or (2) B can be added as a subtopic of a different parent topic (specified under tag: "other_parent_topics"). """
+phrase_filter_init_prompt = """You are a natural language processing research subtopic verifier that verifies that each subtopic in a list is a valid subtopic of the list's parent topic. For the following parent topic (specified before the ":" of each line) and its respective list below (after the ":"), output a filtered version of the list where you have removed all subtopics that are not valid subtopics of the parent topic. A subtopic, B, of parent topic, A, is invalid if (1) B can also be a parent of A (roles can be reversed), and/or (2) B can be added as a subtopic of a different parent topic (specified under tag: "other_parent_topics"). """
 
 def phrase_filter_prompt(topics, phrases, other_parents):
-    prompt = f"""Each line below is in the format, parent_topic: [list of parent_topic subtopics]. You must verify each of the subtopics in each list and output their respective list of invalid subtopics to be filtered. Each of the valid, retained subtopics must be irrelevant to the "other_parent_topics".
+    prompt = f"""Each line below is in the format, parent_topic: [list of parent_topic subtopics]. You must verify each of the subtopics in each list and output their respective filtered list. Each of the subtopics must be irrelevant to the "other_parent_topics".
     
-other_parent_topics:
-{other_parents}
-
-Your list of subtopics to be filtered:
----
-{phrases}
----
-
-Your output should ONLY be in the following YAML format. Do NOT provide any additional comments, greetings, or explanations. DO NOT MODIFY the punctuation within the original subtopics (e.g., do not replace '-' or '.' with '_'). Remember that a subtopic, B, of parent topic, A, is invalid if (1) B is irrelevant to A, (2) B can also be a parent of A, and/or (3) B can be a subtopic of a different parent topic (specified under tag: "other_parent_topics"). Provide a 1-2 sentence explanation behind the subtopics you choose to filter:
----
+    other_parent_topics:
+    {other_parents}
+    
+    {phrases}
+    
+    Your output should ONLY be in the following YAML format. Do NOT provide any additional comments, greetings, or explanations. DO NOT MODIFY the punctuation within the original subtopics (e.g., do not replace '-' or '.' with '_'). Remember that a subtopic, B, of parent topic, A, is invalid if (1) B is irrelevant to A, (2) B can also be a parent of A, and/or (3) B can be a subtopic of a different parent topic (specified under tag: "other_parent_topics"). Provide a 1-2 sentence explanation behind the subtopics you choose to filter:
+    ---
     """
 
     if type(topics) == list:
         for t in topics:
-            prompt += f"{t.label}_filtering_explanation: <1-2, less than 50 word sentence explanation for why certain subtopics were labeled as invalid>\n"
-            prompt += f"{t.label}_invalid_subtopics: [<list of comma-separated invalid subtopics which should be filtered>]\n"
+            prompt += f"{t.label}_filtering_explanation: <1-2, less than 50 word sentence explanation for why certain subtopics were filtered>\n"
+            prompt += f"{t.label}_filtered: [<filtered list of comma-separated valid subtopics>]\n"
         prompt += "---\n"
     else:
-        prompt += f"{topics.label}_filtering_explanation: <1-2, less than 50 word sentence explanation for why certain subtopics were labeled as invalid>\n"
-        prompt += f"{topics.label}_invalid_subtopics: [<list of comma-separated invalid subtopics which should be filtered>]\n"
+        prompt += f"{topics.label}_filtering_explanation: <1-2, less than 50 word sentence explanation for why certain subtopics were filtered>\n"
+        prompt += f"{topics.label}_filtered: [<filtered list of comma-separated valid subtopics>]\n"
         prompt += "---\n"
 
     return prompt
+
+### FILTER VERSION #2
+
+# phrase_filter_init_prompt = """You are a natural language processing research subtopic verifier that verifies that each subtopic in a list is a valid subtopic of the list's parent topic. For the following parent topic (specified before the ":" of each line) and its respective list below (after the ":"), output a list of all subtopics that are not valid subtopics of the parent topic and hence should be filtered/removed. A subtopic, B, of parent topic, A, is invalid if (1) B can also be a parent of A (roles can be reversed), and/or (2) B can be added as a subtopic of a different parent topic (specified under tag: "other_parent_topics"). """
+
+# def phrase_filter_prompt(topics, phrases, other_parents):
+#     prompt = f"""Each line below is in the format, parent_topic: [list of parent_topic subtopics]. You must verify each of the subtopics in each list and output their respective list of invalid subtopics to be filtered. Each of the valid, retained subtopics must be irrelevant to the "other_parent_topics".
+    
+# other_parent_topics:
+# {other_parents}
+
+# Your list of subtopics to be filtered:
+# ---
+# {phrases}
+# ---
+
+# Your output should ONLY be in the following YAML format. Do NOT provide any additional comments, greetings, or explanations. DO NOT MODIFY the punctuation within the original subtopics (e.g., do not replace '-' or '.' with '_'). Remember that a subtopic, B, of parent topic, A, is invalid if (1) B is irrelevant to A, (2) B can also be a parent of A, and/or (3) B can be a subtopic of a different parent topic (specified under tag: "other_parent_topics"). Provide a 1-2 sentence explanation behind the subtopics you choose to filter:
+# ---
+#     """
+
+#     if type(topics) == list:
+#         for t in topics:
+#             prompt += f"{t.label}_filtering_explanation: <1-2, less than 50 word sentence explanation for why certain subtopics were labeled as invalid>\n"
+#             prompt += f"{t.label}_invalid_subtopics: [<list of comma-separated invalid subtopics which should be filtered>]\n"
+#         prompt += "---\n"
+#     else:
+#         prompt += f"{topics.label}_filtering_explanation: <1-2, less than 50 word sentence explanation for why certain subtopics were labeled as invalid>\n"
+#         prompt += f"{topics.label}_invalid_subtopics: [<list of comma-separated invalid subtopics which should be filtered>]\n"
+#         prompt += "---\n"
+
+#     return prompt

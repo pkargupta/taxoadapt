@@ -5,10 +5,10 @@ from model_definitions import llama_8b_model
 from prompts import phrase_filter_init_prompt, phrase_filter_prompt
 import re
 
-def filter_phrases(topics, phrases, other_parents):
+def filter_phrases(topics, phrases, word2emb, other_parents):
     messages = [
             {"role": "system", "content": phrase_filter_init_prompt},
-            {"role": "user", "content": phrase_filter_prompt(topics, f"{topics}: {phrases}\n", other_parents)}]
+            {"role": "user", "content": phrase_filter_prompt(topics, phrases, other_parents)}]
         
     model_prompt = llama_8b_model.tokenizer.apply_chat_template(messages, 
                                                     tokenize=False, 
@@ -30,23 +30,67 @@ def filter_phrases(topics, phrases, other_parents):
 
     print(message)
 
-    invalid_phrases = re.findall(r'.*_invalid_subtopics:\s*\[*(.*)\]*', message, re.IGNORECASE)[0]
+    phrases = re.findall(r'.*_filtered:\s*\[*(.*)\]*', message, re.IGNORECASE)[0]
 
-    invalid_phrases = re.findall(r'([\w.-]+)[,\'"]*', invalid_phrases, re.IGNORECASE)
+    phrases = re.findall(r'([\w.-]+)[,\'"]*', phrases, re.IGNORECASE)
 
-    valid_phrases = phrases.copy()
-    mod_phrases = [w.replace("-", " ").replace("_", " ") for w in valid_phrases]
+    iv_phrases = []
+    vocab = list(word2emb.keys())
+    mod_vocab = [w.replace("-", " ").replace("_", " ") for w in vocab]
+
+    for p in phrases:
+        if p not in word2emb.keys():
+            if p.replace("-", " ").replace("_", " ") in mod_vocab:
+                iv_phrases.append(vocab[mod_vocab.index(p.replace("-", " ").replace("_", " "))])
+            else:
+                print(p, "not found!")
+        else:
+            iv_phrases.append(p)
+
+    return iv_phrases
+
+# def filter_phrases_NEW(topics, phrases, other_parents):
+#     messages = [
+#             {"role": "system", "content": phrase_filter_init_prompt},
+#             {"role": "user", "content": phrase_filter_prompt(topics, f"{topics}: {phrases}\n", other_parents)}]
+        
+#     model_prompt = llama_8b_model.tokenizer.apply_chat_template(messages, 
+#                                                     tokenize=False, 
+#                                                     add_generation_prompt=True)
+
+#     terminators = [
+#         llama_8b_model.tokenizer.eos_token_id,
+#         llama_8b_model.tokenizer.convert_tokens_to_ids("<|eot_id|>")
+#     ]
+
+#     outputs = llama_8b_model(
+#         model_prompt,
+#         max_new_tokens=1024,
+#         eos_token_id=terminators,
+#         do_sample=False,
+#         pad_token_id=llama_8b_model.tokenizer.eos_token_id
+#     )
+#     message = outputs[0]["generated_text"][len(model_prompt):]
+
+#     print(message)
+
+#     invalid_phrases = re.findall(r'.*_invalid_subtopics:\s*\[*(.*)\]*', message, re.IGNORECASE)[0]
+
+#     invalid_phrases = re.findall(r'([\w.-]+)[,\'"]*', invalid_phrases, re.IGNORECASE)
+
+#     valid_phrases = phrases.copy()
+#     mod_phrases = [w.replace("-", " ").replace("_", " ") for w in valid_phrases]
     
 
-    for p in invalid_phrases:
-        if p in valid_phrases:
-            valid_phrases.remove(p)
-            mod_phrases.remove(p.replace("-", " ").replace("_", " "))
-        elif p in mod_phrases:
-            valid_phrases.remove(valid_phrases[mod_phrases.index(p)])
-            mod_phrases.remove(p)
+#     for p in invalid_phrases:
+#         if p in valid_phrases:
+#             valid_phrases.remove(p)
+#             mod_phrases.remove(p.replace("-", " ").replace("_", " "))
+#         elif p in mod_phrases:
+#             valid_phrases.remove(valid_phrases[mod_phrases.index(p)])
+#             mod_phrases.remove(p)
     
-    return valid_phrases
+#     return valid_phrases
 
 ## NODE-ORIENTED SENTENCE REPRESENTATIONS ##
 
