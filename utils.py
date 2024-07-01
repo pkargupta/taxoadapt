@@ -5,10 +5,10 @@ from model_definitions import llama_8b_model
 from prompts import phrase_filter_init_prompt, phrase_filter_prompt
 import re
 
-def filter_phrases(topics, phrases, word2emb, other_parents):
+def filter_phrases(topics, phrases, other_parents):
     messages = [
             {"role": "system", "content": phrase_filter_init_prompt},
-            {"role": "user", "content": phrase_filter_prompt(topics, phrases, other_parents)}]
+            {"role": "user", "content": phrase_filter_prompt(topics, f"{topics}: {phrases}\n", other_parents)}]
         
     model_prompt = llama_8b_model.tokenizer.apply_chat_template(messages, 
                                                     tokenize=False, 
@@ -30,24 +30,23 @@ def filter_phrases(topics, phrases, word2emb, other_parents):
 
     print(message)
 
-    phrases = re.findall(r'.*_filtered:\s*\[*(.*)\]*', message, re.IGNORECASE)[0]
+    invalid_phrases = re.findall(r'.*_invalid_subtopics:\s*\[*(.*)\]*', message, re.IGNORECASE)[0]
 
-    phrases = re.findall(r'([\w.-]+)[,\'"]*', phrases, re.IGNORECASE)
+    invalid_phrases = re.findall(r'([\w.-]+)[,\'"]*', invalid_phrases, re.IGNORECASE)
 
-    iv_phrases = []
-    vocab = list(word2emb.keys())
-    mod_vocab = [w.replace("-", "_") for w in vocab]
+    valid_phrases = phrases.copy()
+    mod_phrases = [w.replace("-", " ").replace("_", " ") for w in valid_phrases]
+    
 
-    for p in phrases:
-        if p not in word2emb.keys():
-            if p in mod_vocab:
-                iv_phrases.append(vocab[mod_vocab.index(p)])
-            else:
-                print(p, "not found!")
-        else:
-            iv_phrases.append(p)
-
-    return iv_phrases
+    for p in invalid_phrases:
+        if p in valid_phrases:
+            valid_phrases.remove(p)
+            mod_phrases.remove(p.replace("-", " ").replace("_", " "))
+        elif p in mod_phrases:
+            valid_phrases.remove(valid_phrases[mod_phrases.index(p)])
+            mod_phrases.remove(p)
+    
+    return valid_phrases
 
 ## NODE-ORIENTED SENTENCE REPRESENTATIONS ##
 

@@ -6,10 +6,12 @@ import json
 from model_definitions import llama_8b_model, sentence_model
 from prompts import depth_expansion_init_prompt, depth_expansion_prompt
 from utils import average_with_harmonic_series
+from utils import rank_by_significance
 
 
 class Paper:
-    def __init__(self, id, title, abstract, text):
+    def __init__(self, taxo, id, title, abstract, text):
+        self.taxo = taxo
         self.id = id
         self.title = title
         self.abstract = abstract
@@ -44,6 +46,18 @@ class Paper:
             self.nodes[node.path] = score
         
         return score
+    
+    def rankTerms(self, class_reprs):
+        iv_terms = [w for w in self.vocabulary if w in self.taxo.word2emb]
+        phrase_reprs = np.concatenate([self.taxo.word2emb[w].reshape((-1, 768)) for w in iv_terms], axis=0)
+        ranked_tok = rank_by_significance(phrase_reprs, class_reprs)
+        return ranked_tok
+    
+    def rankSentences(self, class_reprs):
+        return
+    
+    def computePaperEmb(self):
+        return
 
 
 class Node:
@@ -70,6 +84,8 @@ class Node:
 
         self.mined_terms = []
         self.all_node_terms = [s.lower().replace(" ", "_") for s in [self.label] + seeds]
+
+        # get initial pool of papers
         for paper in self.collection:
             freq = paper.addNodeTerms(self, self.all_node_terms)
             if freq >= self.taxo.min_freq:
@@ -97,8 +113,15 @@ class Node:
         # child_repr = [c.emb for c in self.children if c.emb is not None]
         # child_repr = np.mean(child_repr, axis=0) if len(child_repr) > 0 else []
         # self.emb = average_with_harmonic_series([self_repr] + child_repr)
-        self.emb = average_with_harmonic_series([sentence_model.encode(p[1].title + "[SEP]" + p[1].abstract) 
-                                                 for p in self.papers])
+
+        # SPECTER-BASED
+        # self.emb = average_with_harmonic_series([sentence_model.encode(p[1].title + "[SEP]" + p[1].abstract) 
+        #                                          for p in self.papers])
+        
+        self.emb = average_with_harmonic_series(np.concatenate([self.taxo.static_emb[w].reshape((1,-1)) 
+                                                     for w in self.all_node_terms 
+                                                     if w in self.taxo.static_emb], axis=0))
+
         return self.emb
     
     def addChild(self, label, seeds, desc):
@@ -132,7 +155,7 @@ class Node:
         self.papers = sorted(self.papers, key=lambda x: x[0], reverse=True)
 
         # if (self.taxo.word2emb is not None) and (self.parent is not None):
-        # self.updateNodeEmb()
+        #     self.updateNodeEmb()
 
         if addToParent and (self.parent is not None):
             self.parent.addTerms(terms, addToParent=addToParent)
@@ -197,7 +220,7 @@ class Taxonomy:
                 for p in papers:
                     title = re.findall(r'title\s*:\s*(.*) ; abstract', p, re.IGNORECASE)[0]
                     abstract = re.findall(r'abstract\s*:\s*(.*)', p, re.IGNORECASE)[0]
-                    self.collection.append(Paper(id, title, abstract, p))
+                    self.collection.append(Paper(self, id, title, abstract, p))
                     id += 1
         
         self.root = Node(self, f"Types of {dimen} Proposed in {track} Research Papers")
@@ -247,4 +270,9 @@ class Taxonomy:
             self.height += 1
         
         return self.toDict()
-        
+    
+    def getClassReprs(self, class_nodes):
+        class_reprs = []
+        for cls in class_nodes:
+            class_reprs.append(cls.updateNodeEmb())
+        return class_reprs

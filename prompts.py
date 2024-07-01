@@ -91,13 +91,16 @@ phrase_filter_init_prompt = """You are a natural language processing research su
 def phrase_filter_prompt(topics, phrases, other_parents):
     prompt = f"""Each line below is in the format, parent_topic: [list of parent_topic subtopics]. You must verify each of the subtopics in each list and output their respective list of invalid subtopics to be filtered. Each of the valid, retained subtopics must be irrelevant to the "other_parent_topics".
     
-    other_parent_topics:
-    {other_parents}
-    
-    {phrases}
-    
-    Your output should ONLY be in the following YAML format. Do NOT provide any additional comments, greetings, or explanations. DO NOT MODIFY the punctuation within the original subtopics (e.g., do not replace '-' or '.' with '_'). Remember that a subtopic, B, of parent topic, A, is invalid if (1) B is irrelevant to A, (2) B can also be a parent of A, and/or (3) B can be a subtopic of a different parent topic (specified under tag: "other_parent_topics"). Provide a 1-2 sentence explanation behind the subtopics you choose to filter:
-    ---
+other_parent_topics:
+{other_parents}
+
+Your list of subtopics to be filtered:
+---
+{phrases}
+---
+
+Your output should ONLY be in the following YAML format. Do NOT provide any additional comments, greetings, or explanations. DO NOT MODIFY the punctuation within the original subtopics (e.g., do not replace '-' or '.' with '_'). Remember that a subtopic, B, of parent topic, A, is invalid if (1) B is irrelevant to A, (2) B can also be a parent of A, and/or (3) B can be a subtopic of a different parent topic (specified under tag: "other_parent_topics"). Provide a 1-2 sentence explanation behind the subtopics you choose to filter:
+---
     """
 
     if type(topics) == list:
