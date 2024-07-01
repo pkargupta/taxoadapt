@@ -5,10 +5,10 @@ from model_definitions import llama_8b_model
 from prompts import phrase_filter_init_prompt, phrase_filter_prompt
 import re
 
-def filter_phrases(topics, phrases, word2emb, other_parents):
+def filter_phrases(topic, phrases, word2emb, other_parents, other_terms):
     messages = [
             {"role": "system", "content": phrase_filter_init_prompt},
-            {"role": "user", "content": phrase_filter_prompt(topics, phrases, other_parents)}]
+            {"role": "user", "content": phrase_filter_prompt(topic, f"{topic}: {phrases}\n", other_parents)}]
         
     model_prompt = llama_8b_model.tokenizer.apply_chat_template(messages, 
                                                     tokenize=False, 
@@ -30,18 +30,20 @@ def filter_phrases(topics, phrases, word2emb, other_parents):
 
     print(message)
 
-    phrases = re.findall(r'.*_filtered:\s*\[*(.*)\]*', message, re.IGNORECASE)[0]
+    filtered_phrases = re.findall(r'.*_filtered:\s*\[*(.*)\]*', message, re.IGNORECASE)[0]
 
-    phrases = re.findall(r'([\w.-]+)[,\'"]*', phrases, re.IGNORECASE)
+    filtered_phrases = re.findall(r'([\w.-]+)[,\'"]*', filtered_phrases, re.IGNORECASE)
 
     iv_phrases = []
     vocab = list(word2emb.keys())
-    mod_vocab = [w.replace("-", " ").replace("_", " ") for w in vocab]
+    mod_vocab = [w.replace("-", "_") for w in vocab]
 
-    for p in phrases:
+    for p in filtered_phrases:
+        if (p not in phrases) or (p in other_terms):
+            continue
         if p not in word2emb.keys():
-            if p.replace("-", " ").replace("_", " ") in mod_vocab:
-                iv_phrases.append(vocab[mod_vocab.index(p.replace("-", " ").replace("_", " "))])
+            if p in mod_vocab:
+                iv_phrases.append(vocab[mod_vocab.index(p)])
             else:
                 print(p, "not found!")
         else:
@@ -97,6 +99,12 @@ def filter_phrases(topics, phrases, word2emb, other_parents):
 def cosine_similarity_embeddings(emb_a, emb_b):
     return np.dot(emb_a, np.transpose(emb_b)) / np.outer(np.linalg.norm(emb_a, axis=1), np.linalg.norm(emb_b, axis=1))
 
+def rank_by_discriminative_significance(embeddings, class_embeddings):
+    similarities = cosine_similarity_embeddings(embeddings, class_embeddings)
+    significance_score = np.ptp(np.sort(similarities, axis=1)[:, -2:], axis=1)
+    # significance_score = [np.max(np.sort(similarity)[-2:]) for similarity in similarities]
+    significance_ranking = {i: r for r, i in enumerate(np.argsort(-np.array(significance_score)))}
+    return significance_ranking
 
 def rank_by_significance(embeddings, class_embeddings):
     similarities = cosine_similarity_embeddings(embeddings, class_embeddings)
@@ -138,8 +146,12 @@ def weights_from_ranking(rankings):
         total_score.append(mul(ranking[i] for ranking in rankings))
 
     total_ranking = {i: r for r, i in enumerate(np.argsort(np.array(total_score)))}
-    if rankings_num == 1:
-        assert all(total_ranking[i] == rankings[0][i] for i in total_ranking.keys())
+
+    # print("TOTAL RANKING:", total_ranking)
+    # print("OG RANKING:", rankings[0])
+    # NEW: WE WANT TO COMMENT THIS OUT BECAUSE CERTAIN WORDS MIGHT BE REPEATED AND THUS HAVE THE SAME RANK
+    # if rankings_num == 1:
+    #     assert all(total_ranking[i] == rankings[0][i] for i in total_ranking.keys())
     weights = [0.0] * rankings_len
     for i in range(rankings_len):
         weights[i] = 1. / (total_ranking[i] + 1)

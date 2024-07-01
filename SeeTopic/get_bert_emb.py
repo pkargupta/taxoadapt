@@ -152,6 +152,6 @@ with torch.no_grad():
 			# if word in static_emb:
 			# 	emb = (torch.mean(hidden_states, dim=0).cpu() + static_emb[word].cpu())/2
 			# else:
-			emb = torch.mean(hidden_states, dim=0)
+			emb = torch.mean(hidden_states, dim=0).cpu()
 
 			f.write(f'{word} '+' '.join([str(x.item()) for x in emb])+'\n')

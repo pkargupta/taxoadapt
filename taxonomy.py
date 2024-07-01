@@ -5,8 +5,8 @@ from collections import deque, Counter
 import json
 from model_definitions import llama_8b_model, sentence_model
 from prompts import depth_expansion_init_prompt, depth_expansion_prompt
-from utils import average_with_harmonic_series
-from utils import rank_by_significance, weights_from_ranking
+from utils import average_with_harmonic_series, cosine_similarity_embeddings
+from utils import rank_by_significance, rank_by_discriminative_significance, weights_from_ranking
 
 
 class Paper:
@@ -49,7 +49,7 @@ class Paper:
         
         return score
     
-    def rankTerms(self, class_reprs):
+    def rankPhrases(self, class_reprs):
         iv_phrases = [w for w in self.vocabulary if w in self.taxo.word2emb]
         phrase_reprs = np.concatenate([self.taxo.word2emb[w].reshape((-1, 768)) for w in iv_phrases], axis=0)
         ranks = rank_by_significance(phrase_reprs, class_reprs)
@@ -57,33 +57,58 @@ class Paper:
         return ranked_tok
     
     def rankSentences(self, class_reprs):
-        ranked_phrases = self.rankTerms(class_reprs)
+        ranked_phrases = self.rankPhrases(class_reprs)
 
         sent_avg_weights = []
         sent_reprs = []
         for sent in self.sentences:
             phrase_reprs = []
             phrase_ranks = {}
-            for p_id, phrase in enumerate(sent):
-                phrase_reprs.append(self.taxo.word2emb[phrase])
-                phrase_ranks[p_id] = ranked_phrases[phrase]
+            p_id = 0
+            for phrase in sent:
+                if phrase in self.taxo.word2emb:
+                    phrase_reprs.append(self.taxo.word2emb[phrase])
+                    phrase_ranks[p_id] = ranked_phrases[phrase]
+                    p_id += 1
             
-            phrase_ranks = weights_from_ranking(phrase_ranks)
-            sent_avg_weights.append(np.mean(list(phrase_ranks.values())))
-            sent_reprs.append(np.average(phrase_reprs, weights=phrase_ranks, axis=0))
+            if len(phrase_ranks) > 0:
+                phrase_weights = weights_from_ranking({k: v for k, v in sorted(phrase_ranks.items(), key=lambda item: item[1])})
+                sent_avg_weights.append(np.mean(list(phrase_ranks.values())))
+                # sent_reprs.append(sentence_model.encode(" ".join(sent)))
+                sent_reprs.append(np.average(phrase_reprs, weights=phrase_weights, axis=0))
         
-        sent_ranks = {idx:rank for rank, idx in enumerate(np.argsort(-sent_avg_weights))}
+        sent_ranks = {idx:rank for rank, idx in enumerate(np.argsort(sent_avg_weights))}
 
         return sent_reprs, sent_ranks
     
-    def computePaperEmb(self, class_reprs):
+    def computePaperEmb(self, class_reprs=None):
+        # SPECTER-based
+        # self.emb = sentence_model.encode(self.title + "[SEP]" + self.abstract)
+
+        # sent-based repr
         sent_reprs, sent_ranks = self.rankSentences(class_reprs)
         weights = weights_from_ranking(sent_ranks)
         self.emb = np.average(sent_reprs, weights=weights, axis=0)
 
-        # identify similarity gap (aka perform classification)
+        # term-based repr
+        # ranked_phrases = self.rankPhrases(class_phrase_reprs)
 
+        # phrase_ranks = {}
+        # phrase_reprs = []
+        # p_id = 0
+        # for sent in self.sentences:
+        #     for phrase in sent:
+        #         if phrase in self.taxo.word2emb:
+        #             phrase_reprs.append(self.taxo.word2emb[phrase])
+        #             phrase_ranks[p_id] = ranked_phrases[phrase]
+        #             p_id += 1
         
+        # if len(phrase_ranks) > 0:
+        #     phrase_weights = weights_from_ranking({k: v for k, v in sorted(phrase_ranks.items(), 
+        #                                                             key=lambda item: item[1])})
+        #     self.emb =np.average(phrase_reprs, weights=phrase_weights, axis=0)
+
+
 
         return self.emb
 
@@ -122,6 +147,7 @@ class Node:
         self.papers = sorted(self.papers, key=lambda x: x[0], reverse=True)
         
         self.all_paper_terms = []
+        self.phrase_emb = None
         self.emb = None
 
     def __repr__(self) -> str:
@@ -136,21 +162,24 @@ class Node:
         else:
             return [c.label for c in self.children]
     
-    def updateNodeEmb(self):
+    def updateNodeEmb(self, phrase=False):
         # self_repr = average_with_harmonic_series([self.taxo.word2emb[w] for w in [self.label] + self.seeds + self.mined_terms])
         # child_repr = [c.emb for c in self.children if c.emb is not None]
         # child_repr = np.mean(child_repr, axis=0) if len(child_repr) > 0 else []
         # self.emb = average_with_harmonic_series([self_repr] + child_repr)
 
-        # SPECTER-BASED
-        # self.emb = average_with_harmonic_series([sentence_model.encode(p[1].title + "[SEP]" + p[1].abstract) 
-        #                                          for p in self.papers])
-        
-        self.emb = average_with_harmonic_series(np.concatenate([self.taxo.static_emb[w].reshape((1,-1)) 
-                                                     for w in self.all_node_terms 
-                                                     if w in self.taxo.static_emb], axis=0))
+        # PHRASE-BASED
+        if phrase:
+            self.phrase_emb = average_with_harmonic_series(np.concatenate([self.taxo.static_emb[w].reshape((1,-1)) 
+                                                        for w in self.all_node_terms 
+                                                        if w in self.taxo.static_emb], axis=0))
+            return self.phrase_emb
+        else:
+            # SPECTER-BASED
+            self.emb = average_with_harmonic_series([sentence_model.encode(p[1].title + "[SEP]" + p[1].abstract) 
+                                                    for p in self.papers])
 
-        return self.emb
+            return self.emb
     
     def addChild(self, label, seeds, desc):
         child_node = Node(self.taxo, label, seeds, desc, parent=self)
@@ -224,7 +253,7 @@ class Node:
         if self.label in paper.node_terms.keys():
             self.all_paper_terms.extend(paper.node_terms[self.label])
         # update density (TODO: open problem):
-        self.density += 1
+        self.density = len(self.papers)/len(self.parent.papers)
 
         return
     
@@ -233,6 +262,23 @@ class Node:
         # for paper_score, paper in self.papers:
         #     all_terms.extend(paper.node_terms[self.label])
         return self.all_paper_terms
+    
+    def rankPapers(self, class_reprs, phrase=True):
+        paper_reprs = []
+        for p in self.papers:
+            paper_reprs.append(p[1].computePaperEmb(class_reprs))
+        
+        if phrase:
+            paper_scores = cosine_similarity_embeddings(paper_reprs, [self.phrase_emb]).reshape((-1,))
+        else:
+            paper_scores = cosine_similarity_embeddings(paper_reprs, [self.emb]).reshape((-1,))
+
+        papers = [(paper_scores[i], self.papers[i][1]) for i in np.arange(len(self.papers))]
+
+        self.papers = sorted(papers, key=lambda x: x[0], reverse=True)
+
+        return self.papers
+
 
 class Taxonomy:
     def __init__(self, track=None, dimen=None, input_file=None):
@@ -300,7 +346,20 @@ class Taxonomy:
         return self.toDict()
     
     def getClassReprs(self, class_nodes):
-        class_reprs = []
+        class_reprs, class_phrase_reprs = [], []
         for cls in class_nodes:
-            class_reprs.append(cls.updateNodeEmb())
-        return class_reprs
+            class_reprs.append(cls.updateNodeEmb(phrase=False))
+            class_phrase_reprs.append(cls.updateNodeEmb(phrase=True))
+        return class_reprs, class_phrase_reprs
+    
+    def mapPapers(self, paper_reprs, class_reprs):
+        # no. of papers x no. of classes
+        cos_sim = cosine_similarity_embeddings(paper_reprs, class_reprs)
+        bottom_classes = np.argmax(np.diff(np.sort(cos_sim, axis=1), axis=1), axis=1) + 1
+
+        classes = np.argsort(cos_sim, axis=1)
+        class_labels = [] 
+        for p_id, b in enumerate(bottom_classes):
+            class_labels.append(classes[p_id][b:])
+
+        return class_labels
