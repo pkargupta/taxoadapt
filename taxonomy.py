@@ -6,7 +6,7 @@ import json
 from model_definitions import llama_8b_model, sentence_model
 from prompts import depth_expansion_init_prompt, depth_expansion_prompt
 from utils import average_with_harmonic_series
-from utils import rank_by_significance
+from utils import rank_by_significance, weights_from_ranking
 
 
 class Paper:
@@ -28,6 +28,8 @@ class Paper:
 
         self.vocabulary = dict(Counter(self.split_text))
 
+        self.emb = None
+
     def __repr__(self) -> str:
         return self.text
     
@@ -48,16 +50,40 @@ class Paper:
         return score
     
     def rankTerms(self, class_reprs):
-        iv_terms = [w for w in self.vocabulary if w in self.taxo.word2emb]
-        phrase_reprs = np.concatenate([self.taxo.word2emb[w].reshape((-1, 768)) for w in iv_terms], axis=0)
-        ranked_tok = rank_by_significance(phrase_reprs, class_reprs)
+        iv_phrases = [w for w in self.vocabulary if w in self.taxo.word2emb]
+        phrase_reprs = np.concatenate([self.taxo.word2emb[w].reshape((-1, 768)) for w in iv_phrases], axis=0)
+        ranks = rank_by_significance(phrase_reprs, class_reprs)
+        ranked_tok = {iv_phrases[idx]:rank for idx, rank in ranks.items()}
         return ranked_tok
     
     def rankSentences(self, class_reprs):
-        return
+        ranked_phrases = self.rankTerms(class_reprs)
+
+        sent_avg_weights = []
+        sent_reprs = []
+        for sent in self.sentences:
+            phrase_reprs = []
+            phrase_ranks = {}
+            for p_id, phrase in enumerate(sent):
+                phrase_reprs.append(self.taxo.word2emb[phrase])
+                phrase_ranks[p_id] = ranked_phrases[phrase]
+            
+            phrase_ranks = weights_from_ranking(phrase_ranks)
+            sent_avg_weights.append(np.mean(list(phrase_ranks.values())))
+            sent_reprs.append(np.average(phrase_reprs, weights=phrase_ranks, axis=0))
+        
+        sent_ranks = {idx:rank for rank, idx in enumerate(np.argsort(-sent_avg_weights))}
+
+        return sent_reprs, sent_ranks
     
-    def computePaperEmb(self):
-        return
+    def computePaperEmb(self, class_reprs):
+        sent_reprs, sent_ranks = self.rankSentences(class_reprs)
+        weights = weights_from_ranking(sent_ranks)
+        self.emb = np.average(sent_reprs, weights=weights, axis=0)
+
+        # identify similarity gap (aka perform classification)
+
+        return self.emb
 
 
 class Node:
