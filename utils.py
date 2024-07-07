@@ -8,7 +8,7 @@ import re
 def filter_phrases(topic, phrases, word2emb, other_parents, other_terms):
     messages = [
             {"role": "system", "content": phrase_filter_init_prompt},
-            {"role": "user", "content": phrase_filter_prompt(topic, f"{topic}: {phrases}\n", other_parents)}]
+            {"role": "user", "content": phrase_filter_prompt(topic, f"{topic}: {phrases}", other_parents)}]
         
     model_prompt = llama_8b_model.tokenizer.apply_chat_template(messages, 
                                                     tokenize=False, 

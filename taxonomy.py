@@ -7,6 +7,7 @@ from model_definitions import llama_8b_model, sentence_model
 from prompts import depth_expansion_init_prompt, depth_expansion_prompt
 from utils import average_with_harmonic_series, cosine_similarity_embeddings
 from utils import rank_by_significance, rank_by_discriminative_significance, weights_from_ranking
+from nltk.corpus import stopwords
 
 
 class Paper:
@@ -21,6 +22,7 @@ class Paper:
         
         
         self.sentences = []
+        self.tokenized = []
         self.terms = []
 
         self.nodes = {} # path: score
@@ -33,7 +35,28 @@ class Paper:
     def __repr__(self) -> str:
         return self.text
     
+    def updateVocab(self, terms):
+        updated = False
+        for t in terms:
+            mod_title = re.sub(fr"{t.replace('_', '.')}", t, self.title)
+            mod_abstract = re.sub(fr"{t.replace('_', '.')}", t, self.abstract)
+            if (mod_title != self.title) or (mod_abstract != self.abstract):
+                self.title = mod_title
+                self.abstract = mod_abstract
+                updated = True
+                
+        
+        if updated:
+            self.text = f"title : {self.title}; abstract : {self.abstract}"
+            self.split_text = self.text.split(" ")
+            self.length = len(self.split_text)
+            self.vocabulary = dict(Counter(self.split_text))
+        
+        return
+    
     def addNodeTerms(self, node, terms):
+        self.updateVocab(terms)
+
         # only consider terms that are in the vocab AND (1) this node has not been added yet OR (2) are not already in the node_terms 
         filtered_terms = list(filter(lambda w: (w in self.vocabulary.keys()) 
                                      and ((node.path not in self.node_terms.keys()) 
@@ -50,9 +73,9 @@ class Paper:
         return score
     
     def rankPhrases(self, class_reprs):
-        iv_phrases = [w for w in self.vocabulary if w in self.taxo.word2emb]
-        phrase_reprs = np.concatenate([self.taxo.word2emb[w].reshape((-1, 768)) for w in iv_phrases], axis=0)
-        ranks = rank_by_significance(phrase_reprs, class_reprs)
+        iv_phrases = [w for w in self.vocabulary if w in self.taxo.static_emb]
+        phrase_reprs = np.concatenate([self.taxo.static_emb[w].reshape((-1, 768)) for w in iv_phrases], axis=0)
+        ranks = rank_by_discriminative_significance(phrase_reprs, class_reprs)
         ranked_tok = {iv_phrases[idx]:rank for idx, rank in ranks.items()}
         return ranked_tok
     
@@ -61,19 +84,20 @@ class Paper:
 
         sent_avg_weights = []
         sent_reprs = []
-        for sent in self.sentences:
+        for sent in self.tokenized:
             phrase_reprs = []
             phrase_ranks = {}
             p_id = 0
             for phrase in sent:
-                if phrase in self.taxo.word2emb:
-                    phrase_reprs.append(self.taxo.word2emb[phrase])
+                if (phrase in self.taxo.static_emb) and (phrase not in stopwords.words('english')):
+                    phrase_reprs.append(self.taxo.static_emb[phrase])
                     phrase_ranks[p_id] = ranked_phrases[phrase]
                     p_id += 1
             
             if len(phrase_ranks) > 0:
                 phrase_weights = weights_from_ranking({k: v for k, v in sorted(phrase_ranks.items(), key=lambda item: item[1])})
                 sent_avg_weights.append(np.mean(list(phrase_ranks.values())))
+
                 # sent_reprs.append(sentence_model.encode(" ".join(sent)))
                 sent_reprs.append(np.average(phrase_reprs, weights=phrase_weights, axis=0))
         
@@ -131,7 +155,6 @@ class Node:
         self.seeds = seeds
         self.desc = description
 
-        self.collection = self.taxo.collection
         self.papers = [] # list of tuples (score, paper)
         self.density = 0
 
@@ -139,7 +162,7 @@ class Node:
         self.all_node_terms = [s.lower().replace(" ", "_") for s in [self.label] + seeds]
 
         # get initial pool of papers
-        for paper in self.collection:
+        for paper in self.taxo.collection:
             freq = paper.addNodeTerms(self, self.all_node_terms)
             if freq >= self.taxo.min_freq:
                 self.papers.append((freq, paper))
@@ -204,7 +227,7 @@ class Node:
                     self.mined_terms.append(mod_t)
                 new_terms.append(mod_t)
 
-        for paper in self.collection:
+        for paper in self.taxo.collection:
             freq = paper.addNodeTerms(self, new_terms)
             if freq >= self.taxo.min_freq: # min frequency
                 self.papers.append((freq, paper))
@@ -262,6 +285,20 @@ class Node:
         # for paper_score, paper in self.papers:
         #     all_terms.extend(paper.node_terms[self.label])
         return self.all_paper_terms
+    
+    def sim_lexical(self):
+        idf = lambda w: np.log(len(self.taxo.collection)/np.sum([1 for paper in self.taxo.collection if w in paper.vocabulary]))
+        w_idf = {term:idf(term) for term in self.all_node_terms}
+
+        sim_l = [0 for i in np.arange(len(self.taxo.collection))]
+        for p_id, p in enumerate(self.taxo.collection):
+            for term in self.all_node_terms:
+                sim_l[p_id] += p.vocabulary[term] * w_idf[term]
+        return sim_l/len(self.taxo.all_node_terms)
+    
+    def sim_semantic_phrase(self):
+        
+        return
     
     def rankPapers(self, class_reprs, phrase=True):
         paper_reprs = []
