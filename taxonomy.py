@@ -5,8 +5,8 @@ from collections import deque, Counter
 import json
 from model_definitions import llama_8b_model, sentence_model
 from prompts import depth_expansion_init_prompt, depth_expansion_prompt
-from utils import average_with_harmonic_series, cosine_similarity_embeddings
-from utils import rank_by_significance, rank_by_discriminative_significance, weights_from_ranking
+from utils import average_with_harmonic_series, cosine_similarity_embeddings, mul
+from utils import rank_by_discriminative_significance, rank_by_significance, rank_by_insignificance, rank_by_lexical, weights_from_ranking
 from nltk.corpus import stopwords
 
 
@@ -18,19 +18,21 @@ class Paper:
         self.abstract = abstract
         self.text = text # f"title : {title}; abstract: {abstract}"
         self.split_text = self.text.split(" ")
-        self.length = len(self.split_text)
         
         
         self.sentences = []
         self.tokenized = []
-        self.terms = []
 
         self.nodes = {} # path: score
-        self.node_terms = {} # key: node label; value: paper-specific terms relevant to node
+        self.node_terms = {} # key: node path; value: paper-specific terms relevant to node
 
         self.vocabulary = dict(Counter(self.split_text))
 
+        self.phrase_emb = None
         self.emb = None
+
+    def __eq__(self, other):
+        return (type(self) == type(other)) and (self.id == other.id)
 
     def __repr__(self) -> str:
         return self.text
@@ -38,8 +40,8 @@ class Paper:
     def updateVocab(self, terms):
         updated = False
         for t in terms:
-            mod_title = re.sub(fr"{t.replace('_', '.')}", t, self.title)
-            mod_abstract = re.sub(fr"{t.replace('_', '.')}", t, self.abstract)
+            mod_title = re.sub(fr" {t.replace('_', '.')} ", f" {t} ", self.title)
+            mod_abstract = re.sub(fr" {t.replace('_', '.')} ", f" {t} ", self.abstract)
             if (mod_title != self.title) or (mod_abstract != self.abstract):
                 self.title = mod_title
                 self.abstract = mod_abstract
@@ -47,9 +49,10 @@ class Paper:
                 
         
         if updated:
-            self.text = f"title : {self.title}; abstract : {self.abstract}"
+            self.text = f"title : {self.title} ; abstract : {self.abstract}"
+            self.sentences = self.text.split(" . ")
+            self.tokenized = [sent.split() for sent in self.sentences]
             self.split_text = self.text.split(" ")
-            self.length = len(self.split_text)
             self.vocabulary = dict(Counter(self.split_text))
         
         return
@@ -91,6 +94,8 @@ class Paper:
             for phrase in sent:
                 if (phrase in self.taxo.static_emb) and (phrase not in stopwords.words('english')):
                     phrase_reprs.append(self.taxo.static_emb[phrase])
+                    if phrase not in self.vocabulary:
+                        print(self.id)
                     phrase_ranks[p_id] = ranked_phrases[phrase]
                     p_id += 1
             
@@ -101,18 +106,22 @@ class Paper:
                 # sent_reprs.append(sentence_model.encode(" ".join(sent)))
                 sent_reprs.append(np.average(phrase_reprs, weights=phrase_weights, axis=0))
         
-        sent_ranks = {idx:rank for rank, idx in enumerate(np.argsort(sent_avg_weights))}
-
-        return sent_reprs, sent_ranks
+        sent_avg_ranks = {idx:rank for rank, idx in enumerate(np.argsort(sent_avg_weights))}
+        sent_dis_ranks = rank_by_discriminative_significance(sent_reprs, class_reprs)
+        return sent_reprs, sent_avg_ranks, sent_dis_ranks
     
-    def computePaperEmb(self, class_reprs=None):
-        # SPECTER-based
-        # self.emb = sentence_model.encode(self.title + "[SEP]" + self.abstract)
+    def computePaperEmb(self, class_reprs=None, phrase=True):
+        if phrase:
+            # sent-based repr
+            sent_reprs, sent_avg_ranks, sent_dis_ranks = self.rankSentences(class_reprs)
+            weights = weights_from_ranking([sent_avg_ranks, sent_dis_ranks])
+            self.phrase_emb = np.average(sent_reprs, weights=weights, axis=0)
+            return self.phrase_emb
+        else:
+            # SPECTER-based
+            self.emb = sentence_model.encode(self.title + "[SEP]" + self.abstract)
+            return self.emb
 
-        # sent-based repr
-        sent_reprs, sent_ranks = self.rankSentences(class_reprs)
-        weights = weights_from_ranking(sent_ranks)
-        self.emb = np.average(sent_reprs, weights=weights, axis=0)
 
         # term-based repr
         # ranked_phrases = self.rankPhrases(class_phrase_reprs)
@@ -155,7 +164,8 @@ class Node:
         self.seeds = seeds
         self.desc = description
 
-        self.papers = [] # list of tuples (score, paper)
+        self.papers = [] # paper
+        self.paper_scores = {} # paper_id: score
         self.density = 0
 
         self.mined_terms = []
@@ -165,11 +175,13 @@ class Node:
         for paper in self.taxo.collection:
             freq = paper.addNodeTerms(self, self.all_node_terms)
             if freq >= self.taxo.min_freq:
-                self.papers.append((freq, paper))
+                if paper.id not in self.papers:
+                    self.papers.append(paper)
+                self.paper_scores[paper.id] = freq
 
-        self.papers = sorted(self.papers, key=lambda x: x[0], reverse=True)
+        self.papers = sorted(self.papers, key=lambda x: self.paper_scores[x.id], reverse=True)
         
-        self.all_paper_terms = []
+        self.all_paper_terms = set()
         self.phrase_emb = None
         self.emb = None
 
@@ -199,7 +211,7 @@ class Node:
             return self.phrase_emb
         else:
             # SPECTER-BASED
-            self.emb = average_with_harmonic_series([sentence_model.encode(p[1].title + "[SEP]" + p[1].abstract) 
+            self.emb = average_with_harmonic_series([sentence_model.encode(p.title + "[SEP]" + p.abstract) 
                                                     for p in self.papers])
 
             return self.emb
@@ -230,9 +242,11 @@ class Node:
         for paper in self.taxo.collection:
             freq = paper.addNodeTerms(self, new_terms)
             if freq >= self.taxo.min_freq: # min frequency
-                self.papers.append((freq, paper))
+                if paper not in self.papers:
+                    self.papers.append(paper)
+                self.paper_scores[paper.id] = paper.nodes[self.path]
 
-        self.papers = sorted(self.papers, key=lambda x: x[0], reverse=True)
+        self.papers = sorted(self.papers, key=lambda x: self.paper_scores[x.id], reverse=True)
 
         # if (self.taxo.word2emb is not None) and (self.parent is not None):
         #     self.updateNodeEmb()
@@ -272,9 +286,11 @@ class Node:
         return self.addChildren(labels, seeds, descriptions)
     
     def addPaper(self, paper):
-        self.papers.append(paper)
-        if self.label in paper.node_terms.keys():
-            self.all_paper_terms.extend(paper.node_terms[self.label])
+        if paper not in self.papers:
+            self.papers.append(paper)
+            self.paper_scores[paper.id] = paper.nodes[self.path]
+        if (self.path in paper.nodes) and (paper.nodes[self.path] > 0):
+            self.all_paper_terms.update(paper.node_terms[self.path])
         # update density (TODO: open problem):
         self.density = len(self.papers)/len(self.parent.papers)
 
@@ -303,16 +319,18 @@ class Node:
     def rankPapers(self, class_reprs, phrase=True):
         paper_reprs = []
         for p in self.papers:
-            paper_reprs.append(p[1].computePaperEmb(class_reprs))
+            paper_reprs.append(p.computePaperEmb(class_reprs))
         
         if phrase:
-            paper_scores = cosine_similarity_embeddings(paper_reprs, [self.phrase_emb]).reshape((-1,))
+            new_paper_scores = cosine_similarity_embeddings(paper_reprs, [self.phrase_emb]).reshape((-1,))
         else:
-            paper_scores = cosine_similarity_embeddings(paper_reprs, [self.emb]).reshape((-1,))
+            new_paper_scores = cosine_similarity_embeddings(paper_reprs, [self.emb]).reshape((-1,))
 
-        papers = [(paper_scores[i], self.papers[i][1]) for i in np.arange(len(self.papers))]
+        self.paper_scores = {}
+        for p_id, paper in enumerate(self.papers):
+            self.paper_scores[paper.id] = new_paper_scores[p_id]
 
-        self.papers = sorted(papers, key=lambda x: x[0], reverse=True)
+        self.papers = sorted(self.papers, key=lambda x: self.paper_scores[x.id], reverse=True)
 
         return self.papers
 
@@ -382,21 +400,72 @@ class Taxonomy:
         
         return self.toDict()
     
-    def getClassReprs(self, class_nodes):
-        class_reprs, class_phrase_reprs = [], []
+    def getClassReprs(self, class_nodes, phrase=True):
+        class_reprs = []
         for cls in class_nodes:
-            class_reprs.append(cls.updateNodeEmb(phrase=False))
-            class_phrase_reprs.append(cls.updateNodeEmb(phrase=True))
-        return class_reprs, class_phrase_reprs
+            class_reprs.append(cls.updateNodeEmb(phrase))
+        return class_reprs
     
-    def mapPapers(self, paper_reprs, class_reprs):
+    def mapPapers(self, paper_reprs, class_nodes, class_reprs):
+
         # no. of papers x no. of classes
         cos_sim = cosine_similarity_embeddings(paper_reprs, class_reprs)
+
+        # identify lower-bound for each class (based on bottom-most ranked paper)
+        lower_bounds = [cos_sim[c.papers[-1].id, c_id] for c_id, c in enumerate(class_nodes)]
+
+        # get the classes for each paper which have a sim above the lower-bound threshold
         bottom_classes = np.argmax(np.diff(np.sort(cos_sim, axis=1), axis=1), axis=1) + 1
 
         classes = np.argsort(cos_sim, axis=1)
-        class_labels = [] 
+        class_labels = []
+        mapping = {i:[] for i in np.arange(-1, len(class_nodes))}
         for p_id, b in enumerate(bottom_classes):
-            class_labels.append(classes[p_id][b:])
+            class_labels.append([])
+            for cls in classes[p_id][b:]:
+                if cos_sim[p_id, cls] >= lower_bounds[cls]:
+                    class_labels[p_id].append(cls)
+                    class_nodes[cls].addPaper(self.collection[p_id])
+                    mapping[cls].append(p_id)
+                
+            if len(class_labels[p_id]) == 0:
+                mapping[-1].append(p_id)
 
-        return class_labels
+        return class_labels, mapping
+    
+    def siblingExpansion(self, parent_node, mapping):
+        # get non-stopword oov vocab from unmapped papers
+        unmapped_vocab = set()
+        for p_id in mapping[-1]:
+            unmapped_vocab.update([w for w in self.collection[p_id].vocabulary 
+                                   if (w not in stopwords.words('english') and (w not in parent_node.all_node_terms))])
+        unmapped_vocab = list(unmapped_vocab)
+
+        phrase_reprs = [self.static_emb[w] for w in unmapped_vocab]
+        # terms should be relevant to the parent node
+        parent_ranks = rank_by_significance(phrase_reprs, [parent_node.phrase_emb])
+        # terms should be dissimilar to terms from existing sibling nodes
+        # sib_ranks = rank_by_insignificance(phrase_reprs, [c.phrase_emb for c in parent_node.children])
+
+        # they should be frequent in the unmapped pool of papers but infrequent in the mapped pool of papers
+        unmapped = []
+        mapped = []
+        for p in self.collection:
+            if p.id in mapping[-1]:
+                unmapped.append(p)
+            else:
+                mapped.append(p)
+        lexical_ranks = rank_by_lexical(unmapped_vocab, mapped, unmapped)
+
+        # compute joint rank
+        # rankings = [parent_ranks, sib_ranks, lexical_ranks]
+        rankings = [parent_ranks, lexical_ranks]
+        rankings_len = len(unmapped_vocab)
+
+        total_score = []
+        for i in range(rankings_len):
+            total_score.append(mul(ranking[i] for ranking in rankings))
+
+        total_ranking = {unmapped_vocab[i]: r for r, i in enumerate(np.argsort(np.array(total_score)))}
+
+        return total_ranking

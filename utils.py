@@ -112,6 +112,22 @@ def rank_by_significance(embeddings, class_embeddings):
     significance_ranking = {i: r for r, i in enumerate(np.argsort(-np.array(significance_score)))}
     return significance_ranking
 
+def rank_by_insignificance(embeddings, class_embeddings):
+    similarities = cosine_similarity_embeddings(embeddings, class_embeddings)
+    significance_score = [np.max(similarity) for similarity in similarities]
+    significance_ranking = {i: r for r, i in enumerate(np.argsort(np.array(significance_score)))}
+    return significance_ranking
+
+def rank_by_lexical(phrases, mapped, unmapped):
+    idf = lambda w: np.log((1 + len(mapped))/(1 + np.sum([1 for paper in mapped if w in paper.vocabulary])))
+    w_idf = {term:idf(term) for term in phrases}
+    tf = {term:len([term in p.vocabulary for p in unmapped]) for term in phrases}
+
+    lexical_score = [tf[term]*w_idf[term] for term in phrases]
+    lexical_ranking = {i: r for r, i in enumerate(np.argsort(-np.array(lexical_score)))}
+
+    return lexical_ranking
+
 
 def rank_by_relation(embeddings, class_embeddings):
     relation_score = cosine_similarity_embeddings(embeddings, [np.average(class_embeddings, axis=0)]).reshape((-1))
