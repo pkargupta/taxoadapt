@@ -29,21 +29,36 @@ def get_vocab_idx(split_text: str, tok_lens):
 	return vocab_idx
 
 def get_hidden_states(encoded, data_idx, model, layers, static_emb):
-	 """Push input IDs through model. Stack and sum `layers` (last four by default).
-		Select only those subword token outputs that belong to our word of interest
-		and average them."""
-	 with torch.no_grad():
-		 output = model(**encoded)
- 
-	 # Get all hidden states
-	 states = output.hidden_states
-	 # Stack and sum all requested layers
-	 output = torch.stack([states[i] for i in layers]).sum(0).squeeze()
+	"""Push input IDs through model. Stack and sum `layers` (last four by default).
+	Select only those subword token outputs that belong to our word of interest
+	and average them."""
+	with torch.no_grad():
+		output = model(**encoded)
 
-	 # Only select the tokens that constitute the requested word
+	# Get all hidden states
+	states = output.hidden_states
+	# Stack and sum all requested layers
+	output = torch.stack([states[i] for i in layers]).sum(0).squeeze()
 
-	 for w in data_idx:
-	 	static_emb[w] += output[data_idx[w]].mean(dim=0).cpu().numpy()
+	# Only select the tokens that constitute the requested word
+
+	for w in data_idx:
+		static_emb[w] += output[data_idx[w]].sum(dim=0).cpu().numpy()
+
+def chunkify(text, token_lens, length=512):
+	chunks = [[]]
+	split_text = text.split()
+	count = 0
+	for word in split_text:
+		new_count = count + len(token_lens[word]) + 2 # 2 for [CLS] and [SEP]
+		if new_count > length:
+			chunks.append([word])
+			count = len(token_lens[word])
+		else:
+			chunks[len(chunks) - 1].append(word)
+			count = new_count
+	
+	return chunks
 
 
 device = torch.device("cuda")
@@ -109,14 +124,16 @@ else:
 	with open(os.path.join(args.dataset, corpus_file)) as fin:
 		lines = [l.strip() for l in fin]
 		for doc_id, doc in tqdm(enumerate(lines), total=len(lines)):
+			chunks = chunkify(doc, token_lens, args.length)
+
 			tokenized_docs.append([sent for sent in doc.split(" . ")])
 			tokenized_sents.append([sent.split() for sent in tokenized_docs[doc_id]])
-			for sent_id, sent in enumerate(tokenized_docs[doc_id]):
+			for chunk_id, chunk in enumerate(chunks):
 				# get indices and frequencies for each term in data
-				data_idx = get_vocab_idx(tokenized_sents[doc_id][sent_id], token_lens)
+				data_idx = get_vocab_idx(chunk, token_lens)
 
 				# compute contextualized word embeddings
-				encoded_data = tokenizer.encode_plus(sent.replace("_", " "), return_tensors="pt").to(device)
+				encoded_data = tokenizer.encode_plus(" ".join(chunk).replace("_", " "), return_tensors="pt").to(device)
 
 				get_hidden_states(encoded_data, data_idx, model, layers, static_emb)
 

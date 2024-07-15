@@ -6,12 +6,31 @@ from utils import filter_phrases
 import subprocess
 import shutil
 import pickle as pk
+from tqdm import tqdm
 import numpy as np
+import json
+import string
 import argparse
 from model_definitions import sentence_model
 
 
 def main(args):
+    # printable = set(string.printable)
+    # with open('datasets/qa_papers.jsonl', 'r', encoding='utf-8', errors='ignore') as json_file:
+    #     json_list = list(json_file)
+
+    #     results = []
+    #     for json_str in json_list:
+    #         results.append(json.loads(json_str))
+
+
+    # with open("datasets/qa_papers.txt", "w", encoding='utf-8', errors='ignore') as f:
+    #     for result in tqdm(results):
+    #         result['Content'] = ''.join(filter(lambda x: x in printable, result['Content'])).replace('\r', '')
+    #         f.write(f"Title: {result['Title']}; Abstract: {result['Abstract']}; Paper: {result['Content'].split(' References ')[0]}")
+    #         if result != results[-1]:
+    #             f.write("\n")
+
 
     # input: track, dimension -> get base taxonomy (2 levels) -> Class Tree, Class Node (description, seed words)
     print("########### READING IN PAPERS & CONSTRUCTING BASE TAXONOMY ###########")

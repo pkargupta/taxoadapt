@@ -172,14 +172,18 @@ class Node:
         self.all_node_terms = [s.lower().replace(" ", "_") for s in [self.label] + seeds]
 
         # get initial pool of papers
-        for paper in self.taxo.collection:
-            freq = paper.addNodeTerms(self, self.all_node_terms)
-            if freq >= self.taxo.min_freq:
-                if paper.id not in self.papers:
-                    self.papers.append(paper)
-                self.paper_scores[paper.id] = freq
+        if parent is None:
+            self.papers = self.taxo.collection
+            self.paper_scores = {p.id:1 for p in self.papers}
+        else:
+            for paper in self.parent.papers:
+                freq = paper.addNodeTerms(self, self.all_node_terms)
+                if freq >= self.taxo.min_freq:
+                    if paper.id not in self.papers:
+                        self.papers.append(paper)
+                    self.paper_scores[paper.id] = freq
 
-        self.papers = sorted(self.papers, key=lambda x: self.paper_scores[x.id], reverse=True)
+            self.papers = sorted(self.papers, key=lambda x: self.paper_scores[x.id], reverse=True)
         
         self.all_paper_terms = set()
         self.phrase_emb = None
@@ -239,7 +243,8 @@ class Node:
                     self.mined_terms.append(mod_t)
                 new_terms.append(mod_t)
 
-        for paper in self.taxo.collection:
+        collection = self.papers if self.parent is None else self.parent.papers
+        for paper in collection:
             freq = paper.addNodeTerms(self, new_terms)
             if freq >= self.taxo.min_freq: # min frequency
                 if paper not in self.papers:
@@ -292,7 +297,7 @@ class Node:
         if (self.path in paper.nodes) and (paper.nodes[self.path] > 0):
             self.all_paper_terms.update(paper.node_terms[self.path])
         # update density (TODO: open problem):
-        self.density = len(self.papers)/len(self.parent.papers)
+        self.density = len(self.papers)/(len(self.parent.papers)/(len(self.parent.children)))
 
         return
     
@@ -316,6 +321,13 @@ class Node:
         
         return
     
+    def clearPapers(self):
+        self.papers = []
+        self.paper_scores = {}
+        self.density = 0
+        self.all_paper_terms = set()
+        return
+
     def rankPapers(self, class_reprs, phrase=True):
         paper_reprs = []
         for p in self.papers:
@@ -347,6 +359,8 @@ class Taxonomy:
             with open(input_file, "r") as f:
                 papers = f.read().strip().splitlines()
                 for p in papers:
+                    if 'abstract' not in p:
+                        print(p)
                     title = re.findall(r'title\s*:\s*(.*) ; abstract', p, re.IGNORECASE)[0]
                     abstract = re.findall(r'abstract\s*:\s*(.*)', p, re.IGNORECASE)[0]
                     self.collection.append(Paper(self, id, title, abstract, p))
@@ -417,6 +431,9 @@ class Taxonomy:
         # get the classes for each paper which have a sim above the lower-bound threshold
         bottom_classes = np.argmax(np.diff(np.sort(cos_sim, axis=1), axis=1), axis=1) + 1
 
+        for c in class_nodes:
+            c.clearPapers()
+
         classes = np.argsort(cos_sim, axis=1)
         class_labels = []
         mapping = {i:[] for i in np.arange(-1, len(class_nodes))}
@@ -425,7 +442,7 @@ class Taxonomy:
             for cls in classes[p_id][b:]:
                 if cos_sim[p_id, cls] >= lower_bounds[cls]:
                     class_labels[p_id].append(cls)
-                    class_nodes[cls].addPaper(self.collection[p_id])
+                    class_nodes[cls].addPaper(class_nodes[0].parent.papers[p_id])
                     mapping[cls].append(p_id)
                 
             if len(class_labels[p_id]) == 0:
@@ -437,20 +454,23 @@ class Taxonomy:
         # get non-stopword oov vocab from unmapped papers
         unmapped_vocab = set()
         for p_id in mapping[-1]:
-            unmapped_vocab.update([w for w in self.collection[p_id].vocabulary 
+            unmapped_vocab.update([w for w in parent_node.papers[p_id].vocabulary 
                                    if (w not in stopwords.words('english') and (w not in parent_node.all_node_terms))])
         unmapped_vocab = list(unmapped_vocab)
 
         phrase_reprs = [self.static_emb[w] for w in unmapped_vocab]
         # terms should be relevant to the parent node
         parent_ranks = rank_by_significance(phrase_reprs, [parent_node.phrase_emb])
-        # terms should be dissimilar to terms from existing sibling nodes
-        # sib_ranks = rank_by_insignificance(phrase_reprs, [c.phrase_emb for c in parent_node.children])
+
+        # terms should be similar to terms from existing sibling nodes
+        sib_ranks = rank_by_significance(phrase_reprs, [self.static_emb[c.label] for c in parent_node.children])
+
+        sib_term_ranks = rank_by_insignificance(phrase_reprs, [c.phrase_emb for c in parent_node.children])
 
         # they should be frequent in the unmapped pool of papers but infrequent in the mapped pool of papers
         unmapped = []
         mapped = []
-        for p in self.collection:
+        for p in parent_node.papers:
             if p.id in mapping[-1]:
                 unmapped.append(p)
             else:
@@ -458,14 +478,14 @@ class Taxonomy:
         lexical_ranks = rank_by_lexical(unmapped_vocab, mapped, unmapped)
 
         # compute joint rank
-        # rankings = [parent_ranks, sib_ranks, lexical_ranks]
-        rankings = [parent_ranks, lexical_ranks]
+        rankings = [parent_ranks, sib_ranks, sib_term_ranks, lexical_ranks]
+        # rankings = [parent_ranks, lexical_ranks]
         rankings_len = len(unmapped_vocab)
 
         total_score = []
         for i in range(rankings_len):
             total_score.append(mul(ranking[i] for ranking in rankings))
 
-        total_ranking = {unmapped_vocab[i]: r for r, i in enumerate(np.argsort(np.array(total_score)))}
+        total_ranking = {unmapped_vocab[i]: (r, total_score[i]) for r, i in enumerate(np.argsort(np.array(total_score)))}
 
         return total_ranking

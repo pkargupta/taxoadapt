@@ -23,7 +23,8 @@ def filter_phrases(topic, phrases, word2emb, other_parents, other_terms):
         model_prompt,
         max_new_tokens=1024,
         eos_token_id=terminators,
-        do_sample=False,
+        do_sample=True,
+        top_p=0.9,
         pad_token_id=llama_8b_model.tokenizer.eos_token_id
     )
     message = outputs[0]["generated_text"][len(model_prompt):]
