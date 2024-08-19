@@ -1,11 +1,14 @@
 import argparse
 import os
 import csv
+import string
 import numpy as np
+import re
 from tqdm import tqdm
+import json
 from nltk import word_tokenize
 
-
+# after AutoPhrase
 def phrase_process():
 	f = open(os.path.join('AutoPhrase', 'models', args.dataset, 'segmentation.txt'))
 	g = open(args.out_file, 'w')
@@ -18,17 +21,26 @@ def phrase_process():
 				doc += ('_').join(temp2[0].split(' ')) + temp2[1]
 			else:
 				doc += temp2[0]
+		doc = re.sub(r'(\w)-(\w)', r'\1_\2', doc)
 		g.write(doc.strip()+'\n')
 	print("Phrase segmented corpus written to {}".format(args.out_file))
 	return 
 
-
+# before AutoPhrase
 def preprocess():
+	printable = set(string.printable)
 	f = open(os.path.join(args.dataset, args.in_file))
 	docs = f.readlines()
 	f_out = open(args.out_file, 'w')
 	for doc in tqdm(docs):
-		f_out.write(' '.join([w.lower() for w in word_tokenize(doc.strip())]) + '\n')
+		if doc[0] == "{":
+			doc_json = json.loads(doc.strip())
+			doc = f'title : {doc_json["Title"]} ; abstract : {doc_json["Abstract"]} ; paper : {doc_json["Content"]}'
+		if '. References ' in doc:
+			doc = doc.split('. References ')[0]
+		doc = ''.join(filter(lambda x: x in printable, doc)).replace('\r', '')
+		doc = re.sub(r'\/uni\w{4,8}', "", doc)
+		f_out.write(' '.join([w.lower().replace('-', '_') for w in word_tokenize(doc.strip())]) + '\n')
 	return 
 
 

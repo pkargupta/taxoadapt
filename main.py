@@ -1,126 +1,119 @@
 import os
-os.environ["CUDA_VISIBLE_DEVICES"]="0,1,2,3,4,5"
 os.environ['HF_HOME'] = '/shared/data3/pk36/.cache'
-from taxonomy import Taxonomy, Paper
-from utils import filter_phrases
+from taxonomy import Node, Taxonomy
 import subprocess
-import shutil
 import pickle as pk
 from tqdm import tqdm
 import numpy as np
+from collections import deque
 import json
-import string
+import time
 import argparse
-from model_definitions import sentence_model
+from model_definitions import llama_8b_model, promptLlama, constructPrompt
+from utils import *
+from prompts import *
 
+def commonSenseEnrich(root_node, taxo_dict, batch=True):
+    # phrase and sentence-level enrichment
+
+    ## constructing prompts
+    if batch:
+        prompts = []
+        for child in root_node.children:
+            temp_dict = taxo_dict.copy()
+            temp_dict[root_node.label]['children'] = {c.label:({'description':c.description} if c.node_id != child.node_id else taxo_dict[root_node.label]['children'][child.label]) for c in root_node.children}
+
+            prompts.append(constructPrompt(init_enrich_prompt, main_enrich_prompt(temp_dict)))
+    else:
+        prompts = constructPrompt(init_enrich_prompt, main_enrich_prompt(taxo_dict))
+
+    ## generation
+    output = promptLlama(prompts, max_new_tokens=5000)
+    if batch:
+        output_dict = [json.loads(clean_json_string(c)) if "```json" in c else json.loads(c.strip()) for c in output]
+    else:
+        output_dict = [json.loads(clean_json_string(output) if "```json" in output else output.strip())]
+
+    ## merging all dictionaries
+    print("merging all enrichment dictionaries...")
+
+    for c in tqdm(output_dict):
+
+        queue = deque(c)
+
+        while queue:
+            current_dict = queue.popleft()
+            current_node = root_node.findChild(current_dict['id'])
+            if current_node is not None:
+                updateEnrichment(current_node, current_dict['example_key_phrases'], current_dict['example_sentences'])
+
+                for child_label, child_dict in current_dict['children'].items():
+                    queue.append(child_dicts)
+    return
 
 def main(args):
-    # printable = set(string.printable)
-    # with open('datasets/qa_papers.jsonl', 'r', encoding='utf-8', errors='ignore') as json_file:
-    #     json_list = list(json_file)
 
-    #     results = []
-    #     for json_str in json_list:
-    #         results.append(json.loads(json_str))
+    start = time.time()
 
+    print("########### READING INPUT ###########")
 
-    # with open("datasets/qa_papers.txt", "w", encoding='utf-8', errors='ignore') as f:
-    #     for result in tqdm(results):
-    #         result['Content'] = ''.join(filter(lambda x: x in printable, result['Content'])).replace('\r', '')
-    #         f.write(f"Title: {result['Title']}; Abstract: {result['Abstract']}; Paper: {result['Content'].split(' References ')[0]}")
-    #         if result != results[-1]:
-    #             f.write("\n")
+    # create taxonomy from input
+    root, id2label, label2id = createGraph(os.path.join(args.data_dir), 'labels_with_desc.txt')
 
+    taxo = Taxonomy(root)
 
-    # input: track, dimension -> get base taxonomy (2 levels) -> Class Tree, Class Node (description, seed words)
-    print("########### READING IN PAPERS & CONSTRUCTING BASE TAXONOMY ###########")
-    taxo = Taxonomy(args.track, args.dim, args.input_file)
-    base_taxo = taxo.buildBaseTaxo(levels=1, num_terms=20)
+    taxo_dict = taxo.toDict(cur_node=taxo.root)
+    with open(f'datasets/{args.dataset}/initial.json', 'w') as fp:
+        json.dump(taxo_dict, fp, indent=4)
 
-    print(base_taxo)
+    # first do common sense phrase, sentence enrichment on taxonomy nodes
+    enrich_start = time.time()
+    commonSenseEnrich(taxo.root, taxo_dict, True)
+    enrich_end = time.time()
+    print(f"Time taken: {(enrich_end - enrich_start)/60} minutes")
 
-    # format the input keywords file for seetopic -> get phrases -> filter using LLM
-    dir_name = (args.track + "_" + args.dim).lower().replace(" ", "_")
+    # add common-sense phrases to AutoPhrase
+    with open("preprocessing/AutoPhrase/data/EN/wiki_quality_orig.txt", "r") as f:
+        all_phrases = [w.strip() for w in f.readlines()]
+        for a in aspects:
+            all_phrases.append(a.replace("_", " "))
+        all_phrases.extend([w.replace("_", " ") for a in keywords for w in a])
 
-    if not os.path.exists(f"SeeTopic/{dir_name}"):
-        os.makedirs(f"SeeTopic/{dir_name}")
-
-    if not os.path.exists(f"SeeTopic/{dir_name}/{dir_name}.txt"):
-        shutil.copyfile(args.input_file, f"SeeTopic/{dir_name}/{dir_name}.txt")
-
-    ## get first level of children
-    children_with_terms = taxo.root.getChildren(terms=True)
-    with open(f"SeeTopic/{dir_name}/keywords_0.txt", "w") as f:
-        for idx, c in enumerate(children_with_terms):
-            str_c = ",".join(c[1])
-            f.write(f"{idx}:{c[0]},{str_c}\n")
-    
-    os.chdir("./SeeTopic")
-    subprocess.check_call(['./seetopic.sh', dir_name, str(args.iters), args.model])
-    os.chdir("../")
-
-    # read in raw and static embs
-
-    raw_emb = {}
-    with open(f'./SeeTopic/{dir_name}/embedding_{args.model}.txt') as fin:
-        for line in fin:
-            data = line.strip().split()
-            if len(data) != 769:
-                continue
-            word = data[0]
-            emb = np.array([float(x) for x in data[1:]])
-            emb = emb / np.linalg.norm(emb)
-            raw_emb[word] = emb
-
-    taxo.raw_emb = raw_emb
-
-    if os.path.exists(os.path.join('SeeTopic/text_classification_methodology/static_emb.pk')):
-        with open(os.path.join('SeeTopic/text_classification_methodology/static_emb.pk'), "rb") as f:
-            static_emb = pk.load(f)
-    taxo.static_emb = static_emb
-
-    with open(f"./SeeTopic/{dir_name}/keywords_seetopic.txt", "r") as f:
-        children_phrases = [i.strip().split(":")[1].split(",") for i in f.readlines()]
-        filtered_children_phrases = []
-        for c_id, c in enumerate(taxo.root.children):
-            # other parents
-            other_parents = "\n".join([f"{i.label} -> {i.desc}" for i in taxo.root.children if i != c])
-            # filter the child phrases
-            child_phrases = filter_phrases(c, f"{c}: {children_phrases[c_id]}\n", word2emb, other_parents=other_parents)
-            filtered_children_phrases.append(child_phrases)
-
-    for c_id, c in enumerate(taxo.root.children):
-        c.addTerms(filtered_children_phrases[c_id], mined=True, addToParent=True)
-    
-
-    # (initial relevant pool) identify papers which contain exact-matched terms -> class Paper (relevant segments, sentences, phrases)
-    print("########### INITIAL RELEVANT POOL OF PAPERS ###########")
-    
+    with open("preprocessing/AutoPhrase/data/EN/wiki_quality.txt", "w") as f:
+        for w_id, w in enumerate(all_phrases):
+            if w_id == (len(all_phrases) - 1):
+                f.write(f"{w}")
+            else:
+                f.write(f"{w}\n")
 
 
 
+    print("########### PRE-PROCESSING BOTH CORPORA ###########")
+    if args.override or (not os.path.exists(f"datasets/{args.dataset}/phrase_{args.dataset}.txt")):
+        # pre-process
+        os.chdir("./preprocessing")
+        subprocess.check_call(['./auto_phrase.sh', args.dataset])
+        os.chdir("../")
 
-    # (primary focus pool) identify papers which propose methods involving such topics → utilize class-oriented sentence representations
+    else:
+        print("already pre-processed!")
 
-    # fine-tune [to-be hierarchical] entailment model
 
-    # (paper-based enrichment) if all papers are mapped to all level-nodes, no enrichment
-    #                          elif node is high density + some neutral papers --> either abandon papers or gather more context (retrieval)
-    #                          elif node is high density + many contradictions, unmapped papers --> enrich siblings (open question)
-    #                                    enrich siblings: use LLM to identify clusters within unmapped papers -> mine terms
-    #                          elif node is high density --> enrich children (common-sense)
-    #                          else node is low density --> prune
-
-    # iterative feedback: construct hierarchical entailment hypotheses for further enrichment
     return
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('--track', type=str, default='Text Classification')
-    parser.add_argument('--dim', type=str, default='Methodology')
-    parser.add_argument('--input_file', type=str, default='datasets/sample_1k.txt')
+    parser.add_argument('--dataset', type=str, default='llm_graph')
     parser.add_argument('--iters', type=int, default=4)
     parser.add_argument('--model', type=str, default="bert_full_ft")
+    parser.add_argument('--override', type=bool, default=True)
+    parser.add_argument('--max_depth', type=int, default=5)
 
     args = parser.parse_args()
+
+    # inputs: external knowledge corpus & specific corpus
+    args.data_dir = f"datasets/{args.dataset}/"
+    args.input_file = f"datasets/{args.dataset}/phrase_{args.dataset}.txt"
+
+
     main(args)

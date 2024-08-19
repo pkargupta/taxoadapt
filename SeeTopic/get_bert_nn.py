@@ -52,16 +52,20 @@ else:
 	num_iter += 1
 	out_file = f'{dataset}/keywords_{model}_{num_iter}.txt'
 
+added = []
+
 with open(out_file, 'w') as fout:
 	for idx, topic in enumerate(topics):
+		# other_emb = np.array(topic_embs[:idx] + topic_embs[idx+1:]).mean(axis=0)
 		word2score = defaultdict(float)
 		for word in word2emb:
-			if word in oov:
+			if (word in oov) or (word in added):
 				continue
 			for term in topic:
-				word2score[word] += np.dot(word2emb[word], word2emb[term])
+				word2score[word] += np.dot(word2emb[word], word2emb[term]) # * (1 / np.dot(word2emb[word], other_emb))
 		score_sorted = sorted(word2score.items(), key=lambda x: x[1], reverse=True)[:100]
 		# NEW: ADDED IN VOCABULARY SEED WORDS
 		new_topic = [topic[0]] + [i for i in seed_words[idx][1:] if not (i in oov)] + [x[0] for x in score_sorted]
 		new_topic = list(dict.fromkeys(new_topic))
+		added.extend(new_topic)
 		fout.write(f'{idx}:'+','.join(new_topic)+'\n')

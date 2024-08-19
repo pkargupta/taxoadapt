@@ -1,231 +1,83 @@
-import numpy as np
-import torch
-from transformers import AutoTokenizer, AutoModel
-from model_definitions import llama_8b_model
-from prompts import phrase_filter_init_prompt, phrase_filter_prompt
 import re
 
-def filter_phrases(topic, phrases, word2emb, other_parents, other_terms):
-    messages = [
-            {"role": "system", "content": phrase_filter_init_prompt},
-            {"role": "user", "content": phrase_filter_prompt(topic, f"{topic}: {phrases}", other_parents)}]
-        
-    model_prompt = llama_8b_model.tokenizer.apply_chat_template(messages, 
-                                                    tokenize=False, 
-                                                    add_generation_prompt=True)
+def clean_json_string(json_string):
+    pattern = r'^```json\s*(.*?)\s*```$'
+    cleaned_string = re.sub(pattern, r'\1', json_string, flags=re.DOTALL)
+    return cleaned_string.strip()
 
-    terminators = [
-        llama_8b_model.tokenizer.eos_token_id,
-        llama_8b_model.tokenizer.convert_tokens_to_ids("<|eot_id|>")
-    ]
 
-    outputs = llama_8b_model(
-        model_prompt,
-        max_new_tokens=1024,
-        eos_token_id=terminators,
-        do_sample=True,
-        top_p=0.9,
-        pad_token_id=llama_8b_model.tokenizer.eos_token_id
-    )
-    message = outputs[0]["generated_text"][len(model_prompt):]
+# create taxonomy from input file
+def createGraph(file_addr, label_file='labels.txt'):
+    root = None
+    # sanity check if file exist
+    if not os.path.exists(file_addr):
+        print(f"ERROR. Taxonomy file addr {file_addr} not exists.")
+        exit(-1)
 
-    print(message)
+    id2label = {}
+    id2desc = {}
+    label2id = {}
 
-    filtered_phrases = re.findall(r'.*_filtered:\s*\[*(.*)\]*', message, re.IGNORECASE)[0]
+    with open(os.path.join(file_addr, label_file)) as f:
+        for line in f:
+            line_info = line.strip().split('\t')
+            # without description
+            if len(line_info) == 2:
+                label_id, label_name = line_info
+            # with description
+            if len(line_info) == 3:
+                label_id, label_name, label_desc = line_info
 
-    filtered_phrases = re.findall(r'([\w.-]+)[,\'"]*', filtered_phrases, re.IGNORECASE)
+            id2label[label_id] = label_name
+            id2desc[label_id] = label_desc
+            label2id[label_name] = label_id
 
-    iv_phrases = []
-    vocab = list(word2emb.keys())
-    mod_vocab = [w.replace("-", "_") for w in vocab]
+    # construct graph from file
+    with open(os.path.join(file_addr, 'label_hierarchy.txt')) as f:
+        ## for each line in the file
+        root = Node(-1, 'ROOT')
+        for line in f:
+            parent_id, child_id = line.strip().split('\t')
+            parent = id2label[parent_id]
+            child = id2label[child_id]
+            parent_desc = id2desc[parent_id] if len(id2desc) > 0 else None
+            child_desc = id2desc[child_id] if len(id2desc) > 0 else None
 
-    for p in filtered_phrases:
-        if (p not in phrases) or (p in other_terms):
-            continue
-        if p not in word2emb.keys():
-            if p in mod_vocab:
-                iv_phrases.append(vocab[mod_vocab.index(p)])
-            else:
-                print(p, "not found!")
-        else:
-            iv_phrases.append(p)
+            parent_node = root.findChild(parent_id)
+            if parent_node is None:
+                parent_node = Node(parent_id, parent, description=parent_desc, level=1)
+                root.addChild(parent_node)
+                parent_node.addParent(root)
 
-    return iv_phrases
-
-# def filter_phrases_NEW(topics, phrases, other_parents):
-#     messages = [
-#             {"role": "system", "content": phrase_filter_init_prompt},
-#             {"role": "user", "content": phrase_filter_prompt(topics, f"{topics}: {phrases}\n", other_parents)}]
-        
-#     model_prompt = llama_8b_model.tokenizer.apply_chat_template(messages, 
-#                                                     tokenize=False, 
-#                                                     add_generation_prompt=True)
-
-#     terminators = [
-#         llama_8b_model.tokenizer.eos_token_id,
-#         llama_8b_model.tokenizer.convert_tokens_to_ids("<|eot_id|>")
-#     ]
-
-#     outputs = llama_8b_model(
-#         model_prompt,
-#         max_new_tokens=1024,
-#         eos_token_id=terminators,
-#         do_sample=False,
-#         pad_token_id=llama_8b_model.tokenizer.eos_token_id
-#     )
-#     message = outputs[0]["generated_text"][len(model_prompt):]
-
-#     print(message)
-
-#     invalid_phrases = re.findall(r'.*_invalid_subtopics:\s*\[*(.*)\]*', message, re.IGNORECASE)[0]
-
-#     invalid_phrases = re.findall(r'([\w.-]+)[,\'"]*', invalid_phrases, re.IGNORECASE)
-
-#     valid_phrases = phrases.copy()
-#     mod_phrases = [w.replace("-", " ").replace("_", " ") for w in valid_phrases]
+            child_node = root.findChild(child_id)
+            if child_node is None:
+                child_node = Node(child_id, child, description=child_desc, level=parent_node.level+1)
+            parent_node.addChild(child_node)
+            child_node.addParent(parent_node)
     
+    return root, id2label, label2id
 
-#     for p in invalid_phrases:
-#         if p in valid_phrases:
-#             valid_phrases.remove(p)
-#             mod_phrases.remove(p.replace("-", " ").replace("_", " "))
-#         elif p in mod_phrases:
-#             valid_phrases.remove(valid_phrases[mod_phrases.index(p)])
-#             mod_phrases.remove(p)
-    
-#     return valid_phrases
+def updateEnrichment(node, phrases, sentences, enrich_type=0):
+    if enrich_type == 0: # common-sense
+        for phrase in phrases:
+            if phrase not in node.common_sense['phrases']:
+                node.common_sense['phrases'].append(phrase)
+        for sent in sentences:
+            if sent not in node.common_sense['sentences']:
+                node.common_sense['sentences'].append(sent)
 
-## NODE-ORIENTED SENTENCE REPRESENTATIONS ##
+    elif enrich_type == 1: # external corpus
+        for phrase in phrases:
+            if phrase not in node.external['phrases']:
+                node.external['phrases'].append(phrase)
+        for sent in sentences:
+            if sent not in node.external['sentences']:
+                node.external['sentences'].append(sent)
 
-def cosine_similarity_embeddings(emb_a, emb_b):
-    return np.dot(emb_a, np.transpose(emb_b)) / np.outer(np.linalg.norm(emb_a, axis=1), np.linalg.norm(emb_b, axis=1))
-
-def rank_by_discriminative_significance(embeddings, class_embeddings):
-    similarities = cosine_similarity_embeddings(embeddings, class_embeddings)
-    significance_score = np.ptp(np.sort(similarities, axis=1)[:, -2:], axis=1)
-    # significance_score = [np.max(np.sort(similarity)[-2:]) for similarity in similarities]
-    significance_ranking = {i: r for r, i in enumerate(np.argsort(-np.array(significance_score)))}
-    return significance_ranking
-
-def rank_by_significance(embeddings, class_embeddings):
-    similarities = cosine_similarity_embeddings(embeddings, class_embeddings)
-    significance_score = [np.max(similarity) for similarity in similarities]
-    significance_ranking = {i: r for r, i in enumerate(np.argsort(-np.array(significance_score)))}
-    return significance_ranking
-
-def rank_by_insignificance(embeddings, class_embeddings):
-    similarities = cosine_similarity_embeddings(embeddings, class_embeddings)
-    significance_score = [np.max(similarity) for similarity in similarities]
-    significance_ranking = {i: r for r, i in enumerate(np.argsort(np.array(significance_score)))}
-    return significance_ranking
-
-def rank_by_lexical(phrases, mapped, unmapped):
-    idf = lambda w: np.log((1 + len(mapped))/(1 + np.sum([1 for paper in mapped if w in paper.vocabulary])))
-    w_idf = {term:idf(term) for term in phrases}
-    tf = {term:len([term in p.vocabulary for p in unmapped]) for term in phrases}
-
-    lexical_score = [tf[term]*w_idf[term] for term in phrases]
-    lexical_ranking = {i: r for r, i in enumerate(np.argsort(-np.array(lexical_score)))}
-
-    return lexical_ranking
-
-
-def rank_by_relation(embeddings, class_embeddings):
-    relation_score = cosine_similarity_embeddings(embeddings, [np.average(class_embeddings, axis=0)]).reshape((-1))
-    relation_ranking = {i: r for r, i in enumerate(np.argsort(-np.array(relation_score)))}
-    return relation_ranking
-
-
-def mul(l):
-    m = 1
-    for x in l:
-        m *= x + 1
-    return m
-
-
-def average_with_harmonic_series(representations):
-    weights = [0.0] * len(representations)
-    for i in range(len(representations)):
-        weights[i] = 1. / (i + 1)
-    return np.average(representations, weights=weights, axis=0)
-
-
-def weights_from_ranking(rankings):
-    if len(rankings) == 0:
-        assert False
-    if type(rankings[0]) == type(0):
-        rankings = [rankings]
-    rankings_num = len(rankings)
-    rankings_len = len(rankings[0])
-    assert all(len(rankings[i]) == rankings_len for i in range(rankings_num))
-    total_score = []
-    for i in range(rankings_len):
-        total_score.append(mul(ranking[i] for ranking in rankings))
-
-    total_ranking = {i: r for r, i in enumerate(np.argsort(np.array(total_score)))}
-
-    # print("TOTAL RANKING:", total_ranking)
-    # print("OG RANKING:", rankings[0])
-    # NEW: WE WANT TO COMMENT THIS OUT BECAUSE CERTAIN WORDS MIGHT BE REPEATED AND THUS HAVE THE SAME RANK
-    # if rankings_num == 1:
-    #     assert all(total_ranking[i] == rankings[0][i] for i in total_ranking.keys())
-    weights = [0.0] * rankings_len
-    for i in range(rankings_len):
-        weights[i] = 1. / (total_ranking[i] + 1)
-    return weights
-
-
-def weight_sentence_with_attention(vocab, tokenized_text, contextualized_word_representations, class_representations,
-                                   attention_mechanism):
-    assert len(tokenized_text) == len(contextualized_word_representations)
-
-    contextualized_representations = []
-    static_representations = []
-
-    static_word_representations = vocab["static_word_representations"]
-    word_to_index = vocab["word_to_index"]
-    for i, token in enumerate(tokenized_text):
-        if token in word_to_index:
-            static_representations.append(static_word_representations[word_to_index[token]])
-            contextualized_representations.append(contextualized_word_representations[i])
-    if len(contextualized_representations) == 0:
-        print("Empty Sentence (or sentence with no words that have enough frequency)")
-        return np.average(contextualized_word_representations, axis=0)
-
-    significance_ranking = rank_by_significance(contextualized_representations, class_representations)
-    relation_ranking = rank_by_relation(contextualized_representations, class_representations)
-    significance_ranking_static = rank_by_significance(static_representations, class_representations)
-    relation_ranking_static = rank_by_relation(static_representations, class_representations)
-    if attention_mechanism == "none":
-        weights = [1.0] * len(contextualized_representations)
-    elif attention_mechanism == "significance":
-        weights = weights_from_ranking(significance_ranking)
-    elif attention_mechanism == "relation":
-        weights = weights_from_ranking(relation_ranking)
-    elif attention_mechanism == "significance_static":
-        weights = weights_from_ranking(relation_ranking)
-    elif attention_mechanism == "relation_static":
-        weights = weights_from_ranking(relation_ranking)
-    elif attention_mechanism == "mixture":
-        weights = weights_from_ranking((significance_ranking,
-                                        relation_ranking,
-                                        significance_ranking_static,
-                                        relation_ranking_static))
-    else:
-        assert False
-    return np.average(contextualized_representations, weights=weights, axis=0)
-
-
-def weight_sentence(model,
-                    vocab,
-                    tokenization_info,
-                    class_representations,
-                    attention_mechanism,
-                    layer):
-    
-    tokenized_text, tokenized_to_id_indicies, tokenids_chunks = tokenization_info
-    contextualized_word_representations = handle_sentence(model, layer, tokenized_text, tokenized_to_id_indicies,
-                                                          tokenids_chunks)
-    document_representation = weight_sentence_with_attention(vocab, tokenized_text, contextualized_word_representations,
-                                                             class_representations, attention_mechanism)
-    return document_representation
+    else: # user corpus
+        for phrase in phrases:
+            if phrase not in node.corpus['phrases']:
+                node.corpus['phrases'].append(phrase)
+        for sent in sentences:
+            if sent not in node.corpus['sentences']:
+                node.corpus['sentences'].append(sent)

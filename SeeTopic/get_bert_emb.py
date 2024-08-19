@@ -15,16 +15,13 @@ def get_vocab_idx(split_text: str, tok_lens):
 	start = 0
 
 	for w in split_text:
-		if w not in tok_lens:
-			tok_lens[w] = len(tok_lens[w])
-
+		# print(w, start, start + len(tok_lens[w]))
 		if w not in vocab_idx:
 			vocab_idx[w] = []
 
 		vocab_idx[w].extend(np.arange(start, start + len(tok_lens[w])))
 
 		start += len(tok_lens[w])
-
 
 	return vocab_idx
 
@@ -47,6 +44,7 @@ def get_hidden_states(encoded, data_idx, model, layers, static_emb):
 
 def chunkify(text, token_lens, length=512):
 	chunks = [[]]
+	text_chunks = []
 	split_text = text.split()
 	count = 0
 	for word in split_text:
@@ -67,6 +65,8 @@ parser = argparse.ArgumentParser(description='main', formatter_class=argparse.Ar
 parser.add_argument('--dataset', default='scidocs')
 parser.add_argument('--model', default='bert')
 parser.add_argument('--dim', default=768)
+parser.add_argument('--length', default=512)
+parser.add_argument('--batch_size', default=128)
 args = parser.parse_args()
 
 if args.model == 'bert_cls_ft':
@@ -142,6 +142,8 @@ else:
 	with open(os.path.join(args.dataset, 'static_emb.pk'), "wb") as f:
 		pk.dump({"static_emb": static_emb, "token_lens": token_lens, "tokenized_sents": tokenized_sents, "tokenized_docs": tokenized_docs}, f)
 
+print("####### COMPUTING RAW WORD EMBEDDINGS #######")
+
 
 min_count = 3
 vocabulary = set()
@@ -164,19 +166,38 @@ with open(os.path.join(args.dataset, 'keywords_0.txt')) as fin, open(os.path.joi
 				fout.write(word+'\n')
 				vocabulary.add(word)
 
-with torch.no_grad():
-	with open(os.path.join(args.dataset, bert_file), 'w') as f:
-		f.write(f'{len(vocabulary)} {args.dim}\n')
-		for word in tqdm(vocabulary):
-			text = word.replace('_', ' ')
-			input_ids = torch.tensor(tokenizer.encode(text, max_length=256, truncation=True)).unsqueeze(0).to(device)
-			outputs = model(input_ids)
-			hidden_states = outputs[2][-1][0]
+vocabulary = list(vocabulary)
 
-			# take the average between the static embedding (if it exists) and the raw bert embedding
-			# if word in static_emb:
-			# 	emb = (torch.mean(hidden_states, dim=0).cpu() + static_emb[word].cpu())/2
-			# else:
-			emb = torch.mean(hidden_states, dim=0).cpu()
+with open(os.path.join(args.dataset, bert_file), 'w') as f:
+	f.write(f'{len(vocabulary)} {args.dim}\n')
 
-			f.write(f'{word} '+' '.join([str(x.item()) for x in emb])+'\n')
+	for i in tqdm(range(0, len(vocabulary), args.batch_size)):
+		batch_vocab = vocabulary[i:i+args.batch_size]
+		batch_texts = [word.replace('_', ' ') for word in batch_vocab]
+		encoded_inputs = tokenizer(batch_texts, padding=True, truncation=True, max_length=256, return_tensors='pt')
+		input_ids = encoded_inputs['input_ids'].to(device)
+		attention_mask = encoded_inputs['attention_mask'].to(device)
+
+		with torch.no_grad():
+			outputs = model(input_ids, attention_mask=attention_mask)
+
+		hidden_states = outputs.hidden_states[-1]
+		mean_embeddings = torch.mean(hidden_states, dim=1).cpu()
+
+		for word, emb in zip(batch_vocab, mean_embeddings):
+			f.write(f'{word} ' + ' '.join([str(x.item()) for x in emb]) + '\n')
+		
+
+		# for word in tqdm(vocabulary):
+		# 	text = word.replace('_', ' ')
+		# 	input_ids = torch.tensor(tokenizer.encode(text, max_length=256, truncation=True)).unsqueeze(0).to(device)
+		# 	outputs = model(input_ids)
+		# 	hidden_states = outputs[2][-1][0]
+
+		# 	# take the average between the static embedding (if it exists) and the raw bert embedding
+		# 	# if word in static_emb:
+		# 	# 	emb = (torch.mean(hidden_states, dim=0).cpu() + static_emb[word].cpu())/2
+		# 	# else:
+		# 	emb = torch.mean(hidden_states, dim=0).cpu()
+
+		# 	f.write(f'{word} ' + ' '.join([str(x.item()) for x in emb])+'\n')
