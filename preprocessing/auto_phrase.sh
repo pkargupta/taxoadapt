@@ -18,7 +18,7 @@ reset=`tput sgr0`
 CORPUS_DIR=../datasets/${DATASET}
 
 # raw text file
-CORPUS_FILE=text.txt
+CORPUS_FILE=$2
 
 if [ ! -d "AutoPhrase" ] && [ -f "AutoPhrase.zip" ]; then
     echo "Unzipping AutoPhrase"
@@ -232,4 +232,4 @@ java $TOKENIZER -m segmentation -i $TEXT_TO_SEG -segmented tmp/tokenized_segment
 
 echo ${green}===Segmented Corpus Post-processing===${reset}
 cd ..
-python utils.py --mode 1 --dataset NEW --out_file ${CORPUS_DIR}/phrase_${DATASET}.txt
+python utils.py --mode 1 --dataset NEW --out_file ${CORPUS_DIR}/phrase_${CORPUS_FILE}

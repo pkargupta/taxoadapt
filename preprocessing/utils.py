@@ -35,7 +35,11 @@ def preprocess():
 	for doc in tqdm(docs):
 		if doc[0] == "{":
 			doc_json = json.loads(doc.strip())
-			doc = f'title : {doc_json["Title"]} ; abstract : {doc_json["Abstract"]} ; paper : {doc_json["Content"]}'
+			if 'external' in args.in_file:
+				doc = f'paper_title : {doc_json["Title"]} ; paper_abstract : {doc_json["Abstract"]}'
+			else:
+				doc = f'paper_title : {doc_json["Title"]} ; paper_abstract : {doc_json["Abstract"]} ; paper_content : {doc_json["Content"]}'
+
 		if '. References ' in doc:
 			doc = doc.split('. References ')[0]
 		doc = ''.join(filter(lambda x: x in printable, doc)).replace('\r', '')

@@ -8,7 +8,6 @@ from transformers import BertTokenizer, BertModel
 from tqdm import tqdm
 
 # map each term in text to word_id
-
 def get_vocab_idx(split_text: str, tok_lens):
 
 	vocab_idx = {}
@@ -44,7 +43,6 @@ def get_hidden_states(encoded, data_idx, model, layers, static_emb):
 
 def chunkify(text, token_lens, length=512):
 	chunks = [[]]
-	text_chunks = []
 	split_text = text.split()
 	count = 0
 	for word in split_text:
