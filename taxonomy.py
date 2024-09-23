@@ -5,8 +5,10 @@ from collections import defaultdict, deque, Counter
 import itertools
 from tqdm import tqdm
 import pickle as pk
+from nltk.corpus import stopwords
 import torch
 from model_definitions import sentence_model, bert_model, bert_tokenizer, bertEncode, chunkify, get_vocab_idx, get_hidden_states
+from utils import rank_by_discriminative_significance, weights_from_ranking, cosine_similarity_embeddings, rank_by_significance, rank_by_class_discriminative_significance
 
 class Paper:
     def __init__(self, taxo, raw_text, title, abstract, content=None, id=-1, gold=[]) -> None:
@@ -25,6 +27,55 @@ class Paper:
 
     def __repr__(self) -> str:
         return f"id: {self.id}; title: {self.title}; abstract: {self.abstract}"
+    
+
+    def rankPhrases(self, class_reprs):
+        in_vocab = list(self.vocabulary.keys())
+        phrase_reprs = np.concatenate([self.taxo.vocab['phrases'][w].reshape((-1, 768)) for w in in_vocab], axis=0)
+        ranks = rank_by_discriminative_significance(phrase_reprs, class_reprs)
+        ranked_tok = {in_vocab[idx]:rank for idx, rank in ranks.items()}
+        return ranked_tok
+    
+    def rankSentences(self, class_reprs, phrases=True):
+        if phrases:
+            ranked_phrases = self.rankPhrases(class_reprs)
+
+            sent_avg_weights = []
+            sent_reprs = []
+            for sent in self.sent_tokenize:
+                phrase_reprs = []
+                phrase_ranks = {}
+                p_id = 0
+                for phrase in sent.split():
+                    if phrase not in stopwords.words('english'):
+                        phrase_reprs.append(self.taxo.static_emb[phrase])
+                        phrase_ranks[p_id] = ranked_phrases[phrase]
+                        p_id += 1
+                
+                if len(phrase_ranks) > 0:
+                    phrase_weights = weights_from_ranking({k: v for k, v in sorted(phrase_ranks.items(), key=lambda item: item[1])})
+                    sent_avg_weights.append(np.mean(list(phrase_ranks.values())))
+
+                    # sent_reprs.append(sentence_model.encode(" ".join(sent)))
+                    sent_reprs.append(np.average(phrase_reprs, weights=phrase_weights, axis=0))
+            
+            sent_avg_ranks = {idx:rank for rank, idx in enumerate(np.argsort(sent_avg_weights))}
+        else:
+            sent_reprs = [self.taxo.vocab['sentences'][sent] for sent in self.sent_tokenize]
+            sent_avg_ranks = None
+        
+        sent_dis_ranks = rank_by_discriminative_significance(sent_reprs, class_reprs)
+        return sent_reprs, sent_avg_ranks, sent_dis_ranks
+    
+    def computePaperEmb(self, class_reprs=None, phrase=False):
+        sent_reprs, sent_avg_ranks, sent_dis_ranks = self.rankSentences(class_reprs, phrase)
+        if sent_avg_ranks is not None:
+            weights = weights_from_ranking([sent_avg_ranks, sent_dis_ranks])
+        else:
+            weights = weights_from_ranking([sent_dis_ranks])
+
+        self.emb = np.average(sent_reprs, weights=weights, axis=0)
+        return self.emb
 
 class Node:
     def __init__(self, node_id, label, description=None, level=0):
@@ -45,7 +96,7 @@ class Node:
         self.all = {"phrases": [], "sentences": [], "examples": []}
 
         # classification
-        self.emb = {}
+        self.emb = {} # 'phrase':emb, 'sentence':emb
         self.gold = {}
         self.papers = {} # id: Paper
 
@@ -54,7 +105,7 @@ class Node:
     
     def resetNode(self):
         self.external = {"phrases": [], "sentences": [], "examples": []}
-        self.internal = {"phrases": [], "sentences": [], "examples": []}
+        self.internal = {"phrases": [], "sentences": [], "examples": [], "sent_ids": []}
         self.all = {"phrases": [], "sentences": [], "examples": []}
 
         # classification
@@ -85,14 +136,16 @@ class Node:
         return None
 
     def getAllTerms(self, children=True, granularity='phrases'):
-        all_node_terms = set([self.label if granularity == 'phrases' else self.description])
-        all_node_terms.update(self.common_sense[granularity])
-        all_node_terms.update(self.external[granularity])
-        all_node_terms.update(self.internal[granularity])
+        # TODO: SET THIS BACK!!
+        # all_node_terms = [self.label if granularity == 'phrases' else self.description]
+        all_node_terms = []
+        all_node_terms.extend([w for w in self.common_sense[granularity] if w not in all_node_terms])
+        all_node_terms.extend([w for w in self.external[granularity] if w not in all_node_terms])
+        all_node_terms.extend([w for w in self.internal[granularity] if w not in all_node_terms])
 
         if children:
             for c in self.children:
-                all_node_terms.update(c.getAllTerms(children=True, granularity=granularity))
+                all_node_terms.extend(c.getAllTerms(children=True, granularity=granularity))
 
         return list(all_node_terms)
 
@@ -106,6 +159,7 @@ class Taxonomy:
     def __init__(self, data_dir):
         self.collection = []
         self.external_collection = []
+        # sentence_model embeddings
         self.vocab = {'phrases':{},
                       'sentences': {},
                       'examples': {}}
@@ -118,7 +172,7 @@ class Taxonomy:
         self.sent_tokenize = {} # paper id: [[tokenized sent_1] ... [tokenized sent_k]]
         self.phrase_tokenize = {} # paper id: [tokenized doc]
         
-        self.graph, self.id2label, self.label2id = self.createGraph(os.path.join(data_dir), 'labels_with_desc.txt')
+        self.graph, self.id2label, self.label2id = self.createGraph(os.path.join(data_dir), 'labels.txt')
         self.root = self.graph.findChild('0')
 
         self.gold_labels = []
@@ -145,9 +199,9 @@ class Taxonomy:
                 # with description
                 if len(line_info) == 3:
                     label_id, label_name, label_desc = line_info
+                    id2desc[label_id] = label_desc
 
                 id2label[label_id] = label_name
-                id2desc[label_id] = label_desc
                 label2id[label_name] = label_id
 
         # construct graph from file
@@ -317,17 +371,17 @@ class Taxonomy:
             papers.extend([l.strip() for l in fin])
 
         for paper_idx, paper in tqdm(enumerate(papers), total=len(papers)):
+            sents = paper.split(" . ")
+            phrases = [sent.split() for sent in sents]
+            self.sent_tokenize[paper_idx] = sents
+            self.phrase_tokenize[paper_idx] = phrases
+            data = paper.split()
+
             if paper_idx < len_internal:
                 self.addPapertoCollection(paper_idx, paper, external=False)
             else:
                 self.addPapertoCollection(paper_idx, paper, external=True)
 
-            sents = paper.split(" . ")
-            phrases = [sent.split() for sent in sents]
-            self.sent_tokenize[paper_idx] = sents
-            self.phrase_tokenize[paper_idx] = phrases
-
-            data = paper.split()
             for word in data:
                 self.vocab_count[word] += 1
                 if word not in self.token_lens:
@@ -365,3 +419,57 @@ class Taxonomy:
                 self.vocab[granularity][text] = sentence_model.encode(text)
             
             return self.vocab[granularity][text]
+    
+    def rankPapers(self, class_reprs, class_id, internal=True, phrase=False, top_k=20):
+        if internal:
+            paper_embs = [p.computePaperEmb(class_reprs, phrase) for p in self.collection]
+        else:
+            paper_embs = [p.computePaperEmb(class_reprs, phrase) for p in self.external_collection]
+        if len(class_reprs) == 1:
+            ranks = rank_by_significance(paper_embs, class_reprs)
+        else:
+            ranks = rank_by_class_discriminative_significance(paper_embs, class_reprs, class_id)
+        
+        sorted_ranks = sorted(ranks.items(), key=lambda x: x[1])
+        return sorted_ranks[:top_k]
+    
+    def mapPapers(self, paper_reprs, class_nodes, class_reprs):
+
+        # no. of papers x no. of classes
+        cos_sim = cosine_similarity_embeddings(paper_reprs, class_reprs)
+
+        # identify lower-bound for each class (based on bottom-most ranked paper)
+        lower_bounds = [cos_sim[-1, c_id] for c_id, c in enumerate(class_nodes)]
+
+        # for each paper, only consider the classes that are above the largest similarity gap
+        bottom_classes = np.argmax(np.diff(np.sort(cos_sim, axis=1), axis=1), axis=1) + 1
+
+        classes = np.argsort(cos_sim, axis=1)
+        class_labels = []
+        class_paper_scores = []
+        mapping = {i:[] for i in np.arange(-1, len(class_reprs))}
+        for p_id, b in enumerate(bottom_classes):
+            class_labels.append([])
+            class_paper_scores.append([])
+
+            for cls in classes[p_id][b:]:
+                # get the classes for each paper which have a sim above the lower-bound threshold
+                if cos_sim[p_id, cls] >= lower_bounds[cls]:
+                    class_labels[p_id].append(cls)
+                    class_paper_scores[p_id].append(cos_sim[p_id, cls])
+                    # class_nodes[cls].addPaper(class_nodes[0].parent.papers[p_id])
+                    # class_nodes[cls].addPaper(self.collection[p_id])
+
+                    # update paper score
+                    # class_nodes[cls].paper_scores[p_id] = cos_sim[p_id, cls]
+
+                    mapping[cls].append(p_id)
+                
+            if len(class_labels[p_id]) == 0:
+                mapping[-1].append(p_id)
+        
+        # re-sort papers
+        # for cls in class_nodes:
+        #     cls.papers = sorted(cls.papers, key=lambda x: cls.paper_scores[x.id], reverse=True)
+
+        return class_labels, class_paper_scores, mapping

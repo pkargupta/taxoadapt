@@ -1,4 +1,4 @@
-from pydantic import BaseModel, conset, StringConstraints
+from pydantic import BaseModel, conset, StringConstraints, Field
 from typing_extensions import Annotated
 
 def baseline_prompt(paper, node):
@@ -16,7 +16,9 @@ categories:
 
 init_enrich_prompt = "You are a helpful assistant that performs taxonomy enrichment using realistic specific keywords and sentences that would be used in NLP research papers. These realistic keywords and sentences will be used to identify papers research papers which discuss a specific taxonomy node."
 
-bulk_enrich_prompt = lambda dict_str: f'''I am providing you a JSON which contains a taxonomy detailing concepts for "using llms on graphs" in NLP research papers. Each JSON key within the "children" dictionary represents a taxonomy concept node. Can you fill in the "example_key_phrases" and "example_sentences" fields for each concept node (enrichment of both the root node and its children/descendants) that contains these fields? The required fields are already present for you, so you do not need to create any new keys for concepts without them. Here are the instructions for each field under concept A:
+init_classify_prompt = "You are a helpful assistant that identifies the class labels for the provided NLP research paper, performing multi-label classification."
+
+bulk_enrich_prompt = lambda dict_str: f'''I am providing you a JSON which contains a taxonomy detailing concepts for NLP research papers. Each JSON key within the "children" dictionary represents a taxonomy concept node. Can you fill in the "example_key_phrases" and "example_sentences" fields for each concept node (enrichment of both the root node and its children/descendants) that contains these fields? The required fields are already present for you, so you do not need to create any new keys for concepts without them. Here are the instructions for each field under concept A:
 
 1. "example_key_phrases": This is a list (Python-formatted) of 20 key phrases (e.g., SUBTOPICS of the given concept node A) commonly used amongst NLP research papers that EXCLUSIVELY DISCUSS that concept node (concept A's key phrases/subtopics should be highly relevant to its concept A's parent concept, and NOT OR RARELY be mentioned in ANY of its SIBLING concepts B; A and B share the same parent concept). All added key phrases/subtopics should be 1-3 words, lowercase, and have spaces replaced with underscores (e.g., "key_phrase"). Each key phrase should be unique.
 2. "example_sentences": This is a list (Python-formatted) of 10 key sentences that could be used to discuss the concept node A within an NLP research paper. These key sentences should be SPECIFIC, not generic, to Concept A (also relevant to its parents or ancestors), and unable to be used to describe any other sibling concepts. Utilize your knowledge of the concept node A (including the provided corresponding 'description' of node A and its ancestors/parent node) to form your example sentences.
@@ -35,15 +37,16 @@ output_taxo:
 ---
 '''
 
-main_enrich_prompt = lambda node, dict_str: f'''I am providing you a JSON which contains a taxonomy detailing concepts for "using llms on graphs" in NLP research papers (tag 'input_taxo'). Each JSON key within the "children" dictionary represents a taxonomy concept node. Can you fill in the "example_key_phrases" and "example_sentences" fields for the specified node (tag 'node_to_enrich')? A research paper relevant to 'node_to_enrich' will be relevant to all concept nodes present in the taxonomy path to the node, 'node_to_enrich', as listed in 'path_to_node'. Here are your instructions on how to enrich the fields for node, 'node_to_enrich':
+main_enrich_prompt = lambda node, sibs, dict_str: f'''I am providing you a JSON which contains a taxonomy detailing concepts in NLP research papers (tag 'input_taxo'). Each JSON key within the "children" dictionary represents a taxonomy concept node. Can you fill in the "example_key_phrases" and "example_sentences" fields for the specified node (tag 'node_to_enrich')? A research paper relevant to 'node_to_enrich' will be relevant to all concept nodes present in the taxonomy path to the node, 'node_to_enrich', as listed in 'path_to_node'. Here are your instructions on how to enrich the fields for node, 'node_to_enrich':
 
-1. "example_key_phrases": This is a list (Python-formatted) of 20 key, realistic phrases (e.g., SUBTOPICS of the given 'node_to_enrich') commonly written within NLP research papers that EXCLUSIVELY DISCUSS 'node_to_enrich' ('node_to_enrich's key phrases/subtopics should be highly relevant to all of 'node_to_enrich's ancestors listed in 'path_to_node', and NOT be relevant to ANY other non-ancestor or descendants of 'node_to_enrich'). All added key phrases/subtopics should be 1-3 words, lowercase, and have spaces replaced with underscores (e.g., "key_phrase"). Each key phrase should be unique.
-2. "example_sentences": This is a list (Python-formatted) of 10 key, realistic sentences that could be written in an NLP research paper to discuss 'node_to_enrich'. These key sentences should be SPECIFIC, not generic, to 'node_to_enrich' (also relevant to its parents or ancestors), and unable to be used to describe any other sibling concepts. Utilize your knowledge of the 'node_to_enrich' (including the provided corresponding 'description' of node A and its ancestors/parent node) to form your example sentences.
+1. "example_key_phrases": This is a list (Python-formatted) of 20 key, realistic phrases (e.g., SUBTOPICS of the given 'node_to_enrich') commonly written within NLP research papers that EXCLUSIVELY DISCUSS 'node_to_enrich'. 'node_to_enrich's key phrases/subtopics should be highly relevant to all of 'node_to_enrich's ancestors listed in 'path_to_node', and NOT be relevant to ANY other non-ancestor or siblings of 'node_to_enrich' (siblings of 'node_to_enrich' are specified in tag 'siblings' below). All added key phrases/subtopics should be 1-3 words, lowercase, and have spaces replaced with underscores (e.g., "key_phrase"). Each key phrase should be unique.
+2. "example_sentences": This is a list (Python-formatted) of 10 key, realistic sentences that could be written in an NLP research paper to discuss 'node_to_enrich'. These key sentences should be SPECIFIC, not generic, to 'node_to_enrich' (also relevant to its parents or ancestors), and unable to be used to describe any other sibling concepts (tag 'siblings'). Utilize your knowledge of the 'node_to_enrich' (including the provided corresponding 'description' of node A and its ancestors/parent node) to form your example sentences.
 
 ---
 node_to_enrich: {node.label}
 node_to_enrich_id: {node.node_id}
 path_to_node: {'->'.join(node.path)}
+siblings: {sibs}
 input_taxo:
 {dict_str}
 ---
@@ -55,9 +58,30 @@ Your output format should be in the following JSON format (where node_to_enrich,
 {{
     "node_to_enrich: "{node.label}"
     "id": "{node.node_id}",
-    "description": "{node.description}",
-    "example_key_phrases": <list of strings where values are realistic and relevant key phrases/subtopics>,
-    "example_sentences": <list of strings where values are sentences>
+    "description": "{node.description if node.description else '<string where value is a 1-sentence description of node_to_enrich based on its path, path_to_node>'}",
+    "example_key_phrases": <list of 20 diverse strings where values are realistic and relevant key phrases/subtopics to 'node_to_enrich' and DISSIMILAR to any 'siblings'>,
+    "example_sentences": <list of 10 diverse strings where values are sentences used in papers about 'node_to_enrich' and DISSIMILAR to any 'siblings'>
+}}
+---
+'''
+
+main_classify_prompt = lambda node, paper: f'''Given the 'title', 'abstract', and 'content' (provided below) of an NLP research paper that uses large language models for graphs, select the class labels (tag 'class_options') that should be assigned to this paper (multi-label classification). If the research paper SHOULD NOT be labeled with any of the classes in 'class_options', then output an empty list. We provide additional descriptions (tag 'class_descriptions') for each class option for your reference.
+
+---
+paper_id: {paper.id}
+title: {paper.title}
+abstract: {paper.abstract}
+content: {paper.content[:10000]}
+class_options (class id: class label name): {"; ".join([f"{c.node_id}: {c.label}" for c in node.children])}
+class_descriptions: {"; ".join([f"{c.label}: {c.description}" for c in node.children])}
+---
+
+Your output format should be in the following JSON format:
+---
+{{
+    paper_id: {paper.id}
+    class_options: {[c.node_id for c in node.children]}
+    class_labels: <list of ints where values are the class ids (options provided above in 'class_options') that the paper should be labeled with>
 }}
 ---
 '''
@@ -96,11 +120,15 @@ class CommonSenseSchema(BaseModel):
     node_to_enrich: Annotated[str, StringConstraints(strip_whitespace=True)]
     id: Annotated[str, StringConstraints(strip_whitespace=True)]
     description: Annotated[str, StringConstraints(strip_whitespace=True)]
-    example_key_phrases: conset(str, min_length=5)
-    example_sentences: conset(str, min_length=5)
+    example_key_phrases: conset(str, min_length=20, max_length=50)
+    example_sentences: conset(str, min_length=10, max_length=50)
     # example_paper_titles: conset(str, min_length=5)
     # example_paper_abstracts: conset(str, min_length=5)
 
+class ClassifySchema(BaseModel):
+    paper_id: Annotated[int, Field(strict=True, gt=-1)]
+    class_options: conset(int, min_length=1, max_length=100)
+    class_labels: conset(int, min_length=0, max_length=10)
 
 str_schema = {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
