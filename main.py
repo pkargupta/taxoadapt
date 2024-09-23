@@ -11,7 +11,7 @@ import argparse
 from scipy import stats
 from itertools import compress
 from taxonomy import Node, Taxonomy
-from model_definitions import sentence_model, promptLlamaVLLM, constructPrompt
+from model_definitions import sentence_model, promptLlamaVLLM, constructPrompt, promptLlamaSamba, promptGPT
 from utils import *
 from prompts import *
 
@@ -23,18 +23,20 @@ def commonSenseEnrich(root_node, dict_str, batch=True):
     queue = deque([root_node])
     while queue:
         current_node = queue.popleft()
-
-        prompts.append(constructPrompt(init_enrich_prompt, main_enrich_prompt(current_node, dict_str)))
+        sibs = [i.label for i in current_node.parents[0].children if i != current_node]
+        prompts.append(constructPrompt(init_enrich_prompt, main_enrich_prompt(current_node, sibs, dict_str), api=False))
 
         for child in current_node.children:
             queue.append(child)
 
-    output = promptLlamaVLLM(prompts, schema=CommonSenseSchema, max_new_tokens=7000)
-
-    if batch:
-        output_dict = [json.loads(clean_json_string(c)) if "```json" in c else json.loads(c.strip()) for c in output]
-    else:
-        output_dict = [json.loads(clean_json_string(output) if "```json" in output else output.strip())]
+    output = promptLlamaVLLM(prompts, schema=CommonSenseSchema, max_new_tokens=2000)
+    try:
+        if batch:
+            output_dict = [json.loads(clean_json_string(c)) if "```json" in c else json.loads(c.strip()) for c in output]
+        else:
+            output_dict = [json.loads(clean_json_string(output) if "```json" in output else output.strip())]
+    except:
+        return prompts, output, None, None
 
     ## merging all dictionaries
     print("merging all enrichment dictionaries...")
@@ -48,21 +50,77 @@ def commonSenseEnrich(root_node, dict_str, batch=True):
         current_node = root_node.findChild(c['id'])
         if current_node is not None:
             common_sense_phrases.extend(c['example_key_phrases'])
+            common_sense_sentences.append(c['description'])
             common_sense_sentences.extend(c['example_sentences'])
-            updateEnrichment(current_node, c['example_key_phrases'], c['example_sentences'])
+            updateEnrichment(current_node, c['example_key_phrases'], c['example_sentences'], c['description'])
 
-    return prompts, output, list(set(common_sense_phrases)), list(set(common_sense_sentences)) 
+    return prompts, output_dict, list(set(common_sense_phrases)), list(set(common_sense_sentences))
+
+def classAnnotate(root_node, papers, batch=True):
+    # phrase and sentence-level enrichment
+
+    # construct prompts for each node
+    prompts = []
+    queue = deque([root_node])
+    while queue:
+        current_node = queue.popleft()
+
+        if len(current_node.children) > 0:
+            for paper in papers:
+                prompts.append(constructPrompt(init_classify_prompt, main_classify_prompt(current_node, paper)))
+
+            for child in current_node.children:
+                queue.append(child)
+
+    output = promptLlamaVLLM(prompts, schema=ClassifySchema, max_new_tokens=5000)
+    try:
+        if batch:
+            output_dict = [json.loads(clean_json_string(c)) if "```json" in c else json.loads(c.strip()) for c in output]
+        else:
+            output_dict = [json.loads(clean_json_string(output) if "```json" in output else output.strip())]
+        
+        return prompts, output, output_dict
+    except:
+        return prompts, output, None
+    
+
+def rankPhrases(phrase_pool, curr_node, taxo, use_class_emb=False, granularity='phrases', out_phrases=False):
+    if use_class_emb:
+        embs, sim_diff, keep_phrase = compareClassesEmbs(phrase_pool, taxo, curr_node, granularity)
+    else:
+        embs, sim_diff, keep_phrase = compareClasses(phrase_pool, taxo, curr_node, granularity)
+    
+    filtered_embs = embs[keep_phrase, :]
+    filtered_class_phrases = list(compress(phrase_pool, keep_phrase))
+    filtered_diffs = sim_diff[keep_phrase]
+
+    # print(f'{curr_node.label}: {len(class_phrases) - len(filtered_class_phrases)} {granularity} filtered!')
+    
+    phrase2emb = {p:e for p, e in zip(filtered_class_phrases, filtered_embs)}
+
+    ranks = {i: r for r, i in enumerate(np.argsort(-np.array(filtered_diffs)))}
+    ranked_tok = {filtered_class_phrases[idx]:rank for idx, rank in ranks.items()}
+    ranked_phrases = list(ranked_tok.keys())
+    curr_node.all[granularity] = ranked_phrases
+    
+    class_emb = average_with_harmonic_series(np.array([phrase2emb[p] for p in ranked_phrases]))
+    # curr_node.emb[granularity] = class_emb
+
+    if out_phrases:
+        return ranked_phrases, class_emb
+    else:
+        return class_emb
 
 def computeClassEmb(curr_node, taxo, class_emb=False, granularity='phrases', out_phrases=False):
     if granularity == 'mixed':
         class_phrases = curr_node.getAllTerms(granularity='phrases') + curr_node.getAllTerms(granularity='sentences')
     else:
-        class_phrases = curr_node.getAllTerms(granularity=granularity)
+        class_phrases = curr_node.getAllTerms(children=False, granularity=granularity)
     
     # class_phrases = [curr_node.label] if granularity == 'phrases' else [curr_node.description]
     
     if class_emb:
-        embs, sim_diff, keep_phrase = compareClassesEmbs(class_phrases, taxo, curr_node, granularity)
+        embs, sim_diff, keep_phrase = compareClassesEmbs(class_phrases, taxo, curr_node, granularity, parent_weight=0.2)
     else:
         embs, sim_diff, keep_phrase = compareClasses(class_phrases, taxo, curr_node, granularity)
     
@@ -79,7 +137,7 @@ def computeClassEmb(curr_node, taxo, class_emb=False, granularity='phrases', out
     ranked_phrases = list(ranked_tok.keys())
     curr_node.all[granularity] = ranked_phrases
     
-    class_emb = average_with_harmonic_series([phrase2emb[p] for p in ranked_phrases])
+    class_emb = average_with_harmonic_series(np.array([phrase2emb[p] for p in ranked_phrases]))
     curr_node.emb[granularity] = class_emb
 
     if out_phrases:
