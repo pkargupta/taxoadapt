@@ -14,7 +14,7 @@ categories:
 {cats}
 '''
 
-init_enrich_prompt = "You are a helpful assistant that performs taxonomy enrichment using realistic specific keywords and sentences that would be used in NLP research papers. These realistic keywords and sentences will be used to identify papers research papers which discuss a specific taxonomy node."
+init_enrich_prompt = "You are a helpful assistant that performs taxonomy enrichment using realistic specific keywords and sentences that would be used in NLP research papers. These realistic keywords and sentences will be used to identify research papers which discuss a specific taxonomy node."
 
 init_classify_prompt = "You are a helpful assistant that identifies the class labels for the provided NLP research paper, performing multi-label classification."
 
@@ -37,7 +37,36 @@ output_taxo:
 ---
 '''
 
-main_enrich_prompt = lambda node, sibs, dict_str: f'''I am providing you a JSON which contains a taxonomy detailing concepts in NLP research papers (tag 'input_taxo'). Each JSON key within the "children" dictionary represents a taxonomy concept node. Can you fill in the "example_key_phrases" and "example_sentences" fields for the specified node (tag 'node_to_enrich')? A research paper relevant to 'node_to_enrich' will be relevant to all concept nodes present in the taxonomy path to the node, 'node_to_enrich', as listed in 'path_to_node'. Here are your instructions on how to enrich the fields for node, 'node_to_enrich':
+one_shot = f'''
+Example Input:
+Here is an example output for the topic, 'multi_agent_reinforcement_learning', a subtopic of topic 'reinforcement learning'. The terms are irrelevant to the sibling subtopics, 'hierarchical_reinforcement_learning' and 'meta_reinforcement_learning'.
+
+Example Output:
+{{
+    "node_to_enrich: "multi_agent_reinforcement_learning",
+    "description": "Strategies for reinforcement learning where multiple agents interact within the same environment, learning to collaborate or compete.",
+    "example_key_phrases": ["cooperative_learning", "competitive_learning", "nash_equilibrium", "joint_policy_learning", "decentralized_control", "communication_protocols", "agent_modeling", "self_play", "multi_agent_coordination", "teamwork", "reward_allocation", "multi_agent_credit_assignment", "partially_observable_joint_policy", "equilibrium_dynamics", "multi_agent_exploration", "adversarial_agents", "learning_with_sparse_rewards", "role_assignment", "emergent_behavior", "heterogeneous_agent_interaction"],
+    "example_sentences": ["in multi_agent_reinforcement_learning, agents must adapt to dynamic environments by leveraging decentralized_control strategies, ensuring robustness in the absence of centralized oversight.", "cooperative_learning allows agents to share information efficiently, optimizing joint_policy_learning to achieve a shared goal within multi_agent_coordination frameworks.", "competitive_learning agents often employ adversarial_agents techniques, balancing self-play with learning_with_sparse_rewards to improve their strategies over time.", "achieving nash_equilibrium in multi_agent interactions can help stabilize the learning process, especially when heterogeneous_agent_interaction is present.", "communication_protocols are essential in ensuring seamless information flow, particularly when reward_allocation is based on shared global goals.", "multi_agent_credit_assignment remains a challenge, as agents must determine their contribution to the overall task without centralized feedback.", "emergent_behavior can arise in complex systems where role_assignment evolves dynamically during cooperative and competitive tasks.", "agent_modeling plays a crucial role in predicting the actions of other agents, especially when equilibrium_dynamics shift as policies evolve.", "agents operating in partially_observable_joint_policy environments must rely on incomplete information, making learning robust communication_protocols essential.", "in multi_agent_exploration scenarios, agents must balance the need to gather new information with the exploitation of current knowledge to improve coordination."]
+}}
+'''
+
+parent_prompt = lambda taxo, node: f" and is the subtopic of topics: [{', '.join(taxo.get_par(node.node_id, node=False))}]" if node.parents[0].node_id != -1 else ""
+
+main_simple_enrich_prompt = lambda taxo, node, sibs: f'''"{node.label}" is a topic in Natural Language Processing (NLP){parent_prompt(taxo, node)}. Please generate 20 realistic key terms and sentences about the '{node.label}' topic that are relevant to '{node.label}' but irrelevant to the topics: {sibs}. The terms should be short (1-3 words), concise, and distinctive to {node.label}. The sentences should have specific details and resemble realistic sentences found in NLP research papers.
+
+Your output format should be in the following JSON format (where node_to_enrich, id and description for {node.label} should match their respective values in the input taxonomy 'input_taxo' aka COPIED OVER FROM input_taxo):
+---
+{{
+    "node_to_enrich: "{node.label}"
+    "id": "{node.node_id}",
+    "description": "{node.description if node.description else '<string where value is a 1-sentence description of node_to_enrich>'}",
+    "example_key_phrases": <list of 20 diverse, short terms where values are realistic and relevant to '{node.label}' and DISSIMILAR to any of the following: '{sibs}'>,
+    "example_sentences": <list of 10 diverse sentences where values are sentences used in papers about '{node.label}' and DISSIMILAR to any of the following: '{sibs}'>
+}}
+---
+'''
+
+main_long_enrich_prompt = lambda node, sibs, dict_str: f'''I am providing you a JSON which contains a taxonomy detailing concepts in NLP research papers (tag 'input_taxo'). Each JSON key within the "children" dictionary represents a taxonomy concept node. Can you fill in the "example_key_phrases" and "example_sentences" fields for the specified node (tag 'node_to_enrich')? A research paper relevant to 'node_to_enrich' will be relevant to all concept nodes present in the taxonomy path to the node, 'node_to_enrich', as listed in 'path_to_node'. Here are your instructions on how to enrich the fields for node, 'node_to_enrich':
 
 1. "example_key_phrases": This is a list (Python-formatted) of 20 key, realistic phrases (e.g., SUBTOPICS of the given 'node_to_enrich') commonly written within NLP research papers that EXCLUSIVELY DISCUSS 'node_to_enrich'. 'node_to_enrich's key phrases/subtopics should be highly relevant to all of 'node_to_enrich's ancestors listed in 'path_to_node', and NOT be relevant to ANY other non-ancestor or siblings of 'node_to_enrich' (siblings of 'node_to_enrich' are specified in tag 'siblings' below). All added key phrases/subtopics should be 1-3 words, lowercase, and have spaces replaced with underscores (e.g., "key_phrase"). Each key phrase should be unique.
 2. "example_sentences": This is a list (Python-formatted) of 10 key, realistic sentences that could be written in an NLP research paper to discuss 'node_to_enrich'. These key sentences should be SPECIFIC, not generic, to 'node_to_enrich' (also relevant to its parents or ancestors), and unable to be used to describe any other sibling concepts (tag 'siblings'). Utilize your knowledge of the 'node_to_enrich' (including the provided corresponding 'description' of node A and its ancestors/parent node) to form your example sentences.

@@ -15,21 +15,24 @@ from model_definitions import sentence_model, promptLlamaVLLM, constructPrompt, 
 from utils import *
 from prompts import *
 
-def commonSenseEnrich(root_node, dict_str, batch=True):
+def commonSenseEnrich(taxo, dict_str, batch=True):
+    root_node = taxo.root
     # phrase and sentence-level enrichment
 
     # construct prompts for each node
     prompts = []
+    nodes = []
     queue = deque([root_node])
     while queue:
         current_node = queue.popleft()
+        nodes.append(current_node)
         sibs = [i.label for i in current_node.parents[0].children if i != current_node]
-        prompts.append(constructPrompt(init_enrich_prompt, main_enrich_prompt(current_node, sibs, dict_str), api=False))
+        prompts.append(constructPrompt(init_enrich_prompt, main_simple_enrich_prompt(taxo, current_node, sibs), api=True))
 
         for child in current_node.children:
             queue.append(child)
 
-    output = promptLlamaVLLM(prompts, schema=CommonSenseSchema, max_new_tokens=2000)
+    output = promptGPT(prompts, schema=CommonSenseSchema, max_new_tokens=2000)
     try:
         if batch:
             output_dict = [json.loads(clean_json_string(c)) if "```json" in c else json.loads(c.strip()) for c in output]
@@ -44,10 +47,11 @@ def commonSenseEnrich(root_node, dict_str, batch=True):
     common_sense_phrases = []
     common_sense_sentences = []
 
-    for c in tqdm(output_dict):
+    for idx, c in tqdm(enumerate(output_dict), total=len(output_dict)):
         c['example_key_phrases'] = [p.lower().replace(' ', '_') for p in c['example_key_phrases']]
 
-        current_node = root_node.findChild(c['id'])
+        current_node = nodes[idx]
+
         if current_node is not None:
             common_sense_phrases.extend(c['example_key_phrases'])
             common_sense_sentences.append(c['description'])
@@ -152,22 +156,24 @@ def main(args):
     print("########### CONSTRUCTING GRAPH & COMMON-SENSE ENRICHMENT ###########")
 
     # create taxonomy from input
-    root, id2label, label2id = createGraph(os.path.join(args.data_dir), 'labels_with_desc.txt')
-
-    taxo = Taxonomy(root)
+    taxo = Taxonomy(args.data_dir)
 
     taxo_dict = taxo.toDict(cur_node=taxo.root)
     with open(f'datasets/{args.dataset}/initial.json', 'w') as fp:
         json.dump(taxo_dict, fp, indent=4)
-    
     dict_str = json.dumps(taxo_dict, indent=4)
 
     # first do common sense phrase, sentence enrichment on taxonomy nodes
     enrich_start = time.time()
-    all_common_phrases = commonSenseEnrich(taxo.root, dict_str, True)
+    prompts, outputs, all_common_phrases, all_common_sentences = commonSenseEnrich(taxo.root, dict_str, True)
     enrich_end = time.time()
-    print(f"Time taken: {enrich_end - enrich_start} seconds ({(enrich_end - enrich_start)/60} minutes)")
 
+    if all_common_phrases:
+        # update vocabulary/embeddings
+        taxo.updateVocab(all_common_phrases, 'phrases')
+        taxo.updateVocab(all_common_sentences, 'sentences')
+        print(f"Time taken: {enrich_end - enrich_start} seconds ({(enrich_end - enrich_start)/60} minutes)")
+    
     updated_dict = taxo.toDict(cur_node=taxo.root)
     with open(f'datasets/{args.dataset}/enriched.json', 'w') as fp:
         json.dump(updated_dict, fp, indent=4)
@@ -176,12 +182,12 @@ def main(args):
     print("########### PRE-PROCESSING BOTH CORPORA ###########")
 
     # add common-sense phrases to AutoPhrase
-    with open("preprocessing/AutoPhrase/data/EN/wiki_quality_orig.txt", "r") as f:
-        all_phrases = [w.strip() for w in f.readlines()]
-        for a in all_common_phrases:
+    with open("preprocessing/AutoPhrase/data/EN/wiki_quality_orig.txt", "r", encoding='utf-8') as f:
+        all_phrases = [w.strip() for w in f.readlines() if " " in w.strip()]
+        for a in list(taxo.label2id.keys()) + all_common_phrases:
             all_phrases.append(a.strip().replace("_", " "))
 
-    with open("preprocessing/AutoPhrase/data/EN/wiki_quality.txt", "w") as f:
+    with open("preprocessing/AutoPhrase/data/EN/wiki_quality.txt", "w", encoding='utf-8') as f:
         for w_id, w in enumerate(all_phrases):
             if w_id == (len(all_phrases) - 1):
                 f.write(f"{w}")
@@ -195,67 +201,63 @@ def main(args):
         subprocess.check_call(['./auto_phrase.sh', args.dataset, args.internal])
         subprocess.check_call(['./auto_phrase.sh', args.dataset, args.external])
         os.chdir("../")
-
     else:
         print("already pre-processed!")
 
 
-    collection = taxo.createCollection(os.path.join(args.data_dir, "phrase_" + args.internal), os.path.join(args.data_dir, args.groundtruth), external=False)
-    external_collection = taxo.createCollection(os.path.join(args.data_dir, "phrase_" + args.external), external=True)
-
+    collection, external_collection = taxo.createCollections(args)
 
 
     print("########### EXTERNAL + INTERNAL ENRICHMENT ###########")
 
-    target_node = taxo.root
+    print("encoding sentences...")
+    external_sentences = list(set([sentence for paper in external_collection for sentence in paper.sent_tokenize]))
+    internal_sentences = list(set([sentence for paper in collection for sentence in paper.sent_tokenize]))
+    taxo.updateVocab(external_sentences + internal_sentences, 'sentences')
+    # sent2emb = {sent:idx for idx, sent in enumerate(external_sentences)}
+    # external_sent_emb = {idx:emb for idx, emb in  enumerate(sentence_model.encode(external_sentences))}
+
+    print("encoding phrases...")
+    external_phrases = list(set([phrase for paper in external_collection for sentence in paper.phrase_tokenize for phrase in sentence]))
+    internal_phrases = list(set([phrase for paper in collection for sentence in paper.phrase_tokenize for phrase in sentence]))
+    taxo.updateVocab(external_phrases + internal_phrases, 'phrases')
+
+    taxo.graph.external['phrases'] = external_phrases
+    taxo.graph.external['sentences'] = external_sentences
+    taxo.graph.internal['phrases'] = internal_phrases
+    taxo.graph.internal['sentences'] = internal_sentences
+
+    print("external term enrichment...")
+    phrase_pool = external_phrases
+    pool_emb = np.array([taxo.vocab['phrases'][w] for w in phrase_pool])
+
+    node_external_phrase_ranks, gt, preds = expandDiscriminative(taxo, phrase_pool, pool_emb, internal=False)
+    f1_scores(gt, preds)
+
+    print("internal term enrichment...")
+    term_to_idx, td_matrix, co_matrix = constructTermDocMatrix(taxo, collection + external_collection)
+    co_avg = np.true_divide(co_matrix.sum(),(co_matrix!=0).sum())
+
+    phrase_pool = internal_phrases
+    pool_emb = np.array([taxo.vocab['phrases'][w] for w in phrase_pool])
+    bm_score = computeBM25Cog(co_matrix, co_avg, k=1.2, b=2)
+
+    node_internal_phrase_ranks, gt, preds = expandInternal(taxo, phrase_pool, pool_emb, term_to_idx, bm_score)
+    f1_scores(gt, preds)
+
+    print("internal sentence enrichment...")
+    expandSentences(taxo, term_to_idx, bm_score)
+
+    print("classification...")
+    # constructing class embeddings
+    class_embs = []
+    for node_id in tqdm(taxo.id2label):
+        curr_node = taxo.root.findChild(node_id)
+        curr_node.emb['sentence'] = average_with_harmonic_series(np.stack([taxo.vocab['sentences'][w] 
+                                        for w in curr_node.getAllTerms(granularity='sentences', children=True)], axis=0), axis=0)
+        class_embs.append(curr_node.emb['sentence'])
     
-    class_ids = [child.node_id for child in target_node.children]
-    phrase_class_embs = [computeClassEmb(curr_node, taxo, granularity='phrases') for curr_node in target_node.children]
-    sent_class_embs = [computeClassEmb(curr_node, taxo, granularity='sentences') for curr_node in target_node.children]
-    joint_class_embs = [(p+s)/2 for p, s in zip(phrase_class_embs, sent_class_embs)]
 
-    labels = []
-    scores = []
-    class_map = {i:[] for i in class_ids}
-
-    for p_id, p in tqdm(target_node.papers.items(), total=len(target_node.papers)):
-        phrase_diff = cosine_similarity_embeddings([sentence_model.encode(p.title)], phrase_class_embs).reshape((-1))
-        sent_diff = cosine_similarity_embeddings([sentence_model.encode(p.title)], sent_class_embs).reshape((-1))
-        joint_diff = cosine_similarity_embeddings([sentence_model.encode(p.title)], joint_class_embs).reshape((-1))
-
-        phrase_winner = phrase_diff.argmax()
-        sent_winner = sent_diff.argmax()
-        joint_winner = joint_diff.argmax()
-
-        winner_idx = stats.mode([phrase_winner, sent_winner, joint_winner], keepdims=False)[0]
-        winner = class_ids[winner_idx]
-
-        class_map[winner].append(p)
-        target_node.children[winner_idx].papers[p_id] = p
-        
-        labels.append(winner)
-        scores.append(winner in p.gold)
-
-    print(sum(scores)/len(scores))
-    # we start with first level (titles and abstract)
-
-    # if not os.path.exists(f"SeeTopic/{args.dataset}"):
-    #     os.makedirs(f"SeeTopic/{args.dataset}")
-
-    # with open(f"SeeTopic/{args.dataset}/{args.dataset}.txt", "w") as f:
-    #     for p in taxo.external_collection:
-    #         f.write(f"paper_title : {p.title} ; paper_abstract : {p.abstract}\n")
-    
-    # children_with_terms = taxo.root.getChildren(terms=True)
-
-    # with open(f"SeeTopic/{args.dataset}/keywords_0.txt", "w") as f:
-    #     for idx, c in enumerate(children_with_terms):
-    #         str_c = ",".join(c[1])
-    #         f.write(f"{idx}:{c[0]},{str_c}\n")
-    
-    # os.chdir("./SeeTopic")
-    # subprocess.check_call(['./seetopic.sh', args.dataset, str(args.iters), args.model])
-    # os.chdir("../")
 
 
 

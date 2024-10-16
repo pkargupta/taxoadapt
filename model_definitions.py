@@ -16,7 +16,7 @@ from keys import openai_key, samba_api_key
 #     base_url="https://api.sambanova.ai/v1",
 # )
 
-os.environ["CUDA_VISIBLE_DEVICES"]="6,7"
+os.environ["CUDA_VISIBLE_DEVICES"]="3,4,5"
 os.environ['HF_HOME'] = '/shared/data3/pk36/.cache'
 
 # llama_8b_model = pipeline("text-generation", 
@@ -24,12 +24,13 @@ os.environ['HF_HOME'] = '/shared/data3/pk36/.cache'
 #                     model_kwargs={"torch_dtype": torch.bfloat16},
 #                     device_map='auto')
 
-llama_8b_model = LLM(model="meta-llama/Meta-Llama-3.1-8B-Instruct", tensor_parallel_size=1, gpu_memory_utilization=0.7, max_num_seqs=100)
+# llama_8b_model = LLM(model="meta-llama/Meta-Llama-3.1-8B-Instruct", tensor_parallel_size=1, gpu_memory_utilization=0.75, max_num_seqs=100)
 sentence_model = SentenceTransformer('allenai-specter', device='cuda')
 
-# client = OpenAI(api_key=openai_key)
+client = OpenAI(api_key=openai_key)
 
-bert_model_name = "/home/pk36/Comparative-Summarization/bert_full_ft/checkpoint-8346/"
+# bert_model_name = "/home/pk36/Comparative-Summarization/bert_full_ft/checkpoint-8346/"
+bert_model_name = "bert-base-uncased"
 bert_tokenizer = BertTokenizer.from_pretrained(bert_model_name)
 device = torch.device("cuda")
 bert_model = BertModel.from_pretrained(bert_model_name, output_hidden_states=True, device_map='auto')#.to(device)
@@ -140,23 +141,28 @@ def promptLlama(prompts, max_new_tokens=1024):
 
     return message
 
-def promptGPT(prompts, schema=None, max_new_tokens=1024):
+def promptGPT(prompts, schema=None, max_new_tokens=1024, json_mode=True):
 	outputs = []
 	for messages in tqdm(prompts):
-		response = client.chat.completions.create(model='gpt-3.5-turbo-0125', stream=False, messages=messages, 
-											response_format={"type": "json_object"}, temperature=0.2, 
-											max_tokens=max_new_tokens)
+		if json_mode:
+			response = client.chat.completions.create(model='gpt-3.5-turbo-0125', stream=False, messages=messages, 
+												response_format={"type": "json_object"}, temperature=0, top_p=0.99, 
+												max_tokens=max_new_tokens)
+		else:
+			response = client.chat.completions.create(model='gpt-3.5-turbo-0125', stream=False, messages=messages, 
+											 temperature=0, top_p=0.99,
+											 max_tokens=max_new_tokens)
 		outputs.append(response.choices[0].message.content)
 	return outputs
 
 def promptLlamaVLLM(prompts, schema=None, max_new_tokens=1024):
     if schema is None:
-        sampling_params = SamplingParams(temperature=0.1, top_p=0.99, max_tokens=max_new_tokens)
+        sampling_params = SamplingParams(temperature=0.1, top_p=1, max_tokens=max_new_tokens)
     else:
         logits_processor = JSONLogitsProcessor(schema=schema, llm=llama_8b_model.llm_engine)
         # logits_processor.fsm.vocabulary = list(logits_processor.fsm.vocabulary)
-        sampling_params = SamplingParams(temperature=0.1, top_p=0.99, max_tokens=max_new_tokens, 
-                                    logits_processors=[logits_processor], repetition_penalty=1.1)
+        sampling_params = SamplingParams(temperature=0.1, top_p=1, max_tokens=max_new_tokens, 
+                                    logits_processors=[logits_processor])
     generations = llama_8b_model.generate(prompts, sampling_params)
     
     outputs = []

@@ -1,4 +1,5 @@
 import re
+import math
 import os
 import numpy as np
 from tqdm import tqdm
@@ -6,6 +7,7 @@ import itertools
 import torch
 from model_definitions import sentence_model
 from sklearn.metrics import f1_score
+from collections import deque
 from sklearn.preprocessing import MultiLabelBinarizer
 
 
@@ -96,6 +98,8 @@ def expandDiscriminative(taxo, text, embs, thresh=0, min_freq=3, percentile=99.9
 
     node_text_ranks = []
 
+    terms_to_add = {node_id:[] for node_id in np.arange(0, len(taxo.label2id))}
+
     for node_id in tqdm(np.arange(0, len(taxo.label2id))):
         focus_node = taxo.root.findChild(str(node_id))
         sibling_nodes = taxo.get_sib(focus_node.node_id, granularity='emb')
@@ -123,11 +127,7 @@ def expandDiscriminative(taxo, text, embs, thresh=0, min_freq=3, percentile=99.9
             if (taxo.vocab_count[text[idx]] >= min_freq if granularity == 'phrases' else True) and (avg_text_sim[idx] >= percentile_sim) and (avg_text_sim[idx] > avg_sib_sim[idx]):
                 text_ranks[rank] = (text[idx], avg_text_sim[idx])
                 focus_text.append(text[idx])
-                if internal != -1:
-                    if internal:
-                        focus_node.internal[granularity].append(text[idx])
-                    else:
-                        focus_node.external[granularity].append(text[idx])
+                terms_to_add[node_id].append(text[idx])
         
         node_text_ranks.append(text_ranks)
 
@@ -136,6 +136,14 @@ def expandDiscriminative(taxo, text, embs, thresh=0, min_freq=3, percentile=99.9
             for doc_id, doc_count in external_focus_ranks.items():
                 if doc_count > thresh:
                     paper_preds[doc_id].add(str(node_id))
+    
+    if internal != -1:
+        for node_id in tqdm(np.arange(0, len(taxo.label2id))):
+            focus_node = taxo.root.findChild(str(node_id))
+            if internal:
+                focus_node.internal[granularity].extend(terms_to_add[node_id])
+            else:
+                focus_node.external[granularity].extend(terms_to_add[node_id])
 
     if classify:
         gt = [p.gold for p in taxo.collection]
@@ -144,16 +152,22 @@ def expandDiscriminative(taxo, text, embs, thresh=0, min_freq=3, percentile=99.9
     
     return node_text_ranks, gt, preds
 
-def expandInternal(taxo, text, embs, term_to_idx, bm_score, thresh=3, min_freq=3, percentile=99.9, classify=True, granularity='phrases'):
+def expandInternal(taxo, text, embs, term_to_idx, bm_score, thresh=3, min_freq=3, percentile=99.9, classify=True, granularity='phrases', reset=False):
     if classify:
         paper_preds = {doc_id:set(['0','1']) for doc_id in np.arange(len(taxo.collection))}
     
     node_text_ranks = []
+    terms_to_add = {node_id:[] for node_id in np.arange(0, len(taxo.label2id))}
 
     for node_id in tqdm(np.arange(0, len(taxo.label2id))):
         # gather node and its siblings
         focus_node = taxo.root.findChild(str(node_id))
         sibling_nodes = taxo.get_sib(focus_node.node_id, granularity='emb')
+
+        if reset:
+            focus_node.internal[granularity] = []
+            for sib in sibling_nodes:
+                sib.internal[granularity] = []
 
         # get phrases of node and its siblings
         focus_text = focus_node.getAllTerms(granularity=granularity, children=False)
@@ -176,14 +190,12 @@ def expandInternal(taxo, text, embs, term_to_idx, bm_score, thresh=3, min_freq=3
         target_sim_rank = {idx:rank for rank, idx in enumerate((avg_focus_sim-avg_sib_sim).argsort()[::-1])}
 
         # compute target co-occurrence
-        target_co_ocurrence = np.array([average_with_harmonic_series([getBM25(term, focus_term, term_to_idx, bm_score) for focus_term in focus_text])
-                            for term in text]) # P x 1
+        target_co_ocurrence = average_with_harmonic_series(getBM25(text, focus_text, term_to_idx, bm_score), axis=1) # P x 1
         
         # compute sibling co-occurrence
         if len(sibling_nodes):
-            sib_co_occurrence = np.array([max([average_with_harmonic_series([getBM25(term, sib_term, term_to_idx, bm_score) for sib_term in sib_terms])
-                                    for sib_terms in sibling_text])
-                                    for term in text]) # all terms x focus phrases
+            sib_co_occurrence = np.stack([average_with_harmonic_series(getBM25(text, sib_terms, term_to_idx, bm_score), axis=1)
+                                    for sib_terms in sibling_text], axis=-1).max(axis=1) # all terms x focus phrases
         else:
             sib_co_occurrence = np.zeros_like(target_co_ocurrence)
         
@@ -200,7 +212,7 @@ def expandInternal(taxo, text, embs, term_to_idx, bm_score, thresh=3, min_freq=3
             if (taxo.vocab_count[text[idx]] >= min_freq) and (avg_focus_sim[idx] > avg_sib_sim[idx]) and (target_co_ocurrence[idx] > sib_co_occurrence[idx]):
                 final_ranks[rank] = (text[idx], avg_focus_sim[idx], target_co_ocurrence[idx])
                 focus_text.append(text[idx])
-                focus_node.internal[granularity].append(text[idx])
+                terms_to_add[node_id].append(text[idx])
         
         node_text_ranks.append(final_ranks)
 
@@ -209,6 +221,10 @@ def expandInternal(taxo, text, embs, term_to_idx, bm_score, thresh=3, min_freq=3
         for doc_id, doc_count in external_focus_ranks.items():
             if doc_count > thresh:
                 paper_preds[doc_id].add(str(node_id))
+    
+    for node_id in np.arange(0, len(taxo.label2id)):
+        focus_node = taxo.root.findChild(str(node_id))
+        focus_node.internal[granularity].extend(terms_to_add[node_id])
 
 
     gt = [p.gold for p in taxo.collection]
@@ -216,6 +232,103 @@ def expandInternal(taxo, text, embs, term_to_idx, bm_score, thresh=3, min_freq=3
     print(example_f1(gt, preds))
 
     return node_text_ranks, gt, preds
+
+def expandSentences(taxo, term_to_idx, bm_score):
+    sentence_pool = []
+    sentence_phrase_pool = []
+    for paper in taxo.collection:
+        for s_sent, p_sent in zip(paper.sent_tokenize, paper.phrase_tokenize):
+            if s_sent not in sentence_pool:
+                sentence_pool.append(s_sent)
+                sentence_phrase_pool.append(p_sent)
+
+    phrase_pool_emb = [np.stack([taxo.vocab['phrases'][w] for w in s], axis=0) for s in sentence_phrase_pool] # S x P x 768
+    sentence_pool_emb = np.array([taxo.vocab['sentences'][s] for s in sentence_pool])
+
+    taxo.root.internal['sentences'] = sentence_pool
+    taxo.root.internal['sent_ids'] = np.arange(len(sentence_pool))
+    
+    queue = deque([taxo.root])
+
+    while queue:
+        curr_node = queue.popleft()
+        # for each child, compute phrase emb and sib emb
+        for child in curr_node.children:
+            child.internal['sentences'] = []
+            child.internal['sent_ids'] = []
+
+            child.emb['phrase'] = np.stack([taxo.vocab['phrases'][w] 
+                                            for w in child.getAllTerms(granularity='phrases', children=False)], axis=0)
+            child.emb['sentence'] = np.stack([taxo.vocab['sentences'][w] 
+                                            for w in child.getAllTerms(granularity='sentences', children=False)], axis=0)
+        
+        candidate_phrases = sentence_phrase_pool
+        candidate_phrase_embs = phrase_pool_emb
+        candidate_sent_embs = sentence_pool_emb
+
+        sent_ranks = {sent_id:[] for sent_id in np.arange(len(sentence_pool_emb))} # for each candidate: list of ranks across all child nodes
+
+        for focus_node in tqdm(curr_node.children):
+            sibs = [n for n in curr_node.children if n != focus_node]
+
+            focus_phrases = focus_node.getAllTerms(granularity='phrases', children=False)
+            sibling_phrases = [sib.getAllTerms(granularity='phrases', children=False) for sib in sibs]
+            
+            # compute target phrase/sentence semantic similarity
+            focus_phrase_sim = np.stack([cosine_similarity_embeddings(p_embs, focus_node.emb['phrase']).max(axis=0) 
+                                        for p_embs in candidate_phrase_embs], axis=0) # S x [P x N] -> S x N
+            avg_focus_phrase_sim = average_with_harmonic_series(focus_phrase_sim, axis=1)  # S x 1
+
+            focus_sent_sim = cosine_similarity_embeddings(candidate_sent_embs, focus_node.emb['sentence']) # S x N
+            avg_focus_sent_sim = average_with_harmonic_series(focus_sent_sim, axis=1)  # S x 1
+
+            # compute co_occurrence with focus node
+            target_co_occurrence = np.array([average_with_harmonic_series(getBM25(sent, focus_phrases, term_to_idx, bm_score).mean(axis=0)) 
+                                            for sent in candidate_phrases]) # S x 1
+            
+            # compute sibling sentence semantic dissimilarity
+            sib_phrase_sims = [np.stack([cosine_similarity_embeddings(p_embs, sib.emb['phrase']).max(axis=0)
+                                        for p_embs in candidate_phrase_embs], axis=0)
+                                        for sib in sibs] # siblings x sentences x P x N -> sib x sentences x N
+            sib_sent_sims = [cosine_similarity_embeddings(candidate_sent_embs, sib.emb['sentence']) for sib in sibs] # siblings x sentences x sib_sents
+            
+            if len(sibs):
+                avg_sib_phrase_sim = np.stack([average_with_harmonic_series(sib_sim, axis=1) for sib_sim in sib_phrase_sims], axis=-1).max(axis=1) # sentences x 1
+                avg_sib_sent_sim = np.stack([average_with_harmonic_series(sib_sim, axis=1) for sib_sim in sib_sent_sims], axis=-1).max(axis=1) # sentences x 1
+                # compute sibling co-occurrence
+                sib_co_occurrence = np.array([max([average_with_harmonic_series(getBM25(sent_phrases, sib_terms, term_to_idx, bm_score).mean(axis=0)) 
+                                                for sib_terms in sibling_phrases]) for sent_phrases in candidate_phrases]) # S x 1
+            else:
+                avg_sib_phrase_sim = np.zeros_like(avg_focus_phrase_sim)
+                avg_sib_sent_sim = np.zeros_like(avg_focus_sent_sim)
+                sib_co_occurrence = np.zeros_like(target_co_occurrence)
+                
+            # compute semantic rank
+            target_sim_phrase_rank = {idx:rank for rank, idx in enumerate((avg_focus_phrase_sim-avg_sib_phrase_sim).argsort()[::-1])}
+            target_sim_sent_rank = {idx:rank for rank, idx in enumerate((avg_focus_sent_sim-avg_sib_sent_sim).argsort()[::-1])}
+            
+            # compute co-occurrence rank
+            target_co_rank = {idx:rank for rank, idx in enumerate((target_co_occurrence-sib_co_occurrence).argsort()[::-1])}
+
+            joint_rank = compute_joint_ranking([target_sim_phrase_rank, target_sim_sent_rank, target_co_rank]) # arr idx: rank
+
+            for idx in np.arange(len(sentence_pool)):
+                sent_ranks[idx].append(joint_rank[idx])
+
+        # filter sentences based on rank
+        for node_id, focus_node in enumerate(curr_node.children):
+            in_domain_phrases = focus_node.getAllTerms(granularity='phrases', children=False)
+
+            sorted_ranks = sorted([s_id 
+                                for s_id in np.arange(len(sentence_pool)) 
+                                if (sent_ranks[s_id][node_id] <= min(sent_ranks[s_id])) 
+                                and (len(sentence_phrase_pool[s_id]) > 5) 
+                                and ((sent_ranks[s_id][node_id]) < len(sent_ranks)//2)], 
+                                key=lambda x: sent_ranks[x][node_id])
+
+            focus_node.internal['sentences'] = [sentence_pool[s_id] for s_id in sorted_ranks]
+            focus_node.internal['sent_ids'] = sorted_ranks
+            queue.append(focus_node)
 
 
 def constructTermDocMatrix(taxo, corpus):
@@ -238,12 +351,18 @@ def constructTermDocMatrix(taxo, corpus):
     return term_to_idx, td_matrix, co_matrix
 
 def computeBM25Cog(co_matrix, co_avg, k=1.2, b=2):
+    # co_matrix_t = torch.from_numpy(co_matrix).cuda(device=torch.device('cuda:2'))
+    # co_avg_t = co_avg
+
     co_score = co_matrix * (k + 1) / (co_matrix + k * (1 - b + b * (co_matrix.sum(axis=0, keepdims=True) / co_avg)))
     query_sum = co_matrix.astype(bool).sum(axis=1, keepdims=True)
-    # df_factor = np.log2(np.divide((len(co_matrix) - query_sum + 0.5), (query_sum + 0.5)))
+    # df_factor = np.log2(np.divide((len(co_matrix_t) - query_sum + 0.5), (query_sum + 0.5)))
     df_factor = np.divide(np.log2(1 + len(co_matrix) - query_sum), np.log2(1 + query_sum))
     # df_factor = np.log2(0.5 + query_sum) / math.log(1 + co_matrix.shape[0], 2)
     bm_score = co_score * df_factor
+    # bm_score = bm_score.cpu().numpy()
+    # del co_matrix_t
+    # del co_avg_t
     return bm_score
 
 def getBM25(term, query, term_to_idx, bm_score):
@@ -261,6 +380,30 @@ def getBM25(term, query, term_to_idx, bm_score):
         q_id = term_to_idx[query]
 
         return bm_score[t_id, q_id]
+
+# def getBM25(term, query, term_to_idx, co_matrix, co_avg, k=1.2, b=1):
+    
+#     if type(term) != list:
+#         term = [term]
+#     if type(query) != list:
+#         query = [query]
+
+#     t_id = [term_to_idx[t] for t in term if t in term_to_idx]
+#     q_id = [term_to_idx[q] for q in query if q in term_to_idx]
+
+#     if (len(t_id) == 0) or (len(q_id) == 0):
+#         return 0
+
+#     tq_co_occur = co_matrix[np.ix_(t_id, q_id)]
+
+#     term_co = co_matrix[t_id].sum(axis=1, keepdims=True)
+#     query_co = co_matrix[q_id].astype(bool).sum(axis=1)
+
+#     co_score = tq_co_occur * (k + 1) / (tq_co_occur + k * (1 - b + b * (term_co / co_avg)))
+#     df_factor = np.log2(1 + len(co_matrix) - query_co) / np.log2(1 + query_co)
+#     bm_score = co_score * df_factor
+
+#     return bm_score
 
 
 def compareClasses(w, taxo, node, granularity='phrases'):
@@ -332,6 +475,13 @@ def rank_by_class_discriminative_significance(embeddings, class_embeddings, clas
         significance_score = class_similarities - other_dissimilarity.max(axis=1)
     else:
         significance_score = similarities[:, class_id]
+    # significance_score = [np.max(np.sort(similarity)[-2:]) for similarity in similarities]
+    significance_ranking = {i: r for r, i in enumerate(np.argsort(-np.array(significance_score)))}
+    return significance_ranking
+
+def rank_by_max_discriminative_significance(embeddings, class_embeddings):
+    similarities = np.stack([cosine_similarity_embeddings(embeddings, embs).max(axis=1) for embs in class_embeddings], axis=1)
+    significance_score = np.ptp(np.sort(similarities, axis=1)[:, -2:], axis=1)
     # significance_score = [np.max(np.sort(similarity)[-2:]) for similarity in similarities]
     significance_ranking = {i: r for r, i in enumerate(np.argsort(-np.array(significance_score)))}
     return significance_ranking

@@ -8,7 +8,7 @@ import pickle as pk
 from nltk.corpus import stopwords
 import torch
 from model_definitions import sentence_model, bert_model, bert_tokenizer, bertEncode, chunkify, get_vocab_idx, get_hidden_states
-from utils import rank_by_discriminative_significance, weights_from_ranking, cosine_similarity_embeddings, rank_by_significance, rank_by_class_discriminative_significance
+from utils import rank_by_discriminative_significance, rank_by_max_discriminative_significance, weights_from_ranking, cosine_similarity_embeddings, rank_by_significance, rank_by_class_discriminative_significance
 
 class Paper:
     def __init__(self, taxo, raw_text, title, abstract, content=None, id=-1, gold=[]) -> None:
@@ -36,7 +36,7 @@ class Paper:
         ranked_tok = {in_vocab[idx]:rank for idx, rank in ranks.items()}
         return ranked_tok
     
-    def rankSentences(self, class_reprs, phrases=True):
+    def rankSentences(self, class_reprs, phrases=False):
         if phrases:
             ranked_phrases = self.rankPhrases(class_reprs)
 
@@ -74,8 +74,7 @@ class Paper:
         else:
             weights = weights_from_ranking([sent_dis_ranks])
 
-        self.emb = np.average(sent_reprs, weights=weights, axis=0)
-        return self.emb
+        return np.average(sent_reprs, weights=weights, axis=0)
 
 class Node:
     def __init__(self, node_id, label, description=None, level=0):
@@ -99,6 +98,8 @@ class Node:
         self.emb = {} # 'phrase':emb, 'sentence':emb
         self.gold = {}
         self.papers = {} # id: Paper
+        self.paper_scores = {} # id: score
+        self.ranked = [] # ids
 
     def __repr__(self) -> str:
         return self.label
@@ -122,17 +123,32 @@ class Node:
             self.parents.append(parent)
             self.path = parent.path + self.path
 
-    def findChild(self, node_id):
+    def findChild(self, node_id, parent=False, node=False):
         if type(node_id) == int:
             node_id = str(node_id)
         if node_id == self.node_id:
+            if parent and node:
+                return self, []
+            if parent:
+                return self.label, []
             return self
         if len(self.children) == 0:
-            return None
+            if parent:
+                return None, []
+            else:
+                return None
         for child in self.children:
-            ans = child.findChild(node_id)
+            if parent:
+                ans, ancestors = child.findChild(node_id, parent, node)
+            else:
+                ans = child.findChild(node_id)
             if ans != None:
-                return ans
+                if parent and node:
+                    return ans, ([self] if self.node_id != -1 else []) + ancestors 
+                if parent:
+                    return ans, ([self.label] if self.node_id != -1 else []) + ancestors 
+                else:
+                    return ans
         return None
 
     def getAllTerms(self, children=True, granularity='phrases'):
@@ -219,10 +235,10 @@ class Taxonomy:
                 if parent_node is None:
                     parent_node = Node(parent_id, parent, description=parent_desc, level=1)
                     if parent_node.label not in self.vocab['phrases']:
-                        self.vocab['phrases'][parent_node.label] = sentence_model.encode(parent_node.label)
+                        self.vocab['phrases'][parent_node.label] = sentence_model.encode(parent_node.label.replace('_', ' '))
                         if parent_node.description:
-                            self.vocab['sentences'][parent_node.description] = sentence_model.encode(parent_node.description)
-                            self.vocab['sentences'][f'{parent_node.label}: {parent_node.description}'] = sentence_model.encode(f'{parent_node.label}: {parent_node.description}')
+                            self.vocab['sentences'][parent_node.description] = sentence_model.encode(parent_node.description.replace('_', ' '))
+                            self.vocab['sentences'][f'{parent_node.label}: {parent_node.description}'] = sentence_model.encode(f'{parent_node.label}: {parent_node.description}'.replace('_', ' '))
 
                     root.addChild(parent_node)
                     parent_node.addParent(root)
@@ -231,10 +247,10 @@ class Taxonomy:
                 if child_node is None:
                     child_node = Node(child_id, child, description=child_desc, level=parent_node.level+1)
                     if child_node.label not in self.vocab['phrases']:
-                        self.vocab['phrases'][child] = sentence_model.encode(child_node.label)
+                        self.vocab['phrases'][child] = sentence_model.encode(child_node.label.replace('_', ' '))
                         if child_node.description:
-                            self.vocab['sentences'][child_node.description] = sentence_model.encode(child_node.description)
-                            self.vocab['sentences'][f'{child_node.label}: {child_node.description}'] = sentence_model.encode(f'{child_node.label}: {child_node.description}')
+                            self.vocab['sentences'][child_node.description] = sentence_model.encode(child_node.description.replace('_', ' '))
+                            self.vocab['sentences'][f'{child_node.label}: {child_node.description}'] = sentence_model.encode(f'{child_node.label}: {child_node.description}'.replace('_', ' '))
                     
                 parent_node.addChild(child_node)
                 child_node.addParent(parent_node)
@@ -295,17 +311,9 @@ class Taxonomy:
         else:
             return sib
 
-    def get_par(self, idx):
-        cur_node = self.root.findChild(idx)
-        parent_list = []
-
-        for par_node in cur_node.parents:
-            if par_node != self.root:
-                parent_list.append(par_node.label)
-                for par_par_node in par_node.parents:
-                    if par_par_node != self.root:
-                        parent_list.append(par_par_node.label)
-        return [i.replace("_"," ") for i in parent_list]
+    def get_par(self, idx, node=False):
+        cur_node, parents = self.root.findChild(idx, parent=True, node=node)
+        return parents
     
     def addPapertoCollection(self, paper_idx, paper, external=False):
         if paper_idx < len(self.collection) + len(self.external_collection):
@@ -402,8 +410,8 @@ class Taxonomy:
             for paper_id in gold_map[node_id]:
                 l_node.gold[paper_id] = self.collection[paper_id]
         
-        print("Computing Static Embeddings...")
-        self.computeStaticEmb(args)
+        # print("Computing Static Embeddings...")
+        # self.computeStaticEmb(args)
 
         return self.collection, self.external_collection
     
@@ -411,12 +419,12 @@ class Taxonomy:
         if type(text) == list:
             filtered_text = [text_item for text_item in text if not (text_item in self.vocab[granularity])]
             if len(filtered_text) > 0:
-                embs = sentence_model.encode(filtered_text)
+                embs = sentence_model.encode([t.replace('_', ' ') for t in filtered_text])
                 self.vocab[granularity].update({text_item:emb for text_item, emb in zip(filtered_text, embs)})
                 return None
         else:
             if not (text in self.vocab[granularity]):
-                self.vocab[granularity][text] = sentence_model.encode(text)
+                self.vocab[granularity][text] = sentence_model.encode(text.replace('_', ' '))
             
             return self.vocab[granularity][text]
     
@@ -433,7 +441,7 @@ class Taxonomy:
         sorted_ranks = sorted(ranks.items(), key=lambda x: x[1])
         return sorted_ranks[:top_k]
     
-    def mapPapers(self, paper_reprs, class_nodes, class_reprs):
+    def mapPapers(self, papers, paper_reprs, class_nodes, class_reprs):
 
         # no. of papers x no. of classes
         cos_sim = cosine_similarity_embeddings(paper_reprs, class_reprs)
@@ -442,34 +450,38 @@ class Taxonomy:
         lower_bounds = [cos_sim[-1, c_id] for c_id, c in enumerate(class_nodes)]
 
         # for each paper, only consider the classes that are above the largest similarity gap
-        bottom_classes = np.argmax(np.diff(np.sort(cos_sim, axis=1), axis=1), axis=1) + 1
+        if len(class_nodes) > 1:
+            bottom_classes = np.argmax(np.diff(np.sort(cos_sim, axis=1), axis=1), axis=1) + 1
+        else:
+            bottom_classes = np.zeros((len(cos_sim))).astype(int)
 
         classes = np.argsort(cos_sim, axis=1)
         class_labels = []
         class_paper_scores = []
         mapping = {i:[] for i in np.arange(-1, len(class_reprs))}
         for p_id, b in enumerate(bottom_classes):
+            idx = papers[p_id].id
             class_labels.append([])
             class_paper_scores.append([])
 
             for cls in classes[p_id][b:]:
                 # get the classes for each paper which have a sim above the lower-bound threshold
-                if cos_sim[p_id, cls] >= lower_bounds[cls]:
+                if cos_sim[p_id, cls] >= 0: # lower_bounds[cls]:
                     class_labels[p_id].append(cls)
                     class_paper_scores[p_id].append(cos_sim[p_id, cls])
-                    # class_nodes[cls].addPaper(class_nodes[0].parent.papers[p_id])
-                    # class_nodes[cls].addPaper(self.collection[p_id])
 
+                    # add paper
+                    class_nodes[cls].papers[idx] = self.collection[idx]
                     # update paper score
-                    # class_nodes[cls].paper_scores[p_id] = cos_sim[p_id, cls]
+                    class_nodes[cls].paper_scores[idx] = cos_sim[p_id, cls]
 
-                    mapping[cls].append(p_id)
+                    mapping[cls].append(idx)
                 
             if len(class_labels[p_id]) == 0:
                 mapping[-1].append(p_id)
         
         # re-sort papers
-        # for cls in class_nodes:
-        #     cls.papers = sorted(cls.papers, key=lambda x: cls.paper_scores[x.id], reverse=True)
+        for cls in class_nodes:
+            cls.ranked = sorted(list(cls.paper_scores.keys()), key=lambda x: cls.paper_scores[x], reverse=True)
 
         return class_labels, class_paper_scores, mapping
