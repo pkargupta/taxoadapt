@@ -250,6 +250,8 @@ def expandSentences(taxo, term_to_idx, bm_score):
     
     queue = deque([taxo.root])
 
+    all_sent_ranks = {}
+
     while queue:
         curr_node = queue.popleft()
         # for each child, compute phrase emb and sib emb
@@ -329,6 +331,12 @@ def expandSentences(taxo, term_to_idx, bm_score):
             focus_node.internal['sentences'] = [sentence_pool[s_id] for s_id in sorted_ranks]
             focus_node.internal['sent_ids'] = sorted_ranks
             queue.append(focus_node)
+        
+        all_sent_ranks[curr_node.node_id] = sent_ranks
+    
+    return sentence_pool, all_sent_ranks
+        
+
 
 
 def constructTermDocMatrix(taxo, corpus):
@@ -351,18 +359,17 @@ def constructTermDocMatrix(taxo, corpus):
     return term_to_idx, td_matrix, co_matrix
 
 def computeBM25Cog(co_matrix, co_avg, k=1.2, b=2):
-    # co_matrix_t = torch.from_numpy(co_matrix).cuda(device=torch.device('cuda:2'))
-    # co_avg_t = co_avg
+    co_score = co_matrix * (k + 1) / (co_matrix + k * (1 - b + b * (co_matrix.sum(axis=1, keepdims=True) / co_avg)))
+    query_sum = co_matrix.astype(bool).sum(axis=0, keepdims=True)
+    df_factor = np.divide(np.log2(1 + len(co_matrix) - query_sum), np.log2(1 + query_sum))
+    bm_score = co_score * df_factor
+    return bm_score
 
+def computeBM25CogTemp(co_matrix, co_avg, k=1.2, b=2):
     co_score = co_matrix * (k + 1) / (co_matrix + k * (1 - b + b * (co_matrix.sum(axis=0, keepdims=True) / co_avg)))
     query_sum = co_matrix.astype(bool).sum(axis=1, keepdims=True)
-    # df_factor = np.log2(np.divide((len(co_matrix_t) - query_sum + 0.5), (query_sum + 0.5)))
     df_factor = np.divide(np.log2(1 + len(co_matrix) - query_sum), np.log2(1 + query_sum))
-    # df_factor = np.log2(0.5 + query_sum) / math.log(1 + co_matrix.shape[0], 2)
     bm_score = co_score * df_factor
-    # bm_score = bm_score.cpu().numpy()
-    # del co_matrix_t
-    # del co_avg_t
     return bm_score
 
 def getBM25(term, query, term_to_idx, bm_score):

@@ -27,12 +27,12 @@ def commonSenseEnrich(taxo, dict_str, batch=True):
         current_node = queue.popleft()
         nodes.append(current_node)
         sibs = [i.label for i in current_node.parents[0].children if i != current_node]
-        prompts.append(constructPrompt(init_enrich_prompt, main_simple_enrich_prompt(taxo, current_node, sibs), api=True))
+        prompts.append(constructPrompt(init_enrich_prompt, main_simple_enrich_prompt(taxo, current_node, sibs), api=False))
 
         for child in current_node.children:
             queue.append(child)
 
-    output = promptGPT(prompts, schema=CommonSenseSchema, max_new_tokens=2000)
+    output = promptLlamaVLLM(prompts, schema=CommonSenseSchema, max_new_tokens=2000)
     try:
         if batch:
             output_dict = [json.loads(clean_json_string(c)) if "```json" in c else json.loads(c.strip()) for c in output]

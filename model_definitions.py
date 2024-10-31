@@ -16,7 +16,7 @@ from keys import openai_key, samba_api_key
 #     base_url="https://api.sambanova.ai/v1",
 # )
 
-os.environ["CUDA_VISIBLE_DEVICES"]="3,4,5"
+os.environ["CUDA_VISIBLE_DEVICES"]="0,1"
 os.environ['HF_HOME'] = '/shared/data3/pk36/.cache'
 
 # llama_8b_model = pipeline("text-generation", 
@@ -24,10 +24,10 @@ os.environ['HF_HOME'] = '/shared/data3/pk36/.cache'
 #                     model_kwargs={"torch_dtype": torch.bfloat16},
 #                     device_map='auto')
 
-# llama_8b_model = LLM(model="meta-llama/Meta-Llama-3.1-8B-Instruct", tensor_parallel_size=1, gpu_memory_utilization=0.75, max_num_seqs=100)
+llama_8b_model = LLM(model="meta-llama/Meta-Llama-3.1-8B-Instruct", tensor_parallel_size=2, gpu_memory_utilization=0.5, max_num_seqs=100)
 sentence_model = SentenceTransformer('allenai-specter', device='cuda')
 
-client = OpenAI(api_key=openai_key)
+# client = OpenAI(api_key=openai_key)
 
 # bert_model_name = "/home/pk36/Comparative-Summarization/bert_full_ft/checkpoint-8346/"
 bert_model_name = "bert-base-uncased"
@@ -157,11 +157,11 @@ def promptGPT(prompts, schema=None, max_new_tokens=1024, json_mode=True):
 
 def promptLlamaVLLM(prompts, schema=None, max_new_tokens=1024):
     if schema is None:
-        sampling_params = SamplingParams(temperature=0.1, top_p=1, max_tokens=max_new_tokens)
+        sampling_params = SamplingParams(temperature=0.1, top_p=0.99, max_tokens=max_new_tokens)
     else:
         logits_processor = JSONLogitsProcessor(schema=schema, llm=llama_8b_model.llm_engine)
         # logits_processor.fsm.vocabulary = list(logits_processor.fsm.vocabulary)
-        sampling_params = SamplingParams(temperature=0.1, top_p=1, max_tokens=max_new_tokens, 
+        sampling_params = SamplingParams(temperature=0.1, top_p=0.99, max_tokens=max_new_tokens, 
                                     logits_processors=[logits_processor])
     generations = llama_8b_model.generate(prompts, sampling_params)
     

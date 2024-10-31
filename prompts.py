@@ -154,6 +154,9 @@ class CommonSenseSchema(BaseModel):
     # example_paper_titles: conset(str, min_length=5)
     # example_paper_abstracts: conset(str, min_length=5)
 
+class SiblingSchema(BaseModel):
+    new_siblings: conset(str, min_length=1, max_length=10)
+
 class ClassifySchema(BaseModel):
     paper_id: Annotated[int, Field(strict=True, gt=-1)]
     class_options: conset(int, min_length=1, max_length=100)
