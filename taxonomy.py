@@ -132,11 +132,6 @@ class Node:
             if parent:
                 return self.label, []
             return self
-        if len(self.children) == 0:
-            if parent:
-                return None, []
-            else:
-                return None
         for child in self.children:
             if parent:
                 ans, ancestors = child.findChild(node_id, parent, node)
@@ -149,7 +144,10 @@ class Node:
                     return ans, ([self.label] if self.node_id != -1 else []) + ancestors 
                 else:
                     return ans
-        return None
+        if parent:
+            return None, []
+        else:
+            return None
 
     def getAllTerms(self, children=True, granularity='phrases'):
         # TODO: SET THIS BACK!!

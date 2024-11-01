@@ -16,7 +16,7 @@ from keys import openai_key, samba_api_key
 #     base_url="https://api.sambanova.ai/v1",
 # )
 
-os.environ["CUDA_VISIBLE_DEVICES"]="0,1"
+os.environ["CUDA_VISIBLE_DEVICES"]="5,7"
 os.environ['HF_HOME'] = '/shared/data3/pk36/.cache'
 
 # llama_8b_model = pipeline("text-generation", 
@@ -155,13 +155,13 @@ def promptGPT(prompts, schema=None, max_new_tokens=1024, json_mode=True):
 		outputs.append(response.choices[0].message.content)
 	return outputs
 
-def promptLlamaVLLM(prompts, schema=None, max_new_tokens=1024):
+def promptLlamaVLLM(prompts, schema=None, max_new_tokens=1024, temperature=0.1, top_p=0.99):
     if schema is None:
-        sampling_params = SamplingParams(temperature=0.1, top_p=0.99, max_tokens=max_new_tokens)
+        sampling_params = SamplingParams(temperature=temperature, top_p=top_p, max_tokens=max_new_tokens)
     else:
         logits_processor = JSONLogitsProcessor(schema=schema, llm=llama_8b_model.llm_engine)
         # logits_processor.fsm.vocabulary = list(logits_processor.fsm.vocabulary)
-        sampling_params = SamplingParams(temperature=0.1, top_p=0.99, max_tokens=max_new_tokens, 
+        sampling_params = SamplingParams(temperature=temperature, top_p=top_p, max_tokens=max_new_tokens, 
                                     logits_processors=[logits_processor])
     generations = llama_8b_model.generate(prompts, sampling_params)
     

@@ -156,6 +156,10 @@ class CommonSenseSchema(BaseModel):
 
 class SiblingSchema(BaseModel):
     new_siblings: conset(str, min_length=1, max_length=10)
+  
+class CandidateSchema(BaseModel):
+    parent_node: Annotated[str, StringConstraints(strip_whitespace=True)]
+    candidate_nodes: conset(str, min_length=1, max_length=10)
 
 class ClassifySchema(BaseModel):
     paper_id: Annotated[int, Field(strict=True, gt=-1)]
