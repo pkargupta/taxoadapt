@@ -1,3 +1,7 @@
+from collections import deque
+from enrichment import enrich_node
+
+
 class Node:
     def __init__(self, id, label, description=None, datasets=None, methodologies=None, evaluation_methods=None, applications=None, children=None, parents=None):
         """
@@ -74,6 +78,20 @@ class Node:
                 ancestors.add(current)
                 nodes_to_visit.extend(current.parents)
         return list(ancestors)
+    
+    def get_siblings(self):
+        """
+        Get the siblings of the current node (nodes that share at least one parent).
+
+        Returns:
+        set: A set of sibling nodes.
+        """
+        siblings = set()
+        for parent in self.parents:
+            for sibling in parent.get_children().values():
+                if sibling is not self:
+                    siblings.add(sibling)
+        return siblings
 
     def get_children(self):
         """
@@ -173,3 +191,33 @@ class Node:
 
     def __repr__(self):
         return f"Node(label={self.label}, description={self.description}, level={self.level})"
+    
+
+class DAG:
+    def __init__(self, root):
+        """
+        Initialize a DAG with a root node.
+
+        Args:
+        root (Node): The root node of the DAG.
+        """
+        self.root = root
+
+    def enrich_dag(self):
+        """
+        Iterate through the DAG starting from the root node and call enrich_node on each node.
+        """
+        visited = set()
+        nodes_to_visit = [(self.root, [])]
+
+        while nodes_to_visit:
+            current_node, ancestors = nodes_to_visit.pop()
+            if current_node.id in visited:
+                continue
+            visited.add(current_node.id)
+            # Enrich the current node with a dummy function
+            enrich_node(current_node, ancestors)
+            # Add children to visit next with updated ancestors
+            new_ancestors = ancestors + [current_node]
+            for child in current_node.get_children().values():
+                nodes_to_visit.append((child, new_ancestors))
