@@ -11,11 +11,11 @@ import argparse
 from scipy import stats
 from itertools import compress
 from taxonomy import Node, Taxonomy
-from model_definitions import sentence_model, promptLlamaVLLM, constructPrompt, promptLlamaSamba, promptGPT
+from model_definitions import sentence_model, promptLLM, constructPrompt, promptLlamaSamba, promptGPT
 from utils import *
 from prompts import *
 
-def commonSenseEnrich(taxo, dict_str, batch=True):
+def commonSenseEnrich(args, taxo, dict_str, batch=True):
     root_node = taxo.root
     # phrase and sentence-level enrichment
 
@@ -27,12 +27,12 @@ def commonSenseEnrich(taxo, dict_str, batch=True):
         current_node = queue.popleft()
         nodes.append(current_node)
         sibs = [i.label for i in current_node.parents[0].children if i != current_node]
-        prompts.append(constructPrompt(init_enrich_prompt, main_simple_enrich_prompt(taxo, current_node, sibs), api=False))
+        prompts.append(constructPrompt(args, init_enrich_prompt, main_simple_enrich_prompt(taxo, current_node, sibs)))
 
         for child in current_node.children:
             queue.append(child)
 
-    output = promptLlamaVLLM(prompts, schema=CommonSenseSchema, max_new_tokens=2000)
+    output = promptLLM(args, prompts, schema=CommonSenseSchema, max_new_tokens=2000)
     try:
         if batch:
             output_dict = [json.loads(clean_json_string(c)) if "```json" in c else json.loads(c.strip()) for c in output]
@@ -165,7 +165,7 @@ def main(args):
 
     # first do common sense phrase, sentence enrichment on taxonomy nodes
     enrich_start = time.time()
-    prompts, outputs, all_common_phrases, all_common_sentences = commonSenseEnrich(taxo.root, dict_str, True)
+    prompts, outputs, all_common_phrases, all_common_sentences = commonSenseEnrich(args, taxo.root, dict_str, True)
     enrich_end = time.time()
 
     if all_common_phrases:
@@ -267,6 +267,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--dataset', type=str, default='llm_graph')
     parser.add_argument('--iters', type=int, default=4)
+    parser.add_argument('--llm', type=str, default='gpt')
     parser.add_argument('--model', type=str, default="bert_full_ft")
     parser.add_argument('--override', type=bool, default=True)
     parser.add_argument('--max_depth', type=int, default=5)

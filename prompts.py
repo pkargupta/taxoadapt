@@ -1,6 +1,45 @@
 from pydantic import BaseModel, conset, StringConstraints, Field
 from typing_extensions import Annotated
 
+
+def multi_dim_prompt(node):
+    topic = node.label
+    mod_topic = node.label.replace(' ', '_').lower()
+    ancestors = ", ".join([ancestor.label for ancestor in node.get_ancestors()])
+
+    system_instruction = f'You are a helpful assistant, studying {topic} (relevant to {ancestors}), that constructs taxonomies for a given root topic. Keep in mind that research papers will be mapped to the nodes within your constructed taxonomy.'
+
+    main_prompt = f'Your root topic is: {topic}\nPropose child subtasks of {topic} and, for each child, enrich it with a list of potential types of datasets, methodologies, evaluation methods, and applications (a total of four dimensions). Make sure each type is unique to the topics: {topic}, {ancestors}.'
+
+    json_output_format = f'''Each dataset and evaluation method should be an IDEA/example of what a paper under that subtask could propose if it was either a dataset or evaluation method paper. Can you output your taxonomy ONLY in the following output JSON format:\n
+{{
+  "{mod_topic}":
+  {{
+    "subtask_label_1": {{
+      "description": "<description of subtask>",
+      "datasets": ["<first short description (a few phrases) of a dataset idea for subtask>", "<second short description (a few phrases) of a dataset idea for subtask>", ...],
+      "methodologies": ["<first type of methodology for subtask>", "<second type of methodology for subtask>", ...],
+      "evaluation_methods": ["<first short description (a few phrases) of an evaluation method for subtask>", "<second type of evaluation method for subtask>", ...],
+      "applications": ["<first short description (a few phrases) of an application for subtask>", "<second type of an application for subtask>", ...],
+      "children": {{}},
+    }},
+    ...,
+    "subtask_label_k": {{
+      "description": "<description of subtask>",
+      "datasets": ["<first short description (a few phrases) of a dataset idea for subtask>", "<second short description (a few phrases) of a dataset idea for subtask>", ...],
+      "methodologies": ["<first type of methodology for subtask>", "<second type of methodology for subtask>", ...],
+      "evaluation_methods": ["<first short description (a few phrases) of an evaluation method for subtask>", "<second type of evaluation method for subtask>", ...],
+      "applications": ["<first short description (a few phrases) of an application for subtask>", "<second type of an application for subtask>", ...],
+      "children": {{}},
+    }},
+  }}
+}}'''
+    
+    return system_instruction, main_prompt, json_output_format
+
+
+
+
 def baseline_prompt(paper, node):
    
    cats = "\n".join([f"{node.description}" for c in node.children])
@@ -159,7 +198,8 @@ class SiblingSchema(BaseModel):
   
 class CandidateSchema(BaseModel):
     parent_node: Annotated[str, StringConstraints(strip_whitespace=True)]
-    candidate_nodes: conset(str, min_length=1, max_length=10)
+    explanation: Annotated[str, StringConstraints(strip_whitespace=True)]
+    candidate_nodes: conset(str, min_length=1, max_length=20)
 
 class ClassifySchema(BaseModel):
     paper_id: Annotated[int, Field(strict=True, gt=-1)]

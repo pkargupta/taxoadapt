@@ -5,7 +5,6 @@ import numpy as np
 from tqdm import tqdm
 import itertools
 import torch
-from model_definitions import sentence_model
 from sklearn.metrics import f1_score
 from collections import deque
 from sklearn.preprocessing import MultiLabelBinarizer
@@ -14,6 +13,8 @@ from sklearn.preprocessing import MultiLabelBinarizer
 def clean_json_string(json_string):
     pattern = r'^```json\s*(.*?)\s*```$'
     cleaned_string = re.sub(pattern, r'\1', json_string, flags=re.DOTALL)
+    pattern = r'^```\s*(.*?)\s*```$'
+    cleaned_string = re.sub(pattern, r'\1', cleaned_string, flags=re.DOTALL)
     return cleaned_string.strip()
 
 
@@ -413,29 +414,29 @@ def getBM25(term, query, term_to_idx, bm_score):
 #     return bm_score
 
 
-def compareClasses(w, taxo, node, granularity='phrases'):
-    if type(w) == str:
-        embs = np.array([taxo.vocab[granularity][w]])
-    else:
-        embs = np.array([taxo.vocab[granularity][item] for item in w])
-    sibs = taxo.get_sib(node.node_id, granularity)
-    if granularity == 'phrases':
-        curr_node_sim = cosine_similarity_embeddings(embs, 
-                                                     sentence_model.encode([node.label] 
-                                                                           + sibs))
-    else:
-        curr_node_sim = cosine_similarity_embeddings(embs, 
-                                                     sentence_model.encode([node.label + " : " + node.description] 
-                                                                           + sibs))
+# def compareClasses(w, taxo, node, granularity='phrases'):
+#     if type(w) == str:
+#         embs = np.array([taxo.vocab[granularity][w]])
+#     else:
+#         embs = np.array([taxo.vocab[granularity][item] for item in w])
+#     sibs = taxo.get_sib(node.node_id, granularity)
+#     if granularity == 'phrases':
+#         curr_node_sim = cosine_similarity_embeddings(embs, 
+#                                                      sentence_model.encode([node.label] 
+#                                                                            + sibs))
+#     else:
+#         curr_node_sim = cosine_similarity_embeddings(embs, 
+#                                                      sentence_model.encode([node.label + " : " + node.description] 
+#                                                                            + sibs))
     
-    if len(sibs) == 0:
-        decision = np.array([True] * len(curr_node_sim)) #curr_node_sim[:, 0] >= curr_node_sim[:, 0].mean() # get top 50% of items if there are no other siblings
-        return embs, curr_node_sim[:, 0], decision
-    else:
-        sim_diff = curr_node_sim[:, 0] - curr_node_sim[:, 1:].max(axis=1)
-        decision = curr_node_sim[:, 0] > curr_node_sim[:, 1:].max(axis=1)
-        decision[0] = True
-        return embs, sim_diff, decision
+#     if len(sibs) == 0:
+#         decision = np.array([True] * len(curr_node_sim)) #curr_node_sim[:, 0] >= curr_node_sim[:, 0].mean() # get top 50% of items if there are no other siblings
+#         return embs, curr_node_sim[:, 0], decision
+#     else:
+#         sim_diff = curr_node_sim[:, 0] - curr_node_sim[:, 1:].max(axis=1)
+#         decision = curr_node_sim[:, 0] > curr_node_sim[:, 1:].max(axis=1)
+#         decision[0] = True
+#         return embs, sim_diff, decision
     
 def compareClassesEmbs(w, taxo, node, granularity='phrases', parent_weight=0.0):
     if type(w) == str:
