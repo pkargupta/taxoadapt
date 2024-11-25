@@ -1,32 +1,35 @@
 from collections import deque
-from enrichment import enrich_node
+from enrichment import enrich_node_prompt
+from classification import classify_prompt
+from model_definitions import promptLLM
+from prompts import EnrichSchema
+import json
+from utils import clean_json_string
+
+from classification import ClassifySchema
 
 
 class Node:
-    def __init__(self, id, label, description=None, datasets=None, methodologies=None, evaluation_methods=None, applications=None, children=None, parents=None):
+    def __init__(self, id, label, dimension, description=None, children=None, parents=None):
         """
         Initialize a Node based on the provided JSON schema.
 
         Args:
-        label (str): The label for the subtask.
-        description (str): Description of the subtask.
-        datasets (list of str, optional): A list of dataset ideas for the subtask.
-        methodologies (list of str, optional): A list of methodologies for the subtask.
-        evaluation_methods (list of str, optional): A list of evaluation methods for the subtask.
-        applications (list of str, optional): A list of applications for the subtask.
+        label (str): The label for the node.
+        description (str): Description of the node.
+        dimension (str): Type of node. Examples are: task, dataset, methodology, evaluation method, application
         children (dict, optional): A dictionary of children nodes, where keys are labels and values are Node instances.
         parents (list of Node, optional): A list of parent nodes of the current node.
         """
         self.id = id
         self.label = label
         self.description = description
-        self.datasets = datasets if datasets else []
-        self.methodologies = methodologies if methodologies else []
-        self.evaluation_methods = evaluation_methods if evaluation_methods else []
-        self.applications = applications if applications else []
+        self.dimension = dimension
         self.children = children if children else {}
         self.parents = parents if parents else []
         self.level = 0 if not self.parents else min(parent.level for parent in self.parents) + 1
+
+        self.papers = {}
 
     def add_child(self, label, child_node):
         """
@@ -101,60 +104,42 @@ class Node:
         dict: A dictionary of children nodes where keys are labels and values are Node instances.
         """
         return self.children
-
-    def add_dataset(self, dataset):
+    
+    def get_phrases(self):
         """
-        Append a new dataset to the datasets list if it does not already exist.
+        Get all phrases of the current node and its descendant nodes.
 
-        Args:
-        dataset (str or list of str): The dataset or list of datasets to be added.
+        Returns:
+        list: A list of unique phrases from the current node and all of its descendants.
         """
-        if isinstance(dataset, list):
-            self.datasets = list(set(self.datasets).union(dataset))
-        else:
-            if dataset not in self.datasets:
-                self.datasets.append(dataset)
+        unique_phrases = set(self.phrases)
+        nodes_to_visit = list(self.children.values())
+        
+        while nodes_to_visit:
+            current_node = nodes_to_visit.pop()
+            unique_phrases.update(current_node.phrases)
+            nodes_to_visit.extend(current_node.children.values())
+        
+        return list(unique_phrases)
 
-    def add_methodology(self, methodology):
+    def get_sentences(self):
         """
-        Append a new methodology to the methodologies list if it does not already exist.
+        Get all sentences of the current node and its descendant nodes.
 
-        Args:
-        methodology (str or list of str): The methodology or list of methodologies to be added.
+        Returns:
+        list: A list of unique sentences from the current node and all of its descendants.
         """
-        if isinstance(methodology, list):
-            self.methodologies = list(set(self.methodologies).union(methodology))
-        else:
-            if methodology not in self.methodologies:
-                self.methodologies.append(methodology)
+        unique_sentences = set(self.sentences)
+        nodes_to_visit = list(self.children.values())
+        
+        while nodes_to_visit:
+            current_node = nodes_to_visit.pop()
+            unique_sentences.update(current_node.sentences)
+            nodes_to_visit.extend(current_node.children.values())
+        
+        return list(unique_sentences)
 
-    def add_evaluation_method(self, evaluation_method):
-        """
-        Append a new evaluation method to the evaluation_methods list if it does not already exist.
-
-        Args:
-        evaluation_method (str or list of str): The evaluation method or list of evaluation methods to be added.
-        """
-        if isinstance(evaluation_method, list):
-            self.evaluation_methods = list(set(self.evaluation_methods).union(evaluation_method))
-        else:
-            if evaluation_method not in self.evaluation_methods:
-                self.evaluation_methods.append(evaluation_method)
-
-    def add_application(self, application):
-        """
-        Append a new application to the applications list if it does not already exist.
-
-        Args:
-        application (str or list of str): The application or list of applications to be added.
-        """
-        if isinstance(application, list):
-            self.applications = list(set(self.applications).union(application))
-        else:
-            if application not in self.applications:
-                self.applications.append(application)
-
-    def display(self, level=0, indent_multiplier=2, visited=None, simple=False):
+    def display(self, level=0, indent_multiplier=2, visited=None):
         """
         Display the node and its children in a structured manner, handling nodes with multiple parents.
 
@@ -171,30 +156,22 @@ class Node:
 
         indent = " " * (level * indent_multiplier)
         print(f"{indent}Label: {self.label}")
+        print(f"{indent}Dimension: {self.dimension}")
         print(f"{indent}Description: {self.description}")
         print(f"{indent}Level: {self.level}")
-        if not simple:
-            if self.datasets:
-                print(f"{indent}Datasets: {self.datasets}")
-            if self.methodologies:
-                print(f"{indent}Methodologies: {self.methodologies}")
-            if self.evaluation_methods:
-                print(f"{indent}Evaluation Methods: {self.evaluation_methods}")
-            if self.applications:
-                print(f"{indent}Applications: {self.applications}")
         if self.children:
             print(f"{indent}{'-'*40}")
             print(f"{indent}Children:")
             for child in self.children.values():
-                child.display(level + 1, indent_multiplier, visited, simple=simple)
+                child.display(level + 1, indent_multiplier, visited)
         print(f"{indent}{'-'*40}")
 
     def __repr__(self):
-        return f"Node(label={self.label}, description={self.description}, level={self.level})"
+        return f"Node(label={self.label}, dim={self.dimension}, description={self.description}, level={self.level})"
     
 
 class DAG:
-    def __init__(self, root):
+    def __init__(self, root, dim):
         """
         Initialize a DAG with a root node.
 
@@ -202,22 +179,76 @@ class DAG:
         root (Node): The root node of the DAG.
         """
         self.root = root
+        self.dimension = dim
 
-    def enrich_dag(self):
+    def enrich_dag(self, args, id2node):
         """
         Iterate through the DAG starting from the root node and call enrich_node on each node.
         """
         visited = set()
         nodes_to_visit = [(self.root, [])]
+        prompts = {}
+        all_phrases = []
+        all_sentences = []
 
         while nodes_to_visit:
             current_node, ancestors = nodes_to_visit.pop()
             if current_node.id in visited:
                 continue
             visited.add(current_node.id)
-            # Enrich the current node with a dummy function
-            enrich_node(current_node, ancestors)
+            # Enrich the current node
+            prompts[current_node.id] = enrich_node_prompt(args, current_node, ancestors)
+            
             # Add children to visit next with updated ancestors
             new_ancestors = ancestors + [current_node]
             for child in current_node.get_children().values():
                 nodes_to_visit.append((child, new_ancestors))
+
+        output = promptLLM(args, list(prompts.values()), schema=EnrichSchema, max_new_tokens=1500)
+        output_dict = [json.loads(clean_json_string(c)) if "```" in c else json.loads(c.strip()) for c in output]
+
+        for node_id, out in zip(prompts.keys(), output_dict):
+            node = id2node[node_id]
+
+            node.phrases = [p.lower().replace(' ', '_') for p in out['commonsense_key_phrases']]
+            all_phrases.extend(node.phrases)
+
+            node.sentences = [p.lower() for p in out['commonsense_sentences']]
+            all_sentences.extend(node.sentences)
+        
+        return all_phrases, all_sentences
+    
+    def classify_dag(self, args, collection, label2node):
+        visited = set()
+        self.root.papers = collection
+        nodes_to_visit = [(self.root, collection)]
+
+        while nodes_to_visit:
+            current_node, papers = nodes_to_visit.pop()
+            if (current_node.id in visited) or len(current_node.get_children()) == 0:
+                continue
+            for child_label, child in current_node.get_children().items():
+                if child.id not in visited:
+                    child.papers = {}
+
+            print('visiting: ', current_node.label)
+
+            visited.add(current_node.id)
+
+            # Which papers are classified to the current node?
+            prompts = []
+            for paper_id, paper in papers.items():
+                prompts.append(classify_prompt(current_node, paper))
+
+            output = promptLLM(args, prompts, schema=ClassifySchema, max_new_tokens=1500)
+            output_dict = [json.loads(clean_json_string(c)) if "```" in c else json.loads(c.strip()) for c in output]
+            class_options = [c for c in current_node.get_children()]
+
+            for (paper_id, paper), out_labels in zip(papers.items(), output_dict):
+                for label in out_labels['class_labels']:
+                    if (label in label2node) and (label in class_options):
+                        label2node[label].papers[paper_id] = paper
+            
+            # Add children to visit next with updated ancestors
+            for child in current_node.get_children().values():
+                nodes_to_visit.append((child, child.papers))

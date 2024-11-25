@@ -11,7 +11,7 @@ import openai
 from openai import OpenAI
 from keys import openai_key, samba_api_key
 
-os.environ["CUDA_VISIBLE_DEVICES"]="4,5"
+os.environ["CUDA_VISIBLE_DEVICES"]="5,6"
 os.environ['HF_HOME'] = '/shared/data3/pk36/.cache'
 
 # llama_8b_model = pipeline("text-generation", 
@@ -120,15 +120,17 @@ def promptLlama(prompts, max_new_tokens=1024):
     return message
 
 def initializeLLM(args):
+	args.client = {}
+
+	args.client['vllm'] = LLM(model="meta-llama/Meta-Llama-3.1-8B-Instruct", tensor_parallel_size=2, gpu_memory_utilization=0.5, max_num_seqs=100)
+
 	if args.llm == 'samba':
-		args.client = openai.OpenAI(
+		args.client[args.llm] = openai.OpenAI(
 		    api_key=samba_api_key,
 		    base_url="https://api.sambanova.ai/v1",
 		)
 	elif args.llm == 'gpt':
-		args.client = OpenAI(api_key=openai_key)
-	else:
-		args.client = LLM(model="meta-llama/Meta-Llama-3.1-8B-Instruct", tensor_parallel_size=2, gpu_memory_utilization=0.5, max_num_seqs=100)
+		args.client[args.llm] = OpenAI(api_key=openai_key)
 
 	args.sentence_model = SentenceTransformer('allenai-specter', device='cuda')
 
@@ -139,16 +141,18 @@ def initializeLLM(args):
 		args.device = torch.device("cuda")
 		args.bert_model = BertModel.from_pretrained(bert_model_name, output_hidden_states=True, device_map='auto')#.to(device)
 		args.bert_model.eval()
+	
+	return args
 
 def promptGPT(args, prompts, schema=None, max_new_tokens=1024, json_mode=True, temperature=0.1, top_p=0.99):
 	outputs = []
 	for messages in tqdm(prompts):
 		if json_mode:
-			response = args.client.chat.completions.create(model='gpt-3.5-turbo-0125', stream=False, messages=messages, 
+			response = args.client['gpt'].chat.completions.create(model='gpt-3.5-turbo-0125', stream=False, messages=messages, 
 												response_format={"type": "json_object"}, temperature=temperature, top_p=top_p, 
 												max_tokens=max_new_tokens)
 		else:
-			response = args.client.chat.completions.create(model='gpt-3.5-turbo-0125', stream=False, messages=messages, 
+			response = args.client['gpt'].chat.completions.create(model='gpt-3.5-turbo-0125', stream=False, messages=messages, 
 											 temperature=temperature, top_p=top_p,
 											 max_tokens=max_new_tokens)
 		outputs.append(response.choices[0].message.content)
@@ -158,11 +162,11 @@ def promptLlamaVLLM(args, prompts, schema=None, max_new_tokens=1024, temperature
     if schema is None:
         sampling_params = SamplingParams(temperature=temperature, top_p=top_p, max_tokens=max_new_tokens)
     else:
-        logits_processor = JSONLogitsProcessor(schema=schema, llm=args.client.llm_engine)
+        logits_processor = JSONLogitsProcessor(schema=schema, llm=args.client['vllm'].llm_engine)
         # logits_processor.fsm.vocabulary = list(logits_processor.fsm.vocabulary)
         sampling_params = SamplingParams(temperature=temperature, top_p=top_p, max_tokens=max_new_tokens, 
                                     logits_processors=[logits_processor])
-    generations = args.client.generate(prompts, sampling_params)
+    generations = args.client['vllm'].generate(prompts, sampling_params)
     
     outputs = []
     for gen in generations:
@@ -174,11 +178,11 @@ def promptLlamaSamba(args, prompts, schema=None, max_new_tokens=1024, temperatur
 	outputs = []
 	if len(prompts) == 1:
 		for messages in prompts:
-			response = args.client.chat.completions.create(model='Meta-Llama-3.1-70B-Instruct', stream=False, messages=messages, temperature=temperature, top_p=top_p, max_tokens=max_new_tokens)
+			response = args.client['samba'].chat.completions.create(model='Meta-Llama-3.1-70B-Instruct', stream=False, messages=messages, temperature=temperature, top_p=top_p, max_tokens=max_new_tokens)
 			outputs.append(response.choices[0].message.content)
 	else:
 		for messages in tqdm(prompts):
-			response = args.client.chat.completions.create(model='Meta-Llama-3.1-70B-Instruct', stream=False, messages=messages, temperature=temperature, top_p=top_p, max_tokens=max_new_tokens)
+			response = args.client['samba'].chat.completions.create(model='Meta-Llama-3.1-70B-Instruct', stream=False, messages=messages, temperature=temperature, top_p=top_p, max_tokens=max_new_tokens)
 			outputs.append(response.choices[0].message.content)
 	return outputs
 

@@ -1,36 +1,42 @@
 from pydantic import BaseModel, conset, StringConstraints, Field
 from typing_extensions import Annotated
+from typing import Dict
+
+class NodeSchema(BaseModel):
+    description: Annotated[str, StringConstraints(strip_whitespace=True)]
 
 
+class NodeListSchema(BaseModel):
+    # argument_list : conlist(argument_schema, min_length=1,max_length=10)
+    root_topic: Dict[str, NodeSchema]
+
+class EnrichSchema(BaseModel):
+    node_to_enrich: Annotated[str, StringConstraints(strip_whitespace=True)]
+    id: Annotated[str, StringConstraints(strip_whitespace=True)]
+    commonsense_key_phrases: conset(str, min_length=20, max_length=50)
+    commonsense_sentences: conset(str, min_length=10, max_length=50)
+  
 def multi_dim_prompt(node):
     topic = node.label
-    mod_topic = node.label.replace(' ', '_').lower()
     ancestors = ", ".join([ancestor.label for ancestor in node.get_ancestors()])
 
-    system_instruction = f'You are a helpful assistant, studying {topic} (relevant to {ancestors}), that constructs taxonomies for a given root topic. Keep in mind that research papers will be mapped to the nodes within your constructed taxonomy.'
+    system_instruction = f'You are a helpful assistant that constructs taxonomies for a given root topic: {topic}{"" if ancestors == "" else " (relevant to" + ancestors + ")"}. Keep in mind that research papers will be mapped to the nodes within your constructed taxonomy.'
 
-    main_prompt = f'Your root topic is: {topic}\nPropose child subtasks of {topic} and, for each child, enrich it with a list of potential types of datasets, methodologies, evaluation methods, and applications (a total of four dimensions). Make sure each type is unique to the topics: {topic}, {ancestors}.'
+    main_prompt = f'Your root_topic is: {topic}\nA subcategory is a specific division within a broader category that organizes related items or concepts more precisely. Output up to 5 child, subcategories of {node.dimension} that fall under {topic} and generate corresponding sentence-long descriptions for each. Make sure each type is unique to the topics: {topic}, {ancestors}.'
 
-    json_output_format = f'''Each dataset and evaluation method should be an IDEA/example of what a paper under that subtask could propose if it was either a dataset or evaluation method paper. Can you output your taxonomy ONLY in the following output JSON format:\n
+    if ('domain' in node.dimension) or ('application' in node.dimension):
+        main_prompt += f'\n Remember that {node.dimension} means a real-world domain category in which an NLP paper can be applied to (for example, news or science could be a subcategory of {node.dimension}).'
+
+    json_output_format = f'''Output your taxonomy ONLY in the following JSON format, replacing each label name key with its correct subcategory label name:\n
 {{
-  "{mod_topic}":
+  root_topic:
   {{
-    "subtask_label_1": {{
-      "description": "<description of subtask>",
-      "datasets": ["<first short description (a few phrases) of a dataset idea for subtask>", "<second short description (a few phrases) of a dataset idea for subtask>", ...],
-      "methodologies": ["<first type of methodology for subtask>", "<second type of methodology for subtask>", ...],
-      "evaluation_methods": ["<first short description (a few phrases) of an evaluation method for subtask>", "<second type of evaluation method for subtask>", ...],
-      "applications": ["<first short description (a few phrases) of an application for subtask>", "<second type of an application for subtask>", ...],
-      "children": {{}},
+    "<label name of your first sub-category>": {{
+      "description": "<generate a string description of your subcategory>"
     }},
     ...,
-    "subtask_label_k": {{
-      "description": "<description of subtask>",
-      "datasets": ["<first short description (a few phrases) of a dataset idea for subtask>", "<second short description (a few phrases) of a dataset idea for subtask>", ...],
-      "methodologies": ["<first type of methodology for subtask>", "<second type of methodology for subtask>", ...],
-      "evaluation_methods": ["<first short description (a few phrases) of an evaluation method for subtask>", "<second type of evaluation method for subtask>", ...],
-      "applications": ["<first short description (a few phrases) of an application for subtask>", "<second type of an application for subtask>", ...],
-      "children": {{}},
+    "<label name of your kth (max 5th) sub-category>": {{
+      "description": "<generate a string description of subtask_k>"
     }},
   }}
 }}'''
@@ -89,7 +95,7 @@ Example Output:
 }}
 '''
 
-parent_prompt = lambda taxo, node: f" and is the subtopic of topics: [{', '.join(taxo.get_par(node.node_id, node=False))}]" if node.parents[0].node_id != -1 else ""
+parent_prompt = lambda taxo, node: f" and is the subtopic of all of the following topics: [{', '.join(taxo.get_par(node.node_id, node=False))}]" if node.parents[0].node_id != -1 else ""
 
 main_simple_enrich_prompt = lambda taxo, node, sibs: f'''"{node.label}" is a topic in Natural Language Processing (NLP){parent_prompt(taxo, node)}. Please generate 20 realistic key terms and sentences about the '{node.label}' topic that are relevant to '{node.label}' but irrelevant to the topics: {sibs}. The terms should be short (1-3 words), concise, and distinctive to {node.label}. The sentences should have specific details and resemble realistic sentences found in NLP research papers.
 
