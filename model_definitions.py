@@ -11,7 +11,7 @@ import openai
 from openai import OpenAI
 from keys import openai_key, samba_api_key
 
-os.environ["CUDA_VISIBLE_DEVICES"]="5,6"
+os.environ["CUDA_VISIBLE_DEVICES"]="4,7"
 os.environ['HF_HOME'] = '/shared/data3/pk36/.cache'
 
 # llama_8b_model = pipeline("text-generation", 

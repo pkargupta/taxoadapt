@@ -220,8 +220,8 @@ class DAG:
     
     def classify_dag(self, args, collection, label2node):
         visited = set()
-        self.root.papers = collection
-        nodes_to_visit = [(self.root, collection)]
+        # self.root.papers = collection
+        nodes_to_visit = [(self.root, self.root.papers)]
 
         while nodes_to_visit:
             current_node, papers = nodes_to_visit.pop()

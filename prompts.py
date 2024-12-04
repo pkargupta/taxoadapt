@@ -44,6 +44,41 @@ def multi_dim_prompt(node):
     return system_instruction, main_prompt, json_output_format
 
 
+type_cls_system_instruction = """You are a helpful multi-label classification assistant which helps me label NLP papers based on their paper type. They may be more than one.
+
+Paper types (type:definition):
+
+1. Task: We assume that all papers are associated with a specific task(s). Always output "Task" as one of the paper types unless you are absolutely sure the paper does not address any task.
+2. Methodology: a paper that introduces, explains, or refines a method or approach, providing theoretical foundations, implementation details, and empirical evaluations to advance the state-of-the-art or solve specific problems. 
+3. Datasets: introduces a new dataset, detailing its creation, structure, and intended use, while providing analysis or benchmarks to demonstrate its relevance and utility. It focuses on advancing research by addressing gaps in existing datasets/performance of SOTA models or enabling new applications in the field. 
+4. Evaluation Methods: a paper that assesses the performance, limitations, or biases of models, methods, or datasets using systematic experiments or analyses. It focuses on benchmarking, comparative studies, or proposing new evaluation metrics or frameworks to provide insights and improve understanding in the field. 
+5. Real-World Domains: demonstrates the use of NLP techniques to solve specific, real-world problems or address specific domain challenges. It focuses on practical implementation, impact, and insights gained from applying NLP methods in various contexts.
+"""
+
+class TypeClsSchema(BaseModel):
+  tasks: bool
+  methodologies: bool
+  datasets: bool
+  evaluation_methods: bool
+  real_world_domains: bool
+
+
+def type_cls_main_prompt(paper):
+   out = f"""Given the following paper title and abstract, can you output a Pythonic list of all paper type labels relevant to this paper. 
+
+"Title": "{paper.title}"
+"Abstract": "{paper.abstract}"
+
+Your output should be in the following JSON format:
+{{
+  "tasks": True,
+  "methodologies": <return True if the paper is a Methodology paper, False otherwise>,
+  "datasets": <return True if the paper is a Dataset paper, False otherwise>,
+  "evaluation_methods": <return True if the paper is an Evaluation paper, False otherwise>,
+  "real_world_domains": <return True if the paper is a Real-World Domain/Application paper, False otherwise>,
+}}
+"""
+   return out
 
 
 def baseline_prompt(paper, node):
