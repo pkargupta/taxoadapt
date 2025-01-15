@@ -1,0 +1,700 @@
+Label: natural_language_processing
+Dimension: tasks
+Description: None
+Level: 0
+# of Papers: 2954
+----------------------------------------
+Children:
+     Label: text_classification
+     Dimension: tasks
+     Description: Assigning predefined categories or labels to text data based on its content.
+     Level: 1
+     # of Papers: 370
+     ----------------------------------------
+     Children:
+          Label: sentiment_analysis
+          Dimension: tasks
+          Description: Determining the sentiment or opinion expressed in a piece of text, typically as positive, negative, or neutral.
+          Level: 1
+          # of Papers: 33
+          ----------------------------------------
+          Children:
+               Label: aspect_based_sentiment_analysis
+               Dimension: tasks
+               Description: Aspect-based sentiment analysis focuses on identifying sentiment towards specific aspects or features within a piece of text, providing more granular insights.
+               Level: 2
+               # of Papers: 11
+               ----------------------------------------
+               Label: emotion_detection
+               Dimension: tasks
+               Description: Emotion detection in sentiment analysis involves identifying and categorizing emotions expressed in text, such as joy, anger, sadness, or fear.
+               Level: 2
+               # of Papers: 2
+               ----------------------------------------
+               Label: opinion_mining
+               Dimension: tasks
+               Description: Opinion mining, also known as sentiment mining, involves extracting subjective information from text to determine sentiment polarity, strength, and opinion holders.
+               Level: 2
+               # of Papers: 17
+               ----------------------------------------
+          ----------------------------------------
+          Label: spam_detection
+          Dimension: tasks
+          Description: Spam detection involves identifying and filtering out unwanted or unsolicited messages, emails, or content from a larger set of text data.
+          Level: 2
+          # of Papers: 1
+          ----------------------------------------
+          Label: document_classification
+          Dimension: tasks
+          Description: Document classification categorizes text documents into predefined classes or categories based on their content or topics.
+          Level: 2
+          # of Papers: 176
+          ----------------------------------------
+          Label: text_generation
+          Dimension: tasks
+          Description: Generating text content based on various input sources or prompts.
+          Level: 1
+          # of Papers: 44
+          ----------------------------------------
+          Children:
+               Label: poetry_generation
+               Dimension: tasks
+               Description: Poetry generation involves creating poems using algorithms that mimic human creativity and language patterns.
+               Level: 2
+               # of Papers: 1
+               ----------------------------------------
+               Label: dialogue_generation
+               Dimension: tasks
+               Description: Dialogue generation focuses on generating conversational responses or interactions between virtual agents or chatbots.
+               Level: 2
+               # of Papers: 3
+               ----------------------------------------
+               Label: story_generation
+               Dimension: tasks
+               Description: Story generation is the process of automatically creating narratives or fictional stories based on predefined themes or prompts.
+               Level: 2
+               # of Papers: 12
+               ----------------------------------------
+               Label: code_generation
+               Dimension: tasks
+               Description: Code generation refers to automatically producing code snippets or scripts based on specific requirements or templates.
+               Level: 2
+               # of Papers: 7
+               ----------------------------------------
+               Label: lyrics_generation
+               Dimension: tasks
+               Description: Lyrics generation involves generating song lyrics, often based on musical styles or themes provided as input.
+               Level: 2
+               # of Papers: 1
+               ----------------------------------------
+          ----------------------------------------
+          Label: emotion_analysis
+          Dimension: tasks
+          Description: Tasks involving the analysis and understanding of emotions expressed in text data.
+          Level: 2
+          # of Papers: 35
+          ----------------------------------------
+          Label: intent_detection
+          Dimension: tasks
+          Description: Tasks focused on identifying the intent or purpose behind a piece of text.
+          Level: 2
+          # of Papers: 29
+          ----------------------------------------
+          Label: event_detection
+          Dimension: tasks
+          Description: Tasks related to detecting and identifying events or occurrences in text data.
+          Level: 2
+          # of Papers: 35
+          ----------------------------------------
+          Label: fact_checking
+          Dimension: tasks
+          Description: Tasks related to verifying the accuracy and truthfulness of information presented in text.
+          Level: 2
+          # of Papers: 71
+          ----------------------------------------
+          Label: abuse_detection
+          Dimension: tasks
+          Description: Tasks involving the detection and identification of abusive or harmful content in text data.
+          Level: 2
+          # of Papers: 35
+          ----------------------------------------
+          Label: information_extraction
+          Dimension: tasks
+          Description: Tasks related to extracting specific pieces of information or entities from text data.
+          Level: 2
+          # of Papers: 92
+          ----------------------------------------
+          Label: bias_detection
+          Dimension: tasks
+          Description: Tasks focused on identifying and analyzing biases present in text data.
+          Level: 2
+          # of Papers: 44
+          ----------------------------------------
+          Label: fake_news_detection
+          Dimension: tasks
+          Description: Tasks related to detecting and classifying fake or misleading news articles.
+          Level: 2
+          # of Papers: 26
+          ----------------------------------------
+          Label: question_answering
+          Dimension: tasks
+          Description: Tasks involving answering questions based on the content of text data.
+          Level: 2
+          # of Papers: 35
+          ----------------------------------------
+     ----------------------------------------
+     Label: named_entity_recognition
+     Dimension: tasks
+     Description: Identifying and classifying named entities mentioned in unstructured text into predefined categories such as names of persons, organizations, locations, etc.
+     Level: 1
+     # of Papers: 189
+     ----------------------------------------
+     Children:
+          Label: person_recognition
+          Dimension: tasks
+          Description: Person recognition is the task of identifying and classifying names of individuals in text data.
+          Level: 2
+          # of Papers: 1
+          ----------------------------------------
+          Label: location_recognition
+          Dimension: tasks
+          Description: Location recognition involves identifying and categorizing place names or geographical locations mentioned in text.
+          Level: 2
+          ----------------------------------------
+          Label: organization_recognition
+          Dimension: tasks
+          Description: Organization recognition focuses on detecting and classifying names of companies, institutions, or groups in textual content.
+          Level: 2
+          ----------------------------------------
+          Label: date_recognition
+          Dimension: tasks
+          Description: Date recognition is the process of identifying and extracting specific dates or date ranges mentioned in text.
+          Level: 2
+          ----------------------------------------
+          Label: event_recognition
+          Dimension: tasks
+          Description: Event recognition entails identifying and categorizing mentions of events, such as conferences, meetings, or sports games, in text data.
+          Level: 2
+          # of Papers: 4
+          ----------------------------------------
+          Label: entity_recognition
+          Dimension: tasks
+          Description: Entity recognition involves identifying and categorizing various types of entities, such as persons, locations, organizations, dates, and events, mentioned in text data.
+          Level: 2
+          # of Papers: 146
+          ----------------------------------------
+          Label: information_extraction
+          Label: text_classification
+          Label: knowledge_distillation
+          Dimension: tasks
+          Description: Knowledge distillation involves transferring knowledge from a complex model to a simpler model to improve efficiency and performance in various recognition tasks.
+          Level: 2
+          # of Papers: 7
+          ----------------------------------------
+          Label: multilingual_text_recognition
+          Dimension: tasks
+          Description: Multilingual text recognition focuses on recognizing and processing text data in multiple languages to support cross-lingual applications.
+          Level: 2
+          # of Papers: 6
+          ----------------------------------------
+     ----------------------------------------
+     Label: sentiment_analysis
+     Label: machine_translation
+     Dimension: tasks
+     Description: Automatically translating text from one language to another while preserving the original meaning.
+     Level: 1
+     # of Papers: 495
+     ----------------------------------------
+     Children:
+          Label: neural_machine_translation
+          Dimension: tasks
+          Description: Neural machine translation is a subcategory of machine translation that uses neural networks to translate text from one language to another.
+          Level: 2
+          # of Papers: 216
+          ----------------------------------------
+          Label: statistical_machine_translation
+          Dimension: tasks
+          Description: Statistical machine translation is a subcategory of machine translation that relies on statistical models to translate text between languages.
+          Level: 2
+          # of Papers: 10
+          ----------------------------------------
+          Label: rule-based_machine_translation
+          Dimension: tasks
+          Description: Rule-based machine translation is a subcategory of machine translation that follows predefined linguistic rules to translate text.
+          Level: 2
+          # of Papers: 8
+          ----------------------------------------
+          Label: corpus-based_machine_translation
+          Dimension: tasks
+          Description: Corpus-based machine translation is a subcategory of machine translation that uses large collections of parallel texts to improve translation accuracy.
+          Level: 2
+          # of Papers: 45
+          ----------------------------------------
+          Label: simultaneous_translation
+          Dimension: tasks
+          Description: Simultaneous translation is a subcategory of machine translation that aims to provide real-time translation as the source text is being spoken or typed.
+          Level: 2
+          # of Papers: 16
+          ----------------------------------------
+          Label: task-oriented_machine_translation
+          Dimension: tasks
+          Description: Task-oriented machine translation focuses on translating text in specific domains or for specific tasks.
+          Level: 2
+          # of Papers: 55
+          ----------------------------------------
+          Label: human-centered_machine_translation
+          Dimension: tasks
+          Description: Human-centered machine translation emphasizes the integration of human input and feedback in the translation process.
+          Level: 2
+          # of Papers: 17
+          ----------------------------------------
+          Label: generative_machine_translation
+          Dimension: tasks
+          Description: Generative machine translation involves the use of generative models to produce translations.
+          Level: 2
+          # of Papers: 204
+          ----------------------------------------
+          Label: privacy_preserving_machine_translation
+          Dimension: tasks
+          Description: Privacy-preserving machine translation focuses on ensuring the confidentiality and security of translated data.
+          Level: 2
+          # of Papers: 6
+          ----------------------------------------
+          Label: multilingual_coreference_resolution
+          Dimension: tasks
+          Description: Multilingual coreference resolution deals with identifying and linking references to the same entity across multiple languages.
+          Level: 2
+          # of Papers: 40
+          ----------------------------------------
+          Label: fine-grained_machine_translation
+          Dimension: tasks
+          Description: Fine-grained machine translation aims to achieve high precision and accuracy in translating nuanced or detailed content.
+          Level: 2
+          # of Papers: 64
+          ----------------------------------------
+          Label: cross-cultural_machine_translation
+          Dimension: tasks
+          Description: Cross-cultural machine translation addresses the challenges of translating text between different cultural contexts.
+          Level: 2
+          # of Papers: 66
+          ----------------------------------------
+          Label: data_quality_machine_translation
+          Dimension: tasks
+          Description: Data quality machine translation focuses on ensuring the accuracy and reliability of translation outputs through data preprocessing and validation.
+          Level: 2
+          # of Papers: 20
+          ----------------------------------------
+          Label: conversational_machine_translation
+          Dimension: tasks
+          Description: Conversational machine translation aims to facilitate natural and fluid communication through translated conversations.
+          Level: 2
+          # of Papers: 43
+          ----------------------------------------
+     ----------------------------------------
+     Label: text_summarization
+     Dimension: tasks
+     Description: Generating a concise and coherent summary of a longer text while retaining its key information and main points.
+     Level: 1
+     # of Papers: 243
+     ----------------------------------------
+     Children:
+          Label: extractive_summarization
+          Dimension: tasks
+          Description: Extractive summarization involves selecting and combining important sentences or phrases from the original text to create a summary.
+          Level: 2
+          # of Papers: 3
+          ----------------------------------------
+          Label: abstractive_summarization
+          Dimension: tasks
+          Description: Abstractive summarization generates a summary by interpreting and paraphrasing the content in a new way, often using natural language generation techniques.
+          Level: 2
+          # of Papers: 20
+          ----------------------------------------
+          Label: single_document_summarization
+          Dimension: tasks
+          Description: Single document summarization focuses on condensing the content of a single document into a shorter form while retaining key information.
+          Level: 2
+          # of Papers: 26
+          ----------------------------------------
+          Label: multi_document_summarization
+          Dimension: tasks
+          Description: Multi-document summarization aims to generate a concise summary by extracting essential information from multiple related documents.
+          Level: 2
+          # of Papers: 6
+          ----------------------------------------
+          Label: text_summarization_tasks
+          Dimension: tasks
+          Description: Text summarization tasks involve condensing and extracting key information from textual data to generate concise summaries.
+          Level: 2
+          # of Papers: 188
+          ----------------------------------------
+          Label: information_extraction_tasks
+          Dimension: tasks
+          Description: Information extraction tasks focus on identifying and extracting specific pieces of information from unstructured text.
+          Level: 2
+          # of Papers: 40
+          ----------------------------------------
+          Label: question_answering_tasks
+          Dimension: tasks
+          Description: Question answering tasks involve automatically generating answers to user queries based on the content of the input text.
+          Level: 2
+          # of Papers: 20
+          ----------------------------------------
+          Label: multi_task_learning_tasks
+          Dimension: tasks
+          Description: Multi-task learning tasks aim to train models to perform multiple related tasks simultaneously to improve overall performance.
+          Level: 2
+          # of Papers: 25
+          ----------------------------------------
+          Label: conversation_analysis_tasks
+          Dimension: tasks
+          Description: Conversation analysis tasks involve studying and analyzing the structure and dynamics of dialogues between individuals.
+          Level: 2
+          # of Papers: 10
+          ----------------------------------------
+          Label: fact_checking_tasks
+          Dimension: tasks
+          Description: Fact-checking tasks focus on verifying the accuracy and truthfulness of claims or statements made in textual content.
+          Level: 2
+          # of Papers: 22
+          ----------------------------------------
+          Label: semantic_segmentation_tasks
+          Dimension: tasks
+          Description: Semantic segmentation tasks involve partitioning and classifying different parts of an input text based on their semantic meaning.
+          Level: 2
+          # of Papers: 7
+          ----------------------------------------
+          Label: language_generation_tasks
+          Dimension: tasks
+          Description: Language generation tasks involve creating coherent and meaningful text based on given prompts or input.
+          Level: 2
+          # of Papers: 52
+          ----------------------------------------
+          Label: document_analysis_tasks
+          Dimension: tasks
+          Description: Document analysis tasks focus on analyzing and extracting information from structured or unstructured documents.
+          Level: 2
+          # of Papers: 33
+          ----------------------------------------
+          Label: contextual_summarization_tasks
+          Dimension: tasks
+          Description: Contextual summarization tasks involve generating summaries that take into account the context and background information of the input text.
+          Level: 2
+          # of Papers: 21
+          ----------------------------------------
+     ----------------------------------------
+     Label: text_generation
+     Label: language_model_evaluation
+     Dimension: tasks
+     Description: Assessing the performance and effectiveness of language models in understanding and generating text.
+     Level: 1
+     # of Papers: 2196
+     ----------------------------------------
+     Children:
+          Label: perplexity_calculation
+          Dimension: tasks
+          Description: Perplexity calculation is a metric used to evaluate the performance of language models by measuring how well the model predicts a sample of text.
+          Level: 2
+          # of Papers: 4
+          ----------------------------------------
+          Label: generation_quality_assessment
+          Dimension: tasks
+          Description: Generation quality assessment involves evaluating the fluency, coherence, and relevance of text generated by language models to assess their overall performance.
+          Level: 2
+          # of Papers: 19
+          ----------------------------------------
+          Label: contextual_embedding_analysis
+          Dimension: tasks
+          Description: Contextual embedding analysis focuses on evaluating the quality and effectiveness of contextual word embeddings generated by language models for various NLP tasks.
+          Level: 2
+          # of Papers: 7
+          ----------------------------------------
+          Label: language_model_evaluation_for_specific_nlp_tasks
+          Dimension: tasks
+          Description: Language model evaluation for specific natural language processing tasks involves assessing the performance and effectiveness of language models tailored to specific NLP applications.
+          Level: 2
+          # of Papers: 1990
+          ----------------------------------------
+          Label: model_compression_evaluation
+          Dimension: tasks
+          Description: Model compression evaluation focuses on assessing techniques to reduce the size of language models while maintaining performance and efficiency.
+          Level: 2
+          # of Papers: 42
+          ----------------------------------------
+          Label: speech_model_evaluation
+          Dimension: tasks
+          Description: Speech model evaluation involves assessing the accuracy and effectiveness of models designed for speech recognition and synthesis tasks.
+          Level: 2
+          # of Papers: 44
+          ----------------------------------------
+          Label: dialogue_coherence_evaluation
+          Dimension: tasks
+          Description: Dialogue coherence evaluation focuses on assessing the flow and logical consistency of conversations generated by language models.
+          Level: 2
+          # of Papers: 42
+          ----------------------------------------
+          Label: knowledge_editing_evaluation
+          Dimension: tasks
+          Description: Knowledge editing evaluation involves assessing techniques to modify and refine the knowledge stored within language models for improved performance.
+          Level: 2
+          # of Papers: 65
+          ----------------------------------------
+          Label: model_efficiency_analysis
+          Dimension: tasks
+          Description: Model efficiency analysis focuses on evaluating the computational efficiency and resource utilization of language models.
+          Level: 2
+          # of Papers: 402
+          ----------------------------------------
+          Label: bias_assessment
+          Dimension: tasks
+          Description: Bias assessment involves evaluating and mitigating biases present in language models to ensure fair and unbiased performance.
+          Level: 2
+          # of Papers: 185
+          ----------------------------------------
+          Label: emotion_recognition_evaluation
+          Dimension: tasks
+          Description: Emotion recognition evaluation focuses on assessing the ability of language models to accurately detect and interpret emotions in text.
+          Level: 2
+          # of Papers: 15
+          ----------------------------------------
+          Label: logical_reasoning_evaluation
+          Dimension: tasks
+          Description: Logical reasoning evaluation involves assessing the ability of language models to perform logical reasoning tasks and draw valid conclusions.
+          Level: 2
+          # of Papers: 148
+          ----------------------------------------
+          Label: knowledge_graph_evaluation
+          Dimension: tasks
+          Description: Knowledge graph evaluation focuses on assessing the accuracy and completeness of knowledge graphs generated or utilized by language models.
+          Level: 2
+          # of Papers: 25
+          ----------------------------------------
+     ----------------------------------------
+     Label: knowledge_representation
+     Dimension: tasks
+     Description: Creating structured representations of knowledge for efficient processing and retrieval.
+     Level: 1
+     # of Papers: 1111
+     ----------------------------------------
+     Children:
+          Label: semantic_networks
+          Dimension: tasks
+          Description: Semantic networks are a knowledge representation technique that represents concepts as nodes and relationships between concepts as edges.
+          Level: 2
+          ----------------------------------------
+          Label: ontology_engineering
+          Dimension: tasks
+          Description: Ontology engineering involves creating structured representations of knowledge that specify the concepts and relationships within a domain.
+          Level: 2
+          # of Papers: 3
+          ----------------------------------------
+          Label: concept_mapping
+          Dimension: tasks
+          Description: Concept mapping is a technique used to visually represent relationships between concepts in a knowledge domain.
+          Level: 2
+          ----------------------------------------
+          Label: knowledge_graphs
+          Dimension: tasks
+          Description: Knowledge graphs organize information into entities and relationships, enabling semantic queries and inference.
+          Level: 2
+          # of Papers: 203
+          ----------------------------------------
+          Label: frame-based_representation
+          Dimension: tasks
+          Description: Frame-based representation structures knowledge into frames containing slots for properties and values, facilitating reasoning.
+          Level: 2
+          # of Papers: 3
+          ----------------------------------------
+          Label: representation_in_nlp
+          Dimension: tasks
+          Description: Representation in natural language processing involves encoding textual data into a format suitable for machine learning models to process and understand.
+          Level: 2
+          # of Papers: 1032
+          ----------------------------------------
+          Label: interpretability_methods
+          Dimension: tasks
+          Description: Interpretability methods focus on techniques that aim to explain and make machine learning models more transparent and understandable to humans.
+          Level: 2
+          # of Papers: 102
+          ----------------------------------------
+          Label: knowledge_embedding
+          Dimension: tasks
+          Description: Knowledge embedding techniques aim to represent structured knowledge in a continuous vector space to enable efficient information retrieval and reasoning.
+          Level: 2
+          # of Papers: 766
+          ----------------------------------------
+          Label: multimodal_representation
+          Dimension: tasks
+          Description: Multimodal representation involves integrating and encoding information from multiple modalities such as text, images, and audio into a unified representation for machine learning tasks.
+          Level: 2
+          # of Papers: 160
+          ----------------------------------------
+          Label: bias_detection
+     ----------------------------------------
+     Label: reasoning_analysis
+     Dimension: tasks
+     Description: Examining the logic and inference processes involved in understanding and generating text.
+     Level: 1
+     # of Papers: 1107
+     ----------------------------------------
+     Children:
+          Label: deductive_reasoning
+          Dimension: tasks
+          Description: Deductive reasoning involves drawing specific conclusions from general principles or premises.
+          Level: 2
+          # of Papers: 17
+          ----------------------------------------
+          Label: inductive_reasoning
+          Dimension: tasks
+          Description: Inductive reasoning is the process of making generalized conclusions based on specific observations or evidence.
+          Level: 2
+          # of Papers: 2
+          ----------------------------------------
+          Label: abductive_reasoning
+          Dimension: tasks
+          Description: Abductive reasoning is a form of logical inference that seeks to find the simplest and most likely explanation for observed phenomena.
+          Level: 2
+          # of Papers: 7
+          ----------------------------------------
+          Label: analogical_reasoning
+          Dimension: tasks
+          Description: Analogical reasoning involves using analogies or similarities between different situations to make inferences or draw conclusions.
+          Level: 2
+          # of Papers: 5
+          ----------------------------------------
+          Label: causal_reasoning
+          Dimension: tasks
+          Description: Causal reasoning focuses on understanding the cause-and-effect relationships between events or phenomena.
+          Level: 2
+          # of Papers: 41
+          ----------------------------------------
+          Label: explanatory_reasoning
+          Dimension: tasks
+          Description: Explanatory reasoning involves providing explanations or justifications for observed phenomena or outcomes.
+          Level: 2
+          # of Papers: 59
+          ----------------------------------------
+          Label: interpretation_analysis
+          Dimension: tasks
+          Description: Interpretation analysis focuses on understanding and interpreting complex data or information to derive meaningful insights.
+          Level: 2
+          # of Papers: 701
+          ----------------------------------------
+          Label: argumentation_analysis
+          Dimension: tasks
+          Description: Argumentation analysis involves analyzing and evaluating the structure and validity of arguments presented in a given context.
+          Level: 2
+          # of Papers: 337
+          ----------------------------------------
+          Label: inference_learning
+          Dimension: tasks
+          Description: Inference learning pertains to the process of acquiring and improving the ability to make logical deductions or conclusions based on available information.
+          Level: 2
+          # of Papers: 254
+          ----------------------------------------
+          Label: knowledge_editing
+          Dimension: tasks
+          Description: Knowledge editing involves refining and updating existing knowledge bases or information repositories for accuracy and relevance.
+          Level: 2
+          # of Papers: 18
+          ----------------------------------------
+          Label: collaborative_problem_solving
+          Dimension: tasks
+          Description: Collaborative problem-solving focuses on working together with others to address complex issues or challenges through collective reasoning and decision-making.
+          Level: 2
+          # of Papers: 39
+          ----------------------------------------
+          Label: ethical_reasoning
+          Dimension: tasks
+          Description: Ethical reasoning involves applying moral principles and values to make decisions or judgments in various situations.
+          Level: 2
+          # of Papers: 6
+          ----------------------------------------
+          Label: model_based_reasoning
+          Dimension: tasks
+          Description: Model-based reasoning involves using conceptual or computational models to simulate and analyze complex systems or phenomena.
+          Level: 2
+          # of Papers: 591
+          ----------------------------------------
+          Label: reinforcement_learning
+          Dimension: tasks
+          Description: Reinforcement learning is a type of machine learning where agents learn to make decisions by receiving feedback from their actions.
+          Level: 2
+          # of Papers: 44
+          ----------------------------------------
+          Label: social_inference
+          Dimension: tasks
+          Description: Social inference focuses on understanding and predicting social behaviors or intentions based on available cues or information.
+          Level: 2
+          # of Papers: 24
+          ----------------------------------------
+     ----------------------------------------
+     Label: adversarial_attack_defense
+     Dimension: tasks
+     Description: Developing strategies to protect natural language processing models from adversarial attacks.
+     Level: 1
+     # of Papers: 504
+     ----------------------------------------
+     Children:
+          Label: adversarial_image_generation
+          Dimension: tasks
+          Description: Adversarial image generation involves creating images that are intentionally designed to deceive image recognition systems.
+          Level: 2
+          # of Papers: 4
+          ----------------------------------------
+          Label: adversarial_text_generation
+          Dimension: tasks
+          Description: Adversarial text generation focuses on generating text that can fool natural language processing models, such as generating misleading or incorrect information.
+          Level: 2
+          # of Papers: 29
+          ----------------------------------------
+          Label: adversarial_reinforcement_learning
+          Dimension: tasks
+          Description: Adversarial reinforcement learning explores techniques where agents learn to defend against adversarial attacks during the training process to improve robustness.
+          Level: 2
+          # of Papers: 6
+          ----------------------------------------
+          Label: adversarial_audio_manipulation
+          Dimension: tasks
+          Description: Adversarial audio manipulation involves crafting audio signals that can deceive speech recognition systems or trigger unintended responses.
+          Level: 2
+          # of Papers: 7
+          ----------------------------------------
+          Label: adversarial_defense_evaluation
+          Dimension: tasks
+          Description: Adversarial defense evaluation assesses the effectiveness of defense mechanisms against various types of adversarial attacks to enhance system security.
+          Level: 2
+          # of Papers: 189
+          ----------------------------------------
+          Label: adversarial_data_generation
+          Dimension: tasks
+          Description: Adversarial data generation involves creating synthetic data that can deceive machine learning models, aiming to improve model robustness and security.
+          Level: 2
+          # of Papers: 56
+          ----------------------------------------
+          Label: adversarial_language_model_debiasing
+          Dimension: tasks
+          Description: Adversarial language model debiasing focuses on mitigating biases present in language models to ensure fair and unbiased language processing outcomes.
+          Level: 2
+          # of Papers: 102
+          ----------------------------------------
+          Label: adversarial_model_compression
+          Dimension: tasks
+          Description: Adversarial model compression refers to techniques that reduce the size of machine learning models while maintaining their performance, often to enhance efficiency and deployment in resource-constrained environments.
+          Level: 2
+          # of Papers: 23
+          ----------------------------------------
+          Label: adversarial_transfer_learning
+          Dimension: tasks
+          Description: Adversarial transfer learning explores methods of transferring knowledge from one machine learning task to another, even in the presence of adversarial attacks, to improve model generalization and adaptation.
+          Level: 2
+          # of Papers: 13
+          ----------------------------------------
+          Label: adversarial_language_generation
+          Dimension: tasks
+          Description: Adversarial language generation involves generating text or speech that can deceive natural language processing systems, with a focus on understanding and countering adversarial language patterns.
+          Level: 2
+          # of Papers: 125
+          ----------------------------------------
+     ----------------------------------------
+----------------------------------------

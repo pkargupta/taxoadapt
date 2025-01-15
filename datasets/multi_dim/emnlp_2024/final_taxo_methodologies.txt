@@ -1,0 +1,283 @@
+Label: natural_language_processing
+Dimension: methodologies
+Description: None
+Level: 0
+# of Papers: 2387
+----------------------------------------
+Children:
+     Label: neural_networks
+     Dimension: methodologies
+     Description: Methodologies that utilize artificial neural networks to process and analyze natural language data, such as recurrent neural networks (RNNs) and transformers.
+     Level: 1
+     # of Papers: 441
+     ----------------------------------------
+     Children:
+          Label: convolutional_neural_networks
+          Dimension: methodologies
+          Description: Convolutional Neural Networks (CNNs) are a type of neural network commonly used for image recognition and computer vision tasks.
+          Level: 2
+          # of Papers: 1
+          ----------------------------------------
+          Label: recurrent_neural_networks
+          Dimension: methodologies
+          Description: Recurrent Neural Networks (RNNs) are designed to handle sequential data by maintaining a memory of previous inputs.
+          Level: 2
+          # of Papers: 7
+          ----------------------------------------
+          Label: generative_adversarial_networks
+          Dimension: methodologies
+          Description: Generative Adversarial Networks (GANs) consist of two neural networks, a generator and a discriminator, that compete against each other to generate realistic data.
+          Level: 2
+          # of Papers: 45
+          ----------------------------------------
+          Label: long_short_term_memory
+          Dimension: methodologies
+          Description: Long Short-Term Memory (LSTM) networks are a type of RNN architecture that can learn long-term dependencies in data.
+          Level: 2
+          # of Papers: 10
+          ----------------------------------------
+          Label: autoencoders
+          Dimension: methodologies
+          Description: Autoencoders are neural networks trained to copy their input data to the output, used for tasks like data denoising and dimensionality reduction.
+          Level: 2
+          # of Papers: 6
+          ----------------------------------------
+          Label: sequence_neural_networks
+          Dimension: methodologies
+          Description: Sequence Neural Networks are a type of neural network architecture designed to process sequential data efficiently.
+          Level: 2
+          # of Papers: 66
+          ----------------------------------------
+          Label: transformers
+          Dimension: methodologies
+          Description: Transformers are a class of neural network models that excel in capturing long-range dependencies in data through self-attention mechanisms.
+          Level: 2
+          # of Papers: 119
+          ----------------------------------------
+          Label: multi_model_neural_networks
+          Dimension: methodologies
+          Description: Multi-Model Neural Networks refer to architectures that integrate multiple modalities of data for improved performance in various tasks.
+          Level: 2
+          # of Papers: 93
+          ----------------------------------------
+          Label: multi_label_text_classification
+          Dimension: methodologies
+          Description: Multi-Label Text Classification involves assigning multiple labels to a single text instance based on its content.
+          Level: 2
+          # of Papers: 220
+          ----------------------------------------
+          Label: knowledge_distillation
+          Dimension: methodologies
+          Description: Knowledge Distillation is a technique where a smaller neural network is trained to mimic the behavior of a larger, more complex model.
+          Level: 2
+          # of Papers: 205
+          ----------------------------------------
+          Label: reinforcement_learning_neural_networks
+          Dimension: methodologies
+          Description: Reinforcement Learning Neural Networks combine neural network architectures with reinforcement learning algorithms to learn optimal decision-making policies.
+          Level: 2
+          # of Papers: 33
+          ----------------------------------------
+          Label: neural_text_classification
+          Dimension: methodologies
+          Description: Neural Text Classification involves using neural networks to automatically categorize text data into predefined classes or categories.
+          Level: 2
+          # of Papers: 179
+          ----------------------------------------
+          Label: multi_task_learning
+          Dimension: methodologies
+          Description: Multi-Task Learning is a machine learning paradigm where a single model is trained to perform multiple tasks simultaneously, improving overall performance.
+          Level: 2
+          # of Papers: 192
+          ----------------------------------------
+          Label: graph_neural_networks
+          Dimension: methodologies
+          Description: Graph Neural Networks are specialized neural network architectures designed to operate on graph-structured data, capturing relational information effectively.
+          Level: 2
+          # of Papers: 61
+          ----------------------------------------
+          Label: unsupervised_learning
+          Dimension: methodologies
+          Description: Unsupervised Learning refers to machine learning tasks where models are trained on unlabeled data, extracting patterns and structures without explicit supervision.
+          Level: 2
+          # of Papers: 148
+          ----------------------------------------
+     ----------------------------------------
+     Label: statistical_methods
+     Dimension: methodologies
+     Description: Methodologies that rely on statistical models and techniques to extract meaning from text data, including probabilistic graphical models and Bayesian approaches.
+     Level: 1
+     # of Papers: 64
+     ----------------------------------------
+     Children:
+          Label: hypothesis_testing
+          Dimension: methodologies
+          Description: Hypothesis testing is a statistical method used to make inferences about a population based on sample data.
+          Level: 2
+          # of Papers: 12
+          ----------------------------------------
+          Label: regression_analysis
+          Dimension: methodologies
+          Description: Regression analysis is a statistical technique used to understand the relationship between a dependent variable and one or more independent variables.
+          Level: 2
+          # of Papers: 4
+          ----------------------------------------
+          Label: anova
+          Dimension: methodologies
+          Description: Analysis of Variance (ANOVA) is a statistical method used to analyze the differences among group means in a sample.
+          Level: 2
+          # of Papers: 1
+          ----------------------------------------
+          Label: factor_analysis
+          Dimension: methodologies
+          Description: Factor analysis is a statistical method used to identify underlying factors that explain patterns of correlations among variables.
+          Level: 2
+          # of Papers: 6
+          ----------------------------------------
+          Label: time_series_analysis
+          Dimension: methodologies
+          Description: Time series analysis is a statistical method used to analyze data points collected over time to understand trends and patterns.
+          Level: 2
+          # of Papers: 2
+          ----------------------------------------
+     ----------------------------------------
+     Label: rule-based_systems
+     Dimension: methodologies
+     Description: Methodologies that employ predefined rules and patterns to interpret and generate human language, often used in chatbots and information retrieval systems.
+     Level: 1
+     # of Papers: 48
+     ----------------------------------------
+     Label: deep_learning
+     Dimension: methodologies
+     Description: Methodologies that involve deep learning architectures, such as convolutional neural networks (CNNs) and deep belief networks, to enhance natural language understanding and generation.
+     Level: 1
+     # of Papers: 2146
+     ----------------------------------------
+     Children:
+          Label: convolutional_neural_networks
+          Label: recurrent_neural_networks
+          Label: generative_adversarial_networks
+          Label: reinforcement_learning
+          Dimension: methodologies
+          Description: Reinforcement Learning is a type of machine learning paradigm where an agent learns to make decisions by interacting with an environment and receiving rewards or penalties.
+          Level: 2
+          # of Papers: 186
+          ----------------------------------------
+          Label: transformer_networks
+          Dimension: methodologies
+          Description: Transformer Networks are a type of deep learning model that processes input data in parallel using self-attention mechanisms, enabling effective modeling of long-range dependencies.
+          Level: 2
+          # of Papers: 763
+          ----------------------------------------
+          Label: attention_mechanisms
+          Dimension: methodologies
+          Description: Attention Mechanisms are a type of deep learning technique that allows models to focus on specific parts of input data, improving performance in tasks such as machine translation and image captioning.
+          Level: 2
+          # of Papers: 404
+          ----------------------------------------
+          Label: transfer_learning
+          Dimension: methodologies
+          Description: Transfer Learning involves leveraging knowledge from one task to improve learning and performance on a related task, reducing the need for large amounts of labeled data.
+          Level: 2
+          # of Papers: 891
+          ----------------------------------------
+          Label: representation_learning
+          Dimension: methodologies
+          Description: Representation Learning focuses on automatically discovering and learning the most meaningful features or representations of data, leading to better performance in downstream tasks.
+          Level: 2
+          # of Papers: 1574
+          ----------------------------------------
+          Label: model_training
+          Dimension: methodologies
+          Description: Model Training encompasses the process of optimizing model parameters using algorithms like gradient descent to minimize prediction errors and improve overall model performance.
+          Level: 2
+          # of Papers: 1515
+          ----------------------------------------
+          Label: supervised_learning
+          Dimension: methodologies
+          Description: Supervised Learning is a machine learning paradigm where models are trained on labeled data to make predictions or decisions based on input-output pairs.
+          Level: 2
+          # of Papers: 1595
+          ----------------------------------------
+     ----------------------------------------
+     Label: machine_translation
+     Dimension: methodologies
+     Description: Methodologies focused on translating text from one language to another using techniques like sequence-to-sequence models and attention mechanisms.
+     Level: 1
+     # of Papers: 666
+     ----------------------------------------
+     Children:
+          Label: neural_machine_translation
+          Dimension: methodologies
+          Description: Neural machine translation is a methodology that uses neural networks to translate text from one language to another, achieving state-of-the-art results in machine translation tasks.
+          Level: 2
+          # of Papers: 144
+          ----------------------------------------
+          Label: statistical_machine_translation
+          Dimension: methodologies
+          Description: Statistical machine translation is a methodology that relies on statistical models to translate text between languages, based on patterns and probabilities learned from large corpora of parallel texts.
+          Level: 2
+          # of Papers: 1
+          ----------------------------------------
+          Label: rule-based_machine_translation
+          Dimension: methodologies
+          Description: Rule-based machine translation is a methodology that translates text by following predefined linguistic rules and dictionaries, often used for specific language pairs with well-defined grammar rules.
+          Level: 2
+          # of Papers: 2
+          ----------------------------------------
+          Label: hybrid_machine_translation
+          Dimension: methodologies
+          Description: Hybrid machine translation combines different approaches such as rule-based, statistical, and neural methods to improve translation quality by leveraging the strengths of each approach.
+          Level: 2
+          # of Papers: 12
+          ----------------------------------------
+          Label: deep_learning_based_machine_translation
+          Dimension: methodologies
+          Description: Deep learning-based machine translation involves using neural networks to improve the quality and accuracy of translation tasks.
+          Level: 2
+          # of Papers: 276
+          ----------------------------------------
+          Label: adversarial_machine_translation
+          Dimension: methodologies
+          Description: Adversarial machine translation focuses on developing systems that can withstand adversarial attacks and maintain translation quality.
+          Level: 2
+          # of Papers: 9
+          ----------------------------------------
+          Label: fine-tuning
+          Dimension: methodologies
+          Description: Fine-tuning in machine translation refers to the process of adjusting pre-trained models to improve performance on specific translation tasks.
+          Level: 2
+          # of Papers: 339
+          ----------------------------------------
+          Label: transformer_based_machine_translation
+          Dimension: methodologies
+          Description: Transformer-based machine translation utilizes transformer architecture to enhance translation capabilities by capturing long-range dependencies.
+          Level: 2
+          # of Papers: 266
+          ----------------------------------------
+          Label: unsupervised_machine_translation
+          Dimension: methodologies
+          Description: Unsupervised machine translation aims to translate text between languages without relying on parallel corpora or human annotations.
+          Level: 2
+          # of Papers: 16
+          ----------------------------------------
+          Label: multi-modal_machine_translation
+          Dimension: methodologies
+          Description: Multi-modal machine translation integrates information from different modalities such as text and images to enhance translation accuracy and context understanding.
+          Level: 2
+          # of Papers: 100
+          ----------------------------------------
+          Label: interpretable_machine_translation
+          Dimension: methodologies
+          Description: Interpretable machine translation focuses on developing models that provide transparent and understandable translations, aiding in human comprehension and trust.
+          Level: 2
+          # of Papers: 38
+          ----------------------------------------
+          Label: explainable_machine_translation
+          Dimension: methodologies
+          Description: Explainable machine translation aims to provide clear explanations for translation decisions made by the model, enhancing transparency and interpretability.
+          Level: 2
+          # of Papers: 40
+          ----------------------------------------
+     ----------------------------------------
+----------------------------------------

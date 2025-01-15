@@ -1,0 +1,531 @@
+Label: natural_language_processing
+Dimension: real_world_domains
+Description: None
+Level: 0
+# of Papers: 1033
+----------------------------------------
+Children:
+     Label: product_recommendation_systems
+     Dimension: real_world_domains
+     Description: Involves using NLP techniques to analyze user preferences and recommend products based on text data such as reviews or descriptions.
+     Level: 1
+     # of Papers: 43
+     ----------------------------------------
+     Label: medical_record_summarization
+     Dimension: real_world_domains
+     Description: Focuses on summarizing and extracting key information from medical records using NLP methods to aid healthcare professionals in decision-making.
+     Level: 1
+     # of Papers: 16
+     ----------------------------------------
+     Label: sentiment_analysis_in_social_media
+     Dimension: real_world_domains
+     Description: Applies NLP to analyze and understand sentiment expressed in social media posts, comments, and reviews to gauge public opinion or sentiment trends.
+     Level: 1
+     # of Papers: 51
+     ----------------------------------------
+     Children:
+          Label: brand_sentiment_analysis
+          Dimension: real_world_domains
+          Description: Brand sentiment analysis focuses on analyzing public sentiment towards specific brands or products on social media platforms.
+          Level: 2
+          ----------------------------------------
+          Label: political_sentiment_analysis
+          Dimension: real_world_domains
+          Description: Political sentiment analysis involves analyzing public sentiment towards political figures, parties, or issues on social media.
+          Level: 2
+          # of Papers: 7
+          ----------------------------------------
+          Label: event_sentiment_analysis
+          Dimension: real_world_domains
+          Description: Event sentiment analysis aims to analyze the sentiment of social media users towards specific events or occurrences.
+          Level: 2
+          # of Papers: 7
+          ----------------------------------------
+          Label: product_review_sentiment_analysis
+          Dimension: real_world_domains
+          Description: Product review sentiment analysis focuses on analyzing sentiment expressed in user reviews of products or services on social media.
+          Level: 2
+          # of Papers: 4
+          ----------------------------------------
+          Label: celebrity_sentiment_analysis
+          Dimension: real_world_domains
+          Description: Celebrity sentiment analysis involves analyzing public sentiment towards celebrities or public figures on social media platforms.
+          Level: 2
+          # of Papers: 2
+          ----------------------------------------
+     ----------------------------------------
+     Label: legal_document_analysis
+     Dimension: real_world_domains
+     Description: Utilizes NLP to process and extract insights from legal documents, contracts, and court cases to assist legal professionals in research and analysis.
+     Level: 1
+     # of Papers: 47
+     ----------------------------------------
+     Label: customer_feedback_analysis
+     Dimension: real_world_domains
+     Description: Involves using NLP to analyze and extract insights from customer feedback, reviews, and surveys to understand customer sentiment and improve products or services.
+     Level: 1
+     # of Papers: 16
+     ----------------------------------------
+     Label: clinical_decision_support
+     Dimension: real_world_domains
+     Description: Involves utilizing NLP techniques to provide decision-making support in clinical settings based on analysis of medical data.
+     Level: 1
+     # of Papers: 70
+     ----------------------------------------
+     Children:
+          Label: diagnosis_support
+          Dimension: real_world_domains
+          Description: Diagnosis support systems within clinical decision support assist healthcare professionals in accurately identifying and diagnosing medical conditions based on patient data and symptoms.
+          Level: 2
+          # of Papers: 34
+          ----------------------------------------
+          Label: treatment_recommendation
+          Dimension: real_world_domains
+          Description: Treatment recommendation tools provide healthcare providers with evidence-based suggestions for the most effective treatment plans and interventions for individual patients.
+          Level: 2
+          # of Papers: 23
+          ----------------------------------------
+          Label: patient_monitoring
+          Dimension: real_world_domains
+          Description: Patient monitoring systems in clinical decision support continuously track and analyze patient data to alert healthcare professionals of any significant changes in health status or treatment effectiveness.
+          Level: 2
+          # of Papers: 12
+          ----------------------------------------
+     ----------------------------------------
+     Label: multimodal_misinformation_detection
+     Dimension: real_world_domains
+     Description: Focuses on detecting and combating misinformation across various modalities using NLP methods.
+     Level: 1
+     # of Papers: 58
+     ----------------------------------------
+     Children:
+          Label: visual_misinformation_detection
+          Dimension: real_world_domains
+          Description: Visual misinformation detection focuses on identifying misleading or false information within images and videos to combat misinformation spread through visual content.
+          Level: 2
+          # of Papers: 13
+          ----------------------------------------
+          Label: audio_misinformation_detection
+          Dimension: real_world_domains
+          Description: Audio misinformation detection involves detecting deceptive or false information conveyed through audio recordings or speech to address misinformation in multimedia content.
+          Level: 2
+          # of Papers: 3
+          ----------------------------------------
+          Label: social_media_misinformation_detection
+          Dimension: real_world_domains
+          Description: Social media misinformation detection aims to detect and combat false or misleading information spread through social media platforms, considering the unique challenges posed by social networks.
+          Level: 2
+          # of Papers: 12
+          ----------------------------------------
+          Label: deepfake_detection
+          Dimension: real_world_domains
+          Description: Deepfake detection is the process of identifying digitally manipulated media, such as videos or images, created using artificial intelligence techniques to deceive viewers, contributing to the fight against deceptive content.
+          Level: 2
+          # of Papers: 1
+          ----------------------------------------
+     ----------------------------------------
+     Label: code_documentation_generation
+     Dimension: real_world_domains
+     Description: Refers to automatically generating documentation for code using natural language processing techniques.
+     Level: 1
+     # of Papers: 26
+     ----------------------------------------
+     Label: emotion_analysis_in_social_media
+     Dimension: real_world_domains
+     Description: Entails analyzing and understanding emotions expressed in social media content through NLP for sentiment analysis.
+     Level: 1
+     # of Papers: 21
+     ----------------------------------------
+     Label: text_attack_detection
+     Dimension: real_world_domains
+     Description: Involves identifying and mitigating attacks on text data using NLP-based detection methods.
+     Level: 1
+     # of Papers: 106
+     ----------------------------------------
+     Children:
+          Label: adversarial_text_generation
+          Dimension: real_world_domains
+          Description: Adversarial text generation involves creating text that is designed to deceive text attack detection systems.
+          Level: 2
+          # of Papers: 29
+          ----------------------------------------
+          Label: plagiarism_detection
+          Dimension: real_world_domains
+          Description: Plagiarism detection focuses on identifying instances where text has been copied or closely paraphrased without proper attribution.
+          Level: 2
+          # of Papers: 4
+          ----------------------------------------
+          Label: hate_speech_detection
+          Dimension: real_world_domains
+          Description: Hate speech detection aims to identify and classify text that contains offensive language or promotes discrimination against specific groups.
+          Level: 2
+          # of Papers: 21
+          ----------------------------------------
+          Label: fake_news_detection
+          Dimension: real_world_domains
+          Description: Fake news detection involves identifying and flagging news articles or information that is intentionally misleading or fabricated.
+          Level: 2
+          # of Papers: 24
+          ----------------------------------------
+          Label: rumor_detection
+          Dimension: real_world_domains
+          Description: Rumor detection focuses on identifying and verifying the accuracy of information that is spreading rapidly through text-based communication channels.
+          Level: 2
+          # of Papers: 11
+          ----------------------------------------
+     ----------------------------------------
+     Label: named_entity_recognition
+     Dimension: real_world_domains
+     Description: Focuses on identifying and classifying named entities in text data using NLP algorithms.
+     Level: 1
+     # of Papers: 272
+     ----------------------------------------
+     Children:
+          Label: person_names
+          Dimension: real_world_domains
+          Description: Identifying and extracting names of individuals from text data.
+          Level: 2
+          # of Papers: 1
+          ----------------------------------------
+          Label: location_names
+          Dimension: real_world_domains
+          Description: Recognizing and extracting names of places, cities, countries, or regions from text.
+          Level: 2
+          # of Papers: 4
+          ----------------------------------------
+          Label: organization_names
+          Dimension: real_world_domains
+          Description: Detecting and extracting names of companies, institutions, or organizations mentioned in text.
+          Level: 2
+          # of Papers: 5
+          ----------------------------------------
+          Label: date_entities
+          Dimension: real_world_domains
+          Description: Identifying and extracting specific dates or date ranges mentioned in text.
+          Level: 2
+          ----------------------------------------
+          Label: event_names
+          Dimension: real_world_domains
+          Description: Recognizing and extracting names of events, conferences, or incidents from textual data.
+          Level: 2
+          # of Papers: 5
+          ----------------------------------------
+          Label: textual_entities
+          Dimension: real_world_domains
+          Description: Identifying and extracting various types of textual entities from text data.
+          Level: 2
+          # of Papers: 39
+          ----------------------------------------
+          Label: meeting_names
+          Dimension: real_world_domains
+          Description: Recognizing and extracting names of meetings, conferences, or gatherings from textual data.
+          Level: 2
+          # of Papers: 2
+          ----------------------------------------
+          Label: material_names
+          Dimension: real_world_domains
+          Description: Detecting and extracting names of materials or substances mentioned in text.
+          Level: 2
+          # of Papers: 2
+          ----------------------------------------
+          Label: group_names
+          Dimension: real_world_domains
+          Description: Identifying and extracting names of different groups or organizations from text.
+          Level: 2
+          # of Papers: 2
+          ----------------------------------------
+          Label: technology_names
+          Dimension: real_world_domains
+          Description: Recognizing and extracting names of different technologies or tools mentioned in text.
+          Level: 2
+          # of Papers: 40
+          ----------------------------------------
+          Label: annotation_tools
+          Dimension: real_world_domains
+          Description: Identifying and extracting tools or software used for annotation purposes in text data.
+          Level: 2
+          # of Papers: 10
+          ----------------------------------------
+          Label: platform_names
+          Dimension: real_world_domains
+          Description: Detecting and extracting names of various platforms or systems mentioned in text.
+          Level: 2
+          # of Papers: 8
+          ----------------------------------------
+          Label: language_models
+          Dimension: real_world_domains
+          Description: Recognizing and extracting different language models or frameworks used in text processing.
+          Level: 2
+          # of Papers: 115
+          ----------------------------------------
+          Label: data_types
+          Dimension: real_world_domains
+          Description: Identifying and extracting different types of data structures or formats mentioned in text.
+          Level: 2
+          # of Papers: 21
+          ----------------------------------------
+          Label: knowledge_graphs
+          Dimension: real_world_domains
+          Description: Detecting and extracting information related to knowledge graphs or structured knowledge representations.
+          Level: 2
+          # of Papers: 22
+          ----------------------------------------
+     ----------------------------------------
+     Label: text_classification
+     Dimension: real_world_domains
+     Description: Refers to categorizing text data into predefined classes or categories using NLP techniques.
+     Level: 1
+     # of Papers: 362
+     ----------------------------------------
+     Children:
+          Label: sentiment_analysis
+          Dimension: real_world_domains
+          Description: Sentiment analysis is the process of determining the emotional tone behind a series of words, often used to gauge public opinion or sentiment towards a particular topic.
+          Level: 2
+          # of Papers: 7
+          ----------------------------------------
+          Label: spam_detection
+          Dimension: real_world_domains
+          Description: Spam detection involves identifying and filtering out unwanted or unsolicited messages, typically in emails or online communication channels.
+          Level: 2
+          ----------------------------------------
+          Label: document_classification
+          Dimension: real_world_domains
+          Description: Document classification is the categorization of documents into predefined classes or categories based on their content, helping in organizing and retrieving information efficiently.
+          Level: 2
+          # of Papers: 33
+          ----------------------------------------
+          Label: text_representation
+          Dimension: real_world_domains
+          Description: Text representation involves converting textual data into a format suitable for machine learning algorithms to process and analyze.
+          Level: 2
+          # of Papers: 181
+          ----------------------------------------
+          Label: language_classification
+          Dimension: real_world_domains
+          Description: Language classification focuses on categorizing text or speech data into different languages or language families.
+          Level: 2
+          # of Papers: 13
+          ----------------------------------------
+          Label: conversational_analysis
+          Dimension: real_world_domains
+          Description: Conversational analysis examines the structure and dynamics of human conversations, often involving natural language processing techniques.
+          Level: 2
+          # of Papers: 85
+          ----------------------------------------
+          Label: multimodal_text_classification
+          Dimension: real_world_domains
+          Description: Multimodal text classification deals with the classification of text data that incorporates multiple modalities such as text, images, and audio.
+          Level: 2
+          # of Papers: 132
+          ----------------------------------------
+          Label: question_answering
+          Dimension: real_world_domains
+          Description: Question answering involves developing systems that can automatically provide accurate responses to user queries based on textual information.
+          Level: 2
+          # of Papers: 108
+          ----------------------------------------
+          Label: text_summarization
+          Dimension: real_world_domains
+          Description: Text summarization focuses on condensing large amounts of text into shorter, coherent summaries while preserving key information.
+          Level: 2
+          # of Papers: 52
+          ----------------------------------------
+          Label: multilingual_translation
+          Dimension: real_world_domains
+          Description: Multilingual translation involves translating text between multiple languages to facilitate cross-lingual communication.
+          Level: 2
+          # of Papers: 80
+          ----------------------------------------
+          Label: privacy_preservation
+          Dimension: real_world_domains
+          Description: Privacy preservation addresses techniques and methods to protect sensitive information and maintain user privacy in data processing tasks.
+          Level: 2
+          # of Papers: 10
+          ----------------------------------------
+          Label: bias_detection
+          Dimension: real_world_domains
+          Description: Bias detection aims to identify and mitigate biases present in datasets or models to ensure fair and unbiased decision-making processes.
+          Level: 2
+          # of Papers: 66
+          ----------------------------------------
+          Label: cybersecurity
+          Dimension: real_world_domains
+          Description: Cybersecurity focuses on safeguarding computer systems, networks, and data from unauthorized access, cyber attacks, and data breaches.
+          Level: 2
+          # of Papers: 41
+          ----------------------------------------
+     ----------------------------------------
+     Label: text_generation
+     Dimension: real_world_domains
+     Description: Involves generating human-like text content using natural language processing models.
+     Level: 1
+     # of Papers: 468
+     ----------------------------------------
+     Children:
+          Label: poetry_generation
+          Dimension: real_world_domains
+          Description: Poetry generation involves the automatic creation of poems using algorithms and natural language processing techniques.
+          Level: 2
+          ----------------------------------------
+          Label: code_generation
+          Dimension: real_world_domains
+          Description: Code generation is the process of automatically producing source code or scripts based on predefined templates or rules, often used in software development and automation tasks.
+          Level: 2
+          # of Papers: 3
+          ----------------------------------------
+          Label: lyrics_generation
+          Dimension: real_world_domains
+          Description: Lyrics generation focuses on creating song lyrics through computational methods, mimicking the style and structure of human-written lyrics.
+          Level: 2
+          ----------------------------------------
+          Label: story_generation
+          Dimension: real_world_domains
+          Description: Story generation refers to the automated creation of narratives, plots, and storytelling elements, often used in interactive fiction, chatbots, and creative writing applications.
+          Level: 2
+          # of Papers: 17
+          ----------------------------------------
+          Label: text_generation_control
+          Dimension: real_world_domains
+          Description: Text generation control involves techniques and methods for managing and directing the output of text generation models to ensure desired outcomes and quality.
+          Level: 2
+          # of Papers: 415
+          ----------------------------------------
+          Label: conversation_planning
+          Dimension: real_world_domains
+          Description: Conversation planning focuses on the automated generation of structured dialogues, including topic selection, flow management, and coherence enhancement.
+          Level: 2
+          # of Papers: 84
+          ----------------------------------------
+          Label: multi_agent_systems
+          Dimension: real_world_domains
+          Description: Multi-agent systems refer to the development and coordination of multiple autonomous agents for collaborative problem-solving and decision-making tasks.
+          Level: 2
+          # of Papers: 40
+          ----------------------------------------
+          Label: inference_serving
+          Dimension: real_world_domains
+          Description: Inference serving involves the deployment and management of models for making predictions and drawing conclusions based on input data in real-time applications.
+          Level: 2
+          # of Papers: 73
+          ----------------------------------------
+          Label: ranking_generation
+          Dimension: real_world_domains
+          Description: Ranking generation pertains to the automatic generation of ordered lists or rankings based on specific criteria or relevance scores.
+          Level: 2
+          # of Papers: 14
+          ----------------------------------------
+     ----------------------------------------
+     Label: document_clustering
+     Dimension: real_world_domains
+     Description: Entails grouping documents into clusters based on similarity in content or features using NLP clustering algorithms.
+     Level: 1
+     # of Papers: 120
+     ----------------------------------------
+     Children:
+          Label: topic_modeling
+          Dimension: real_world_domains
+          Description: Topic modeling is a subcategory of document clustering that involves identifying topics within a collection of documents based on their content.
+          Level: 2
+          # of Papers: 6
+          ----------------------------------------
+          Label: hierarchical_clustering
+          Dimension: real_world_domains
+          Description: Hierarchical clustering is a method within document clustering that organizes documents into a tree-like structure based on their similarity.
+          Level: 2
+          # of Papers: 3
+          ----------------------------------------
+          Label: density-based_clustering
+          Dimension: real_world_domains
+          Description: Density-based clustering is a technique in document clustering that groups documents based on their density in the feature space.
+          Level: 2
+          # of Papers: 2
+          ----------------------------------------
+          Label: multimodal_clustering
+          Dimension: real_world_domains
+          Description: Multimodal clustering involves grouping data points based on multiple modalities such as text, images, and audio.
+          Level: 2
+          # of Papers: 12
+          ----------------------------------------
+          Label: language_processing
+          Dimension: real_world_domains
+          Description: Language processing encompasses tasks such as language identification, translation, and sentiment analysis.
+          Level: 2
+          # of Papers: 86
+          ----------------------------------------
+          Label: graph_based_methods
+          Dimension: real_world_domains
+          Description: Graph-based methods involve using graph structures to represent and analyze data relationships in clustering tasks.
+          Level: 2
+          # of Papers: 10
+          ----------------------------------------
+          Label: multi-agent_systems
+          Dimension: real_world_domains
+          Description: Multi-agent systems refer to systems where multiple agents interact to achieve common goals, often used in clustering for collaborative problem-solving.
+          Level: 2
+          # of Papers: 12
+          ----------------------------------------
+          Label: real-time_analysis
+          Dimension: real_world_domains
+          Description: Real-time analysis focuses on processing and clustering data streams in real-time to provide timely insights.
+          Level: 2
+          # of Papers: 10
+          ----------------------------------------
+     ----------------------------------------
+     Label: language_model_evaluation
+     Dimension: real_world_domains
+     Description: Focuses on assessing the performance and quality of language models through evaluation metrics and techniques.
+     Level: 1
+     # of Papers: 485
+     ----------------------------------------
+     Children:
+          Label: text_generation_evaluation
+          Dimension: real_world_domains
+          Description: Text generation evaluation involves assessing the quality and coherence of generated text by language models.
+          Level: 2
+          # of Papers: 4
+          ----------------------------------------
+          Label: language_model_fine-tuning_evaluation
+          Dimension: real_world_domains
+          Description: Language model fine-tuning evaluation focuses on measuring the performance of fine-tuned models for specific tasks or domains.
+          Level: 2
+          # of Papers: 70
+          ----------------------------------------
+          Label: language_model_robustness_evaluation
+          Dimension: real_world_domains
+          Description: Language model robustness evaluation examines the ability of models to maintain performance across different datasets and scenarios.
+          Level: 2
+          # of Papers: 115
+          ----------------------------------------
+          Label: language_model_real-world_applications_evaluation
+          Dimension: real_world_domains
+          Description: Language model evaluation focusing on real-world applications and practical use cases.
+          Level: 2
+          # of Papers: 345
+          ----------------------------------------
+          Label: language_model_social_impact_evaluation
+          Dimension: real_world_domains
+          Description: Language model evaluation examining the social impact and implications of model deployment.
+          Level: 2
+          # of Papers: 38
+          ----------------------------------------
+          Label: language_model_ethical_evaluation
+          Dimension: real_world_domains
+          Description: Language model evaluation assessing ethical considerations and implications of model behavior.
+          Level: 2
+          # of Papers: 48
+          ----------------------------------------
+          Label: language_model_multimodal_integration_evaluation
+          Dimension: real_world_domains
+          Description: Language model evaluation exploring integration with multiple modalities for enhanced performance.
+          Level: 2
+          # of Papers: 71
+          ----------------------------------------
+          Label: language_model_bias_and_fairness_evaluation
+          Dimension: real_world_domains
+          Description: Language model evaluation investigating bias and fairness issues in model predictions and outcomes.
+          Level: 2
+          # of Papers: 36
+          ----------------------------------------
+     ----------------------------------------
+----------------------------------------

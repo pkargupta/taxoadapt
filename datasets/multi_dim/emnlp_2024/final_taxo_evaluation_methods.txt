@@ -1,0 +1,281 @@
+Label: natural_language_processing
+Dimension: evaluation_methods
+Description: None
+Level: 0
+# of Papers: 1943
+----------------------------------------
+Children:
+     Label: benchmarking
+     Dimension: evaluation_methods
+     Description: Evaluation method focusing on comparing the performance of different natural language processing models or methods on standardized tasks or datasets.
+     Level: 1
+     # of Papers: 1184
+     ----------------------------------------
+     Children:
+          Label: performance_evaluation
+          Dimension: evaluation_methods
+          Description: Performance evaluation involves assessing the effectiveness and efficiency of a system or process in achieving its intended goals or outcomes, often through quantitative metrics and comparisons.
+          Level: 2
+          # of Papers: 362
+          ----------------------------------------
+          Label: competitor_analysis
+          Dimension: evaluation_methods
+          Description: Competitor analysis is the process of identifying and evaluating the strengths and weaknesses of rival companies to inform strategic decision-making and improve competitive positioning.
+          Level: 2
+          # of Papers: 7
+          ----------------------------------------
+          Label: market_research
+          Dimension: evaluation_methods
+          Description: Market research entails gathering and analyzing information about target markets, customers, and competitors to guide business decisions, product development, and marketing strategies.
+          Level: 2
+          ----------------------------------------
+     ----------------------------------------
+     Label: comparative_studies
+     Dimension: evaluation_methods
+     Description: Evaluation method that involves comparing the effectiveness, efficiency, or other aspects of multiple natural language processing techniques or algorithms.
+     Level: 1
+     # of Papers: 386
+     ----------------------------------------
+     Children:
+          Label: qualitative_comparison
+          Dimension: evaluation_methods
+          Description: Qualitative comparison involves analyzing and contrasting the non-numeric aspects of different subjects or entities within comparative studies.
+          Level: 2
+          # of Papers: 248
+          ----------------------------------------
+          Label: quantitative_comparison
+          Dimension: evaluation_methods
+          Description: Quantitative comparison focuses on the numerical analysis and measurement of variables across different subjects or entities in comparative studies.
+          Level: 2
+          # of Papers: 171
+          ----------------------------------------
+          Label: cross-cultural_comparison
+          Dimension: evaluation_methods
+          Description: Cross-cultural comparison examines and contrasts the similarities and differences between various cultures or societies within the context of comparative studies.
+          Level: 2
+          # of Papers: 47
+          ----------------------------------------
+          Label: historical_comparison
+          Dimension: evaluation_methods
+          Description: Historical comparison involves studying and comparing events, trends, or phenomena from different time periods within the realm of comparative studies.
+          Level: 2
+          # of Papers: 24
+          ----------------------------------------
+          Label: socio-economic_comparison
+          Dimension: evaluation_methods
+          Description: Socio-economic comparison entails evaluating and contrasting the social and economic aspects of different groups or regions in comparative studies.
+          Level: 2
+          # of Papers: 23
+          ----------------------------------------
+     ----------------------------------------
+     Label: novel_evaluation_metrics
+     Dimension: evaluation_methods
+     Description: Evaluation method proposing new metrics or frameworks to assess the performance, limitations, or biases of natural language processing models or datasets.
+     Level: 1
+     # of Papers: 597
+     ----------------------------------------
+     Children:
+          Label: contextual_similarity_evaluation
+          Dimension: evaluation_methods
+          Description: Contextual similarity evaluation methods assess the ability of models to understand and generate contextually relevant responses in natural language processing tasks.
+          Level: 2
+          # of Papers: 2
+          ----------------------------------------
+          Label: adversarial_evaluation
+          Dimension: evaluation_methods
+          Description: Adversarial evaluation techniques involve testing models against adversarial examples to measure their robustness and resilience to input perturbations.
+          Level: 2
+          # of Papers: 2
+          ----------------------------------------
+          Label: multi-modal_evaluation
+          Dimension: evaluation_methods
+          Description: Multi-modal evaluation metrics focus on assessing models that can process and generate outputs across different modalities such as text, images, and audio.
+          Level: 2
+          # of Papers: 25
+          ----------------------------------------
+          Label: novel_evaluation_metrics_for_long_text_generation
+          Dimension: evaluation_methods
+          Description: Evaluation methods specifically designed to assess the performance of models in generating long text sequences.
+          Level: 2
+          # of Papers: 284
+          ----------------------------------------
+          Label: novel_evaluation_metrics_for_math_multiple_choice_questions
+          Dimension: evaluation_methods
+          Description: Evaluation methods tailored for assessing the accuracy and effectiveness of models in solving math multiple-choice questions.
+          Level: 2
+          # of Papers: 38
+          ----------------------------------------
+          Label: novel_language_model_evaluation
+          Dimension: evaluation_methods
+          Description: Evaluation methods focused on evaluating the performance and capabilities of language models in understanding and generating text.
+          Level: 2
+          # of Papers: 268
+          ----------------------------------------
+          Label: novel_frame_semantic_evaluation
+          Dimension: evaluation_methods
+          Description: Evaluation methods that analyze the ability of models to understand and apply frame semantics in natural language processing tasks.
+          Level: 2
+          # of Papers: 15
+          ----------------------------------------
+          Label: novel_benchmark_evaluation
+          Dimension: evaluation_methods
+          Description: Evaluation methods aimed at assessing the performance of models against new and challenging benchmarks.
+          Level: 2
+          # of Papers: 79
+          ----------------------------------------
+     ----------------------------------------
+     Label: evaluation_methodologies
+     Dimension: evaluation_methods
+     Description: Evaluation methods that focus on the methodologies used to assess the performance, limitations, or biases of natural language processing models or datasets.
+     Level: 1
+     # of Papers: 1268
+     ----------------------------------------
+     Children:
+          Label: qualitative_evaluation
+          Dimension: evaluation_methods
+          Description: Qualitative evaluation methods involve subjective assessments and observations to measure the quality or effectiveness of a system or process.
+          Level: 2
+          # of Papers: 111
+          ----------------------------------------
+          Label: quantitative_evaluation
+          Dimension: evaluation_methods
+          Description: Quantitative evaluation methods utilize numerical data and metrics to assess the performance or impact of a system or process objectively.
+          Level: 2
+          # of Papers: 292
+          ----------------------------------------
+          Label: user_feedback_analysis
+          Dimension: evaluation_methods
+          Description: User feedback analysis is a method of evaluating systems or products by gathering and analyzing feedback from users to understand their experiences and satisfaction levels.
+          Level: 2
+          # of Papers: 14
+          ----------------------------------------
+          Label: benchmarking
+          Label: cost-benefit_analysis
+          Dimension: evaluation_methods
+          Description: Cost-benefit analysis is a method of evaluating the financial implications of implementing a system or process by comparing the costs involved with the expected benefits or returns.
+          Level: 2
+          # of Papers: 19
+          ----------------------------------------
+     ----------------------------------------
+     Label: model_applications
+     Dimension: evaluation_methods
+     Description: Evaluation methods that center around the applications and use cases of natural language processing models in various domains.
+     Level: 1
+     # of Papers: 986
+     ----------------------------------------
+     Label: safety_requirements
+     Dimension: evaluation_methods
+     Description: Evaluation methods that emphasize the safety and security requirements needed for natural language processing models to operate effectively and ethically.
+     Level: 1
+     # of Papers: 174
+     ----------------------------------------
+     Children:
+          Label: safety_analysis
+          Dimension: evaluation_methods
+          Description: Safety analysis involves identifying potential hazards and assessing risks to ensure safety requirements are met.
+          Level: 2
+          # of Papers: 62
+          ----------------------------------------
+          Label: safety_audit
+          Dimension: evaluation_methods
+          Description: Safety audits are systematic examinations of safety procedures and practices to verify compliance with safety requirements.
+          Level: 2
+          # of Papers: 2
+          ----------------------------------------
+          Label: safety_training
+          Dimension: evaluation_methods
+          Description: Safety training programs aim to educate individuals on safety protocols and procedures to meet safety requirements.
+          Level: 2
+          ----------------------------------------
+          Label: safety_inspection
+          Dimension: evaluation_methods
+          Description: Safety inspections involve thorough examinations of equipment and facilities to ensure they meet safety requirements.
+          Level: 2
+          ----------------------------------------
+          Label: safety_certification
+          Dimension: evaluation_methods
+          Description: Safety certification processes verify that products or systems comply with established safety requirements before being used or deployed.
+          Level: 2
+          ----------------------------------------
+          Label: safety_mitigation
+          Dimension: evaluation_methods
+          Description: Safety mitigation methods focus on reducing or eliminating potential risks to meet safety requirements.
+          Level: 2
+          # of Papers: 123
+          ----------------------------------------
+          Label: safety_risk_assessment
+          Dimension: evaluation_methods
+          Description: Safety risk assessment involves evaluating potential hazards and determining the likelihood and impact of adverse events to ensure safety requirements are met.
+          Level: 2
+          # of Papers: 41
+          ----------------------------------------
+          Label: safety_frameworks
+          Dimension: evaluation_methods
+          Description: Safety frameworks provide structured approaches or guidelines for implementing safety measures to meet safety requirements.
+          Level: 2
+          # of Papers: 14
+          ----------------------------------------
+          Label: safety_testing
+          Dimension: evaluation_methods
+          Description: Safety testing involves conducting experiments or trials to assess the effectiveness and reliability of safety measures in meeting safety requirements.
+          Level: 2
+          # of Papers: 14
+          ----------------------------------------
+     ----------------------------------------
+     Label: robustness_evaluation
+     Dimension: evaluation_methods
+     Description: Evaluation methods that concentrate on assessing the robustness and resilience of natural language processing models against various adversarial attacks and challenges.
+     Level: 1
+     # of Papers: 723
+     ----------------------------------------
+     Children:
+          Label: adversarial_attack_evaluation
+          Dimension: evaluation_methods
+          Description: Adversarial attack evaluation involves testing the robustness of a model by assessing its performance when subjected to carefully crafted adversarial examples.
+          Level: 2
+          # of Papers: 3
+          ----------------------------------------
+          Label: generalization_evaluation
+          Dimension: evaluation_methods
+          Description: Generalization evaluation focuses on measuring how well a model performs on unseen data to determine its robustness and ability to generalize.
+          Level: 2
+          # of Papers: 5
+          ----------------------------------------
+          Label: out-of-distribution_detection
+          Dimension: evaluation_methods
+          Description: Out-of-distribution detection evaluates a model's capability to identify samples that lie outside the training data distribution, crucial for robustness.
+          Level: 2
+          # of Papers: 2
+          ----------------------------------------
+          Label: robustness_evaluation_of_language_models
+          Dimension: evaluation_methods
+          Description: Evaluation methods focused on assessing the robustness of language models to various challenges and biases.
+          Level: 2
+          # of Papers: 655
+          ----------------------------------------
+          Label: robustness_evaluation_of_neural_news_generation
+          Dimension: evaluation_methods
+          Description: Evaluation methods specifically designed to evaluate the robustness of neural news generation models.
+          Level: 2
+          # of Papers: 26
+          ----------------------------------------
+          Label: robustness_evaluation_in_tool_learning
+          Dimension: evaluation_methods
+          Description: Evaluation methods aimed at assessing the robustness of models in the context of tool learning tasks.
+          Level: 2
+          # of Papers: 10
+          ----------------------------------------
+          Label: robustness_evaluation_of_political_discourse
+          Dimension: evaluation_methods
+          Description: Evaluation methods tailored to evaluate the robustness of models in analyzing political discourse.
+          Level: 2
+          # of Papers: 14
+          ----------------------------------------
+          Label: robustness_evaluation_of_multimodal_models
+          Dimension: evaluation_methods
+          Description: Evaluation methods focusing on assessing the robustness of multimodal models across different modalities.
+          Level: 2
+          # of Papers: 54
+          ----------------------------------------
+     ----------------------------------------
+----------------------------------------

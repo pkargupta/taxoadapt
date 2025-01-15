@@ -1,0 +1,32 @@
+Label: natural_language_processing
+Dimension: real_world_domains
+Description: None
+Level: 0
+----------------------------------------
+Children:
+     Label: product_recommendation_systems
+     Dimension: real_world_domains
+     Description: Involves using NLP techniques to analyze user preferences and recommend products based on text data such as reviews or descriptions.
+     Level: 1
+     ----------------------------------------
+     Label: medical_record_summarization
+     Dimension: real_world_domains
+     Description: Focuses on summarizing and extracting key information from medical records using NLP methods to aid healthcare professionals in decision-making.
+     Level: 1
+     ----------------------------------------
+     Label: sentiment_analysis_in_social_media
+     Dimension: real_world_domains
+     Description: Applies NLP to analyze and understand sentiment expressed in social media posts, comments, and reviews to gauge public opinion or sentiment trends.
+     Level: 1
+     ----------------------------------------
+     Label: legal_document_analysis
+     Dimension: real_world_domains
+     Description: Utilizes NLP to process and extract insights from legal documents, contracts, and court cases to assist legal professionals in research and analysis.
+     Level: 1
+     ----------------------------------------
+     Label: customer_feedback_analysis
+     Dimension: real_world_domains
+     Description: Involves using NLP to analyze and extract insights from customer feedback, reviews, and surveys to understand customer sentiment and improve products or services.
+     Level: 1
+     ----------------------------------------
+----------------------------------------

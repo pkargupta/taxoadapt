@@ -148,23 +148,63 @@ class Node:
         indent_multiplier (int): The number of spaces used for indentation, multiplied by the level.
         visited (set): A set of visited node IDs to handle cycles in the directed acyclic graph.
         """
+        indent = " " * (level * indent_multiplier)
+        
         if visited is None:
             visited = set()
         if self.id in visited:
+            print(f"{indent}Label: {self.label}")
             return
         visited.add(self.id)
 
-        indent = " " * (level * indent_multiplier)
         print(f"{indent}Label: {self.label}")
         print(f"{indent}Dimension: {self.dimension}")
         print(f"{indent}Description: {self.description}")
         print(f"{indent}Level: {self.level}")
+        if len(self.papers) > 0:
+            print(f"{indent}# of Papers: {len(self.papers)}")
         if self.children:
             print(f"{indent}{'-'*40}")
             print(f"{indent}Children:")
             for child in self.children.values():
                 child.display(level + 1, indent_multiplier, visited)
         print(f"{indent}{'-'*40}")
+    
+    def classify_node(self, args, label2node, visited):
+
+        for child_label, child in self.get_children().items():
+            if child.id not in visited:
+                child.papers = {}
+
+        # Which papers are classified to the current node?
+        prompts = []
+        for paper_id, paper in self.papers.items():
+            prompts.append(classify_prompt(self, paper))
+
+        output = promptLLM(args, prompts, schema=ClassifySchema, max_new_tokens=3000)
+        output_dict = [json.loads(clean_json_string(c)) if "```" in c else json.loads(c.strip()) for c in output]
+        class_options = [c for c in self.get_children()]
+        class_map = {c:0 for c in self.get_children()}
+        class_map['unlabeled'] = 0
+
+        for (paper_id, paper), out_labels in zip(self.papers.items(), output_dict):
+            if (len(out_labels['class_labels']) == 0) or ("None" in out_labels['class_labels']):
+                class_map['unlabeled'] += 1
+                continue
+            for label in out_labels['class_labels']:
+                full_label = label + f'_{self.dimension}'
+                if "None" in label:
+                    class_map['unlabeled'] += 1
+                    continue
+                elif (full_label in label2node) and (label in class_options):
+                    label2node[full_label].papers[paper_id] = paper
+                    class_map[label] += 1
+                    paper.labels[self.dimension].append(label)
+                else:
+                    class_map['unlabeled'] += 1
+        
+        print(f'classification: {str(class_map)}')
+        return output_dict
 
     def __repr__(self):
         return f"Node(label={self.label}, dim={self.dimension}, description={self.description}, level={self.level})"
@@ -218,10 +258,13 @@ class DAG:
         
         return all_phrases, all_sentences
     
-    def classify_dag(self, args, collection, label2node):
+    def classify_dag(self, args, label2node, start_node=None):
         visited = set()
         # self.root.papers = collection
-        nodes_to_visit = [(self.root, self.root.papers)]
+        if start_node is None:
+            nodes_to_visit = [(self.root, self.root.papers)]
+        else:
+            nodes_to_visit = [(start_node, start_node.papers)]
 
         while nodes_to_visit:
             current_node, papers = nodes_to_visit.pop()
@@ -231,7 +274,7 @@ class DAG:
                 if child.id not in visited:
                     child.papers = {}
 
-            print('visiting: ', current_node.label)
+            print(f'visiting: {current_node.label}; # of papers: {len(papers)}')
 
             visited.add(current_node.id)
 
@@ -245,10 +288,17 @@ class DAG:
             class_options = [c for c in current_node.get_children()]
 
             for (paper_id, paper), out_labels in zip(papers.items(), output_dict):
+                if len(out_labels['class_labels']) == 0:
+                    continue
                 for label in out_labels['class_labels']:
-                    if (label in label2node) and (label in class_options):
+                    if "None" in label:
+                        continue
+                    elif (label in label2node) and (label in class_options):
                         label2node[label].papers[paper_id] = paper
+                        paper.labels[current_node.dimension].append(label)
             
             # Add children to visit next with updated ancestors
             for child in current_node.get_children().values():
                 nodes_to_visit.append((child, child.papers))
+        
+        return output_dict

@@ -1,0 +1,22 @@
+Label: natural_language_processing
+Dimension: evaluation_methods
+Description: None
+Level: 0
+----------------------------------------
+Children:
+     Label: benchmarking
+     Dimension: evaluation_methods
+     Description: Evaluation method focusing on comparing the performance of different natural language processing models or methods on standardized tasks or datasets.
+     Level: 1
+     ----------------------------------------
+     Label: comparative_studies
+     Dimension: evaluation_methods
+     Description: Evaluation method that involves comparing the effectiveness, efficiency, or other aspects of multiple natural language processing techniques or algorithms.
+     Level: 1
+     ----------------------------------------
+     Label: novel_evaluation_metrics
+     Dimension: evaluation_methods
+     Description: Evaluation method proposing new metrics or frameworks to assess the performance, limitations, or biases of natural language processing models or datasets.
+     Level: 1
+     ----------------------------------------
+----------------------------------------

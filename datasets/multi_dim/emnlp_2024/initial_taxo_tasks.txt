@@ -1,0 +1,32 @@
+Label: natural_language_processing
+Dimension: tasks
+Description: None
+Level: 0
+----------------------------------------
+Children:
+     Label: text_classification
+     Dimension: tasks
+     Description: Assigning predefined categories or labels to text data based on its content.
+     Level: 1
+     ----------------------------------------
+     Label: named_entity_recognition
+     Dimension: tasks
+     Description: Identifying and classifying named entities mentioned in unstructured text into predefined categories such as names of persons, organizations, locations, etc.
+     Level: 1
+     ----------------------------------------
+     Label: sentiment_analysis
+     Dimension: tasks
+     Description: Determining the sentiment or opinion expressed in a piece of text, typically as positive, negative, or neutral.
+     Level: 1
+     ----------------------------------------
+     Label: machine_translation
+     Dimension: tasks
+     Description: Automatically translating text from one language to another while preserving the original meaning.
+     Level: 1
+     ----------------------------------------
+     Label: text_summarization
+     Dimension: tasks
+     Description: Generating a concise and coherent summary of a longer text while retaining its key information and main points.
+     Level: 1
+     ----------------------------------------
+----------------------------------------

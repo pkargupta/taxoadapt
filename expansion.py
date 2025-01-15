@@ -1,153 +1,240 @@
-from tqdm import tqdm
-import numpy as np
-import torch
-import torch.nn as nn
-from torch.utils.data import TensorDataset, DataLoader
-from collections import deque
 from taxonomy import Node
 import json
 from utils import clean_json_string
 from model_definitions import constructPrompt, promptLLM
-from prompts import CandidateSchema
 import argparse
-import os
+from pydantic import BaseModel, StringConstraints
+from typing_extensions import Annotated
+from typing import Dict
 
-def llmExpansion(args, taxo, model, temperature=0.5, top_p=0.99):
-    queue = deque([taxo.root])
 
-    expansion_prompts = []
-    focus_nodes =  []
+width_system_instruction = """You are an assistant that is provided a list of class labels. You determine whether or not a given paper's primary topic exists within the input class label list. If so, you output that topic label name. If not, then suggest a new topic at the same level of specificity. By specificity, we mean that your new_class_label and the existing_class_options are "equally specific": the topics are at the same level of detail or abstraction; they are on the same conceptual plane without overlap. In other words, they could be sibling nodes within a topical taxonomy.
+"""
 
-    while queue:
-        curr_node = queue.popleft()
-        focus_nodes.append(curr_node)
+class WidthExpansionSchema(BaseModel):
+  new_class_label: Annotated[str, StringConstraints(strip_whitespace=True)]
 
-        # if it is not a leaf node, perform width expansion on its children
-        if len(curr_node.children):
-            queue.extend(curr_node.children)
-            path = " -> ".join(curr_node.path[1:])
-            sibs = ", ".join(map(str, curr_node.children))
-            parent_sibs = ", ".join(map(str, [n.label for n in curr_node.parents[0].children if n != curr_node]))
 
-            init_prompt = 'You are an assistant that performs width expansion of taxonomies. Width expansion in taxonomies adds more nodes at the same level, increasing nodes adjacent to a parent node\'s existing children (sibling nodes) without adding depth. For example, expanding a taxonomy of NLP tasks from [\"text_classification\" and \"named_entity_recognition\"] to include \"machine_translation\", and \"question_answering\" would be a width expansion. On the other hand, \"fine_grained_text_classification\" SHOULD NOT be added as it is at a deeper level compared to \"text_classification\" and instead should be considered its child (depth expansion).'
-            # init_prompt = f'''You are an assistant that identifies keywords that could replace all instances of <mask> in a given excerpt.
-            # <example>
-            # ---
-            # The given excerpt can be: "text_classification" is a node within a taxonomy, where the path to it is: nlp_tasks -> text_classification. The children of text_classification are: ["sentiment_analysis", "spam_detection", and <mask>]. <mask> does not fall under any other topic adjacent to text_classification, including machine_translation and question_answering.
-            
-            # For this excerpt, we can replace <mask> with several options, making our example output:
-            
-            # {{
-            #     "parent_node": "text_classification",
-            #     "explanation: "stance_detection, long_document_classification, and 'fine_grained_classification' are all subtopics of parent text_classification and are at the same level of specificity as sentiment_analysis and spam_detection. They are only relevant to text_classification and not any adjacent topics like machine_translation and question_answering.",
-            #     "candidate_nodes": ["stance_detection", "long_document_classification", "fine_grained_classification"]
-            # }}
-            # ---
-            # </example>
-            # '''
-            # main_prompt = f'''
-            # Output a diverse list of unique keywords that could replace all instances of <mask> in the following excerpt:
-            # ---
-            # "{curr_node.label} is a node within a taxonomy, where the path to it is: {curr_node.path[1:]}. The children of {curr_node.label} are: [{sibs}, and <mask>]. <mask> does not fall under any other topic adjacent to {curr_node.label}, including {parent_sibs}."
-            # ---
-            # Output JSON Format:
-            # {{
-            #     "parent_node": "{curr_node.label}",
-            #     "explanation": <a string explanation of your chosen children of {curr_node.label} and siblings of {sibs}>,
-            #     "candidate_nodes": <list of diverse strings that can replace <mask> in the above excerpt>
-            # }}'''
-            main_prompt = f'''
-            Taxonomy Path to Parent Node: {curr_node.path[1:]}
-            Parent Node: {curr_node.label}
-            Children of Parent Node (Existing Siblings): [{sibs}].
-            
-            Can you expand the set of existing siblings with several candidate node options? Only the new siblings should be exclusively listed within the key, "candidate_nodes".
+def width_main_prompt(paper, node, nl='\n'):
+   out = f"""Given the following paper title and abstract, suggest for a new class label to be added to the list of existing_class_options. All of these class labels (existing_class_options and your new class) should fall under the topic: {node.label}.
 
-            Each new sibling should meet the following constraints:
-            1. Be a valid (child) subtopic/subcategory of "{curr_node.label}"
-            2. Not be a possible subtopic/subcategory of any of the following topics: {parent_sibs}.
-            3. Be a valid (sibling) adjacent topic/category to the existing sibling set: [{sibs}]. Valid means at the same depth as the sibling topics but not similar to the existing siblings.
-            4. Be able to replace <mask> in the following statement: "Subtopics of topic {curr_node.label} are: {sibs}, and <mask>."
+"Title": "{paper.title}"
+"Abstract": "{paper.abstract}"
 
-            Output JSON Format:
-            {{
-                "parent_node": "{curr_node.label}",
-                "explanation": <a string explanation of why you chose the candidate_nodes below as the children of {curr_node.label} and why they are also siblings of {sibs}>,
-                "candidate_nodes": <list of strings (minimum 1 string, maximum 20 strings) where values are the new children/subtopics of {curr_node.label} and siblings/adjacent topics (1-3 words) to [{sibs}]>
+existing_class_options (list of existing class labels): {"; ".join([f"{c}" for c in node.get_children()])}
 
-            }}'''
-            expansion_prompts.append(constructPrompt(args, init_prompt, main_prompt))
-        # if it is a leaf node, perform depth expansion
-        else:
-            sibs = ", ".join(map(str, [n.label for n in curr_node.parents[0].children if n != curr_node]))
-            path = " -> ".join(curr_node.path[1:])
-            init_prompt = 'You are an assistant that performs depth expansion of taxonomies. Depth expansion in taxonomies adds nodes deeper to a given node, these being children concepts/topics which EXCLUSIVELY fall under the specified parent node and not the parent\'s siblings. For example, given a taxonomy of NLP tasks, expanding "text_classification" depth-wise (where its siblings are [\"named_entity_recognition\", \"machine_translation\", and \"question_answering\"]) would create the children nodes, [\"sentiment_analysis\", \"spam_detection\", and \"document_classification\"] (any suitable number of children). On the other hand, \"open_domain_question_answering\" SHOULD NOT be added as it belongs to sibling, \"question_answering\".'
+Here is some additional information about each existing class option:
+{nl.join([f"{c_label}:{nl}{nl}Description of {c_label}: {c.description}{nl}" for c_label, c in node.get_children().items()])}
 
-            # init_prompt = f'''You are an assistant that identifies keywords that could replace all instances of <mask> in a given excerpt.
-            # <example>
-            # ---
-            # The given excerpt can be: "text_classification" is a node within a taxonomy, where the path to it is: nlp_tasks -> text_classification. A child of text_classification is <mask>. <mask> is irrelevant to the following nodes: ["named_entity_recognition", "machine_translation", "question_answering"].
-            
-            # For this excerpt, we can replace <mask> with several options, making our example output:
-            
-            # {{
-            #     "parent_node": "text_classification",
-            #     "explanation: "stance_detection, long_document_classification, and 'fine_grained_classification' are all subtopics of parent, text_classification, and are all at the same level of specificity. They are only relevant to text_classification and not any adjacent topics like named_entity_recognition, machine_translation, and question_answering.",
-            #     "candidate_nodes": ["stance_detection", "long_document_classification", "fine_grained_classification"]
-            # }}
-            # ---
-            # </example>
-            # '''
 
-            # main_prompt = f'''Output a list of diverse keywords that could each replace all instances of <mask> in the following excerpt:
-            # ---
-            # "{curr_node.label} is a node within a taxonomy, where the path to it is: {path}. A child of {curr_node.label} is <mask>. <mask> is irrelevant to the following nodes: [{sibs}]."
-            # ---
-            # Output JSON Format:
-            # {{
-            #     "parent_node": "{curr_node.label}",
-            #     "explanation": <a string explanation of your chosen children of {curr_node.label}, irrelevant to {sibs}>,
-            #     "candidate_nodes": <list of diverse strings that can replace <mask> in the above excerpt>
-            # }}'''
-            main_prompt = f'''
-            Taxonomy Path to Parent Node: {curr_node.path[1:]}
-            Parent Node: {curr_node.label}
-            Siblings of Parent Node: [{sibs}].
-            
-            Can you generate a diverse set of candidate children nodes for the parent node? These should be exclusively listed within the key, "candidate_nodes".
+Your output should be in the following JSON format:
+{{
+  "new_class_label": <value type is string; string is the new topic label that is the paper's true primary topic at the same level of depth/specificity as the other class labels in existing_class_options>,
+}}
+"""
+   return out
 
-            Each new child should meet the following constraints:
-            1. Be a valid child (subtopic/subcategory) of "{curr_node.label}". Valid means at a deeper/finer level of specificity than the parent node and cannot fall under the existing siblings.
-            2. Unique and diverse from the other new children.
+# {nl.join([f"{c_label}:{nl}{nl}Description of {c_label}: {c.description}{nl}Example phrases used in {c_label} papers: {c.phrases}{nl}Example sentences used in {c_label} papers: {c.sentences}" for c_label, c in node.get_children().items()])}
 
-            Output JSON Format:
-            {{
-                "parent_node": "{curr_node.label}",
-                "explanation": <a string explanation behind why you chose the candidate_nodes below as the children of {curr_node.label}, and how they are irrelevant to {sibs}>,
-                "candidate_nodes": <list of strings (minimum 1 string, maximum 20 strings) where values are the labels of {curr_node.label}'s new subtopics (1-3 words each) and irrelevant to sibling topics: [{sibs}]>
+cluster_system_instruction = "You are a clusterer, identifying clusters relevant to being formed from an input set of labels. For each cluster you identify, you must provide a cluster name (in similar format to the input labels) as its key and a 1 sentence description of the cluster name."
 
-            }}'''
-            expansion_prompts.append(constructPrompt(args, init_prompt, main_prompt))
+class ClusterSchema(BaseModel):
+    cluster_topic_description: Annotated[str, StringConstraints(strip_whitespace=True, max_length=250)]
+
+class ClusterListSchema(BaseModel):
+    new_cluster_topics: Dict[str, ClusterSchema]
+
+
+
+def cluster_main_prompt(options, node, nl='\n'):
+   siblings = node.get_children()
+   out = f"""Given the following set of candidate node labels, can you identify the most popular, unique but MINIMAL set of clusters that best represent all candidate_node_labels and are highly likely to be siblings of the following existing nodes within a taxonomy (existing_sibling_nodes)? Each new cluster topic that you suggest should fall under the parent topic node, {node.label}, and be a type of {node.dimension}.\n
+
+existing_sibling_nodes: {str(siblings)}
+
+candidate_node_labels:\n{str(options)}
+
+
+Your output should be in the following JSON format:
+{{
+  "new_cluster_topics":
+  {{
+    "<key type is string; string is the first new cluster topic label that is the paper's true primary topic at the same level of depth/specificity as the other class labels in existing_class_options>": {{
+      "cluster_topic_description": "<generate a string sentence-long description of your new first cluster topic>"
+    }},
+    ...,
+    "<key type is string; string is the kth (max 10th) new cluster topic label that is the paper's true primary topic at the same level of depth/specificity as the other class labels in existing_class_options>": {{
+      "cluster_topic_description": "<generate a string sentence-long description of your new kth cluster topic>"
+    }},
+  }}
+}}
+"""
+   return out
+
+
+def expandNodeWidth(args, node, id2node, label2node):
+    unlabeled_papers = {}
+    for idx, p in node.papers.items():
+        unlabeled = True
+        for c in node.children.values():
+            if idx in c.papers:
+                unlabeled = False
+                break
+        if unlabeled:
+            unlabeled_papers[idx] = p
+
+    print(f'node {node.label} ({node.dimension}) has {len(unlabeled_papers)} unlabeled papers!')
+
+    if len(unlabeled_papers) < args.min_density:
+        return [] 
     
-    output_dict = promptLLM(args, expansion_prompts, schema=CandidateSchema, max_new_tokens=1000, temperature=temperature, top_p=top_p)
+    exp_prompts = [constructPrompt(args, width_system_instruction, width_main_prompt(paper, node)) for paper in unlabeled_papers.values()]
+    exp_outputs = promptLLM(args=args, prompts=exp_prompts, schema=WidthExpansionSchema, max_new_tokens=300, json_mode=True, temperature=0.1, top_p=0.99)
+    exp_outputs = [json.loads(clean_json_string(c))['new_class_label'].replace(' ', '_').lower() if "```" in c else json.loads(c.strip())['new_class_label'].replace(' ', '_').lower() for c in exp_outputs]
 
-    candidate_nodes = [json.loads(clean_json_string(c)) if "```json" in c else json.loads(c.strip()) for c in output_dict]
+    # FILTERING OF EXPANSION OUTPUTS
+
+    width_options = list(set(exp_outputs))
+    args.llm = 'gpt'
+    clustered_prompt = [constructPrompt(args, cluster_system_instruction, cluster_main_prompt(width_options, node))]
+    success = False
+    attempts = 0
+    while (not success) and (attempts < 5):
+        try:
+            cluster_topics = promptLLM(args=args, prompts=clustered_prompt, schema=ClusterListSchema, max_new_tokens=3000, json_mode=True, temperature=0.1, top_p=0.99)[0]
+            cluster_outputs = json.loads(clean_json_string(cluster_topics)) if "```" in cluster_topics else json.loads(cluster_topics.strip())
+            success = True
+        except Exception as e:
+            success = False
+            print(f'failed clustering attempt #{attempts}!')
+            print(cluster_topics)
+            print(str(e))
+        attempts += 1
+    
+    args.llm = 'vllm'
+    
+    if not success:
+        print(f'FAILED WIDTH EXPANSION!')
+        return []
+    
+    print('clusters:\n', cluster_outputs)
+    cluster_outputs = cluster_outputs['new_cluster_topics']
+    final_expansion = []
+    dim = node.dimension
+
+    for key, value in cluster_outputs.items():
+        sibling_label = key
+        sibling_desc = value['cluster_topic_description'] if 'cluster_topic_description' in value else value['description']
+        mod_key = sibling_label.replace(' ', '_').lower()
+        mod_full_key = sibling_label.replace(' ', '_').lower() + f"_{dim}"
         
-    for curr_node, candidates in zip(focus_nodes, candidate_nodes):
-        for candidate in candidates["candidate_nodes"]:
-            candidate = candidate.lower().replace(' ', '_')
-            if candidate not in taxo.label2id:
-                node_id = str(len(taxo.id2label))
-                candidate_node = Node(node_id, candidate, description=None, level=curr_node.level+1)
-                candidate_node.addParent(curr_node)
-                curr_node.addChild(candidate_node)
-                taxo.id2label[node_id] = candidate
-                taxo.label2id[candidate] = node_id
-                taxo.vocab['phrases'][candidate] = model.encode(candidate.replace('_', ' '))
+        if mod_full_key not in label2node:
+            child_node = Node(
+                    id=len(id2node),
+                    label=mod_key,
+                    dimension=dim,
+                    description=sibling_desc,
+                    parents=[node]
+                )
+            node.add_child(mod_key, child_node)
+            id2node[child_node.id] = child_node
+            label2node[mod_full_key] = child_node
+            final_expansion.append(mod_key)
+        elif label2node[mod_full_key] in label2node[node.label + f"_{dim}"].get_ancestors():
+            continue
+        else:
+            child_node = label2node[mod_full_key]
+            node.add_child(mod_key, child_node)
+            child_node.add_parent(node)
+            final_expansion.append(mod_key)
+
+    return final_expansion
+
+
+depth_system_instruction = """You are an assistant that performs depth expansion of taxonomies. Depth expansion in taxonomies adds subcategory nodes deeper to a given root_topic node, these being children concepts/topics which EXCLUSIVELY fall under the specified parent node and not the parent\'s siblings. For example, given a taxonomy of NLP tasks, expanding "text_classification" depth-wise (where its siblings are [\"named_entity_recognition\", \"machine_translation\", and \"question_answering\"]) would create the children nodes, [\"sentiment_analysis\", \"spam_detection\", and \"document_classification\"] (any suitable number of children). On the other hand, \"open_domain_question_answering\" SHOULD NOT be added as it belongs to sibling, \"question_answering\".
+"""
+
+class NodeSchema(BaseModel):
+    description: Annotated[str, StringConstraints(strip_whitespace=True, max_length=250)]
+
+class NodeListSchema(BaseModel):
+    root_topic: Dict[str, NodeSchema]
+
+
+def depth_main_prompt(node):
+   ancestors = ", ".join([ancestor.label for ancestor in node.get_ancestors()])
+
+   out = f"""Your root_topic is: {node.label}\nA subcategory is a specific division within a broader category that organizes related items or concepts more precisely. Output up to 5 children, subcategories of {node.dimension} that fall under {node.label} and generate corresponding sentence-long descriptions for each. Make sure each type is unique to the topics: {node.label}, {ancestors}. 
+
+Output your taxonomy ONLY in the following JSON format, replacing each label name key with its correct subcategory label name:\n
+{{
+  root_topic:
+  {{
+    "<label name of your first sub-category>": {{
+      "description": "<generate a string description of your subcategory>"
+    }},
+    ...,
+    "<label name of your kth (max 5th) sub-category>": {{
+      "description": "<generate a string description of subtask_k>"
+    }},
+  }}
+}}
+"""
+   return out
+
+def expandNodeDepth(args, node, id2node, label2node):
     
+    prompts = [constructPrompt(args, depth_system_instruction, depth_main_prompt(node))]
 
-    return expansion_prompts, candidate_nodes
+    success = False
+    attempts = 0
+    while (not success) and (attempts < 5):
+        try:
+            outputs = promptLLM(args=args, prompts=prompts, schema=NodeListSchema, max_new_tokens=3000, json_mode=True, temperature=0.1, top_p=0.99)[0]
+            gen_child = json.loads(clean_json_string(outputs)) if "```" in outputs else json.loads(outputs.strip())
+            gen_child = gen_child['root_topic'] if 'root_topic' in gen_child else gen_child[node.label]
+            success = True
+        except Exception as e:
+            success = False
+            print(outputs)
+            print(f'failed depth expansion attempt #{attempts}!')
+            print(str(e))
 
+        attempts += 1
+    if not success:
+        print(f'FAILED DEPTH EXPANSION!')
+        return [], False
+
+    final_expansion = []
+    dim = node.dimension
+
+    for key, value in gen_child.items():
+        child_label = key.replace(' ', '_').lower()
+        child_full_label = child_label + f"_{dim}"
+        child_desc = value['description']
+        if child_label == node.dimension:
+          continue
+        if child_full_label not in label2node:
+            child_node = Node(
+                    id=len(id2node),
+                    label=child_label,
+                    dimension=dim,
+                    description=child_desc,
+                    parents=[node]
+                )
+            node.add_child(child_label, child_node)
+            id2node[child_node.id] = child_node
+            label2node[child_full_label] = child_node
+            final_expansion.append(child_label)
+        elif label2node[child_full_label] in label2node[node.label + f"_{dim}"].get_ancestors():
+            continue
+        else:
+            child_node = label2node[child_full_label]
+            node.add_child(child_label, child_node)
+            child_node.add_parent(node)
+            final_expansion.append(child_label)
+
+    return final_expansion, True
 
 
 if __name__ == '__main__':

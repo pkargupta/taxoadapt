@@ -11,7 +11,7 @@ import openai
 from openai import OpenAI
 from keys import openai_key, samba_api_key
 
-os.environ["CUDA_VISIBLE_DEVICES"]="4,7"
+os.environ["CUDA_VISIBLE_DEVICES"]="1,2,3,4"
 os.environ['HF_HOME'] = '/shared/data3/pk36/.cache'
 
 # llama_8b_model = pipeline("text-generation", 
@@ -122,7 +122,7 @@ def promptLlama(prompts, max_new_tokens=1024):
 def initializeLLM(args):
 	args.client = {}
 
-	args.client['vllm'] = LLM(model="meta-llama/Meta-Llama-3.1-8B-Instruct", tensor_parallel_size=2, gpu_memory_utilization=0.5, max_num_seqs=100)
+	args.client['vllm'] = LLM(model="meta-llama/Meta-Llama-3.1-8B-Instruct", tensor_parallel_size=4, gpu_memory_utilization=0.9, max_model_len=1024*100, max_num_batched_tokens=1024*100, enable_prefix_caching=True)
 
 	if args.llm == 'samba':
 		args.client[args.llm] = openai.OpenAI(
@@ -148,11 +148,11 @@ def promptGPT(args, prompts, schema=None, max_new_tokens=1024, json_mode=True, t
 	outputs = []
 	for messages in tqdm(prompts):
 		if json_mode:
-			response = args.client['gpt'].chat.completions.create(model='gpt-3.5-turbo-0125', stream=False, messages=messages, 
+			response = args.client['gpt'].chat.completions.create(model='gpt-4o-mini-2024-07-18', stream=False, messages=messages, 
 												response_format={"type": "json_object"}, temperature=temperature, top_p=top_p, 
 												max_tokens=max_new_tokens)
 		else:
-			response = args.client['gpt'].chat.completions.create(model='gpt-3.5-turbo-0125', stream=False, messages=messages, 
+			response = args.client['gpt'].chat.completions.create(model='gpt-4o-mini-2024-07-18', stream=False, messages=messages, 
 											 temperature=temperature, top_p=top_p,
 											 max_tokens=max_new_tokens)
 		outputs.append(response.choices[0].message.content)

@@ -15,14 +15,22 @@ class EnrichSchema(BaseModel):
     id: Annotated[str, StringConstraints(strip_whitespace=True)]
     commonsense_key_phrases: conset(str, min_length=20, max_length=50)
     commonsense_sentences: conset(str, min_length=10, max_length=50)
+
+dimension_definitions = {
+    'tasks': """Task: we assume that all papers are associated with a specific task(s). Always output "Task" as one of the paper types unless you are absolutely sure the paper does not address any task.""",
+    'methodologies': """Methodology: a paper that introduces, explains, or refines a method or approach, providing theoretical foundations, implementation details, and empirical evaluations to advance the state-of-the-art or solve specific problems.""",
+    'datasets': """Datasets: introduces a new dataset, detailing its creation, structure, and intended use, while providing analysis or benchmarks to demonstrate its relevance and utility. It focuses on advancing research by addressing gaps in existing datasets/performance of SOTA models or enabling new applications in the field.""",
+    'evaluation_methods': """Evaluation Methods: a paper that assesses the performance, limitations, or biases of models, methods, or datasets using systematic experiments or analyses. It focuses on benchmarking, comparative studies, or proposing new evaluation metrics or frameworks to provide insights and improve understanding in the field.""",
+    'real_world_domains': """Real-World Domains: demonstrates the use of NLP techniques to solve specific, real-world problems or address specific domain challenges. It focuses on practical implementation, impact, and insights gained from applying NLP methods in various contexts. Examples include: product recommendation systems, medical record summarization, etc."""
+    }
   
 def multi_dim_prompt(node):
     topic = node.label
     ancestors = ", ".join([ancestor.label for ancestor in node.get_ancestors()])
 
-    system_instruction = f'You are a helpful assistant that constructs taxonomies for a given root topic: {topic}{"" if ancestors == "" else " (relevant to" + ancestors + ")"}. Keep in mind that research papers will be mapped to the nodes within your constructed taxonomy.'
+    system_instruction = f'You are a helpful assistant that constructs taxonomies for a given root topic: {topic} {"" if ancestors == "" else " (relevant to" + ancestors + ")"} (types of {node.dimension}). Keep in mind that research papers will be mapped to the nodes within your constructed taxonomy. We define {node.dimension} below:\n{dimension_definitions[node.dimension]}\n'
 
-    main_prompt = f'Your root_topic is: {topic}\nA subcategory is a specific division within a broader category that organizes related items or concepts more precisely. Output up to 5 child, subcategories of {node.dimension} that fall under {topic} and generate corresponding sentence-long descriptions for each. Make sure each type is unique to the topics: {topic}, {ancestors}.'
+    main_prompt = f'Your root_topic is: {topic}\nA subcategory is a specific division within a broader category that organizes related items or concepts more precisely. Output up to 5 children, subcategories that are types of {node.dimension} which fall under {topic} and generate corresponding sentence-long descriptions for each. Make sure each type is unique to the topics: {topic}, {ancestors}.'
 
     if ('domain' in node.dimension) or ('application' in node.dimension):
         main_prompt += f'\n Remember that {node.dimension} means a real-world domain category in which an NLP paper can be applied to (for example, news or science could be a subcategory of {node.dimension}).'
@@ -48,11 +56,11 @@ type_cls_system_instruction = """You are a helpful multi-label classification as
 
 Paper types (type:definition):
 
-1. Task: We assume that all papers are associated with a specific task(s). Always output "Task" as one of the paper types unless you are absolutely sure the paper does not address any task.
+1. Task: we assume that all papers are associated with a specific task(s). Always output "Task" as one of the paper types unless you are absolutely sure the paper does not address any task.
 2. Methodology: a paper that introduces, explains, or refines a method or approach, providing theoretical foundations, implementation details, and empirical evaluations to advance the state-of-the-art or solve specific problems. 
 3. Datasets: introduces a new dataset, detailing its creation, structure, and intended use, while providing analysis or benchmarks to demonstrate its relevance and utility. It focuses on advancing research by addressing gaps in existing datasets/performance of SOTA models or enabling new applications in the field. 
 4. Evaluation Methods: a paper that assesses the performance, limitations, or biases of models, methods, or datasets using systematic experiments or analyses. It focuses on benchmarking, comparative studies, or proposing new evaluation metrics or frameworks to provide insights and improve understanding in the field. 
-5. Real-World Domains: demonstrates the use of NLP techniques to solve specific, real-world problems or address specific domain challenges. It focuses on practical implementation, impact, and insights gained from applying NLP methods in various contexts.
+5. Real-World Domains: demonstrates the use of NLP techniques to solve specific, real-world problems or address specific domain challenges. It focuses on practical implementation, impact, and insights gained from applying NLP methods in various contexts. Examples include: product recommendation systems, medical record summarization, etc.
 """
 
 class TypeClsSchema(BaseModel):
