@@ -74,14 +74,14 @@ class Node:
         Returns:
         list: A list of ancestor nodes from the root to the current node.
         """
-        ancestors = set()
+        ancestors = []
         nodes_to_visit = list(self.parents)
         while nodes_to_visit:
             current = nodes_to_visit.pop()
             if current not in ancestors:
-                ancestors.add(current)
+                ancestors.append(current)
                 nodes_to_visit.extend(current.parents)
-        return list(ancestors)
+        return ancestors
     
     def get_siblings(self):
         """
@@ -139,39 +139,6 @@ class Node:
             nodes_to_visit.extend(current_node.children.values())
         
         return list(unique_sentences)
-
-    def display(self, level=0, indent_multiplier=2, visited=None):
-        """
-        Display the node and its children in a structured manner, handling nodes with multiple parents.
-
-        Args:
-        level (int): The current level of the node for indentation purposes.
-        indent_multiplier (int): The number of spaces used for indentation, multiplied by the level.
-        visited (set): A set of visited node IDs to handle cycles in the directed acyclic graph.
-        """
-        indent = " " * (level * indent_multiplier)
-        
-        if visited is None:
-            visited = set()
-        if self.id in visited:
-            print(f"{indent}Label: {self.label}")
-            return
-        visited.add(self.id)
-
-        print(f"{indent}Label: {self.label}")
-        print(f"{indent}Dimension: {self.dimension}")
-        print(f"{indent}Description: {self.description}")
-        print(f"{indent}Level: {self.level}")
-        if len(self.papers) > 0:
-            example_papers = [(p.id, unidecode(p.title)) for p in self.papers.values()][:3]
-            print(f"{indent}# of Papers: {len(self.papers)}")
-            print(f"{indent}Example Papers: {str(example_papers)}")
-        if self.children:
-            print(f"{indent}{'-'*40}")
-            print(f"{indent}Children:")
-            for child in self.children.values():
-                child.display(level + 1, indent_multiplier, visited)
-        print(f"{indent}{'-'*40}")
     
     def classify_node(self, args, label2node, visited):
 
@@ -207,6 +174,53 @@ class Node:
                     class_map['unlabeled'] += 1
         
         print(f'classification: {str(class_map)}')
+        return output_dict
+    
+    def display(self, level=0, indent_multiplier=2, visited=None):
+        """
+        Display the node and its children in a structured manner, handling nodes with multiple parents.
+
+        Args:
+        level (int): The current level of the node for indentation purposes.
+        indent_multiplier (int): The number of spaces used for indentation, multiplied by the level.
+        visited (set): A set of visited node IDs to handle cycles in the directed acyclic graph.
+        """
+        indent = " " * (level * indent_multiplier)
+        
+        if visited is None:
+            visited = set()
+        if self.id in visited:
+            print(f"{indent}Label: {self.label}")
+            return
+        
+        output_dict = {"name": self.name,
+                       "description": self.description,
+                       "level":self.level}
+        
+        visited.add(self.id)
+
+        print(f"{indent}Label: {self.label}")
+        print(f"{indent}Dimension: {self.dimension}")
+        print(f"{indent}Description: {self.description}")
+        print(f"{indent}Level: {self.level}")
+        if len(self.papers) > 0:
+            example_papers = [(p.id, unidecode(p.title)) for p in self.papers.values()]
+            output_dict['example_papers'] = example_papers[:10]
+            output_dict['paper_ids'] = list(self.papers.keys())
+
+            print(f"{indent}# of Papers: {len(self.papers)}")
+            print(f"{indent}Example Papers: {str(example_papers[:3])}")
+        if self.children:
+            print(f"{indent}{'-'*40}")
+            print(f"{indent}Children:")
+            output_dict['children'] = []
+
+            for child in self.children.values():
+                sub_dict = child.display(level + 1, indent_multiplier, visited)
+                if sub_dict is not None:
+                    output_dict['children'].append(sub_dict)
+            
+        print(f"{indent}{'-'*40}")
         return output_dict
 
     def __repr__(self):

@@ -174,11 +174,10 @@ def main(args):
             # add children to queue if constraints are met
             for child_label, child_node in curr_node.children.items():
                 c_papers = label2node[child_label + f"_{curr_node.dimension}"].papers
-                if (child_node.level < args.max_depth) and (len(c_papers) > args.min_density):
+                if (child_node.level < args.max_depth) and (len(c_papers) > args.max_density):
                     queue.append(child_node)
         else:
             # no children -> perform depth expansion
-            args.llm = 'gpt'
             new_children, success = expandNodeDepth(args, curr_node, id2node, label2node)
             args.llm = 'vllm'
             print(f'(DEPTH EXPANSION) new {len(new_children)} children for {curr_node.label} ({curr_node.dimension}) are: {str((new_children))}')
@@ -196,7 +195,10 @@ def main(args):
     for dim in args.dimensions:
         with open(f'{args.data_dir}/final_taxo_{dim}.txt', 'w') as f:
             with redirect_stdout(f):
-                roots[dim].display(0, indent_multiplier=5)
+                taxo_dict = roots[dim].display(0, indent_multiplier=5)
+
+        with open(f'{args.data_dir}/final_taxo_{dim}.json', 'w', encoding='utf-8') as f:
+            json.dump(taxo_dict, f, ensure_ascii=False, indent=4)
 
 
 
@@ -208,7 +210,7 @@ if __name__ == "__main__":
     parser.add_argument('--llm', type=str, default='gpt')
     parser.add_argument('--max_depth', type=int, default=3)
     parser.add_argument('--init_levels', type=int, default=1)
-    parser.add_argument('--min_density', type=int, default=40)
+    parser.add_argument('--max_density', type=int, default=40)
 
     args = parser.parse_args()
 
