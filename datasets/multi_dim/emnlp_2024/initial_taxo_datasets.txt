@@ -6,27 +6,27 @@ Level: 0
 Children:
      Label: text_classification_datasets
      Dimension: datasets
-     Description: Datasets specifically curated for training and evaluating text classification models, covering various topics and domains.
+     Description: These datasets are designed for training models to categorize text into predefined classes, often used in sentiment analysis, topic detection, and spam detection.
      Level: 1
      ----------------------------------------
      Label: named_entity_recognition_datasets
      Dimension: datasets
-     Description: Datasets annotated with named entity labels to facilitate the development and evaluation of named entity recognition systems.
+     Description: These datasets provide annotated text for training models to identify and classify named entities such as people, organizations, and locations within the text.
      Level: 1
      ----------------------------------------
-     Label: sentiment_analysis_datasets
+     Label: machine_translation_datasets
      Dimension: datasets
-     Description: Datasets designed for sentiment analysis tasks, providing labeled data for sentiment polarity classification.
+     Description: These datasets consist of parallel corpora in multiple languages, enabling the training and evaluation of models for translating text from one language to another.
      Level: 1
      ----------------------------------------
      Label: question_answering_datasets
      Dimension: datasets
-     Description: Datasets structured to support question answering systems by including question-answer pairs and relevant context passages.
+     Description: These datasets contain questions paired with corresponding answers, often sourced from various domains, to facilitate the development of models that can understand and respond to inquiries.
      Level: 1
      ----------------------------------------
-     Label: language_translation_datasets
+     Label: text_generation_datasets
      Dimension: datasets
-     Description: Datasets containing parallel texts in multiple languages to enable training and evaluation of machine translation models.
+     Description: These datasets are used to train models for generating coherent and contextually relevant text, often sourced from creative writing, dialogues, or other narrative forms.
      Level: 1
      ----------------------------------------
 ----------------------------------------

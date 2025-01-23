@@ -2,530 +2,896 @@ Label: natural_language_processing
 Dimension: real_world_domains
 Description: None
 Level: 0
-# of Papers: 1033
+# of Papers: 1038
+Example Papers: [(0, 'UniGen: Universal Domain Generalization for Sentiment Classification via Zero-shot Dataset Generation'), (5, 'ImageInWords: Unlocking Hyper-Detailed Image Descriptions'), (6, 'LLM-Based Agent Society Investigation: Collaboration and Confrontation in Avalon Gameplay')]
 ----------------------------------------
 Children:
-     Label: product_recommendation_systems
+     Label: healthcare
      Dimension: real_world_domains
-     Description: Involves using NLP techniques to analyze user preferences and recommend products based on text data such as reviews or descriptions.
+     Description: NLP techniques are applied in healthcare to analyze medical records, assist in clinical decision-making, and improve patient outcomes through automated summarization and information extraction.
      Level: 1
-     # of Papers: 43
-     ----------------------------------------
-     Label: medical_record_summarization
-     Dimension: real_world_domains
-     Description: Focuses on summarizing and extracting key information from medical records using NLP methods to aid healthcare professionals in decision-making.
-     Level: 1
-     # of Papers: 16
-     ----------------------------------------
-     Label: sentiment_analysis_in_social_media
-     Dimension: real_world_domains
-     Description: Applies NLP to analyze and understand sentiment expressed in social media posts, comments, and reviews to gauge public opinion or sentiment trends.
-     Level: 1
-     # of Papers: 51
+     # of Papers: 56
+     Example Papers: [(263, 'PsyGUARD: An Automated System for Suicide Detection and Risk Assessment in Psychological Counseling'), (279, 'An Unsupervised Approach to Achieve Supervised-Level Explainability in Healthcare Records'), (398, 'Generative Models for Automatic Medical Decision Rule Extraction from Text')]
      ----------------------------------------
      Children:
-          Label: brand_sentiment_analysis
+          Label: patient_management
           Dimension: real_world_domains
-          Description: Brand sentiment analysis focuses on analyzing public sentiment towards specific brands or products on social media platforms.
-          Level: 2
-          ----------------------------------------
-          Label: political_sentiment_analysis
-          Dimension: real_world_domains
-          Description: Political sentiment analysis involves analyzing public sentiment towards political figures, parties, or issues on social media.
-          Level: 2
-          # of Papers: 7
-          ----------------------------------------
-          Label: event_sentiment_analysis
-          Dimension: real_world_domains
-          Description: Event sentiment analysis aims to analyze the sentiment of social media users towards specific events or occurrences.
-          Level: 2
-          # of Papers: 7
-          ----------------------------------------
-          Label: product_review_sentiment_analysis
-          Dimension: real_world_domains
-          Description: Product review sentiment analysis focuses on analyzing sentiment expressed in user reviews of products or services on social media.
-          Level: 2
-          # of Papers: 4
-          ----------------------------------------
-          Label: celebrity_sentiment_analysis
-          Dimension: real_world_domains
-          Description: Celebrity sentiment analysis involves analyzing public sentiment towards celebrities or public figures on social media platforms.
-          Level: 2
-          # of Papers: 2
-          ----------------------------------------
-     ----------------------------------------
-     Label: legal_document_analysis
-     Dimension: real_world_domains
-     Description: Utilizes NLP to process and extract insights from legal documents, contracts, and court cases to assist legal professionals in research and analysis.
-     Level: 1
-     # of Papers: 47
-     ----------------------------------------
-     Label: customer_feedback_analysis
-     Dimension: real_world_domains
-     Description: Involves using NLP to analyze and extract insights from customer feedback, reviews, and surveys to understand customer sentiment and improve products or services.
-     Level: 1
-     # of Papers: 16
-     ----------------------------------------
-     Label: clinical_decision_support
-     Dimension: real_world_domains
-     Description: Involves utilizing NLP techniques to provide decision-making support in clinical settings based on analysis of medical data.
-     Level: 1
-     # of Papers: 70
-     ----------------------------------------
-     Children:
-          Label: diagnosis_support
-          Dimension: real_world_domains
-          Description: Diagnosis support systems within clinical decision support assist healthcare professionals in accurately identifying and diagnosing medical conditions based on patient data and symptoms.
-          Level: 2
-          # of Papers: 34
-          ----------------------------------------
-          Label: treatment_recommendation
-          Dimension: real_world_domains
-          Description: Treatment recommendation tools provide healthcare providers with evidence-based suggestions for the most effective treatment plans and interventions for individual patients.
-          Level: 2
-          # of Papers: 23
-          ----------------------------------------
-          Label: patient_monitoring
-          Dimension: real_world_domains
-          Description: Patient monitoring systems in clinical decision support continuously track and analyze patient data to alert healthcare professionals of any significant changes in health status or treatment effectiveness.
-          Level: 2
-          # of Papers: 12
-          ----------------------------------------
-     ----------------------------------------
-     Label: multimodal_misinformation_detection
-     Dimension: real_world_domains
-     Description: Focuses on detecting and combating misinformation across various modalities using NLP methods.
-     Level: 1
-     # of Papers: 58
-     ----------------------------------------
-     Children:
-          Label: visual_misinformation_detection
-          Dimension: real_world_domains
-          Description: Visual misinformation detection focuses on identifying misleading or false information within images and videos to combat misinformation spread through visual content.
+          Description: Patient management involves coordinating and overseeing patient care, ensuring that individuals receive appropriate treatments and follow-up services.
           Level: 2
           # of Papers: 13
+          Example Papers: [(263, 'PsyGUARD: An Automated System for Suicide Detection and Risk Assessment in Psychological Counseling'), (590, 'Roleplay-doh: Enabling Domain-Experts to Create LLM-simulated Patients via Eliciting and Adhering to Principles'), (710, 'PATIENT-ps: Using Large Language Models to Simulate Patients for Training Mental Health Professionals')]
           ----------------------------------------
-          Label: audio_misinformation_detection
+          Label: telemedicine
           Dimension: real_world_domains
-          Description: Audio misinformation detection involves detecting deceptive or false information conveyed through audio recordings or speech to address misinformation in multimedia content.
-          Level: 2
-          # of Papers: 3
-          ----------------------------------------
-          Label: social_media_misinformation_detection
-          Dimension: real_world_domains
-          Description: Social media misinformation detection aims to detect and combat false or misleading information spread through social media platforms, considering the unique challenges posed by social networks.
-          Level: 2
-          # of Papers: 12
-          ----------------------------------------
-          Label: deepfake_detection
-          Dimension: real_world_domains
-          Description: Deepfake detection is the process of identifying digitally manipulated media, such as videos or images, created using artificial intelligence techniques to deceive viewers, contributing to the fight against deceptive content.
-          Level: 2
-          # of Papers: 1
-          ----------------------------------------
-     ----------------------------------------
-     Label: code_documentation_generation
-     Dimension: real_world_domains
-     Description: Refers to automatically generating documentation for code using natural language processing techniques.
-     Level: 1
-     # of Papers: 26
-     ----------------------------------------
-     Label: emotion_analysis_in_social_media
-     Dimension: real_world_domains
-     Description: Entails analyzing and understanding emotions expressed in social media content through NLP for sentiment analysis.
-     Level: 1
-     # of Papers: 21
-     ----------------------------------------
-     Label: text_attack_detection
-     Dimension: real_world_domains
-     Description: Involves identifying and mitigating attacks on text data using NLP-based detection methods.
-     Level: 1
-     # of Papers: 106
-     ----------------------------------------
-     Children:
-          Label: adversarial_text_generation
-          Dimension: real_world_domains
-          Description: Adversarial text generation involves creating text that is designed to deceive text attack detection systems.
-          Level: 2
-          # of Papers: 29
-          ----------------------------------------
-          Label: plagiarism_detection
-          Dimension: real_world_domains
-          Description: Plagiarism detection focuses on identifying instances where text has been copied or closely paraphrased without proper attribution.
-          Level: 2
-          # of Papers: 4
-          ----------------------------------------
-          Label: hate_speech_detection
-          Dimension: real_world_domains
-          Description: Hate speech detection aims to identify and classify text that contains offensive language or promotes discrimination against specific groups.
-          Level: 2
-          # of Papers: 21
-          ----------------------------------------
-          Label: fake_news_detection
-          Dimension: real_world_domains
-          Description: Fake news detection involves identifying and flagging news articles or information that is intentionally misleading or fabricated.
-          Level: 2
-          # of Papers: 24
-          ----------------------------------------
-          Label: rumor_detection
-          Dimension: real_world_domains
-          Description: Rumor detection focuses on identifying and verifying the accuracy of information that is spreading rapidly through text-based communication channels.
-          Level: 2
-          # of Papers: 11
-          ----------------------------------------
-     ----------------------------------------
-     Label: named_entity_recognition
-     Dimension: real_world_domains
-     Description: Focuses on identifying and classifying named entities in text data using NLP algorithms.
-     Level: 1
-     # of Papers: 272
-     ----------------------------------------
-     Children:
-          Label: person_names
-          Dimension: real_world_domains
-          Description: Identifying and extracting names of individuals from text data.
-          Level: 2
-          # of Papers: 1
-          ----------------------------------------
-          Label: location_names
-          Dimension: real_world_domains
-          Description: Recognizing and extracting names of places, cities, countries, or regions from text.
-          Level: 2
-          # of Papers: 4
-          ----------------------------------------
-          Label: organization_names
-          Dimension: real_world_domains
-          Description: Detecting and extracting names of companies, institutions, or organizations mentioned in text.
-          Level: 2
-          # of Papers: 5
-          ----------------------------------------
-          Label: date_entities
-          Dimension: real_world_domains
-          Description: Identifying and extracting specific dates or date ranges mentioned in text.
+          Description: Telemedicine refers to the use of technology to provide clinical health care from a distance, allowing patients to consult with healthcare providers remotely.
           Level: 2
           ----------------------------------------
-          Label: event_names
+          Label: healthcare_data_analysis
           Dimension: real_world_domains
-          Description: Recognizing and extracting names of events, conferences, or incidents from textual data.
-          Level: 2
-          # of Papers: 5
-          ----------------------------------------
-          Label: textual_entities
-          Dimension: real_world_domains
-          Description: Identifying and extracting various types of textual entities from text data.
-          Level: 2
-          # of Papers: 39
-          ----------------------------------------
-          Label: meeting_names
-          Dimension: real_world_domains
-          Description: Recognizing and extracting names of meetings, conferences, or gatherings from textual data.
-          Level: 2
-          # of Papers: 2
-          ----------------------------------------
-          Label: material_names
-          Dimension: real_world_domains
-          Description: Detecting and extracting names of materials or substances mentioned in text.
-          Level: 2
-          # of Papers: 2
-          ----------------------------------------
-          Label: group_names
-          Dimension: real_world_domains
-          Description: Identifying and extracting names of different groups or organizations from text.
-          Level: 2
-          # of Papers: 2
-          ----------------------------------------
-          Label: technology_names
-          Dimension: real_world_domains
-          Description: Recognizing and extracting names of different technologies or tools mentioned in text.
-          Level: 2
-          # of Papers: 40
-          ----------------------------------------
-          Label: annotation_tools
-          Dimension: real_world_domains
-          Description: Identifying and extracting tools or software used for annotation purposes in text data.
-          Level: 2
-          # of Papers: 10
-          ----------------------------------------
-          Label: platform_names
-          Dimension: real_world_domains
-          Description: Detecting and extracting names of various platforms or systems mentioned in text.
-          Level: 2
-          # of Papers: 8
-          ----------------------------------------
-          Label: language_models
-          Dimension: real_world_domains
-          Description: Recognizing and extracting different language models or frameworks used in text processing.
-          Level: 2
-          # of Papers: 115
-          ----------------------------------------
-          Label: data_types
-          Dimension: real_world_domains
-          Description: Identifying and extracting different types of data structures or formats mentioned in text.
-          Level: 2
-          # of Papers: 21
-          ----------------------------------------
-          Label: knowledge_graphs
-          Dimension: real_world_domains
-          Description: Detecting and extracting information related to knowledge graphs or structured knowledge representations.
-          Level: 2
-          # of Papers: 22
-          ----------------------------------------
-     ----------------------------------------
-     Label: text_classification
-     Dimension: real_world_domains
-     Description: Refers to categorizing text data into predefined classes or categories using NLP techniques.
-     Level: 1
-     # of Papers: 362
-     ----------------------------------------
-     Children:
-          Label: sentiment_analysis
-          Dimension: real_world_domains
-          Description: Sentiment analysis is the process of determining the emotional tone behind a series of words, often used to gauge public opinion or sentiment towards a particular topic.
-          Level: 2
-          # of Papers: 7
-          ----------------------------------------
-          Label: spam_detection
-          Dimension: real_world_domains
-          Description: Spam detection involves identifying and filtering out unwanted or unsolicited messages, typically in emails or online communication channels.
-          Level: 2
-          ----------------------------------------
-          Label: document_classification
-          Dimension: real_world_domains
-          Description: Document classification is the categorization of documents into predefined classes or categories based on their content, helping in organizing and retrieving information efficiently.
-          Level: 2
-          # of Papers: 33
-          ----------------------------------------
-          Label: text_representation
-          Dimension: real_world_domains
-          Description: Text representation involves converting textual data into a format suitable for machine learning algorithms to process and analyze.
-          Level: 2
-          # of Papers: 181
-          ----------------------------------------
-          Label: language_classification
-          Dimension: real_world_domains
-          Description: Language classification focuses on categorizing text or speech data into different languages or language families.
-          Level: 2
-          # of Papers: 13
-          ----------------------------------------
-          Label: conversational_analysis
-          Dimension: real_world_domains
-          Description: Conversational analysis examines the structure and dynamics of human conversations, often involving natural language processing techniques.
-          Level: 2
-          # of Papers: 85
-          ----------------------------------------
-          Label: multimodal_text_classification
-          Dimension: real_world_domains
-          Description: Multimodal text classification deals with the classification of text data that incorporates multiple modalities such as text, images, and audio.
-          Level: 2
-          # of Papers: 132
-          ----------------------------------------
-          Label: question_answering
-          Dimension: real_world_domains
-          Description: Question answering involves developing systems that can automatically provide accurate responses to user queries based on textual information.
-          Level: 2
-          # of Papers: 108
-          ----------------------------------------
-          Label: text_summarization
-          Dimension: real_world_domains
-          Description: Text summarization focuses on condensing large amounts of text into shorter, coherent summaries while preserving key information.
-          Level: 2
-          # of Papers: 52
-          ----------------------------------------
-          Label: multilingual_translation
-          Dimension: real_world_domains
-          Description: Multilingual translation involves translating text between multiple languages to facilitate cross-lingual communication.
-          Level: 2
-          # of Papers: 80
-          ----------------------------------------
-          Label: privacy_preservation
-          Dimension: real_world_domains
-          Description: Privacy preservation addresses techniques and methods to protect sensitive information and maintain user privacy in data processing tasks.
-          Level: 2
-          # of Papers: 10
-          ----------------------------------------
-          Label: bias_detection
-          Dimension: real_world_domains
-          Description: Bias detection aims to identify and mitigate biases present in datasets or models to ensure fair and unbiased decision-making processes.
-          Level: 2
-          # of Papers: 66
-          ----------------------------------------
-          Label: cybersecurity
-          Dimension: real_world_domains
-          Description: Cybersecurity focuses on safeguarding computer systems, networks, and data from unauthorized access, cyber attacks, and data breaches.
+          Description: Healthcare data analysis focuses on examining and interpreting health data to improve patient outcomes and optimize healthcare services.
           Level: 2
           # of Papers: 41
+          Example Papers: [(279, 'An Unsupervised Approach to Achieve Supervised-Level Explainability in Healthcare Records'), (398, 'Generative Models for Automatic Medical Decision Rule Extraction from Text'), (417, 'Towards Injecting Medical Visual Knowledge into Multimodal LLMs at Scale')]
           ----------------------------------------
-     ----------------------------------------
-     Label: text_generation
-     Dimension: real_world_domains
-     Description: Involves generating human-like text content using natural language processing models.
-     Level: 1
-     # of Papers: 468
-     ----------------------------------------
-     Children:
-          Label: poetry_generation
+          Children:
+               Label: patient_outcome_analysis
+               Dimension: real_world_domains
+               Description: This subcategory focuses on evaluating and interpreting data related to patient outcomes to improve healthcare quality and treatment effectiveness.
+               Level: 3
+               ----------------------------------------
+               Label: healthcare_cost_analysis
+               Dimension: real_world_domains
+               Description: This area involves analyzing healthcare expenditures and resource allocation to identify cost-saving opportunities and enhance financial sustainability.
+               Level: 3
+               ----------------------------------------
+               Label: clinical_data_mining
+               Dimension: real_world_domains
+               Description: This subcategory encompasses techniques for extracting valuable insights from clinical data, aiding in decision-making and improving patient care.
+               Level: 3
+               # of Papers: 32
+               Example Papers: [(279, 'An Unsupervised Approach to Achieve Supervised-Level Explainability in Healthcare Records'), (398, 'Generative Models for Automatic Medical Decision Rule Extraction from Text'), (417, 'Towards Injecting Medical Visual Knowledge into Multimodal LLMs at Scale')]
+               ----------------------------------------
+               Label: epidemiological_data_analysis
+               Dimension: real_world_domains
+               Description: This field involves the statistical analysis of data related to the distribution and determinants of health-related states in specific populations.
+               Level: 3
+               # of Papers: 15
+               Example Papers: [(417, 'Towards Injecting Medical Visual Knowledge into Multimodal LLMs at Scale'), (463, 'FEDKIM: Adaptive Federated Knowledge Injection into Medical Foundation Models'), (579, 'CARER - ClinicAl Reasoning-Enhanced Representation for Temporal Health Risk Prediction')]
+               ----------------------------------------
+               Label: healthcare_utilization_analysis
+               Dimension: real_world_domains
+               Description: This subcategory examines patterns of healthcare service usage to identify trends, improve access, and optimize resource distribution.
+               Level: 3
+               # of Papers: 7
+               Example Papers: [(279, 'An Unsupervised Approach to Achieve Supervised-Level Explainability in Healthcare Records'), (499, 'Beyond Label Attention: Transparency in Language Models for Automated Medical Coding via Dictionary Learning'), (579, 'CARER - ClinicAl Reasoning-Enhanced Representation for Temporal Health Risk Prediction')]
+               ----------------------------------------
+          ----------------------------------------
+          Label: medical_imaging
           Dimension: real_world_domains
-          Description: Poetry generation involves the automatic creation of poems using algorithms and natural language processing techniques.
+          Description: Medical imaging encompasses various techniques, such as X-rays and MRIs, used to visualize the interior of a body for clinical analysis and medical intervention.
           Level: 2
+          # of Papers: 9
+          Example Papers: [(417, 'Towards Injecting Medical Visual Knowledge into Multimodal LLMs at Scale'), (432, 'Divide and Conquer Radiology Report Generation via Observation Level Fine-grained Pretraining and Prompt Tuning'), (463, 'FEDKIM: Adaptive Federated Knowledge Injection into Medical Foundation Models')]
           ----------------------------------------
-          Label: code_generation
+          Label: pharmaceutical_research
           Dimension: real_world_domains
-          Description: Code generation is the process of automatically producing source code or scripts based on predefined templates or rules, often used in software development and automation tasks.
-          Level: 2
-          # of Papers: 3
-          ----------------------------------------
-          Label: lyrics_generation
-          Dimension: real_world_domains
-          Description: Lyrics generation focuses on creating song lyrics through computational methods, mimicking the style and structure of human-written lyrics.
-          Level: 2
-          ----------------------------------------
-          Label: story_generation
-          Dimension: real_world_domains
-          Description: Story generation refers to the automated creation of narratives, plots, and storytelling elements, often used in interactive fiction, chatbots, and creative writing applications.
-          Level: 2
-          # of Papers: 17
-          ----------------------------------------
-          Label: text_generation_control
-          Dimension: real_world_domains
-          Description: Text generation control involves techniques and methods for managing and directing the output of text generation models to ensure desired outcomes and quality.
-          Level: 2
-          # of Papers: 415
-          ----------------------------------------
-          Label: conversation_planning
-          Dimension: real_world_domains
-          Description: Conversation planning focuses on the automated generation of structured dialogues, including topic selection, flow management, and coherence enhancement.
-          Level: 2
-          # of Papers: 84
-          ----------------------------------------
-          Label: multi_agent_systems
-          Dimension: real_world_domains
-          Description: Multi-agent systems refer to the development and coordination of multiple autonomous agents for collaborative problem-solving and decision-making tasks.
-          Level: 2
-          # of Papers: 40
-          ----------------------------------------
-          Label: inference_serving
-          Dimension: real_world_domains
-          Description: Inference serving involves the deployment and management of models for making predictions and drawing conclusions based on input data in real-time applications.
-          Level: 2
-          # of Papers: 73
-          ----------------------------------------
-          Label: ranking_generation
-          Dimension: real_world_domains
-          Description: Ranking generation pertains to the automatic generation of ordered lists or rankings based on specific criteria or relevance scores.
-          Level: 2
-          # of Papers: 14
-          ----------------------------------------
-     ----------------------------------------
-     Label: document_clustering
-     Dimension: real_world_domains
-     Description: Entails grouping documents into clusters based on similarity in content or features using NLP clustering algorithms.
-     Level: 1
-     # of Papers: 120
-     ----------------------------------------
-     Children:
-          Label: topic_modeling
-          Dimension: real_world_domains
-          Description: Topic modeling is a subcategory of document clustering that involves identifying topics within a collection of documents based on their content.
+          Description: Pharmaceutical research involves the discovery and development of new medications and therapies to treat diseases and improve health outcomes.
           Level: 2
           # of Papers: 6
-          ----------------------------------------
-          Label: hierarchical_clustering
-          Dimension: real_world_domains
-          Description: Hierarchical clustering is a method within document clustering that organizes documents into a tree-like structure based on their similarity.
-          Level: 2
-          # of Papers: 3
-          ----------------------------------------
-          Label: density-based_clustering
-          Dimension: real_world_domains
-          Description: Density-based clustering is a technique in document clustering that groups documents based on their density in the feature space.
-          Level: 2
-          # of Papers: 2
-          ----------------------------------------
-          Label: multimodal_clustering
-          Dimension: real_world_domains
-          Description: Multimodal clustering involves grouping data points based on multiple modalities such as text, images, and audio.
-          Level: 2
-          # of Papers: 12
-          ----------------------------------------
-          Label: language_processing
-          Dimension: real_world_domains
-          Description: Language processing encompasses tasks such as language identification, translation, and sentiment analysis.
-          Level: 2
-          # of Papers: 86
-          ----------------------------------------
-          Label: graph_based_methods
-          Dimension: real_world_domains
-          Description: Graph-based methods involve using graph structures to represent and analyze data relationships in clustering tasks.
-          Level: 2
-          # of Papers: 10
-          ----------------------------------------
-          Label: multi-agent_systems
-          Dimension: real_world_domains
-          Description: Multi-agent systems refer to systems where multiple agents interact to achieve common goals, often used in clustering for collaborative problem-solving.
-          Level: 2
-          # of Papers: 12
-          ----------------------------------------
-          Label: real-time_analysis
-          Dimension: real_world_domains
-          Description: Real-time analysis focuses on processing and clustering data streams in real-time to provide timely insights.
-          Level: 2
-          # of Papers: 10
+          Example Papers: [(398, 'Generative Models for Automatic Medical Decision Rule Extraction from Text'), (579, 'CARER - ClinicAl Reasoning-Enhanced Representation for Temporal Health Risk Prediction'), (758, 'Large Language Models Are Poor Clinical Decision-Makers: A Comprehensive Benchmark')]
           ----------------------------------------
      ----------------------------------------
-     Label: language_model_evaluation
+     Label: finance
      Dimension: real_world_domains
-     Description: Focuses on assessing the performance and quality of language models through evaluation metrics and techniques.
+     Description: In the finance sector, NLP is utilized for sentiment analysis of market trends, fraud detection, and automating customer service through chatbots and virtual assistants.
      Level: 1
-     # of Papers: 485
+     # of Papers: 22
+     Example Papers: [(62, 'CryptoTrade: A Reflective LLM-based Agent to Guide Zero-shot Cryptocurrency Trading'), (437, 'KnowledgeSG: Privacy-Preserving Synthetic Text Generation with Knowledge Distillation from Server'), (584, 'InferAligner: Inference-Time Alignment for Harmlessness through Cross-Model Guidance')]
+     ----------------------------------------
+     Label: e-commerce
+     Dimension: real_world_domains
+     Description: E-commerce platforms leverage NLP for product recommendation systems, customer feedback analysis, and enhancing user experience through personalized search functionalities.
+     Level: 1
+     # of Papers: 28
+     Example Papers: [(445, 'MIND: Multimodal Shopping Intention Distillation from Large Vision-language Models for E-commerce Purchase Understanding'), (652, 'Enhancing High-order Interaction Awareness in LLM-based Recommender Model'), (994, 'PepRec: Progressive Enhancement of Prompting for Recommendation')]
+     ----------------------------------------
+     Label: legal
+     Dimension: real_world_domains
+     Description: NLP is used in the legal domain for document review, contract analysis, and legal research, helping to streamline processes and improve accuracy in legal proceedings.
+     Level: 1
+     # of Papers: 48
+     Example Papers: [(72, 'Learning Interpretable Legal Case Retrieval via Knowledge-Guided Case Reformulation'), (97, 'SHIELD: Evaluation and Defense Strategies for Copyright Compliance in LLM Text Generation'), (194, 'GoldCoin: Grounding Large Language Models in Privacy Laws via Contextual Integrity Theory')]
      ----------------------------------------
      Children:
-          Label: text_generation_evaluation
+          Label: contract_law
           Dimension: real_world_domains
-          Description: Text generation evaluation involves assessing the quality and coherence of generated text by language models.
+          Description: Contract law governs the agreements made between parties, ensuring that promises are enforceable and providing remedies for breaches.
           Level: 2
-          # of Papers: 4
+          # of Papers: 5
+          Example Papers: [(2648, 'Enhancing Contract Negotiations with LLM-Based Legal Document Comparison'), (2649, 'Attributed Question Answering for Preconditions in the Dutch Law'), (2655, 'BLT: Can Large Language Models Handle Basic Legal Text?')]
           ----------------------------------------
-          Label: language_model_fine-tuning_evaluation
+          Label: criminal_law
           Dimension: real_world_domains
-          Description: Language model fine-tuning evaluation focuses on measuring the performance of fine-tuned models for specific tasks or domains.
+          Description: Criminal law involves the prosecution of individuals or entities by the state for acts classified as crimes, encompassing various offenses and penalties.
           Level: 2
-          # of Papers: 70
+          # of Papers: 12
+          Example Papers: [(72, 'Learning Interpretable Legal Case Retrieval via Knowledge-Guided Case Reformulation'), (931, 'The Odyssey of Commonsense Causality: From Foundational Benchmarks to Cutting-Edge Reasoning'), (1489, 'Enabling Discriminative Reasoning in LLMs for Legal Judgment Prediction')]
           ----------------------------------------
-          Label: language_model_robustness_evaluation
+          Label: property_law
           Dimension: real_world_domains
-          Description: Language model robustness evaluation examines the ability of models to maintain performance across different datasets and scenarios.
+          Description: Property law deals with the rights and responsibilities related to the ownership and use of real estate and personal property.
           Level: 2
-          # of Papers: 115
+          # of Papers: 1
+          Example Papers: [(2649, 'Attributed Question Answering for Preconditions in the Dutch Law')]
           ----------------------------------------
-          Label: language_model_real-world_applications_evaluation
+          Label: family_law
           Dimension: real_world_domains
-          Description: Language model evaluation focusing on real-world applications and practical use cases.
+          Description: Family law encompasses legal issues related to family relationships, including marriage, divorce, child custody, and adoption.
           Level: 2
-          # of Papers: 345
           ----------------------------------------
-          Label: language_model_social_impact_evaluation
+          Label: intellectual_property_law
           Dimension: real_world_domains
-          Description: Language model evaluation examining the social impact and implications of model deployment.
+          Description: Intellectual property law protects the rights of creators and inventors over their inventions, designs, and artistic works, promoting innovation and creativity.
           Level: 2
-          # of Papers: 38
+          # of Papers: 12
+          Example Papers: [(97, 'SHIELD: Evaluation and Defense Strategies for Copyright Compliance in LLM Text Generation'), (194, 'GoldCoin: Grounding Large Language Models in Privacy Laws via Contextual Integrity Theory'), (216, 'C3PA: An Open Dataset of Expert-Annotated and Regulation-Aware Privacy Policies to Enable Scalable Regulatory Compliance Audits')]
           ----------------------------------------
-          Label: language_model_ethical_evaluation
+     ----------------------------------------
+     Label: education
+     Dimension: real_world_domains
+     Description: In education, NLP applications include automated grading systems, personalized learning experiences, and tools for language learning that adapt to individual student needs.
+     Level: 1
+     # of Papers: 62
+     Example Papers: [(26, 'Impeding LLM-assisted Cheating in Introductory Programming Assignments via Adversarial Perturbation'), (77, 'Model Balancing Helps Low-data Training and Fine-tuning'), (93, 'Standardize: Aligning Language Models with Expert-Defined Standards for Content Generation')]
+     ----------------------------------------
+     Children:
+          Label: early_childhood_education
           Dimension: real_world_domains
-          Description: Language model evaluation assessing ethical considerations and implications of model behavior.
+          Description: Early childhood education focuses on the developmental needs of children from birth to eight years old, emphasizing play-based learning and foundational skills.
+          Level: 2
+          # of Papers: 3
+          Example Papers: [(276, 'KidLM: Advancing Language Models for Children - Early Insights and Future Directions'), (960, "StorySparkQA: Expert-Annotated QA Pairs with Real-World Knowledge for Children's Story-Based Learning"), (2953, 'BERT-based Annotation of Oral Texts Elicited via Multilingual Assessment Instrument for Narratives')]
+          ----------------------------------------
+          Label: special_education
+          Dimension: real_world_domains
+          Description: Special education provides tailored educational programs and services to meet the unique needs of students with disabilities or learning differences.
+          Level: 2
+          # of Papers: 1
+          Example Papers: [(800, 'ASL STEM Wiki: Dataset and Benchmark for Interpreting STEM Articles')]
+          ----------------------------------------
+          Label: adult_education
+          Dimension: real_world_domains
+          Description: Adult education encompasses various programs designed to help adults gain new skills, knowledge, and qualifications, often focusing on career advancement or personal development.
+          Level: 2
+          # of Papers: 23
+          Example Papers: [(93, 'Standardize: Aligning Language Models with Expert-Defined Standards for Content Generation'), (145, 'Large Language Model as an Assignment Evaluator: Insights, Feedback, and Challenges in a 1000+ Student Course'), (292, 'Academics Can Contribute to Domain-Specialized Language Models')]
+          ----------------------------------------
+          Label: vocational_training
+          Dimension: real_world_domains
+          Description: Vocational training prepares individuals for specific trades or careers, combining practical skills with theoretical knowledge to enhance employability.
+          Level: 2
+          ----------------------------------------
+          Label: online_learning
+          Dimension: real_world_domains
+          Description: Online learning utilizes digital platforms to deliver educational content, allowing students to learn at their own pace and access resources from anywhere.
+          Level: 2
+          # of Papers: 20
+          Example Papers: [(93, 'Standardize: Aligning Language Models with Expert-Defined Standards for Content Generation'), (145, 'Large Language Model as an Assignment Evaluator: Insights, Feedback, and Challenges in a 1000+ Student Course'), (292, 'Academics Can Contribute to Domain-Specialized Language Models')]
+          ----------------------------------------
+     ----------------------------------------
+     Label: agriculture
+     Dimension: real_world_domains
+     Description: NLP applications in agriculture focus on analyzing agricultural data, improving crop management, and enhancing supply chain efficiency through automated insights.
+     Level: 1
+     # of Papers: 1
+     Example Papers: [(2735, 'AgriLLM:Harnessing Transformers for Framer Queries')]
+     ----------------------------------------
+     Label: biomedical
+     Dimension: real_world_domains
+     Description: In the biomedical domain, NLP is utilized for processing and analyzing medical literature, clinical data, and patient records to support research and healthcare delivery.
+     Level: 1
+     # of Papers: 193
+     Example Papers: [(7, 'When LLMs Meets Acoustic Landmarks: An Efficient Approach to Integrate Speech into Large Language Models for Depression Detection'), (48, 'Overcome Noise and Bias: Segmentation-Aided Multi-Granularity Denoising and Debiasing for Enhanced Quarduples Extraction in Dialogue'), (53, 'Large Language Models for Data Annotation and Synthesis: A Survey')]
+     ----------------------------------------
+     Children:
+          Label: clinical_trials
+          Dimension: real_world_domains
+          Description: Clinical trials are research studies that evaluate the effectiveness and safety of new medical treatments or interventions in human participants.
+          Level: 2
+          ----------------------------------------
+          Label: genomic_research
+          Dimension: real_world_domains
+          Description: Genomic research involves the study of genomes, focusing on the structure, function, evolution, and mapping of genes to understand genetic diseases and develop targeted therapies.
+          Level: 2
+          # of Papers: 1
+          Example Papers: [(1723, 'Geneverse: A Collection of Open-source Multimodal Large Language Models for Genomic and Proteomic Research')]
+          ----------------------------------------
+          Label: pharmacovigilance
+          Dimension: real_world_domains
+          Description: Pharmacovigilance is the science of monitoring the effects of medical drugs after they have been licensed for use, aiming to identify and evaluate adverse reactions.
+          Level: 2
+          ----------------------------------------
+          Label: biomedical_imaging
+          Dimension: real_world_domains
+          Description: Biomedical imaging encompasses various techniques used to visualize the internal structures of the body for diagnosis and treatment planning, including MRI, CT scans, and ultrasound.
+          Level: 2
+          # of Papers: 11
+          Example Papers: [(417, 'Towards Injecting Medical Visual Knowledge into Multimodal LLMs at Scale'), (432, 'Divide and Conquer Radiology Report Generation via Observation Level Fine-grained Pretraining and Prompt Tuning'), (961, 'MedCoT: Medical Chain of Thought via Hierarchical Expert')]
+          ----------------------------------------
+          Label: health_informatics
+          Dimension: real_world_domains
+          Description: Health informatics is the intersection of information science, computer science, and healthcare, focusing on the management and analysis of health data to improve patient care.
+          Level: 2
+          # of Papers: 66
+          Example Papers: [(7, 'When LLMs Meets Acoustic Landmarks: An Efficient Approach to Integrate Speech into Large Language Models for Depression Detection'), (61, 'RULE: Reliable Multimodal RAG for Factuality in Medical Vision Language Models'), (263, 'PsyGUARD: An Automated System for Suicide Detection and Risk Assessment in Psychological Counseling')]
+          ----------------------------------------
+          Children:
+               Label: clinical_decision_support
+               Dimension: real_world_domains
+               Description: Clinical decision support systems provide healthcare professionals with knowledge and patient-specific information to enhance decision-making in patient care.
+               Level: 3
+               # of Papers: 6
+               Example Papers: [(263, 'PsyGUARD: An Automated System for Suicide Detection and Risk Assessment in Psychological Counseling'), (398, 'Generative Models for Automatic Medical Decision Rule Extraction from Text'), (479, 'CliMedBench: A Large-Scale Chinese Benchmark for Evaluating Medical Large Language Models in Clinical Scenarios')]
+               ----------------------------------------
+               Label: health_information_exchange
+               Dimension: real_world_domains
+               Description: Health information exchange facilitates the electronic sharing of health-related information among organizations to improve the quality and safety of patient care.
+               Level: 3
+               # of Papers: 10
+               Example Papers: [(579, 'CARER - ClinicAl Reasoning-Enhanced Representation for Temporal Health Risk Prediction'), (1244, 'EHRAgent: Code Empowers Large Language Models for Few-shot Complex Tabular Reasoning on Electronic Health Records'), (1775, 'TriageAgent: Towards Better Multi-Agents Collaborations for Large Language Model-Based Clinical Triage')]
+               ----------------------------------------
+               Label: telemedicine
+               Label: patient_portal
+               Dimension: real_world_domains
+               Description: Patient portals are secure online websites that give patients access to their personal health information and enable communication with healthcare providers.
+               Level: 3
+               ----------------------------------------
+               Label: health_data_analytics
+               Dimension: real_world_domains
+               Description: Health data analytics involves the systematic computational analysis of health data to uncover patterns, trends, and insights that can inform healthcare decisions.
+               Level: 3
+               # of Papers: 51
+               Example Papers: [(7, 'When LLMs Meets Acoustic Landmarks: An Efficient Approach to Integrate Speech into Large Language Models for Depression Detection'), (61, 'RULE: Reliable Multimodal RAG for Factuality in Medical Vision Language Models'), (279, 'An Unsupervised Approach to Achieve Supervised-Level Explainability in Healthcare Records')]
+               ----------------------------------------
+          ----------------------------------------
+          Label: data_science
+          Dimension: real_world_domains
+          Description: Data science involves the use of statistical and computational techniques to analyze and interpret complex data sets, often applied in healthcare for predictive analytics.
+          Level: 2
+          # of Papers: 119
+          Example Papers: [(48, 'Overcome Noise and Bias: Segmentation-Aided Multi-Granularity Denoising and Debiasing for Enhanced Quarduples Extraction in Dialogue'), (53, 'Large Language Models for Data Annotation and Synthesis: A Survey'), (56, 'RoseLoRA: Row and Column-wise Sparse Low-rank Adaptation of Pre-trained Language Model for Knowledge Editing and Fine-tuning')]
+          ----------------------------------------
+          Children:
+               Label: healthcare_analytics
+               Dimension: real_world_domains
+               Description: Healthcare analytics involves the use of data analysis techniques to improve patient outcomes, optimize operational efficiency, and reduce costs in healthcare settings.
+               Level: 3
+               # of Papers: 3
+               Example Papers: [(279, 'An Unsupervised Approach to Achieve Supervised-Level Explainability in Healthcare Records'), (2121, 'HealthAlignSumm : Utilizing Alignment for Multimodal Summarization of Code-Mixed Healthcare Dialogues'), (2260, 'Can LLMs Replace Clinical Doctors? Exploring Bias in Disease Diagnosis by Large Language Models')]
+               ----------------------------------------
+               Label: financial_analysis
+               Dimension: real_world_domains
+               Description: Financial analysis in data science focuses on evaluating financial data to inform investment decisions, risk management, and strategic planning for businesses.
+               Level: 3
+               ----------------------------------------
+               Label: marketing_analytics
+               Dimension: real_world_domains
+               Description: Marketing analytics utilizes data science methods to analyze consumer behavior, measure campaign effectiveness, and enhance customer engagement strategies.
+               Level: 3
+               ----------------------------------------
+               Label: sports_analytics
+               Dimension: real_world_domains
+               Description: Sports analytics applies data science techniques to evaluate player performance, optimize team strategies, and enhance fan engagement in the sports industry.
+               Level: 3
+               ----------------------------------------
+               Label: retail_analytics
+               Dimension: real_world_domains
+               Description: Retail analytics leverages data science to understand consumer purchasing patterns, optimize inventory management, and improve overall retail performance.
+               Level: 3
+               ----------------------------------------
+               Label: cybersecurity_analytics
+               Dimension: real_world_domains
+               Description: Cybersecurity analytics focuses on applying data science techniques to detect, prevent, and respond to cyber threats and vulnerabilities.
+               Level: 3
+               # of Papers: 2
+               Example Papers: [(392, 'Taylor Unswift: Secured Weight Release for Large Language Models via Taylor Expansion'), (1607, "Typos that Broke the RAG's Back: Genetic Attack on RAG Pipeline by Simulating Documents in the Wild via Low-level Perturbations")]
+               ----------------------------------------
+               Label: biomedical_domain
+               Dimension: real_world_domains
+               Description: The biomedical domain involves the application of data science methods to analyze biological and medical data for research and healthcare improvements.
+               Level: 3
+               # of Papers: 85
+               Example Papers: [(48, 'Overcome Noise and Bias: Segmentation-Aided Multi-Granularity Denoising and Debiasing for Enhanced Quarduples Extraction in Dialogue'), (56, 'RoseLoRA: Row and Column-wise Sparse Low-rank Adaptation of Pre-trained Language Model for Knowledge Editing and Fine-tuning'), (68, 'LLMs Are Zero-Shot Context-Aware Simultaneous Translators')]
+               ----------------------------------------
+               Label: education_analytics
+               Dimension: real_world_domains
+               Description: Education analytics utilizes data science to assess and enhance educational outcomes, student performance, and institutional effectiveness.
+               Level: 3
+               # of Papers: 2
+               Example Papers: [(77, 'Model Balancing Helps Low-data Training and Fine-tuning'), (509, 'Statistical Uncertainty in Word Embeddings: GloVe-V')]
+               ----------------------------------------
+               Label: psychology_analytics
+               Dimension: real_world_domains
+               Description: Psychology analytics applies data science techniques to understand and analyze psychological data, behaviors, and mental health trends.
+               Level: 3
+               # of Papers: 7
+               Example Papers: [(909, 'WorryWords: Norms of Anxiety Association for over 44k English Words'), (993, 'CURE: Context- and Uncertainty-Aware Mental Disorder Detection'), (1469, 'LLM Questionnaire Completion for Automatic Psychiatric Assessment')]
+               ----------------------------------------
+          ----------------------------------------
+          Label: machine_learning
+          Dimension: real_world_domains
+          Description: Machine learning is a subset of artificial intelligence that focuses on the development of algorithms that allow computers to learn from and make predictions based on data.
+          Level: 2
+          # of Papers: 184
+          Example Papers: [(7, 'When LLMs Meets Acoustic Landmarks: An Efficient Approach to Integrate Speech into Large Language Models for Depression Detection'), (48, 'Overcome Noise and Bias: Segmentation-Aided Multi-Granularity Denoising and Debiasing for Enhanced Quarduples Extraction in Dialogue'), (53, 'Large Language Models for Data Annotation and Synthesis: A Survey')]
+          ----------------------------------------
+          Children:
+               Label: computer_vision
+               Dimension: real_world_domains
+               Description: Computer vision is a field of machine learning that focuses on enabling machines to interpret and understand visual information from the world, such as images and videos.
+               Level: 3
+               # of Papers: 5
+               Example Papers: [(417, 'Towards Injecting Medical Visual Knowledge into Multimodal LLMs at Scale'), (453, 'Efficient Vision-Language pre-training via domain-specific learning for human activities'), (872, 'ERVQA: A Dataset to Benchmark the Readiness of Large Vision Language Models in Hospital Environments')]
+               ----------------------------------------
+               Label: reinforcement_learning
+               Dimension: real_world_domains
+               Description: Reinforcement learning is a type of machine learning where an agent learns to make decisions by taking actions in an environment to maximize cumulative rewards.
+               Level: 3
+               # of Papers: 4
+               Example Papers: [(405, 'Learning to Retrieve Iteratively for In-Context Learning'), (474, 'WPO: Enhancing RLHF with Weighted Preference Optimization'), (476, 'MetaReflection: Learning Instructions for Language Agents using Past Reflections')]
+               ----------------------------------------
+               Label: predictive_analytics
+               Dimension: real_world_domains
+               Description: Predictive analytics involves using statistical algorithms and machine learning techniques to identify the likelihood of future outcomes based on historical data.
+               Level: 3
+               # of Papers: 18
+               Example Papers: [(279, 'An Unsupervised Approach to Achieve Supervised-Level Explainability in Healthcare Records'), (364, 'Satyrn: A Platform for Analytics Augmented Generation'), (509, 'Statistical Uncertainty in Word Embeddings: GloVe-V')]
+               ----------------------------------------
+               Label: anomaly_detection
+               Dimension: real_world_domains
+               Description: Anomaly detection is a machine learning technique used to identify unusual patterns or outliers in data that do not conform to expected behavior.
+               Level: 3
+               # of Papers: 2
+               Example Papers: [(1607, "Typos that Broke the RAG's Back: Genetic Attack on RAG Pipeline by Simulating Documents in the Wild via Low-level Perturbations"), (2079, 'Light-weight Fine-tuning Method for Defending Adversarial Noise in Pre-trained Medical Vision-Language Models')]
+               ----------------------------------------
+               Label: time_series_forecasting
+               Dimension: real_world_domains
+               Description: Time series forecasting is a method in machine learning that involves predicting future values based on previously observed values in a time-ordered sequence.
+               Level: 3
+               # of Papers: 2
+               Example Papers: [(555, 'Efficient Temporal Extrapolation of Multimodal Large Language Models with Temporal Grounding Bridge'), (2085, 'Mental Disorder Classification via Temporal Representation of Text')]
+               ----------------------------------------
+               Label: federated_learning
+               Dimension: real_world_domains
+               Description: Federated learning is a machine learning approach that enables decentralized training of models across multiple devices while preserving data privacy.
+               Level: 3
+               # of Papers: 36
+               Example Papers: [(392, 'Taylor Unswift: Secured Weight Release for Large Language Models via Taylor Expansion'), (437, 'KnowledgeSG: Privacy-Preserving Synthetic Text Generation with Knowledge Distillation from Server'), (460, 'Data Advisor: Dynamic Data Curation for Safety Alignment of Large Language Models')]
+               ----------------------------------------
+               Label: multimodal_learning
+               Dimension: real_world_domains
+               Description: Multimodal learning involves integrating and processing information from multiple modalities, such as text, images, and audio, to improve machine learning models.
+               Level: 3
+               # of Papers: 140
+               Example Papers: [(7, 'When LLMs Meets Acoustic Landmarks: An Efficient Approach to Integrate Speech into Large Language Models for Depression Detection'), (48, 'Overcome Noise and Bias: Segmentation-Aided Multi-Granularity Denoising and Debiasing for Enhanced Quarduples Extraction in Dialogue'), (53, 'Large Language Models for Data Annotation and Synthesis: A Survey')]
+               ----------------------------------------
+               Label: knowledge_graph_construction
+               Dimension: real_world_domains
+               Description: Knowledge graph construction is the process of creating a structured representation of knowledge in a graph format, enabling machines to understand relationships between entities.
+               Level: 3
+               # of Papers: 60
+               Example Papers: [(56, 'RoseLoRA: Row and Column-wise Sparse Low-rank Adaptation of Pre-trained Language Model for Knowledge Editing and Fine-tuning'), (61, 'RULE: Reliable Multimodal RAG for Factuality in Medical Vision Language Models'), (96, 'Predicate Debiasing in Vision-Language Models Integration for Scene Graph Generation Enhancement')]
+               ----------------------------------------
+               Label: topic_modeling
+               Dimension: real_world_domains
+               Description: Topic modeling is a technique in natural language processing that identifies topics within a collection of documents, helping to uncover hidden thematic structures.
+               Level: 3
+               # of Papers: 97
+               Example Papers: [(48, 'Overcome Noise and Bias: Segmentation-Aided Multi-Granularity Denoising and Debiasing for Enhanced Quarduples Extraction in Dialogue'), (53, 'Large Language Models for Data Annotation and Synthesis: A Survey'), (56, 'RoseLoRA: Row and Column-wise Sparse Low-rank Adaptation of Pre-trained Language Model for Knowledge Editing and Fine-tuning')]
+               ----------------------------------------
+          ----------------------------------------
+          Label: computational_biology
+          Dimension: real_world_domains
+          Description: Computational biology applies quantitative techniques and models to understand biological systems and relationships, often used in genomics and drug discovery.
+          Level: 2
+          # of Papers: 24
+          Example Papers: [(96, 'Predicate Debiasing in Vision-Language Models Integration for Scene Graph Generation Enhancement'), (103, 'Retrieved Sequence Augmentation for Protein Representation Learning'), (171, 'Verification and Refinement of Natural Language Explanations through LLM-Symbolic Theorem Proving')]
+          ----------------------------------------
+     ----------------------------------------
+     Label: social_sciences
+     Dimension: real_world_domains
+     Description: NLP techniques in social sciences are applied to study social behavior, analyze discourse, and understand cultural phenomena through text and data analysis.
+     Level: 1
+     # of Papers: 154
+     Example Papers: [(28, 'On the Influence of Gender and Race in Romantic Relationship Prediction from Large Language Models'), (58, 'HEART-felt Narratives: Tracing Empathy and Narrative Style in Personal Stories with LLMs'), (60, 'Bridging Cultures in the Kitchen: A Framework and Benchmark for Cross-Cultural Recipe Retrieval')]
+     ----------------------------------------
+     Children:
+          Label: sociology
+          Dimension: real_world_domains
+          Description: The study of social behavior, institutions, and structures, focusing on how individuals interact within groups and societies.
+          Level: 2
+          # of Papers: 93
+          Example Papers: [(28, 'On the Influence of Gender and Race in Romantic Relationship Prediction from Large Language Models'), (60, 'Bridging Cultures in the Kitchen: A Framework and Benchmark for Cross-Cultural Recipe Retrieval'), (69, 'AgentReview: Exploring Peer Review Dynamics with LLM Agents')]
+          ----------------------------------------
+          Children:
+               Label: urban_sociology
+               Dimension: real_world_domains
+               Description: Urban sociology examines the social, political, and economic dynamics of urban areas, focusing on the interactions and relationships within city environments.
+               Level: 3
+               ----------------------------------------
+               Label: medical_sociology
+               Dimension: real_world_domains
+               Description: Medical sociology studies the social aspects of health and illness, exploring how societal factors influence health outcomes and healthcare practices.
+               Level: 3
+               # of Papers: 5
+               Example Papers: [(515, 'Words Matter: Reducing Stigma in Online Conversations about Substance Use with Large Language Models'), (719, 'SPEED++: A Multilingual Event Extraction Framework for Epidemic Prediction and Preparedness'), (1639, "Revealing COVID-19's Social Dynamics: Diachronic Semantic Analysis of Vaccine and Symptom Discourse on Twitter")]
+               ----------------------------------------
+               Label: environmental_sociology
+               Dimension: real_world_domains
+               Description: Environmental sociology investigates the interactions between societies and their environments, analyzing how social structures and processes affect environmental issues.
+               Level: 3
+               # of Papers: 1
+               Example Papers: [(2732, 'Efficient Aspect-Based Summarization of Climate Change Reports with Small Language Models')]
+               ----------------------------------------
+               Label: sociology_of_family
+               Dimension: real_world_domains
+               Description: The sociology of family explores the structure, dynamics, and roles within family units, as well as how families interact with broader social institutions.
+               Level: 3
+               # of Papers: 1
+               Example Papers: [(2949, 'Is It Safe to Tell Your Story? Towards Achieving Privacy for Sensitive Narratives')]
+               ----------------------------------------
+               Label: sociology_of_education
+               Dimension: real_world_domains
+               Description: Sociology of education examines how educational systems and institutions affect social structures, individual behavior, and cultural norms.
+               Level: 3
+               ----------------------------------------
+               Label: sociology_of_belief
+               Dimension: real_world_domains
+               Description: Sociology of belief examines how belief systems, including religion and ideology, shape social behavior and influence community dynamics.
+               Level: 3
+               # of Papers: 15
+               Example Papers: [(254, 'F^2RL: Factuality and Faithfulness Reinforcement Learning Framework for Claim-Guided Evidence-Supported Counterspeech Generation'), (326, 'The Computational Anatomy of Humility: Modeling Intellectual Humility in Online Public Discourse'), (723, 'OATH-Frames: Characterizing Online Attitudes Towards Homelessness with LLM Assistants')]
+               ----------------------------------------
+               Label: sociology_of_technology
+               Dimension: real_world_domains
+               Description: Sociology of technology explores the social implications of technological advancements and how they affect human interactions and societal structures.
+               Level: 3
+               # of Papers: 34
+               Example Papers: [(28, 'On the Influence of Gender and Race in Romantic Relationship Prediction from Large Language Models'), (69, 'AgentReview: Exploring Peer Review Dynamics with LLM Agents'), (200, 'Is Safer Better? The Impact of Guardrails on the Argumentative Strength of LLMs in Hate Speech Countering')]
+               ----------------------------------------
+               Label: cultural_sociology
+               Dimension: real_world_domains
+               Description: Cultural sociology investigates the relationship between culture and society, focusing on how cultural practices and norms influence social behavior.
+               Level: 3
+               # of Papers: 24
+               Example Papers: [(60, 'Bridging Cultures in the Kitchen: A Framework and Benchmark for Cross-Cultural Recipe Retrieval'), (250, 'Voices Unheard: NLP Resources and Models for Yoruba Regional Dialects'), (381, 'MirrorStories: Reflecting Diversity through Personalized Narrative Generation with Large Language Models')]
+               ----------------------------------------
+               Label: sociology_of_communities
+               Dimension: real_world_domains
+               Description: Sociology of communities studies the formation, structure, and dynamics of communities, including their social interactions and collective identities.
+               Level: 3
+               # of Papers: 30
+               Example Papers: [(208, 'Toxicity Detection is NOT all you Need: Measuring the Gaps to Supporting Volunteer Content Moderators through a User-Centric Method'), (254, 'F^2RL: Factuality and Faithfulness Reinforcement Learning Framework for Claim-Guided Evidence-Supported Counterspeech Generation'), (255, 'Deciphering Rumors: A Multi-Task Learning Approach with Intent-aware Hierarchical Contrastive Learning')]
+               ----------------------------------------
+               Label: sociology_of_gender
+               Dimension: real_world_domains
+               Description: Sociology of gender analyzes the social constructs of gender roles and their impact on individual identities and societal norms.
+               Level: 3
+               # of Papers: 20
+               Example Papers: [(28, 'On the Influence of Gender and Race in Romantic Relationship Prediction from Large Language Models'), (254, 'F^2RL: Factuality and Faithfulness Reinforcement Learning Framework for Claim-Guided Evidence-Supported Counterspeech Generation'), (362, "ChatGPT Doesn't Trust Chargers Fans: Guardrail Sensitivity in Context")]
+               ----------------------------------------
+          ----------------------------------------
+          Label: psychology
+          Dimension: real_world_domains
+          Description: The scientific study of the mind and behavior, exploring mental processes, emotions, and the impact of social environments on individuals.
+          Level: 2
+          # of Papers: 33
+          Example Papers: [(58, 'HEART-felt Narratives: Tracing Empathy and Narrative Style in Personal Stories with LLMs'), (200, 'Is Safer Better? The Impact of Guardrails on the Argumentative Strength of LLMs in Hate Speech Countering'), (208, 'Toxicity Detection is NOT all you Need: Measuring the Gaps to Supporting Volunteer Content Moderators through a User-Centric Method')]
+          ----------------------------------------
+          Label: anthropology
+          Dimension: real_world_domains
+          Description: The comprehensive study of humans, their societies, cultures, and development throughout history, emphasizing cultural diversity.
+          Level: 2
+          # of Papers: 29
+          Example Papers: [(60, 'Bridging Cultures in the Kitchen: A Framework and Benchmark for Cross-Cultural Recipe Retrieval'), (200, 'Is Safer Better? The Impact of Guardrails on the Argumentative Strength of LLMs in Hate Speech Countering'), (254, 'F^2RL: Factuality and Faithfulness Reinforcement Learning Framework for Claim-Guided Evidence-Supported Counterspeech Generation')]
+          ----------------------------------------
+          Label: economics
+          Dimension: real_world_domains
+          Description: The analysis of the production, distribution, and consumption of goods and services, examining how individuals and societies allocate resources.
+          Level: 2
+          # of Papers: 12
+          Example Papers: [(108, 'An Effective Deployment of Diffusion LM for Data Augmentation in Low-Resource Sentiment Classification'), (200, 'Is Safer Better? The Impact of Guardrails on the Argumentative Strength of LLMs in Hate Speech Countering'), (254, 'F^2RL: Factuality and Faithfulness Reinforcement Learning Framework for Claim-Guided Evidence-Supported Counterspeech Generation')]
+          ----------------------------------------
+          Label: political_science
+          Dimension: real_world_domains
+          Description: The systematic study of political institutions, processes, behavior, and power dynamics within societies and governments.
           Level: 2
           # of Papers: 48
+          Example Papers: [(200, 'Is Safer Better? The Impact of Guardrails on the Argumentative Strength of LLMs in Hate Speech Countering'), (243, "Hidden Persuaders: LLMs' Political Leaning and Their Influence on Voters"), (254, 'F^2RL: Factuality and Faithfulness Reinforcement Learning Framework for Claim-Guided Evidence-Supported Counterspeech Generation')]
           ----------------------------------------
-          Label: language_model_multimodal_integration_evaluation
-          Dimension: real_world_domains
-          Description: Language model evaluation exploring integration with multiple modalities for enhanced performance.
-          Level: 2
-          # of Papers: 71
+          Children:
+               Label: comparative_politics
+               Dimension: real_world_domains
+               Description: Comparative politics involves the systematic study and comparison of political systems, institutions, and behaviors across different countries to understand their similarities and differences.
+               Level: 3
+               # of Papers: 13
+               Example Papers: [(243, "Hidden Persuaders: LLMs' Political Leaning and Their Influence on Voters"), (311, 'Investigating LLMs as Voting Assistants via Contextual Augmentation: A Case Study on the European Parliament Elections 2024'), (336, 'Fine-Grained Detection of Solidarity for Women and Migrants in 155 Years of German Parliamentary Debates')]
+               ----------------------------------------
+               Label: international_relations
+               Dimension: real_world_domains
+               Description: International relations examines the interactions between nation-states, including diplomacy, conflict, trade, and the impact of international organizations on global politics.
+               Level: 3
+               # of Papers: 3
+               Example Papers: [(1121, 'Detecting Online Community Practices with Large Language Models: A Case Study of Pro-Ukrainian Publics on Twitter'), (1972, 'Forecasting Future International Events: A Reliable Dataset for Text-Based Event Modeling'), (2719, 'Corpus Development Based on Conflict Structures in the Security Field and LLM Bias Verification')]
+               ----------------------------------------
+               Label: political_theory
+               Dimension: real_world_domains
+               Description: Political theory explores the philosophical foundations of political systems, ideologies, and concepts such as justice, power, and democracy, often through the analysis of historical texts and contemporary debates.
+               Level: 3
+               # of Papers: 5
+               Example Papers: [(200, 'Is Safer Better? The Impact of Guardrails on the Argumentative Strength of LLMs in Hate Speech Countering'), (362, "ChatGPT Doesn't Trust Chargers Fans: Guardrail Sensitivity in Context"), (1089, 'Adaptable Moral Stances of Large Language Models on Sexist Content: Implications for Society and Gender Discourse')]
+               ----------------------------------------
+               Label: public_policy
+               Dimension: real_world_domains
+               Description: Public policy focuses on the processes through which governments create and implement laws and regulations, analyzing the effectiveness and impact of these policies on society.
+               Level: 3
+               # of Papers: 21
+               Example Papers: [(243, "Hidden Persuaders: LLMs' Political Leaning and Their Influence on Voters"), (254, 'F^2RL: Factuality and Faithfulness Reinforcement Learning Framework for Claim-Guided Evidence-Supported Counterspeech Generation'), (336, 'Fine-Grained Detection of Solidarity for Women and Migrants in 155 Years of German Parliamentary Debates')]
+               ----------------------------------------
+               Label: political_economy
+               Dimension: real_world_domains
+               Description: Political economy studies the relationship between politics and economics, investigating how political institutions and processes influence economic policies and outcomes.
+               Level: 3
+               # of Papers: 11
+               Example Papers: [(509, 'Statistical Uncertainty in Word Embeddings: GloVe-V'), (706, '"Global is Good, Local is Bad?": Understanding Brand Bias in LLMs'), (900, 'TKGT: Redefinition and A New Way of Text-to-Table Tasks Based on Real World Demands and Knowledge Graphs Augmented LLMs')]
+               ----------------------------------------
           ----------------------------------------
-          Label: language_model_bias_and_fairness_evaluation
+     ----------------------------------------
+     Label: environmental_science
+     Dimension: real_world_domains
+     Description: NLP is leveraged in environmental science to analyze textual data related to climate change, biodiversity, and sustainability efforts for informed decision-making.
+     Level: 1
+     # of Papers: 17
+     Example Papers: [(77, 'Model Balancing Helps Low-data Training and Fine-tuning'), (214, 'Performance-Guided LLM Knowledge Distillation for Efficient Text Classification at Scale'), (664, 'Segment Any Text: A Universal Approach for Robust, Efficient and Adaptable Sentence Segmentation')]
+     ----------------------------------------
+     Label: human_computer_interaction
+     Dimension: real_world_domains
+     Description: NLP plays a crucial role in human-computer interaction by enabling more intuitive communication between users and systems through conversational interfaces and dialogue systems.
+     Level: 1
+     # of Papers: 600
+     Example Papers: [(5, 'ImageInWords: Unlocking Hyper-Detailed Image Descriptions'), (6, 'LLM-Based Agent Society Investigation: Collaboration and Confrontation in Avalon Gameplay'), (8, 'Speaking in Wavelet Domain: A Simple and Efficient Approach to Speed up Speech Diffusion Model')]
+     ----------------------------------------
+     Children:
+          Label: user_interface_design
           Dimension: real_world_domains
-          Description: Language model evaluation investigating bias and fairness issues in model predictions and outcomes.
+          Description: User interface design focuses on creating intuitive and efficient interfaces that enhance user experience and facilitate interaction between humans and computers.
           Level: 2
-          # of Papers: 36
+          # of Papers: 1
+          Example Papers: [(1514, 'VGA: Vision GUI Assistant - Minimizing Hallucinations through Image-Centric Fine-Tuning')]
+          ----------------------------------------
+          Label: usability_testing
+          Dimension: real_world_domains
+          Description: Usability testing involves evaluating a product or service by testing it with real users to identify any usability issues and improve overall user satisfaction.
+          Level: 2
+          # of Papers: 1
+          Example Papers: [(2723, 'Empowering Teachers with Usability-Oriented LLM-Based Tools for Digital Pedagogy')]
+          ----------------------------------------
+          Label: interaction_design
+          Dimension: real_world_domains
+          Description: Interaction design is the process of designing interactive digital products, environments, and systems, emphasizing how users engage with technology.
+          Level: 2
+          # of Papers: 179
+          Example Papers: [(6, 'LLM-Based Agent Society Investigation: Collaboration and Confrontation in Avalon Gameplay'), (11, "NumeroLogic: Number Encoding for Enhanced LLMs' Numerical Reasoning"), (25, 'Strength Lies in Differences! Improving Strategy Planning for Non-collaborative Dialogues via Diversified User Simulation')]
+          ----------------------------------------
+          Children:
+               Label: user_interface_design
+               Label: experience_design
+               Dimension: real_world_domains
+               Description: Experience design encompasses the overall journey a user has with a product, ensuring that every touchpoint is engaging and meaningful.
+               Level: 3
+               ----------------------------------------
+               Label: interaction_prototyping
+               Dimension: real_world_domains
+               Description: Interaction prototyping involves creating early models of a product to test and refine user interactions before full-scale development.
+               Level: 3
+               ----------------------------------------
+               Label: usability_testing
+               Label: accessibility_design
+               Dimension: real_world_domains
+               Description: Accessibility design ensures that products are usable by people of all abilities and disabilities, promoting inclusivity in interaction.
+               Level: 3
+               # of Papers: 1
+               Example Papers: [(2785, 'Images Speak Volumes: User-Centric Assessment of Image Generation for Accessible Communication')]
+               ----------------------------------------
+               Label: human_machine_interaction
+               Dimension: real_world_domains
+               Description: Human-machine interaction focuses on the collaborative dynamics between humans and machines, enhancing productivity and user experience.
+               Level: 3
+               # of Papers: 106
+               Example Papers: [(6, 'LLM-Based Agent Society Investigation: Collaboration and Confrontation in Avalon Gameplay'), (27, 'Clustering and Ranking: Diversity-preserved Instruction Selection through Expert-aligned Quality Estimation'), (37, 'MSI-Agent: Incorporating Multi-Scale Insight into Embodied Agents for Superior Planning and Decision-Making')]
+               ----------------------------------------
+               Label: conversational_interface_design
+               Dimension: real_world_domains
+               Description: Conversational interface design involves creating interfaces that facilitate natural dialogue between users and systems, often through voice or text.
+               Level: 3
+               # of Papers: 36
+               Example Papers: [(117, "Be Helpful but Don't Talk too Much - Enhancing Helpfulness in Conversations through Relevance in Multi-Turn Emotional Support"), (258, 'Leveraging Conflicts in Social Media Posts: Unintended Offense Dataset'), (262, 'Bootstrapped Policy Learning for Task-oriented Dialogue through Goal Shaping')]
+               ----------------------------------------
+               Label: human_centered_design
+               Dimension: real_world_domains
+               Description: Human-centered design emphasizes designing products and systems with a deep understanding of user needs and behaviors.
+               Level: 3
+               # of Papers: 14
+               Example Papers: [(117, "Be Helpful but Don't Talk too Much - Enhancing Helpfulness in Conversations through Relevance in Multi-Turn Emotional Support"), (720, 'CoGen: Learning from Feedback with Coupled Comprehension and Generation'), (880, 'Global Reward to Local Rewards: Multimodal-Guided Decomposition for Improving Dialogue Agents')]
+               ----------------------------------------
+               Label: interaction_technology
+               Dimension: real_world_domains
+               Description: Interaction technology encompasses the tools and systems that enable user interaction with digital products and services.
+               Level: 3
+               # of Papers: 86
+               Example Papers: [(11, "NumeroLogic: Number Encoding for Enhanced LLMs' Numerical Reasoning"), (37, 'MSI-Agent: Incorporating Multi-Scale Insight into Embodied Agents for Superior Planning and Decision-Making'), (65, 'AMR-Evol: Adaptive Modular Response Evolution Elicits Better Knowledge Distillation for Large Language Models in Code Generation')]
+               ----------------------------------------
+               Label: interaction_design_methodologies
+               Dimension: real_world_domains
+               Description: Interaction design methodologies refer to the structured approaches and processes used to create effective user interactions in design.
+               Level: 3
+               # of Papers: 99
+               Example Papers: [(6, 'LLM-Based Agent Society Investigation: Collaboration and Confrontation in Avalon Gameplay'), (25, 'Strength Lies in Differences! Improving Strategy Planning for Non-collaborative Dialogues via Diversified User Simulation'), (27, 'Clustering and Ranking: Diversity-preserved Instruction Selection through Expert-aligned Quality Estimation')]
+               ----------------------------------------
+          ----------------------------------------
+          Label: cognitive_load_reduction
+          Dimension: real_world_domains
+          Description: Cognitive load reduction aims to minimize the mental effort required by users when interacting with systems, making tasks easier and more efficient.
+          Level: 2
+          # of Papers: 9
+          Example Papers: [(266, 'How Do Humans Write Code? Large Models Do It the Same Way Too'), (1229, 'The LLM Effect: Are Humans Truly Using LLMs, or Are They Being Influenced By Them Instead?'), (1334, 'SAAS: Solving Ability Amplification Strategy for Enhanced Mathematical Reasoning in Large Language Models')]
+          ----------------------------------------
+          Label: affective_computing
+          Dimension: real_world_domains
+          Description: Affective computing is the study and development of systems that can recognize, interpret, and respond to human emotions, enhancing the interaction experience.
+          Level: 2
+          # of Papers: 197
+          Example Papers: [(10, "Eyes Don't Lie: Subjective Hate Annotation and Detection with Gaze"), (36, 'Personality-aware Student Simulation for Conversational Intelligent Tutoring Systems'), (37, 'MSI-Agent: Incorporating Multi-Scale Insight into Embodied Agents for Superior Planning and Decision-Making')]
+          ----------------------------------------
+          Children:
+               Label: emotion_recognition
+               Dimension: real_world_domains
+               Description: Emotion recognition involves identifying and interpreting human emotions through various modalities such as facial expressions, voice tone, and physiological signals.
+               Level: 3
+               # of Papers: 2
+               Example Papers: [(330, 'Analyzing Key Factors Influencing Emotion Prediction Performance of VLLMs in Conversational Contexts'), (882, 'ESC-Eval: Evaluating Emotion Support Conversations in Large Language Models')]
+               ----------------------------------------
+               Label: affective_dialog_systems
+               Dimension: real_world_domains
+               Description: Affective dialog systems are designed to engage users in conversations that adapt to their emotional states, enhancing user experience and satisfaction.
+               Level: 3
+               # of Papers: 34
+               Example Papers: [(48, 'Overcome Noise and Bias: Segmentation-Aided Multi-Granularity Denoising and Debiasing for Enhanced Quarduples Extraction in Dialogue'), (117, "Be Helpful but Don't Talk too Much - Enhancing Helpfulness in Conversations through Relevance in Multi-Turn Emotional Support"), (330, 'Analyzing Key Factors Influencing Emotion Prediction Performance of VLLMs in Conversational Contexts')]
+               ----------------------------------------
+               Label: sentiment_analysis
+               Dimension: real_world_domains
+               Description: Sentiment analysis focuses on determining the emotional tone behind a series of words, commonly used to understand opinions in social media and customer feedback.
+               Level: 3
+               # of Papers: 6
+               Example Papers: [(48, 'Overcome Noise and Bias: Segmentation-Aided Multi-Granularity Denoising and Debiasing for Enhanced Quarduples Extraction in Dialogue'), (514, 'Enhancing Reinforcement Learning with Dense Rewards from Language Model Critic'), (1688, 'Inference-Time Language Model Alignment via Integrated Value Guidance')]
+               ----------------------------------------
+               Label: emotion-aware_recommendation_systems
+               Dimension: real_world_domains
+               Description: Emotion-aware recommendation systems tailor suggestions based on the user's current emotional state, improving the relevance and effectiveness of recommendations.
+               Level: 3
+               # of Papers: 4
+               Example Papers: [(85, 'Mitigating Matthew Effect: Multi-Hypergraph Boosted Multi-Interest Self-Supervised Learning for Conversational Recommendation'), (1693, 'Beyond Persuasion: Towards Conversational Recommender System with Credible Explanations'), (2774, "RecomMind: Movie Recommendation Dialogue with Seeker's Internal State")]
+               ----------------------------------------
+               Label: affective_robotics
+               Dimension: real_world_domains
+               Description: Affective robotics involves creating robots that can recognize and respond to human emotions, facilitating more natural and empathetic interactions.
+               Level: 3
+               # of Papers: 51
+               Example Papers: [(37, 'MSI-Agent: Incorporating Multi-Scale Insight into Embodied Agents for Superior Planning and Decision-Making'), (96, 'Predicate Debiasing in Vision-Language Models Integration for Scene Graph Generation Enhancement'), (132, 'By My Eyes: Grounding Multimodal Large Language Models with Sensor Data via Visual Prompting')]
+               ----------------------------------------
+               Label: multimodal_emotion_recognition
+               Dimension: real_world_domains
+               Description: Multimodal emotion recognition integrates various data sources, such as visual, auditory, and textual inputs, to enhance the accuracy of identifying human emotions.
+               Level: 3
+               # of Papers: 19
+               Example Papers: [(96, 'Predicate Debiasing in Vision-Language Models Integration for Scene Graph Generation Enhancement'), (132, 'By My Eyes: Grounding Multimodal Large Language Models with Sensor Data via Visual Prompting'), (135, 'Towards Low-Resource Harmful Meme Detection with LMM Agents')]
+               ----------------------------------------
+               Label: emotion-aware_education_technology
+               Dimension: real_world_domains
+               Description: Emotion-aware education technology adapts learning experiences based on students' emotional states, promoting engagement and improving educational outcomes.
+               Level: 3
+               # of Papers: 2
+               Example Papers: [(1646, 'EDEN: Empathetic Dialogues for English Learning'), (2723, 'Empowering Teachers with Usability-Oriented LLM-Based Tools for Digital Pedagogy')]
+               ----------------------------------------
+               Label: affective_human-computer_interaction
+               Dimension: real_world_domains
+               Description: Affective human-computer interaction focuses on designing systems that can recognize and respond to users' emotions, creating more intuitive and empathetic user experiences.
+               Level: 3
+               # of Papers: 81
+               Example Papers: [(36, 'Personality-aware Student Simulation for Conversational Intelligent Tutoring Systems'), (117, "Be Helpful but Don't Talk too Much - Enhancing Helpfulness in Conversations through Relevance in Multi-Turn Emotional Support"), (171, 'Verification and Refinement of Natural Language Explanations through LLM-Symbolic Theorem Proving')]
+               ----------------------------------------
+               Label: multimodal_sentiment_analysis
+               Dimension: real_world_domains
+               Description: Multimodal sentiment analysis combines text, audio, and visual data to assess the emotional tone of content across different platforms, enhancing understanding of public sentiment.
+               Level: 3
+               # of Papers: 6
+               Example Papers: [(48, 'Overcome Noise and Bias: Segmentation-Aided Multi-Granularity Denoising and Debiasing for Enhanced Quarduples Extraction in Dialogue'), (594, 'Speechworthy Instruction-tuned Language Models'), (1700, 'Recent Advances in Online Hate Speech Moderation: Multimodality and the Role of Large Models')]
+               ----------------------------------------
+               Label: affective_narrative_computing
+               Dimension: real_world_domains
+               Description: Affective narrative computing explores how emotional elements can be integrated into storytelling and content generation, enriching user engagement and experience.
+               Level: 3
+               # of Papers: 29
+               Example Papers: [(171, 'Verification and Refinement of Natural Language Explanations through LLM-Symbolic Theorem Proving'), (200, 'Is Safer Better? The Impact of Guardrails on the Argumentative Strength of LLMs in Hate Speech Countering'), (483, 'Explaining and Improving Contrastive Decoding by Extrapolating the Probabilities of a Huge and Hypothetical LM')]
+               ----------------------------------------
+          ----------------------------------------
+          Label: multimodal_interaction
+          Dimension: real_world_domains
+          Description: Multimodal interaction focuses on designing systems that allow users to interact through multiple modes of communication, such as speech, text, and gestures.
+          Level: 2
+          # of Papers: 334
+          Example Papers: [(5, 'ImageInWords: Unlocking Hyper-Detailed Image Descriptions'), (6, 'LLM-Based Agent Society Investigation: Collaboration and Confrontation in Avalon Gameplay'), (8, 'Speaking in Wavelet Domain: A Simple and Efficient Approach to Speed up Speech Diffusion Model')]
+          ----------------------------------------
+          Children:
+               Label: gesture_recognition
+               Dimension: real_world_domains
+               Description: Gesture recognition involves interpreting human gestures through mathematical algorithms, enabling intuitive control of devices and applications.
+               Level: 3
+               # of Papers: 1
+               Example Papers: [(1103, 'Unsupervised Discrete Representations of American Sign Language')]
+               ----------------------------------------
+               Label: emotion_recognition
+               Label: multimodal_dialog_systems
+               Dimension: real_world_domains
+               Description: Multimodal dialog systems integrate multiple forms of input, such as speech, text, and visual cues, to facilitate more natural and effective human-computer interactions.
+               Level: 3
+               # of Papers: 197
+               Example Papers: [(6, 'LLM-Based Agent Society Investigation: Collaboration and Confrontation in Avalon Gameplay'), (10, "Eyes Don't Lie: Subjective Hate Annotation and Detection with Gaze"), (25, 'Strength Lies in Differences! Improving Strategy Planning for Non-collaborative Dialogues via Diversified User Simulation')]
+               ----------------------------------------
+               Label: augmented_reality_interaction
+               Dimension: real_world_domains
+               Description: Augmented reality interaction enhances the real-world environment with digital information, allowing users to engage with both physical and virtual elements simultaneously.
+               Level: 3
+               ----------------------------------------
+               Label: multimodal_learning_environments
+               Dimension: real_world_domains
+               Description: Multimodal learning environments utilize various sensory inputs and outputs to create immersive educational experiences that cater to diverse learning styles.
+               Level: 3
+               # of Papers: 153
+               Example Papers: [(6, 'LLM-Based Agent Society Investigation: Collaboration and Confrontation in Avalon Gameplay'), (8, 'Speaking in Wavelet Domain: A Simple and Efficient Approach to Speed up Speech Diffusion Model'), (10, "Eyes Don't Lie: Subjective Hate Annotation and Detection with Gaze")]
+               ----------------------------------------
+          ----------------------------------------
+          Label: personalization
+          Dimension: real_world_domains
+          Description: Personalization refers to tailoring user experiences and content based on individual preferences and behaviors to enhance engagement and satisfaction.
+          Level: 2
+          # of Papers: 125
+          Example Papers: [(25, 'Strength Lies in Differences! Improving Strategy Planning for Non-collaborative Dialogues via Diversified User Simulation'), (36, 'Personality-aware Student Simulation for Conversational Intelligent Tutoring Systems'), (56, 'RoseLoRA: Row and Column-wise Sparse Low-rank Adaptation of Pre-trained Language Model for Knowledge Editing and Fine-tuning')]
+          ----------------------------------------
+          Children:
+               Label: user_behavior_analysis
+               Dimension: real_world_domains
+               Description: User behavior analysis involves studying how individuals interact with systems to tailor experiences and recommendations based on their unique patterns and preferences.
+               Level: 3
+               # of Papers: 29
+               Example Papers: [(25, 'Strength Lies in Differences! Improving Strategy Planning for Non-collaborative Dialogues via Diversified User Simulation'), (85, 'Mitigating Matthew Effect: Multi-Hypergraph Boosted Multi-Interest Self-Supervised Learning for Conversational Recommendation'), (134, 'CHIQ: Contextual History Enhancement for Improving Query Rewriting in Conversational Search')]
+               ----------------------------------------
+               Label: content_recommendation
+               Dimension: real_world_domains
+               Description: Content recommendation systems utilize algorithms to suggest personalized articles, videos, or products to users based on their past interactions and preferences.
+               Level: 3
+               # of Papers: 61
+               Example Papers: [(56, 'RoseLoRA: Row and Column-wise Sparse Low-rank Adaptation of Pre-trained Language Model for Knowledge Editing and Fine-tuning'), (68, 'LLMs Are Zero-Shot Context-Aware Simultaneous Translators'), (85, 'Mitigating Matthew Effect: Multi-Hypergraph Boosted Multi-Interest Self-Supervised Learning for Conversational Recommendation')]
+               ----------------------------------------
+               Label: adaptive_user_interfaces
+               Dimension: real_world_domains
+               Description: Adaptive user interfaces dynamically adjust their layout and functionality to meet the specific needs and preferences of individual users, enhancing usability and satisfaction.
+               Level: 3
+               # of Papers: 36
+               Example Papers: [(25, 'Strength Lies in Differences! Improving Strategy Planning for Non-collaborative Dialogues via Diversified User Simulation'), (36, 'Personality-aware Student Simulation for Conversational Intelligent Tutoring Systems'), (68, 'LLMs Are Zero-Shot Context-Aware Simultaneous Translators')]
+               ----------------------------------------
+               Label: personalized_marketing
+               Dimension: real_world_domains
+               Description: Personalized marketing strategies leverage user data to create targeted advertising campaigns that resonate with individual consumer interests and behaviors.
+               Level: 3
+               # of Papers: 15
+               Example Papers: [(199, 'Unsupervised Human Preference Learning'), (253, 'VIMI: Grounding Video Generation through Multi-modal Instruction'), (280, 'Crafting Personalized Agents through Retrieval-Augmented Generation on Editable Memory Graphs')]
+               ----------------------------------------
+               Label: dynamic_pricing
+               Dimension: real_world_domains
+               Description: Dynamic pricing models adjust the cost of products or services in real-time based on user behavior, demand, and other factors, providing a tailored shopping experience.
+               Level: 3
+               # of Papers: 10
+               Example Papers: [(371, 'Democratizing Large Language Models via Personalized Parameter-Efficient Fine-tuning'), (504, 'AssistantBench: Can Web Agents Solve Realistic and Time-Consuming Tasks?'), (754, 'Exploring the Practicality of Generative Retrieval on Dynamic Corpora')]
+               ----------------------------------------
+          ----------------------------------------
+          Label: security_in_ai
+          Dimension: real_world_domains
+          Description: Security in AI encompasses the strategies and technologies designed to protect artificial intelligence systems from threats and vulnerabilities.
+          Level: 2
+          # of Papers: 73
+          Example Papers: [(40, 'FLIRT: Feedback Loop In-context Red Teaming'), (81, 'Towards Tool Use Alignment of Large Language Models'), (95, 'Glue pizza and eat rocks - Exploiting Vulnerabilities in Retrieval-Augmented Generative Models')]
+          ----------------------------------------
+          Children:
+               Label: adversarial_attacks
+               Dimension: real_world_domains
+               Description: Adversarial attacks involve manipulating input data to deceive AI models, highlighting vulnerabilities in machine learning systems.
+               Level: 3
+               # of Papers: 12
+               Example Papers: [(40, 'FLIRT: Feedback Loop In-context Red Teaming'), (95, 'Glue pizza and eat rocks - Exploiting Vulnerabilities in Retrieval-Augmented Generative Models'), (376, 'Reconstruct Your Previous Conversations! Comprehensively Investigating Privacy Leakage Risks in Conversations with GPT Models')]
+               ----------------------------------------
+               Label: privacy_preserving_ai
+               Dimension: real_world_domains
+               Description: Privacy preserving AI focuses on developing techniques that protect user data while still allowing for effective machine learning and analysis.
+               Level: 3
+               # of Papers: 4
+               Example Papers: [(302, 'Safely Learning with Private Data: A Federated Learning Framework for Large Language Model'), (376, 'Reconstruct Your Previous Conversations! Comprehensively Investigating Privacy Leakage Risks in Conversations with GPT Models'), (392, 'Taylor Unswift: Secured Weight Release for Large Language Models via Taylor Expansion')]
+               ----------------------------------------
+               Label: secure_model_deployment
+               Dimension: real_world_domains
+               Description: Secure model deployment ensures that AI models are safely integrated into applications, minimizing risks of exploitation or data breaches.
+               Level: 3
+               # of Papers: 40
+               Example Papers: [(81, 'Towards Tool Use Alignment of Large Language Models'), (95, 'Glue pizza and eat rocks - Exploiting Vulnerabilities in Retrieval-Augmented Generative Models'), (200, 'Is Safer Better? The Impact of Guardrails on the Argumentative Strength of LLMs in Hate Speech Countering')]
+               ----------------------------------------
+               Label: robustness_testing
+               Dimension: real_world_domains
+               Description: Robustness testing evaluates AI systems against various threats and attacks to ensure they perform reliably under adverse conditions.
+               Level: 3
+               # of Papers: 47
+               Example Papers: [(40, 'FLIRT: Feedback Loop In-context Red Teaming'), (81, 'Towards Tool Use Alignment of Large Language Models'), (266, 'How Do Humans Write Code? Large Models Do It the Same Way Too')]
+               ----------------------------------------
+               Label: ethical_ai_frameworks
+               Dimension: real_world_domains
+               Description: Ethical AI frameworks provide guidelines and best practices for developing AI systems that prioritize security, fairness, and accountability.
+               Level: 3
+               # of Papers: 16
+               Example Papers: [(81, 'Towards Tool Use Alignment of Large Language Models'), (362, "ChatGPT Doesn't Trust Chargers Fans: Guardrail Sensitivity in Context"), (621, 'Integrating Argumentation and Hate-Speech-based Techniques for Countering Misinformation')]
+               ----------------------------------------
+          ----------------------------------------
+          Label: cross_cultural_computing
+          Dimension: real_world_domains
+          Description: Cross-cultural computing examines how cultural differences impact the design and use of technology, aiming to create inclusive and accessible systems for diverse user groups.
+          Level: 2
+          # of Papers: 42
+          Example Papers: [(16, 'Studying and Mitigating Biases in Sign Language Understanding Models'), (60, 'Bridging Cultures in the Kitchen: A Framework and Benchmark for Cross-Cultural Recipe Retrieval'), (78, 'Reuse Your Rewards: Reward Model Transfer for Zero-Shot Cross-Lingual Alignment')]
+          ----------------------------------------
+          Children:
+               Label: cultural_adaptation
+               Dimension: real_world_domains
+               Description: Cultural adaptation focuses on modifying technology and interfaces to better suit the cultural norms and values of diverse user groups.
+               Level: 3
+               # of Papers: 4
+               Example Papers: [(16, 'Studying and Mitigating Biases in Sign Language Understanding Models'), (60, 'Bridging Cultures in the Kitchen: A Framework and Benchmark for Cross-Cultural Recipe Retrieval'), (2388, 'Extrinsic Evaluation of Cultural Competence in Large Language Models')]
+               ----------------------------------------
+               Label: multilingual_user_interface_design
+               Dimension: real_world_domains
+               Description: This subcategory emphasizes the creation of user interfaces that support multiple languages and cultural contexts, enhancing accessibility for global users.
+               Level: 3
+               # of Papers: 2
+               Example Papers: [(728, 'RLHF Can Speak Many Languages: Unlocking Multilingual Preference Optimization for LLMs'), (1392, 'Building an Efficient Multilingual Non-Profit IR System for the Islamic Domain Leveraging Multiprocessing Design in Rust')]
+               ----------------------------------------
+               Label: cross_cultural_user_experience
+               Dimension: real_world_domains
+               Description: Cross cultural user experience examines how cultural differences influence user interactions with technology, aiming to improve usability across various cultural backgrounds.
+               Level: 3
+               # of Papers: 11
+               Example Papers: [(60, 'Bridging Cultures in the Kitchen: A Framework and Benchmark for Cross-Cultural Recipe Retrieval'), (362, "ChatGPT Doesn't Trust Chargers Fans: Guardrail Sensitivity in Context"), (382, 'InterIntent: Investigating Social Intelligence of LLMs via Intention Understanding in an Interactive Game Context')]
+               ----------------------------------------
+               Label: cultural_data_analysis
+               Dimension: real_world_domains
+               Description: Cultural data analysis involves the study of data from different cultural contexts to derive insights that inform the design and functionality of computing systems.
+               Level: 3
+               # of Papers: 6
+               Example Papers: [(728, 'RLHF Can Speak Many Languages: Unlocking Multilingual Preference Optimization for LLMs'), (1392, 'Building an Efficient Multilingual Non-Profit IR System for the Islamic Domain Leveraging Multiprocessing Design in Rust'), (2251, 'One Model is All You Need: ByT5-Sanskrit, a Unified Model for Sanskrit NLP Tasks')]
+               ----------------------------------------
+               Label: globalization_and_localization
+               Dimension: real_world_domains
+               Description: This subcategory addresses the processes of globalization and localization in software development, ensuring that products are relevant and usable in different cultural settings.
+               Level: 3
+               # of Papers: 15
+               Example Papers: [(60, 'Bridging Cultures in the Kitchen: A Framework and Benchmark for Cross-Cultural Recipe Retrieval'), (78, 'Reuse Your Rewards: Reward Model Transfer for Zero-Shot Cross-Lingual Alignment'), (504, 'AssistantBench: Can Web Agents Solve Realistic and Time-Consuming Tasks?')]
+               ----------------------------------------
           ----------------------------------------
      ----------------------------------------
 ----------------------------------------

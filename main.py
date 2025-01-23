@@ -15,6 +15,31 @@ from expansion import expandNodeWidth, expandNodeDepth
 from paper import Paper
 from utils import clean_json_string
 
+def construct_dataset(args):
+    if not os.path.exists(args.data_dir):
+        os.makedirs(args.data_dir)
+
+    if args.dataset == 'emnlp_2024':
+        ds = load_dataset("EMNLP/EMNLP2024-papers")
+        split = 'train'
+    else:
+        ds = load_dataset("TimSchopf/nlp_taxonomy_data")
+        split = 'test'
+    
+    internal_collection = {}
+
+    with open(os.path.join(args.data_dir, 'internal.txt'), 'w') as i:
+        internal_count = 0
+        id = 0
+        for p in tqdm(ds[split]):
+            temp_dict = {"Title": p['title'], "Abstract": p['abstract']}
+            formatted_dict = json.dumps(temp_dict)
+            i.write(f'{formatted_dict}\n')
+            internal_collection[id] = Paper(id, p['title'], p['abstract'], label_opts=args.dimensions, internal=True)
+            internal_count += 1
+            id += 1
+    
+    return internal_collection, internal_count
 
 def initialize_DAG(args):
     ## we want to make this a directed acyclic graph (DAG) so maintain a list of the nodes
@@ -79,7 +104,13 @@ def initialize_DAG(args):
 
 def main(args):
 
-    print("######## STEP 1: INITIALIZE DAG ########")
+    print("######## STEP 1: LOAD IN DATASET ########")
+
+    internal_collection, internal_count = construct_dataset(args)
+    
+    print(f'Internal: {internal_count}')
+
+    print("######## STEP 2: INITIALIZE DAG ########")
     args = initializeLLM(args)
 
     roots, id2node, label2node = initialize_DAG(args)
@@ -88,28 +119,6 @@ def main(args):
         with open(f'{args.data_dir}/initial_taxo_{dim}.txt', 'w') as f:
             with redirect_stdout(f):
                 roots[dim].display(0, indent_multiplier=5)
-    
-    print("######## STEP 2: LOAD IN DATASET ########")
-
-    if not os.path.exists(args.data_dir):
-        os.makedirs(args.data_dir)
-
-    ds = load_dataset("EMNLP/EMNLP2024-papers")
-
-    internal_collection = {}
-
-    with open(os.path.join(args.data_dir, 'internal.txt'), 'w') as i:
-        internal_count = 0
-        id = 0
-        for p in tqdm(ds['train']):
-            temp_dict = {"Title": p['title'], "Abstract": p['abstract']}
-            formatted_dict = json.dumps(temp_dict)
-            i.write(f'{formatted_dict}\n')
-            internal_collection[id] = Paper(id, p['title'], p['abstract'], label_opts=args.dimensions, internal=True)
-            internal_count += 1
-            id += 1
-    
-    print(f'Internal: {internal_count}')
 
     print("######## STEP 3: CLASSIFY PAPERS BY DIMENSION (TASK, METHOD, DATASET, EVAL, APPLICATION, etc.) ########")
 
@@ -144,7 +153,7 @@ def main(args):
 
     while queue:
         curr_node = queue.popleft()
-        print(f'VISITING {curr_node.label} AT LEVEL {curr_node.level}. WE HAVE {len(queue)} NODES LEFT IN THE QUEUE!')
+        print(f'VISITING {curr_node.label} ({curr_node.dimension}) AT LEVEL {curr_node.level}. WE HAVE {len(queue)} NODES LEFT IN THE QUEUE!')
         
         if len(curr_node.children) > 0:
             if curr_node.id in visited:
@@ -153,12 +162,15 @@ def main(args):
 
             # classify
             curr_node.classify_node(args, label2node, visited)
+
             # sibling expansion if needed
             new_sibs = expandNodeWidth(args, curr_node, id2node, label2node)
             print(f'(WIDTH EXPANSION) new children for {curr_node.label} ({curr_node.dimension}) are: {str((new_sibs))}')
+
             # re-classify and re-do process if necessary
             if len(new_sibs) > 0:
                 curr_node.classify_node(args, label2node, visited)
+            
             # add children to queue if constraints are met
             for child_label, child_node in curr_node.children.items():
                 c_papers = label2node[child_label + f"_{curr_node.dimension}"].papers
@@ -194,9 +206,9 @@ if __name__ == "__main__":
     parser.add_argument('--topic', type=str, default='natural language processing')
     parser.add_argument('--dataset', type=str, default='llm_graph')
     parser.add_argument('--llm', type=str, default='gpt')
-    parser.add_argument('--max_depth', type=int, default=2)
+    parser.add_argument('--max_depth', type=int, default=3)
     parser.add_argument('--init_levels', type=int, default=1)
-    parser.add_argument('--min_density', type=int, default=50)
+    parser.add_argument('--min_density', type=int, default=40)
 
     args = parser.parse_args()
 
@@ -204,7 +216,7 @@ if __name__ == "__main__":
     # args.dimensions = ["tasks", "datasets", "methodologies"]
 
     args.dataset = "emnlp_2024"
-    args.data_dir = f"datasets/multi_dim/{args.dataset.lower().replace(' ', '_')}/"
+    args.data_dir = f"datasets/multi_dim/{args.dataset.lower().replace(' ', '_')}"
     args.internal = f"{args.dataset}.txt"
     # args.external = f"{args.dataset}_external.txt"
     # args.groundtruth = "groundtruth.txt"

@@ -8,7 +8,7 @@ from typing_extensions import Annotated
 from typing import Dict
 
 
-width_system_instruction = """You are an assistant that is provided a list of class labels. You determine whether or not a given paper's primary topic exists within the input class label list. If so, you output that topic label name. If not, then suggest a new topic at the same level of specificity. By specificity, we mean that your new_class_label and the existing_class_options are "equally specific": the topics are at the same level of detail or abstraction; they are on the same conceptual plane without overlap. In other words, they could be sibling nodes within a topical taxonomy.
+width_system_instruction = """You are an assistant that is provided a list of class labels. You determine whether or not a given paper's primary topic exists within the input class label list. If it does exist, output that topic label name. If not, then suggest a new topic at the same level of specificity. By specificity, we mean that your new_class_label and the existing_class_options are "equally specific": the topics are at the same level of detail or abstraction; they are on the same conceptual plane without overlap. In other words, they could be sibling nodes within a topical taxonomy.
 """
 
 class WidthExpansionSchema(BaseModel):
@@ -36,7 +36,7 @@ Your output should be in the following JSON format:
 
 # {nl.join([f"{c_label}:{nl}{nl}Description of {c_label}: {c.description}{nl}Example phrases used in {c_label} papers: {c.phrases}{nl}Example sentences used in {c_label} papers: {c.sentences}" for c_label, c in node.get_children().items()])}
 
-cluster_system_instruction = "You are a clusterer, identifying clusters relevant to being formed from an input set of labels. For each cluster you identify, you must provide a cluster name (in similar format to the input labels) as its key and a 1 sentence description of the cluster name."
+cluster_system_instruction = "You are a clusterer, identifying unique clusters relevant to being formed from an input set of labels. For each cluster you identify, you must provide a cluster name (in similar format to the input labels) as its key and a 1 sentence description of the cluster name."
 
 class ClusterSchema(BaseModel):
     cluster_topic_description: Annotated[str, StringConstraints(strip_whitespace=True, max_length=250)]
@@ -48,7 +48,7 @@ class ClusterListSchema(BaseModel):
 
 def cluster_main_prompt(options, node, nl='\n'):
    siblings = node.get_children()
-   out = f"""Given the following set of candidate node labels, can you identify the most popular, unique but MINIMAL set of clusters that best represent all candidate_node_labels and are highly likely to be siblings of the following existing nodes within a taxonomy (existing_sibling_nodes)? Each new cluster topic that you suggest should fall under the parent topic node, {node.label}, and be a type of {node.dimension}.\n
+   out = f"""Given the following set of candidate node labels, can you identify the most popular, unique but MINIMAL set of clusters that best represent all candidate_node_labels and are highly likely to be siblings of the following existing nodes within a taxonomy (existing_sibling_nodes)? Each new cluster topic that you suggest should be a more specific subtopic under the parent topic node, {node.label}, and be a type of {node.dimension}. By minimal, we mean no duplicate or overlapping topics.\n
 
 existing_sibling_nodes: {str(siblings)}
 
@@ -63,7 +63,7 @@ Your output should be in the following JSON format:
       "cluster_topic_description": "<generate a string sentence-long description of your new first cluster topic>"
     }},
     ...,
-    "<key type is string; string is the kth (max 10th) new cluster topic label that is the paper's true primary topic at the same level of depth/specificity as the other class labels in existing_class_options>": {{
+    "<key type is string; string is the kth (max 5th) new cluster topic label that is the paper's true primary topic at the same level of depth/specificity as the other class labels in existing_class_options>": {{
       "cluster_topic_description": "<generate a string sentence-long description of your new kth cluster topic>"
     }},
   }}
@@ -85,12 +85,14 @@ def expandNodeWidth(args, node, id2node, label2node):
 
     print(f'node {node.label} ({node.dimension}) has {len(unlabeled_papers)} unlabeled papers!')
 
-    if len(unlabeled_papers) < args.min_density:
+    if len(unlabeled_papers) <= args.min_density:
         return [] 
     
     exp_prompts = [constructPrompt(args, width_system_instruction, width_main_prompt(paper, node)) for paper in unlabeled_papers.values()]
     exp_outputs = promptLLM(args=args, prompts=exp_prompts, schema=WidthExpansionSchema, max_new_tokens=300, json_mode=True, temperature=0.1, top_p=0.99)
     exp_outputs = [json.loads(clean_json_string(c))['new_class_label'].replace(' ', '_').lower() if "```" in c else json.loads(c.strip())['new_class_label'].replace(' ', '_').lower() for c in exp_outputs]
+
+    # TODO: PRE-FILTERING IF EXP_OUTPUT ITEM ALREADY EXISTS
 
     # FILTERING OF EXPANSION OUTPUTS
 
@@ -147,6 +149,9 @@ def expandNodeWidth(args, node, id2node, label2node):
             node.add_child(mod_key, child_node)
             child_node.add_parent(node)
             final_expansion.append(mod_key)
+    
+    if len(final_expansion) == 0:
+        print(f"NOTICE!!!! {cluster_outputs}")
 
     return final_expansion
 

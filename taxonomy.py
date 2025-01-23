@@ -5,6 +5,7 @@ from model_definitions import promptLLM
 from prompts import EnrichSchema
 import json
 from utils import clean_json_string
+from unidecode import unidecode
 
 from classification import ClassifySchema
 
@@ -162,7 +163,9 @@ class Node:
         print(f"{indent}Description: {self.description}")
         print(f"{indent}Level: {self.level}")
         if len(self.papers) > 0:
+            example_papers = [(p.id, unidecode(p.title)) for p in self.papers.values()][:3]
             print(f"{indent}# of Papers: {len(self.papers)}")
+            print(f"{indent}Example Papers: {str(example_papers)}")
         if self.children:
             print(f"{indent}{'-'*40}")
             print(f"{indent}Children:")

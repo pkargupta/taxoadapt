@@ -6,17 +6,27 @@ Level: 0
 Children:
      Label: benchmarking
      Dimension: evaluation_methods
-     Description: Evaluation method focusing on comparing the performance of different natural language processing models or methods on standardized tasks or datasets.
+     Description: Benchmarking involves the systematic comparison of different models or algorithms on standardized datasets to evaluate their performance and identify strengths and weaknesses.
      Level: 1
      ----------------------------------------
      Label: comparative_studies
      Dimension: evaluation_methods
-     Description: Evaluation method that involves comparing the effectiveness, efficiency, or other aspects of multiple natural language processing techniques or algorithms.
+     Description: Comparative studies assess the performance of various natural language processing methods against each other, providing insights into their relative effectiveness and applicability in different contexts.
      Level: 1
      ----------------------------------------
-     Label: novel_evaluation_metrics
+     Label: error_analysis
      Dimension: evaluation_methods
-     Description: Evaluation method proposing new metrics or frameworks to assess the performance, limitations, or biases of natural language processing models or datasets.
+     Description: Error analysis focuses on identifying and categorizing the types of errors made by NLP models, helping researchers understand limitations and areas for improvement.
+     Level: 1
+     ----------------------------------------
+     Label: user_studies
+     Dimension: evaluation_methods
+     Description: User studies evaluate the usability and effectiveness of NLP applications by gathering feedback from end-users, which can inform design and development decisions.
+     Level: 1
+     ----------------------------------------
+     Label: proposed_evaluation_metrics
+     Dimension: evaluation_methods
+     Description: Proposed evaluation metrics introduce new quantitative measures to assess the performance of NLP models, aiming to provide more nuanced insights than traditional metrics.
      Level: 1
      ----------------------------------------
 ----------------------------------------
