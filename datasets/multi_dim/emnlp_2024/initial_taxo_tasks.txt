@@ -16,7 +16,7 @@ Children:
      ----------------------------------------
      Label: machine_translation
      Dimension: tasks
-     Description: The task of automatically translating text from one language to another while preserving its meaning and context, utilizing various algorithms and models.
+     Description: The task of automatically translating text from one language to another while preserving its meaning and context, facilitating cross-lingual communication.
      Level: 1
      ----------------------------------------
      Label: sentiment_analysis
@@ -26,7 +26,7 @@ Children:
      ----------------------------------------
      Label: text_summarization
      Dimension: tasks
-     Description: The process of creating a concise and coherent summary of a longer text document, capturing the main ideas and essential information.
+     Description: The process of generating a concise and coherent summary of a longer text document, capturing the main ideas and essential information.
      Level: 1
      ----------------------------------------
 ----------------------------------------

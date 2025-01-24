@@ -6,27 +6,27 @@ Level: 0
 Children:
      Label: text_classification_datasets
      Dimension: datasets
-     Description: These datasets are designed for training models to categorize text into predefined classes, often used in applications like sentiment analysis and topic detection.
+     Description: These datasets are designed for training and evaluating models on tasks that involve categorizing text into predefined labels, such as sentiment analysis or topic classification.
      Level: 1
      ----------------------------------------
      Label: named_entity_recognition_datasets
      Dimension: datasets
-     Description: These datasets provide annotated text for training models to identify and classify entities such as names, organizations, and locations within the text.
+     Description: These datasets provide annotated text for training models to identify and classify named entities, such as people, organizations, and locations, within a body of text.
      Level: 1
      ----------------------------------------
      Label: machine_translation_datasets
      Dimension: datasets
-     Description: These datasets consist of parallel corpora in multiple languages, enabling the development and evaluation of models for translating text from one language to another.
+     Description: These datasets consist of parallel corpora in multiple languages, used to train and benchmark models for translating text from one language to another.
      Level: 1
      ----------------------------------------
      Label: question_answering_datasets
      Dimension: datasets
-     Description: These datasets contain questions paired with context passages and corresponding answers, facilitating the training of models to understand and retrieve information.
+     Description: These datasets contain pairs of questions and answers, often with context passages, aimed at developing and evaluating models that can understand and respond to queries.
      Level: 1
      ----------------------------------------
-     Label: text_generation_datasets
+     Label: dialogue_systems_datasets
      Dimension: datasets
-     Description: These datasets are used to train models for generating coherent and contextually relevant text, often sourced from diverse domains like literature, news articles, and dialogues.
+     Description: These datasets are structured to facilitate the training of conversational agents, containing dialogues that reflect various interaction scenarios and user intents.
      Level: 1
      ----------------------------------------
 ----------------------------------------

@@ -13,7 +13,7 @@ width_system_instruction = """You are an assistant that is provided a list of cl
 """
 
 class WidthExpansionSchema(BaseModel):
-  class_label: Annotated[str, StringConstraints(strip_whitespace=True)]
+  class_label: Annotated[str, StringConstraints(strip_whitespace=True, max_length=100)]
 
 
 def width_main_prompt(paper, node, nl='\n'):
@@ -206,7 +206,7 @@ Output your taxonomy ONLY in the following JSON format, replacing each label nam
 subtopic_system_instruction = lambda node, ancestors: f"""You are an assistant that is provided with a {node.label} paper's title and abstract. We define {node.label} as {node.description}, where the path of ancestors to reach {node.label} is: {ancestors}. Your task is to identify the subtopic discussed by the paper that falls under the parent topic, {node.label}."""
 
 class SubtopicSchema(BaseModel):
-  subtopic: Annotated[str, StringConstraints(strip_whitespace=True)]
+  subtopic: Annotated[str, StringConstraints(strip_whitespace=True, max_length=100)]
 
 
 def subtopic_main_prompt(paper, node, nl='\n'):

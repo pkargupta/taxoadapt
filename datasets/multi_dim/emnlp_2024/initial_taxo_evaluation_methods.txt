@@ -4,29 +4,29 @@ Description: None
 Level: 0
 ----------------------------------------
 Children:
-     Label: quantitative_evaluation_metrics
+     Label: benchmarking
      Dimension: evaluation_methods
-     Description: This subcategory focuses on numerical metrics used to assess the performance of NLP models, such as accuracy, precision, recall, F1 score, and BLEU score.
-     Level: 1
-     ----------------------------------------
-     Label: qualitative_evaluation_methods
-     Dimension: evaluation_methods
-     Description: This subcategory involves subjective assessments of NLP outputs, including human judgment and expert reviews to evaluate the quality and relevance of generated text.
-     Level: 1
-     ----------------------------------------
-     Label: benchmarking_datasets
-     Dimension: evaluation_methods
-     Description: This subcategory encompasses the use of standardized datasets to compare the performance of different NLP models, facilitating a common ground for evaluation.
-     Level: 1
-     ----------------------------------------
-     Label: error_analysis_techniques
-     Dimension: evaluation_methods
-     Description: This subcategory involves systematic examination of model errors to identify weaknesses and biases in NLP systems, providing insights for improvement.
+     Description: This method involves systematically comparing the performance of various natural language processing models on standardized datasets to establish performance baselines and identify strengths and weaknesses.
      Level: 1
      ----------------------------------------
      Label: comparative_studies
      Dimension: evaluation_methods
-     Description: This subcategory includes research that systematically compares multiple NLP methods or models to highlight their strengths, weaknesses, and applicability in various contexts.
+     Description: This approach focuses on analyzing and contrasting different NLP techniques or models to understand their relative effectiveness and applicability in specific tasks or domains.
+     Level: 1
+     ----------------------------------------
+     Label: user_studies
+     Dimension: evaluation_methods
+     Description: This evaluation method involves gathering feedback from end-users to assess the usability, effectiveness, and satisfaction of NLP applications in real-world scenarios.
+     Level: 1
+     ----------------------------------------
+     Label: error_analysis
+     Dimension: evaluation_methods
+     Description: This method entails a detailed examination of the errors made by NLP models to identify common failure modes and inform improvements in model design and training.
+     Level: 1
+     ----------------------------------------
+     Label: proposed_metrics
+     Dimension: evaluation_methods
+     Description: This involves the development of new evaluation metrics or frameworks specifically tailored for assessing the performance of NLP systems, aiming to provide more nuanced insights than traditional metrics.
      Level: 1
      ----------------------------------------
 ----------------------------------------

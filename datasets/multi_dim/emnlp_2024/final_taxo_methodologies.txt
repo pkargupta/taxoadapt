@@ -1,0 +1,757 @@
+Label: natural_language_processing
+Dimension: methodologies
+Description: None
+Level: 0
+# of Papers: 2376
+Example Papers: [(0, 'UniGen: Universal Domain Generalization for Sentiment Classification via Zero-shot Dataset Generation'), (1, 'Multi-News+: Cost-efficient Dataset Cleansing via LLM-based Data Annotation'), (2, 'FIZZ: Factual Inconsistency Detection by Zoom-in Summary and Zoom-out Document')]
+----------------------------------------
+Children:
+     Label: statistical_methods
+     Dimension: methodologies
+     Description: This methodology focuses on the use of statistical techniques to analyze and model linguistic data, often employing probabilistic models to improve language understanding and generation.
+     Level: 1
+     # of Papers: 49
+     Example Papers: [(168, 'Understanding Higher-Order Correlations Among Semantic Components in Embeddings'), (178, 'On the Role of Context in Reading Time Prediction'), (231, 'Estimating Knowledge in Large Language Models Without Generating a Single Token')]
+     ----------------------------------------
+     Children:
+          Label: probabilistic_models
+          Dimension: methodologies
+          Description: This cluster focuses on methodologies that utilize probabilistic models to analyze linguistic data, enhancing language understanding through statistical inference.
+          Level: 2
+          # of Papers: 18
+          Example Papers: [(231, 'Estimating Knowledge in Large Language Models Without Generating a Single Token'), (563, 'Detecting Subtle Differences between Human and Model Languages Using Spectrum of Relative Likelihood'), (638, 'DECOR: Improving Coherence in L2 English Writing with a Novel Benchmark for Incoherence Detection, Reasoning, and Rewriting')]
+          ----------------------------------------
+          Label: evaluation_methods
+          Dimension: methodologies
+          Description: This cluster encompasses various methodologies for evaluating statistical models and their performance in natural language processing tasks.
+          Level: 2
+          # of Papers: 28
+          Example Papers: [(178, 'On the Role of Context in Reading Time Prediction'), (268, 'Forgetting Curve: A Reliable Method for Evaluating Memorization Capability for Long-Context Models'), (286, 'MaPPER: Multimodal Prior-guided Parameter Efficient Tuning for Referring Expression Comprehension')]
+          ----------------------------------------
+          Label: dimensionality_reduction
+          Dimension: methodologies
+          Description: This cluster includes methodologies that apply dimensionality reduction techniques to simplify linguistic data while preserving essential information.
+          Level: 2
+          # of Papers: 4
+          Example Papers: [(168, 'Understanding Higher-Order Correlations Among Semantic Components in Embeddings'), (1064, 'Exploring Intra and Inter-language Consistency in Embeddings with ICA'), (1474, 'Axis Tour: Word Tour Determines the Order of Axes in ICA-transformed Embeddings')]
+          ----------------------------------------
+          Label: hypothesis_testing
+          Dimension: methodologies
+          Description: This cluster covers methodologies that employ hypothesis testing to validate assumptions and theories in linguistic data analysis.
+          Level: 2
+          # of Papers: 4
+          Example Papers: [(509, 'Statistical Uncertainty in Word Embeddings: GloVe-V'), (1046, "Surprise! Uniform Information Density Isn't the Whole Story: Predicting Surprisal Contours in Long-form Discourse"), (1543, 'PaCoST: Paired Confidence Significance Testing for Benchmark Contamination Detection in Large Language Models')]
+          ----------------------------------------
+          Label: data_preprocessing
+          Dimension: methodologies
+          Description: This cluster focuses on methodologies for preprocessing linguistic data, ensuring it is suitable for statistical analysis and modeling.
+          Level: 2
+          # of Papers: 9
+          Example Papers: [(420, 'Lexically Grounded Subword Segmentation'), (664, 'Segment Any Text: A Universal Approach for Robust, Efficient and Adaptable Sentence Segmentation'), (909, 'WorryWords: Norms of Anxiety Association for over 44k English Words')]
+          ----------------------------------------
+     ----------------------------------------
+     Label: machine_learning_approaches
+     Dimension: methodologies
+     Description: This methodology encompasses various machine learning techniques, including supervised, unsupervised, and reinforcement learning, to develop models that can learn from data and make predictions or decisions in natural language tasks.
+     Level: 1
+     # of Papers: 1548
+     Example Papers: [(1, 'Multi-News+: Cost-efficient Dataset Cleansing via LLM-based Data Annotation'), (2, 'FIZZ: Factual Inconsistency Detection by Zoom-in Summary and Zoom-out Document'), (3, 'Prompts have evil twins')]
+     ----------------------------------------
+     Children:
+          Label: supervised_learning
+          Dimension: methodologies
+          Description: This cluster encompasses methodologies that utilize labeled datasets to train models, enabling them to make predictions or classifications based on input data.
+          Level: 2
+          # of Papers: 42
+          Example Papers: [(22, 'An Experimental Analysis on Evaluating Patent Citations'), (85, 'Mitigating Matthew Effect: Multi-Hypergraph Boosted Multi-Interest Self-Supervised Learning for Conversational Recommendation'), (124, 'Advancing Process Verification for Large Language Models via Tree-Based Preference Learning')]
+          ----------------------------------------
+          Children:
+               Label: classification
+               Dimension: methodologies
+               Description: This cluster encompasses methodologies focused on categorizing input data into predefined classes based on labeled examples.
+               Level: 3
+               # of Papers: 10
+               Example Papers: [(22, 'An Experimental Analysis on Evaluating Patent Citations'), (218, 'Text Grafting: Near-Distribution Weak Supervision for Minority Classes in Text Classification'), (837, 'Learning to Rank Salient Content for Query-focused Summarization')]
+               ----------------------------------------
+               Label: regression
+               Dimension: methodologies
+               Description: This cluster includes methodologies that predict continuous outcomes based on input features and labeled training data.
+               Level: 3
+               # of Papers: 1
+               Example Papers: [(2245, 'Regression Aware Inference with LLMs')]
+               ----------------------------------------
+               Label: active_learning
+               Dimension: methodologies
+               Description: This cluster involves methodologies that iteratively select the most informative data points for labeling to improve model performance efficiently.
+               Level: 3
+               # of Papers: 5
+               Example Papers: [(1264, 'ALVIN: Active Learning Via INterpolation'), (1463, 'Selective Annotation via Data Allocation: These Data Should Be Triaged to Experts for Annotation Rather Than the Model'), (1808, 'Learning from Relevant Subgoals in Successful Dialogs using Iterative Training for Task-oriented Dialog Systems')]
+               ----------------------------------------
+               Label: deep_learning
+               Dimension: methodologies
+               Description: This cluster covers methodologies that utilize deep neural networks to learn complex patterns from labeled datasets for various predictive tasks.
+               Level: 3
+               # of Papers: 24
+               Example Papers: [(22, 'An Experimental Analysis on Evaluating Patent Citations'), (85, 'Mitigating Matthew Effect: Multi-Hypergraph Boosted Multi-Interest Self-Supervised Learning for Conversational Recommendation'), (124, 'Advancing Process Verification for Large Language Models via Tree-Based Preference Learning')]
+               ----------------------------------------
+               Label: model_evaluation
+               Dimension: methodologies
+               Description: This cluster focuses on methodologies for assessing the performance and reliability of supervised learning models using various metrics and validation techniques.
+               Level: 3
+               # of Papers: 12
+               Example Papers: [(85, 'Mitigating Matthew Effect: Multi-Hypergraph Boosted Multi-Interest Self-Supervised Learning for Conversational Recommendation'), (124, 'Advancing Process Verification for Large Language Models via Tree-Based Preference Learning'), (147, 'Instruction Pre-Training: Language Models are Supervised Multitask Learners')]
+               ----------------------------------------
+          ----------------------------------------
+          Label: unsupervised_learning
+          Dimension: methodologies
+          Description: This cluster focuses on methodologies that analyze and interpret data without labeled responses, allowing models to identify patterns and structures within the data.
+          Level: 2
+          # of Papers: 38
+          Example Papers: [(155, 'To Word Senses and Beyond: Inducing Concepts with Contextualized Language Models'), (199, 'Unsupervised Human Preference Learning'), (279, 'An Unsupervised Approach to Achieve Supervised-Level Explainability in Healthcare Records')]
+          ----------------------------------------
+          Label: reinforcement_learning
+          Dimension: methodologies
+          Description: This cluster includes methodologies where agents learn to make decisions by interacting with an environment, receiving feedback in the form of rewards or penalties.
+          Level: 2
+          # of Papers: 87
+          Example Papers: [(19, 'Learning Planning-based Reasoning by Trajectories Collection and Process Reward Synthesizing'), (25, 'Strength Lies in Differences! Improving Strategy Planning for Non-collaborative Dialogues via Diversified User Simulation'), (34, 'Mitigating the Alignment Tax of RLHF')]
+          ----------------------------------------
+          Children:
+               Label: deep_reinforcement_learning
+               Dimension: methodologies
+               Description: This cluster focuses on methodologies that integrate deep learning techniques with reinforcement learning, enabling agents to learn complex behaviors through high-dimensional sensory inputs.
+               Level: 3
+               # of Papers: 57
+               Example Papers: [(34, 'Mitigating the Alignment Tax of RLHF'), (92, 'Watch Every Step! LLM Agent Learning via Iterative Step-level Process Refinement'), (137, 'Direct Multi-Turn Preference Optimization for Language Agents')]
+               ----------------------------------------
+               Label: multiagent_reinforcement_learning
+               Dimension: methodologies
+               Description: This cluster encompasses methodologies where multiple agents interact within a shared environment, learning to make decisions collaboratively or competitively.
+               Level: 3
+               # of Papers: 7
+               Example Papers: [(25, 'Strength Lies in Differences! Improving Strategy Planning for Non-collaborative Dialogues via Diversified User Simulation'), (37, 'MSI-Agent: Incorporating Multi-Scale Insight into Embodied Agents for Superior Planning and Decision-Making'), (991, 'Encouraging Divergent Thinking in Large Language Models through Multi-Agent Debate')]
+               ----------------------------------------
+               Label: policy_learning
+               Dimension: methodologies
+               Description: This cluster includes methodologies that emphasize the development and optimization of policies, which dictate the actions an agent should take in various states to maximize cumulative rewards.
+               Level: 3
+               # of Papers: 5
+               Example Papers: [(262, 'Bootstrapped Policy Learning for Task-oriented Dialogue through Goal Shaping'), (1128, 'Towards Aligning Language Models with Textual Feedback'), (1189, 'Contrastive Policy Gradient: Aligning LLMs on sequence-level scores in a supervised-friendly fashion')]
+               ----------------------------------------
+               Label: model_based_rl
+               Dimension: methodologies
+               Description: This cluster focuses on methodologies that utilize models of the environment to improve decision-making and planning in reinforcement learning tasks.
+               Level: 3
+               # of Papers: 14
+               Example Papers: [(19, 'Learning Planning-based Reasoning by Trajectories Collection and Process Reward Synthesizing'), (92, 'Watch Every Step! LLM Agent Learning via Iterative Step-level Process Refinement'), (137, 'Direct Multi-Turn Preference Optimization for Language Agents')]
+               ----------------------------------------
+               Label: offline_reinforcement_learning
+               Dimension: methodologies
+               Description: This cluster includes methodologies that allow agents to learn from previously collected data without direct interaction with the environment, focusing on leveraging historical experiences.
+               Level: 3
+               # of Papers: 13
+               Example Papers: [(59, 'Eliminating Biased Length Reliance of Direct Preference Optimization via Down-Sampled KL Divergence'), (267, 'Retrospex: Language Agent Meets Offline Reinforcement Learning Critic'), (331, 'Context-Aware Assistant Selection for Improved Inference Acceleration with Large Language Models')]
+               ----------------------------------------
+          ----------------------------------------
+          Label: transfer_learning
+          Dimension: methodologies
+          Description: This cluster involves methodologies that leverage knowledge gained from one task to improve learning in a different but related task, enhancing model performance with limited data.
+          Level: 2
+          # of Papers: 288
+          Example Papers: [(14, 'Fine-Tuning or Retrieval? Comparing Knowledge Injection in LLMs'), (18, 'RoTBench: A Multi-Level Benchmark for Evaluating the Robustness of Large Language Models in Tool Learning'), (23, 'Fine-Tuning Large Language Models to Translate: Will a Touch of Noisy Data in Misaligned Languages Suffice?')]
+          ----------------------------------------
+          Children:
+               Label: domain_adaptation
+               Dimension: methodologies
+               Description: Domain adaptation methodologies focus on transferring knowledge from a source domain to a target domain, aiming to improve model performance in the target domain with limited labeled data.
+               Level: 3
+               # of Papers: 74
+               Example Papers: [(70, 'ChatRetriever: Adapting Large Language Models for Generalized and Robust Conversational Dense Retrieval'), (94, 'Cross-domain NER with Generated Task-Oriented Knowledge: An Empirical Study from Information Density Perspective'), (123, 'Towards Difficulty-Agnostic Efficient Transfer Learning for Vision-Language Models')]
+               ----------------------------------------
+               Label: cross_lingual_transfer
+               Dimension: methodologies
+               Description: Cross-lingual transfer methodologies leverage knowledge from one language to enhance learning in another language, facilitating multilingual model training and performance.
+               Level: 3
+               # of Papers: 71
+               Example Papers: [(23, 'Fine-Tuning Large Language Models to Translate: Will a Touch of Noisy Data in Misaligned Languages Suffice?'), (68, 'LLMs Are Zero-Shot Context-Aware Simultaneous Translators'), (78, 'Reuse Your Rewards: Reward Model Transfer for Zero-Shot Cross-Lingual Alignment')]
+               ----------------------------------------
+               Label: knowledge_distillation
+               Dimension: methodologies
+               Description: Knowledge distillation techniques involve transferring knowledge from a larger, complex model (teacher) to a smaller, simpler model (student), improving the student's performance while maintaining efficiency.
+               Level: 3
+               # of Papers: 37
+               Example Papers: [(138, 'Self-Refine Instruction-Tuning for Aligning Reasoning in Language Models'), (151, 'Knowledge Verification to Nip Hallucination in the Bud'), (184, 'DocKD: Knowledge Distillation from LLMs for Open-World Document Understanding Models')]
+               ----------------------------------------
+               Label: multitask_learning
+               Dimension: methodologies
+               Description: Multitask learning methodologies enable models to learn multiple tasks simultaneously, sharing representations and knowledge across tasks to improve overall performance.
+               Level: 3
+               # of Papers: 92
+               Example Papers: [(42, 'Parameter-Efficient Sparsity Crafting from Dense to Mixture-of-Experts for Instruction Tuning on General Tasks'), (62, 'CryptoTrade: A Reflective LLM-based Agent to Guide Zero-shot Cryptocurrency Trading'), (68, 'LLMs Are Zero-Shot Context-Aware Simultaneous Translators')]
+               ----------------------------------------
+               Label: few_shot_learning
+               Dimension: methodologies
+               Description: Few-shot learning approaches aim to train models that can generalize well from a very limited number of training examples, often leveraging prior knowledge from related tasks.
+               Level: 3
+               # of Papers: 89
+               Example Papers: [(14, 'Fine-Tuning or Retrieval? Comparing Knowledge Injection in LLMs'), (18, 'RoTBench: A Multi-Level Benchmark for Evaluating the Robustness of Large Language Models in Tool Learning'), (23, 'Fine-Tuning Large Language Models to Translate: Will a Touch of Noisy Data in Misaligned Languages Suffice?')]
+               ----------------------------------------
+          ----------------------------------------
+          Label: fine_tuning
+          Dimension: methodologies
+          Description: This cluster consists of methodologies that adapt pre-trained models to specific tasks by making minor adjustments to their parameters, optimizing performance on targeted applications.
+          Level: 2
+          # of Papers: 382
+          Example Papers: [(14, 'Fine-Tuning or Retrieval? Comparing Knowledge Injection in LLMs'), (18, 'RoTBench: A Multi-Level Benchmark for Evaluating the Robustness of Large Language Models in Tool Learning'), (23, 'Fine-Tuning Large Language Models to Translate: Will a Touch of Noisy Data in Misaligned Languages Suffice?')]
+          ----------------------------------------
+          Children:
+               Label: parameter_efficient_fine_tuning
+               Dimension: methodologies
+               Description: This methodology focuses on optimizing the fine-tuning process by minimizing the number of parameters that need to be adjusted, thereby enhancing efficiency and reducing computational costs.
+               Level: 3
+               # of Papers: 172
+               Example Papers: [(14, 'Fine-Tuning or Retrieval? Comparing Knowledge Injection in LLMs'), (31, 'On Sensitivity of Learning with Limited Labelled Data to the Effects of Randomness: Impact of Interactions and Systematic Choices'), (42, 'Parameter-Efficient Sparsity Crafting from Dense to Mixture-of-Experts for Instruction Tuning on General Tasks')]
+               ----------------------------------------
+               Label: pretrained_model_adaptation
+               Dimension: methodologies
+               Description: This approach involves modifying pre-trained models to better fit specific tasks, ensuring that the model's capabilities are aligned with the requirements of the target application.
+               Level: 3
+               # of Papers: 127
+               Example Papers: [(23, 'Fine-Tuning Large Language Models to Translate: Will a Touch of Noisy Data in Misaligned Languages Suffice?'), (31, 'On Sensitivity of Learning with Limited Labelled Data to the Effects of Randomness: Impact of Interactions and Systematic Choices'), (56, 'RoseLoRA: Row and Column-wise Sparse Low-rank Adaptation of Pre-trained Language Model for Knowledge Editing and Fine-tuning')]
+               ----------------------------------------
+               Label: prompt_engineering
+               Dimension: methodologies
+               Description: This methodology emphasizes the design and optimization of prompts to effectively guide pre-trained models in generating desired outputs for specific tasks.
+               Level: 3
+               # of Papers: 34
+               Example Papers: [(31, 'On Sensitivity of Learning with Limited Labelled Data to the Effects of Randomness: Impact of Interactions and Systematic Choices'), (120, 'GLaPE: Gold Label-agnostic Prompt Evaluation for Large Language Models'), (123, 'Towards Difficulty-Agnostic Efficient Transfer Learning for Vision-Language Models')]
+               ----------------------------------------
+               Label: instruction_tuning
+               Dimension: methodologies
+               Description: This technique involves fine-tuning models based on explicit instructions, allowing them to better understand and execute tasks as specified by user directives.
+               Level: 3
+               # of Papers: 73
+               Example Papers: [(27, 'Clustering and Ranking: Diversity-preserved Instruction Selection through Expert-aligned Quality Estimation'), (31, 'On Sensitivity of Learning with Limited Labelled Data to the Effects of Randomness: Impact of Interactions and Systematic Choices'), (42, 'Parameter-Efficient Sparsity Crafting from Dense to Mixture-of-Experts for Instruction Tuning on General Tasks')]
+               ----------------------------------------
+               Label: task_adaptation
+               Dimension: methodologies
+               Description: This methodology focuses on adjusting models to perform optimally on specific tasks by tailoring their parameters and training processes to the unique characteristics of the task.
+               Level: 3
+               # of Papers: 177
+               Example Papers: [(18, 'RoTBench: A Multi-Level Benchmark for Evaluating the Robustness of Large Language Models in Tool Learning'), (23, 'Fine-Tuning Large Language Models to Translate: Will a Touch of Noisy Data in Misaligned Languages Suffice?'), (31, 'On Sensitivity of Learning with Limited Labelled Data to the Effects of Randomness: Impact of Interactions and Systematic Choices')]
+               ----------------------------------------
+          ----------------------------------------
+          Label: text_classification
+          Dimension: methodologies
+          Description: This cluster covers methodologies that classify text into predefined categories using deep learning techniques, enabling applications such as sentiment analysis and topic categorization.
+          Level: 2
+          # of Papers: 124
+          Example Papers: [(0, 'UniGen: Universal Domain Generalization for Sentiment Classification via Zero-shot Dataset Generation'), (9, 'Hateful Word in Context Classification'), (21, '"We Demand Justice!": Towards Social Context Grounding of Political Texts')]
+          ----------------------------------------
+          Children:
+               Label: sentiment_analysis
+               Dimension: methodologies
+               Description: This cluster focuses on methodologies that determine the emotional tone behind a series of words, helping to understand the attitudes, opinions, and emotions expressed in text.
+               Level: 2
+               # of Papers: 22
+               Example Papers: [(0, 'UniGen: Universal Domain Generalization for Sentiment Classification via Zero-shot Dataset Generation'), (9, 'Hateful Word in Context Classification'), (21, '"We Demand Justice!": Towards Social Context Grounding of Political Texts')]
+               ----------------------------------------
+               Children:
+                    Label: aspect_based_sentiment_analysis
+                    Dimension: methodologies
+                    Description: This methodology focuses on analyzing sentiments expressed towards specific aspects or features of a product or service, allowing for a more granular understanding of consumer opinions.
+                    Level: 3
+                    # of Papers: 9
+                    Example Papers: [(610, 'Dynamic Multi-granularity Attribution Network for Aspect-based Sentiment Analysis'), (1575, 'ASTE-Transformer: Modelling Dependencies in Aspect-Sentiment Triplet Extraction'), (1732, 'Stanceformer: Target-Aware Transformer for Stance Detection')]
+                    ----------------------------------------
+                    Label: emotion_classification
+                    Dimension: methodologies
+                    Description: This approach categorizes text based on the emotional states conveyed, such as happiness, sadness, anger, or fear, providing insights into the emotional landscape of the content.
+                    Level: 3
+                    # of Papers: 5
+                    Example Papers: [(161, 'Message Passing on Semantic-Anchor-Graphs for Fine-grained Emotion Representation Learning and Classification'), (1138, 'MASIVE: Open-Ended Affective State Identification in English and Spanish'), (2454, 'Language Models Linearly Represent Sentiment')]
+                    ----------------------------------------
+                    Label: hate_speech_detection
+                    Dimension: methodologies
+                    Description: This methodology aims to identify and classify text that contains hate speech or discriminatory language, contributing to the moderation of online content and promoting a safer digital environment.
+                    Level: 3
+                    # of Papers: 4
+                    Example Papers: [(9, 'Hateful Word in Context Classification'), (1852, 'PclGPT: A Large Language Model for Patronizing and Condescending Language Detection'), (2523, 'Advancing Arabic Sentiment Analysis: ArSen Benchmark and the Improved Fuzzy Deep Hybrid Network')]
+                    ----------------------------------------
+                    Label: bias_detection
+                    Dimension: methodologies
+                    Description: This approach focuses on identifying and analyzing biases present in sentiment analysis models and datasets, ensuring fairness and accuracy in the interpretation of sentiments.
+                    Level: 3
+                    # of Papers: 4
+                    Example Papers: [(1852, 'PclGPT: A Large Language Model for Patronizing and Condescending Language Detection'), (2454, 'Language Models Linearly Represent Sentiment'), (2523, 'Advancing Arabic Sentiment Analysis: ArSen Benchmark and the Improved Fuzzy Deep Hybrid Network')]
+                    ----------------------------------------
+                    Label: emotion_recognition
+                    Dimension: methodologies
+                    Description: This methodology involves detecting and interpreting emotions expressed in text, often utilizing machine learning techniques to enhance the understanding of emotional nuances.
+                    Level: 3
+                    # of Papers: 2
+                    Example Papers: [(2523, 'Advancing Arabic Sentiment Analysis: ArSen Benchmark and the Improved Fuzzy Deep Hybrid Network'), (2607, 'Towards a new Benchmark for Emotion Detection in NLP: A Unifying Framework of Recent Corpora')]
+                    ----------------------------------------
+               ----------------------------------------
+               Label: multi_label_classification
+               Dimension: methodologies
+               Description: This cluster encompasses techniques for classifying text into multiple categories simultaneously, including methodologies like multi-label text classification and extreme multi-label text classification.
+               Level: 3
+               # of Papers: 80
+               Example Papers: [(30, 'On Fake News Detection with LLM Enhanced Semantics Mining'), (207, 'A Generic Method for Fine-grained Category Discovery in Natural Language Texts'), (214, 'Performance-Guided LLM Knowledge Distillation for Efficient Text Classification at Scale')]
+               ----------------------------------------
+               Label: intent_detection
+               Dimension: methodologies
+               Description: This cluster includes methodologies aimed at identifying the intent behind user inputs, covering areas such as intent classification and multi-turn intent classification.
+               Level: 3
+               # of Papers: 14
+               Example Papers: [(255, 'Deciphering Rumors: A Multi-Task Learning Approach with Intent-aware Hierarchical Contrastive Learning'), (838, 'Are Large Language Models Good Classifiers? A Study on Edit Intent Classification in Scientific Document Revisions'), (1387, 'A new approach for fine-tuning sentence transformers for intent classification and out-of-scope detection tasks')]
+               ----------------------------------------
+               Label: adversarial_methods
+               Dimension: methodologies
+               Description: This cluster focuses on methodologies that address the robustness of text classification systems against adversarial attacks, including adversarial training and certifiably robust text classification.
+               Level: 3
+               # of Papers: 21
+               Example Papers: [(480, 'The Best Defense is Attack: Repairing Semantics in Textual Adversarial Examples'), (665, 'Applying Contrastive Learning to Code Vulnerability Type Classification'), (833, 'Shortcuts Arising from Contrast: Towards Effective and Lightweight Clean-Label Attacks in Prompt-Based Learning')]
+               ----------------------------------------
+               Label: hierarchical_classification
+               Dimension: methodologies
+               Description: This cluster involves methodologies that classify text within a hierarchical structure, including hierarchical text classification and case outcome classification.
+               Level: 3
+               # of Papers: 29
+               Example Papers: [(30, 'On Fake News Detection with LLM Enhanced Semantics Mining'), (218, 'Text Grafting: Near-Distribution Weak Supervision for Minority Classes in Text Classification'), (219, 'Incubating Text Classifiers Following User Instruction with Nothing but LLM')]
+               ----------------------------------------
+          ----------------------------------------
+          Label: sentiment_analysis
+          Label: question_answering
+          Dimension: methodologies
+          Description: This cluster involves methodologies that enable systems to automatically answer questions posed in natural language, drawing from a variety of information sources.
+          Level: 2
+          # of Papers: 406
+          Example Papers: [(2, 'FIZZ: Factual Inconsistency Detection by Zoom-in Summary and Zoom-out Document'), (24, 'Consolidating Ranking and Relevance Predictions of Large Language Models through Post-Processing'), (35, 'Evaluating Readability and Faithfulness of Concept-based Explanations')]
+          ----------------------------------------
+          Children:
+               Label: retrieval_based_methods
+               Dimension: methodologies
+               Description: This cluster focuses on methodologies that utilize retrieval techniques to enhance the accuracy and relevance of answers provided by question answering systems.
+               Level: 3
+               # of Papers: 75
+               Example Papers: [(24, 'Consolidating Ranking and Relevance Predictions of Large Language Models through Post-Processing'), (109, 'Self-Bootstrapped Visual-Language Model for Knowledge Selection and Question Answering'), (112, 'Do We Need Language-Specific Fact-Checking Models? The Case of Chinese')]
+               ----------------------------------------
+               Label: knowledge_integration_approaches
+               Dimension: methodologies
+               Description: This cluster encompasses methodologies that integrate various knowledge sources to improve the performance and reliability of question answering systems.
+               Level: 3
+               # of Papers: 134
+               Example Papers: [(84, 'Controllable Preference Optimization: Toward Controllable Multi-Objective Alignment'), (100, 'Triad: A Framework Leveraging a Multi-Role LLM-based Agent to Solve Knowledge Base Question Answering'), (109, 'Self-Bootstrapped Visual-Language Model for Knowledge Selection and Question Answering')]
+               ----------------------------------------
+               Label: evaluation_and_metrics
+               Dimension: methodologies
+               Description: This cluster includes methodologies that develop and apply evaluation metrics and assessment techniques to measure the effectiveness of question answering systems.
+               Level: 3
+               # of Papers: 116
+               Example Papers: [(2, 'FIZZ: Factual Inconsistency Detection by Zoom-in Summary and Zoom-out Document'), (35, 'Evaluating Readability and Faithfulness of Concept-based Explanations'), (112, 'Do We Need Language-Specific Fact-Checking Models? The Case of Chinese')]
+               ----------------------------------------
+               Label: reasoning_and_inference_methods
+               Dimension: methodologies
+               Description: This cluster covers methodologies that employ reasoning and inference techniques to derive answers from complex information and enhance understanding in question answering.
+               Level: 3
+               # of Papers: 189
+               Example Papers: [(47, 'Making Large Language Models Better Reasoners with Orchestrated Streaming Experiences'), (50, 'In-context Contrastive Learning for Event Causality Identification'), (67, 'Rethinking Pruning Large Language Models: Benefits and Pitfalls of Reconstruction Error Minimization')]
+               ----------------------------------------
+               Label: explanation_generation_techniques
+               Dimension: methodologies
+               Description: This cluster focuses on methodologies that generate explanations for the answers provided by question answering systems, aiming to improve transparency and user trust.
+               Level: 3
+               # of Papers: 49
+               Example Papers: [(35, 'Evaluating Readability and Faithfulness of Concept-based Explanations'), (117, "Be Helpful but Don't Talk too Much - Enhancing Helpfulness in Conversations through Relevance in Multi-Turn Emotional Support"), (346, 'Model Internals-based Answer Attribution for Trustworthy Retrieval-Augmented Generation')]
+               ----------------------------------------
+          ----------------------------------------
+          Label: text_generation
+          Dimension: methodologies
+          Description: This cluster encompasses methodologies specifically aimed at generating coherent and contextually relevant text, leveraging deep learning architectures to produce human-like language outputs.
+          Level: 2
+          # of Papers: 430
+          Example Papers: [(2, 'FIZZ: Factual Inconsistency Detection by Zoom-in Summary and Zoom-out Document'), (5, 'ImageInWords: Unlocking Hyper-Detailed Image Descriptions'), (25, 'Strength Lies in Differences! Improving Strategy Planning for Non-collaborative Dialogues via Diversified User Simulation')]
+          ----------------------------------------
+          Children:
+               Label: language_model_training
+               Dimension: methodologies
+               Description: This cluster focuses on methodologies for training language models, encompassing techniques and strategies to enhance their performance and capabilities in generating coherent text.
+               Level: 3
+               # of Papers: 276
+               Example Papers: [(40, 'FLIRT: Feedback Loop In-context Red Teaming'), (59, 'Eliminating Biased Length Reliance of Direct Preference Optimization via Down-Sampled KL Divergence'), (65, 'AMR-Evol: Adaptive Modular Response Evolution Elicits Better Knowledge Distillation for Large Language Models in Code Generation')]
+               ----------------------------------------
+               Label: text_summarization
+               Dimension: methodologies
+               Description: This cluster includes methodologies aimed at condensing long texts into shorter summaries while preserving essential information and context.
+               Level: 3
+               # of Papers: 46
+               Example Papers: [(2, 'FIZZ: Factual Inconsistency Detection by Zoom-in Summary and Zoom-out Document'), (78, 'Reuse Your Rewards: Reward Model Transfer for Zero-Shot Cross-Lingual Alignment'), (83, 'Lookback Lens: Detecting and Mitigating Contextual Hallucinations in Large Language Models Using Only Attention Maps')]
+               ----------------------------------------
+               Label: dialogue_systems
+               Dimension: methodologies
+               Description: This cluster encompasses methodologies for developing systems that can engage in natural language dialogue, generating contextually relevant responses in conversational settings.
+               Level: 3
+               # of Papers: 57
+               Example Papers: [(25, 'Strength Lies in Differences! Improving Strategy Planning for Non-collaborative Dialogues via Diversified User Simulation'), (48, 'Overcome Noise and Bias: Segmentation-Aided Multi-Granularity Denoising and Debiasing for Enhanced Quarduples Extraction in Dialogue'), (78, 'Reuse Your Rewards: Reward Model Transfer for Zero-Shot Cross-Lingual Alignment')]
+               ----------------------------------------
+               Label: code_generation
+               Dimension: methodologies
+               Description: This cluster focuses on methodologies for generating code snippets or entire programs from natural language descriptions, facilitating the automation of software development.
+               Level: 3
+               # of Papers: 14
+               Example Papers: [(65, 'AMR-Evol: Adaptive Modular Response Evolution Elicits Better Knowledge Distillation for Large Language Models in Code Generation'), (547, 'Extract, Define, Canonicalize: An LLM-based Framework for Knowledge Graph Construction'), (748, 'Leveraging Context-Aware Prompting for Commit Message Generation')]
+               ----------------------------------------
+               Label: text_style_transfer
+               Dimension: methodologies
+               Description: This cluster includes methodologies that enable the transformation of text from one style to another, allowing for creative and contextual adaptations of written content.
+               Level: 3
+               # of Papers: 17
+               Example Papers: [(58, 'HEART-felt Narratives: Tracing Empathy and Narrative Style in Personal Stories with LLMs'), (144, 'Reusing Transferable Weight Increments for Low-resource Style Generation'), (240, 'StyleRemix: Interpretable Authorship Obfuscation via Distillation and Perturbation of Style Elements')]
+               ----------------------------------------
+          ----------------------------------------
+     ----------------------------------------
+     Label: deep_learning_techniques
+     Dimension: methodologies
+     Description: This methodology leverages neural networks, particularly deep learning architectures, to automatically learn representations of language data, enabling advancements in tasks such as translation, sentiment analysis, and text generation.
+     Level: 1
+     # of Papers: 1833
+     Example Papers: [(0, 'UniGen: Universal Domain Generalization for Sentiment Classification via Zero-shot Dataset Generation'), (1, 'Multi-News+: Cost-efficient Dataset Cleansing via LLM-based Data Annotation'), (2, 'FIZZ: Factual Inconsistency Detection by Zoom-in Summary and Zoom-out Document')]
+     ----------------------------------------
+     Children:
+          Label: language_models
+          Dimension: methodologies
+          Description: This cluster focuses on methodologies that utilize language models to understand, generate, and evaluate natural language, encompassing various techniques for training and fine-tuning these models.
+          Level: 2
+          # of Papers: 1218
+          Example Papers: [(0, 'UniGen: Universal Domain Generalization for Sentiment Classification via Zero-shot Dataset Generation'), (1, 'Multi-News+: Cost-efficient Dataset Cleansing via LLM-based Data Annotation'), (6, 'LLM-Based Agent Society Investigation: Collaboration and Confrontation in Avalon Gameplay')]
+          ----------------------------------------
+          Children:
+               Label: training_and_fine_tuning
+               Dimension: methodologies
+               Description: This cluster focuses on methodologies related to the training and fine-tuning of language models, encompassing various techniques and strategies to enhance model performance.
+               Level: 3
+               # of Papers: 390
+               Example Papers: [(1, 'Multi-News+: Cost-efficient Dataset Cleansing via LLM-based Data Annotation'), (23, 'Fine-Tuning Large Language Models to Translate: Will a Touch of Noisy Data in Misaligned Languages Suffice?'), (39, 'Tokenization Is More Than Compression')]
+               ----------------------------------------
+               Label: language_model_evaluation
+               Dimension: methodologies
+               Description: This cluster encompasses methodologies for evaluating language models, including metrics and techniques to assess their effectiveness and reliability.
+               Level: 3
+               # of Papers: 383
+               Example Papers: [(14, 'Fine-Tuning or Retrieval? Comparing Knowledge Injection in LLMs'), (18, 'RoTBench: A Multi-Level Benchmark for Evaluating the Robustness of Large Language Models in Tool Learning'), (24, 'Consolidating Ranking and Relevance Predictions of Large Language Models through Post-Processing')]
+               ----------------------------------------
+               Label: multilingual_language_models
+               Dimension: methodologies
+               Description: This cluster is dedicated to methodologies that develop and utilize multilingual language models, enabling understanding and generation across multiple languages.
+               Level: 3
+               # of Papers: 104
+               Example Papers: [(23, 'Fine-Tuning Large Language Models to Translate: Will a Touch of Noisy Data in Misaligned Languages Suffice?'), (54, 'Chain-of-Dictionary Prompting Elicits Translation in Large Language Models'), (68, 'LLMs Are Zero-Shot Context-Aware Simultaneous Translators')]
+               ----------------------------------------
+               Label: generative_language_models
+               Dimension: methodologies
+               Description: This cluster focuses on methodologies that involve generative language models, which are designed to create coherent and contextually relevant text outputs.
+               Level: 3
+               # of Papers: 468
+               Example Papers: [(0, 'UniGen: Universal Domain Generalization for Sentiment Classification via Zero-shot Dataset Generation'), (6, 'LLM-Based Agent Society Investigation: Collaboration and Confrontation in Avalon Gameplay'), (11, "NumeroLogic: Number Encoding for Enhanced LLMs' Numerical Reasoning")]
+               ----------------------------------------
+               Label: knowledge_integration
+               Dimension: methodologies
+               Description: This cluster explores methodologies for integrating external knowledge into language models, enhancing their ability to understand and generate contextually rich responses.
+               Level: 3
+               # of Papers: 429
+               Example Papers: [(6, 'LLM-Based Agent Society Investigation: Collaboration and Confrontation in Avalon Gameplay'), (14, 'Fine-Tuning or Retrieval? Comparing Knowledge Injection in LLMs'), (18, 'RoTBench: A Multi-Level Benchmark for Evaluating the Robustness of Large Language Models in Tool Learning')]
+               ----------------------------------------
+          ----------------------------------------
+          Label: text_generation
+          Label: machine_translation
+          Dimension: methodologies
+          Description: This cluster includes methodologies that apply deep learning techniques to translate text from one language to another, focusing on improving accuracy and fluency in translations.
+          Level: 2
+          # of Papers: 155
+          Example Papers: [(23, 'Fine-Tuning Large Language Models to Translate: Will a Touch of Noisy Data in Misaligned Languages Suffice?'), (54, 'Chain-of-Dictionary Prompting Elicits Translation in Large Language Models'), (68, 'LLMs Are Zero-Shot Context-Aware Simultaneous Translators')]
+          ----------------------------------------
+          Children:
+               Label: neural_machine_translation
+               Dimension: methodologies
+               Description: This cluster focuses on methodologies that utilize neural networks to enhance the translation of text between languages, emphasizing deep learning architectures.
+               Level: 3
+               # of Papers: 106
+               Example Papers: [(23, 'Fine-Tuning Large Language Models to Translate: Will a Touch of Noisy Data in Misaligned Languages Suffice?'), (54, 'Chain-of-Dictionary Prompting Elicits Translation in Large Language Models'), (68, 'LLMs Are Zero-Shot Context-Aware Simultaneous Translators')]
+               ----------------------------------------
+               Label: evaluation_metrics
+               Dimension: methodologies
+               Description: This cluster encompasses methodologies that develop and apply various metrics to assess the quality and effectiveness of machine translation systems.
+               Level: 3
+               # of Papers: 21
+               Example Papers: [(187, 'Word Alignment as Preference for Machine Translation'), (288, 'Aligning Translation-Specific Understanding to General Understanding in Large Language Models'), (293, 'Beyond Reference: Evaluating High Quality Translations Better than Human References')]
+               ----------------------------------------
+               Label: multilingual_translation
+               Dimension: methodologies
+               Description: This cluster includes methodologies aimed at translating text across multiple languages simultaneously, addressing the challenges of multilingual contexts.
+               Level: 3
+               # of Papers: 42
+               Example Papers: [(23, 'Fine-Tuning Large Language Models to Translate: Will a Touch of Noisy Data in Misaligned Languages Suffice?'), (54, 'Chain-of-Dictionary Prompting Elicits Translation in Large Language Models'), (68, 'LLMs Are Zero-Shot Context-Aware Simultaneous Translators')]
+               ----------------------------------------
+               Label: low_resource_machine_translation
+               Dimension: methodologies
+               Description: This cluster focuses on methodologies designed to improve machine translation for languages with limited training data and resources.
+               Level: 3
+               # of Papers: 47
+               Example Papers: [(23, 'Fine-Tuning Large Language Models to Translate: Will a Touch of Noisy Data in Misaligned Languages Suffice?'), (54, 'Chain-of-Dictionary Prompting Elicits Translation in Large Language Models'), (185, 'Cross-lingual Transfer for Automatic Question Generation by Learning Interrogative Structures in Target Languages')]
+               ----------------------------------------
+               Label: sequence_to_sequence_translation
+               Dimension: methodologies
+               Description: This cluster involves methodologies that implement sequence-to-sequence models for translating text, capturing the relationships between input and output sequences.
+               Level: 3
+               # of Papers: 87
+               Example Papers: [(23, 'Fine-Tuning Large Language Models to Translate: Will a Touch of Noisy Data in Misaligned Languages Suffice?'), (54, 'Chain-of-Dictionary Prompting Elicits Translation in Large Language Models'), (68, 'LLMs Are Zero-Shot Context-Aware Simultaneous Translators')]
+               ----------------------------------------
+          ----------------------------------------
+          Label: text_classification
+          Label: multimodal_learning
+          Dimension: methodologies
+          Description: This cluster focuses on methodologies that integrate multiple modalities, such as text and images, to enhance learning and representation capabilities in deep learning models.
+          Level: 2
+          # of Papers: 427
+          Example Papers: [(5, 'ImageInWords: Unlocking Hyper-Detailed Image Descriptions'), (8, 'Speaking in Wavelet Domain: A Simple and Efficient Approach to Speed up Speech Diffusion Model'), (37, 'MSI-Agent: Incorporating Multi-Scale Insight into Embodied Agents for Superior Planning and Decision-Making')]
+          ----------------------------------------
+          Children:
+               Label: multimodal_fusion
+               Dimension: methodologies
+               Description: This cluster focuses on methodologies that combine different modalities, such as text and images, to create a unified representation that enhances model performance.
+               Level: 3
+               # of Papers: 86
+               Example Papers: [(96, 'Predicate Debiasing in Vision-Language Models Integration for Scene Graph Generation Enhancement'), (119, 'Tag-grounded Visual Instruction Tuning with Retrieval Augmentation'), (123, 'Towards Difficulty-Agnostic Efficient Transfer Learning for Vision-Language Models')]
+               ----------------------------------------
+               Label: multimodal_generation
+               Dimension: methodologies
+               Description: This cluster encompasses methodologies aimed at generating content across multiple modalities, including text-to-image synthesis and image captioning.
+               Level: 3
+               # of Papers: 122
+               Example Papers: [(5, 'ImageInWords: Unlocking Hyper-Detailed Image Descriptions'), (8, 'Speaking in Wavelet Domain: A Simple and Efficient Approach to Speed up Speech Diffusion Model'), (40, 'FLIRT: Feedback Loop In-context Red Teaming')]
+               ----------------------------------------
+               Label: multimodal_reasoning
+               Dimension: methodologies
+               Description: This cluster includes methodologies that leverage multimodal inputs to perform reasoning tasks, such as visual question answering and causal reasoning.
+               Level: 3
+               # of Papers: 136
+               Example Papers: [(37, 'MSI-Agent: Incorporating Multi-Scale Insight into Embodied Agents for Superior Planning and Decision-Making'), (75, 'QUDSELECT: Selective Decoding for Questions Under Discussion Parsing'), (87, 'Exploring Union and Intersection of Visual Regions for Generating Questions, Answers, and Distractors')]
+               ----------------------------------------
+               Label: multimodal_retrieval
+               Dimension: methodologies
+               Description: This cluster focuses on methodologies that enhance retrieval tasks by integrating information from multiple modalities, improving the relevance and accuracy of results.
+               Level: 3
+               # of Papers: 49
+               Example Papers: [(88, 'UniFashion: A Unified Vision-Language Model for Multimodal Fashion Retrieval and Generation'), (109, 'Self-Bootstrapped Visual-Language Model for Knowledge Selection and Question Answering'), (119, 'Tag-grounded Visual Instruction Tuning with Retrieval Augmentation')]
+               ----------------------------------------
+               Label: multimodal_classification
+               Dimension: methodologies
+               Description: This cluster involves methodologies that classify data by utilizing features from various modalities, such as text, images, and audio, to improve classification accuracy.
+               Level: 3
+               # of Papers: 98
+               Example Papers: [(85, 'Mitigating Matthew Effect: Multi-Hypergraph Boosted Multi-Interest Self-Supervised Learning for Conversational Recommendation'), (153, 'African or European Swallow? Benchmarking Large Vision-Language Models for Fine-Grained Object Classification'), (161, 'Message Passing on Semantic-Anchor-Graphs for Fine-grained Emotion Representation Learning and Classification')]
+               ----------------------------------------
+          ----------------------------------------
+     ----------------------------------------
+     Label: rule-based_systems
+     Dimension: methodologies
+     Description: This methodology involves the use of handcrafted rules and heuristics to process and analyze natural language, often focusing on specific tasks like parsing or information extraction.
+     Level: 1
+     # of Papers: 52
+     Example Papers: [(86, 'Advancing Event Causality Identification via Heuristic Semantic Dependency Inquiry Network'), (127, 'LogicAsker: Evaluating and Improving the Logical Reasoning Ability of Large Language Models'), (152, 'QUITE: Quantifying Uncertainty in Natural Language Text in Bayesian Reasoning Scenarios')]
+     ----------------------------------------
+     Children:
+          Label: information_extraction
+          Dimension: methodologies
+          Description: This cluster focuses on methodologies that utilize handcrafted rules to extract structured information from unstructured text, enabling the identification of specific data points and relationships.
+          Level: 2
+          # of Papers: 22
+          Example Papers: [(398, 'Generative Models for Automatic Medical Decision Rule Extraction from Text'), (467, 'An L* Algorithm for Deterministic Weighted Regular Languages'), (690, 'ABSEval: An Agent-based Framework for Script Evaluation')]
+          ----------------------------------------
+          Label: logical_reasoning
+          Dimension: methodologies
+          Description: This cluster encompasses methodologies that apply logical frameworks and rules to derive conclusions or make inferences from given information, often involving formal logic systems.
+          Level: 2
+          # of Papers: 12
+          Example Papers: [(127, 'LogicAsker: Evaluating and Improving the Logical Reasoning Ability of Large Language Models'), (152, 'QUITE: Quantifying Uncertainty in Natural Language Text in Bayesian Reasoning Scenarios'), (179, 'BC-Prover: Backward Chaining Prover for Formal Theorem Proving')]
+          ----------------------------------------
+          Label: parsing
+          Dimension: methodologies
+          Description: This cluster includes methodologies dedicated to the syntactic analysis of text, utilizing rules to determine the grammatical structure and relationships between words in sentences.
+          Level: 2
+          # of Papers: 11
+          Example Papers: [(521, 'RuBLiMP: Russian Benchmark of Linguistic Minimal Pairs'), (690, 'ABSEval: An Agent-based Framework for Script Evaluation'), (772, 'Contribution of Linguistic Typology to Universal Dependency Parsing: An Empirical Investigation')]
+          ----------------------------------------
+          Label: fact_checking
+          Dimension: methodologies
+          Description: This cluster involves methodologies that apply rule-based approaches to verify the accuracy of claims or statements by cross-referencing them against established facts or data.
+          Level: 2
+          # of Papers: 10
+          Example Papers: [(690, 'ABSEval: An Agent-based Framework for Script Evaluation'), (945, 'Mathador-LM: A Dynamic Benchmark for Mathematical Reasoning on Large Language Models'), (1287, 'WebOlympus: An Open Platform for Web Agents on Live Websites')]
+          ----------------------------------------
+          Label: event_causality_identification
+          Dimension: methodologies
+          Description: This cluster focuses on methodologies that utilize rules to identify and analyze causal relationships between events in textual data, helping to understand the dynamics of narratives.
+          Level: 2
+          # of Papers: 6
+          Example Papers: [(86, 'Advancing Event Causality Identification via Heuristic Semantic Dependency Inquiry Network'), (152, 'QUITE: Quantifying Uncertainty in Natural Language Text in Bayesian Reasoning Scenarios'), (521, 'RuBLiMP: Russian Benchmark of Linguistic Minimal Pairs')]
+          ----------------------------------------
+     ----------------------------------------
+     Label: hybrid_approaches
+     Dimension: methodologies
+     Description: This methodology combines elements from different paradigms, such as statistical methods and rule-based systems, to create more robust and flexible models for natural language processing tasks.
+     Level: 1
+     # of Papers: 277
+     Example Papers: [(13, 'A Usage-centric Take on Intent Understanding in E-Commerce'), (27, 'Clustering and Ranking: Diversity-preserved Instruction Selection through Expert-aligned Quality Estimation'), (49, "Integrating Plutchik's Theory with Mixture of Experts for Enhancing Emotion Classification")]
+     ----------------------------------------
+     Children:
+          Label: rule_based_and_statistical_methods
+          Dimension: methodologies
+          Description: This cluster focuses on methodologies that integrate rule-based systems with statistical methods to enhance the performance and flexibility of natural language processing tasks.
+          Level: 2
+          # of Papers: 8
+          Example Papers: [(300, 'Scaling Synthetic Logical Reasoning Datasets with Context-Sensitive Declarative Grammars'), (1325, "Don't Shoot The Breeze: Topic Continuity Model Using Nonlinear Naive Bayes With Attention"), (1787, 'Learning to Generate Rules for Realistic Few-Shot Relation Classification: An Encoder-Decoder Approach')]
+          ----------------------------------------
+          Label: ensemble_and_multi_model_approaches
+          Dimension: methodologies
+          Description: This cluster encompasses methodologies that utilize ensemble techniques and multi-model strategies to improve the robustness and accuracy of NLP applications.
+          Level: 2
+          # of Papers: 141
+          Example Papers: [(27, 'Clustering and Ranking: Diversity-preserved Instruction Selection through Expert-aligned Quality Estimation'), (49, "Integrating Plutchik's Theory with Mixture of Experts for Enhancing Emotion Classification"), (57, 'BlendFilter: Advancing Retrieval-Augmented Large Language Models via Query Generation Blending and Knowledge Filtering')]
+          ----------------------------------------
+          Children:
+               Label: multi_model_strategies
+               Dimension: methodologies
+               Description: This cluster focuses on methodologies that leverage multiple models in tandem to enhance performance and accuracy in various NLP tasks.
+               Level: 3
+               # of Papers: 94
+               Example Papers: [(60, 'Bridging Cultures in the Kitchen: A Framework and Benchmark for Cross-Cultural Recipe Retrieval'), (129, 'FuseGen: PLM Fusion for Data-generation based Zero-shot Learning'), (157, 'An Electoral Approach to Diversify LLM-based Multi-Agent Collective Decision-Making')]
+               ----------------------------------------
+               Label: ensemble_methods
+               Dimension: methodologies
+               Description: This cluster encompasses techniques that combine predictions from multiple models to improve overall decision-making and robustness in NLP applications.
+               Level: 3
+               # of Papers: 108
+               Example Papers: [(27, 'Clustering and Ranking: Diversity-preserved Instruction Selection through Expert-aligned Quality Estimation'), (49, "Integrating Plutchik's Theory with Mixture of Experts for Enhancing Emotion Classification"), (57, 'BlendFilter: Advancing Retrieval-Augmented Large Language Models via Query Generation Blending and Knowledge Filtering')]
+               ----------------------------------------
+               Label: multi_task_learning
+               Dimension: methodologies
+               Description: This cluster involves methodologies that train models on multiple tasks simultaneously, allowing for shared representations and improved generalization across tasks.
+               Level: 3
+               # of Papers: 8
+               Example Papers: [(613, 'Towards Probing Speech-Specific Risks in Large Multimodal Models: A Taxonomy, Benchmark, and Insights'), (1166, 'TokenVerse: Towards Unifying Speech and NLP Tasks via Transducer-based ASR'), (1419, 'Hyper-QKSG: Framework for Automating Query Generation and Knowledge-Snippet Extraction from Tables and Lists')]
+               ----------------------------------------
+               Label: model_fusion
+               Dimension: methodologies
+               Description: This cluster includes approaches that integrate different models' outputs into a cohesive prediction, enhancing the reliability and accuracy of NLP systems.
+               Level: 3
+               # of Papers: 95
+               Example Papers: [(49, "Integrating Plutchik's Theory with Mixture of Experts for Enhancing Emotion Classification"), (57, 'BlendFilter: Advancing Retrieval-Augmented Large Language Models via Query Generation Blending and Knowledge Filtering'), (60, 'Bridging Cultures in the Kitchen: A Framework and Benchmark for Cross-Cultural Recipe Retrieval')]
+               ----------------------------------------
+               Label: multi_view_learning
+               Dimension: methodologies
+               Description: This cluster focuses on methodologies that utilize multiple perspectives or representations of data to improve learning outcomes in NLP applications.
+               Level: 3
+               # of Papers: 18
+               Example Papers: [(521, 'RuBLiMP: Russian Benchmark of Linguistic Minimal Pairs'), (557, 'MMoE: Enhancing Multimodal Models with Mixtures of Multimodal Interaction Experts'), (613, 'Towards Probing Speech-Specific Risks in Large Multimodal Models: A Taxonomy, Benchmark, and Insights')]
+               ----------------------------------------
+          ----------------------------------------
+          Label: knowledge_integration_and_graph_based_methods
+          Dimension: methodologies
+          Description: This cluster includes methodologies that leverage knowledge integration and knowledge graph-based approaches to enrich natural language understanding and reasoning.
+          Level: 2
+          # of Papers: 93
+          Example Papers: [(13, 'A Usage-centric Take on Intent Understanding in E-Commerce'), (57, 'BlendFilter: Advancing Retrieval-Augmented Large Language Models via Query Generation Blending and Knowledge Filtering'), (60, 'Bridging Cultures in the Kitchen: A Framework and Benchmark for Cross-Cultural Recipe Retrieval')]
+          ----------------------------------------
+          Children:
+               Label: knowledge_graph_construction
+               Dimension: methodologies
+               Description: This cluster focuses on methodologies for constructing knowledge graphs, which involve the systematic organization and representation of knowledge in a graph format.
+               Level: 3
+               # of Papers: 1
+               Example Papers: [(2653, 'Cross Examine: An Ensemble-based approach to leverage Large Language Models for Legal Text Analytics')]
+               ----------------------------------------
+               Label: knowledge_integration_methods
+               Dimension: methodologies
+               Description: This cluster encompasses various methodologies aimed at integrating diverse knowledge sources to enhance understanding and reasoning capabilities.
+               Level: 3
+               # of Papers: 89
+               Example Papers: [(13, 'A Usage-centric Take on Intent Understanding in E-Commerce'), (57, 'BlendFilter: Advancing Retrieval-Augmented Large Language Models via Query Generation Blending and Knowledge Filtering'), (60, 'Bridging Cultures in the Kitchen: A Framework and Benchmark for Cross-Cultural Recipe Retrieval')]
+               ----------------------------------------
+               Label: graph_based_methods
+               Dimension: methodologies
+               Description: This cluster includes methodologies that utilize graph-based approaches for natural language understanding and reasoning, emphasizing the structural relationships within data.
+               Level: 3
+               # of Papers: 67
+               Example Papers: [(57, 'BlendFilter: Advancing Retrieval-Augmented Large Language Models via Query Generation Blending and Knowledge Filtering'), (60, 'Bridging Cultures in the Kitchen: A Framework and Benchmark for Cross-Cultural Recipe Retrieval'), (72, 'Learning Interpretable Legal Case Retrieval via Knowledge-Guided Case Reformulation')]
+               ----------------------------------------
+               Label: knowledge_graph_based_reasoning
+               Dimension: methodologies
+               Description: This cluster is dedicated to methodologies that leverage knowledge graphs to facilitate reasoning processes, enabling more informed decision-making and inference.
+               Level: 3
+               # of Papers: 21
+               Example Papers: [(80, 'A New Pipeline for Knowledge Graph Reasoning Enhanced by Large Language Models Without Fine-Tuning'), (152, 'QUITE: Quantifying Uncertainty in Natural Language Text in Bayesian Reasoning Scenarios'), (171, 'Verification and Refinement of Natural Language Explanations through LLM-Symbolic Theorem Proving')]
+               ----------------------------------------
+               Label: multimodal_knowledge_integration
+               Dimension: methodologies
+               Description: This cluster explores methodologies that integrate knowledge from multiple modalities, such as text, images, and audio, to enrich natural language understanding.
+               Level: 3
+               # of Papers: 5
+               Example Papers: [(61, 'RULE: Reliable Multimodal RAG for Factuality in Medical Vision Language Models'), (1269, 'i-Code Studio: A Configurable and Composable Framework for Integrative AI'), (1513, 'Breaking the Boundaries: A Unified Framework for Chinese Named Entity Recognition Across Text and Speech')]
+               ----------------------------------------
+          ----------------------------------------
+          Label: multi_agent_and_dialogue_systems
+          Dimension: methodologies
+          Description: This cluster focuses on methodologies that employ multi-agent systems and dialogue systems to facilitate interactive and dynamic communication in NLP tasks.
+          Level: 2
+          # of Papers: 23
+          Example Papers: [(690, 'ABSEval: An Agent-based Framework for Script Evaluation'), (963, 'Inductive-Deductive Strategy Reuse for Multi-Turn Instructional Dialogues'), (1059, 'Unsupervised Extraction of Dialogue Policies from Conversations')]
+          ----------------------------------------
+          Label: learning_and_optimization_methods
+          Dimension: methodologies
+          Description: This cluster covers methodologies that incorporate various learning paradigms and optimization techniques to enhance the efficiency and effectiveness of NLP models.
+          Level: 2
+          # of Papers: 142
+          Example Papers: [(49, "Integrating Plutchik's Theory with Mixture of Experts for Enhancing Emotion Classification"), (57, 'BlendFilter: Advancing Retrieval-Augmented Large Language Models via Query Generation Blending and Knowledge Filtering'), (60, 'Bridging Cultures in the Kitchen: A Framework and Benchmark for Cross-Cultural Recipe Retrieval')]
+          ----------------------------------------
+          Children:
+               Label: optimization_techniques
+               Dimension: methodologies
+               Description: This cluster encompasses various methodologies focused on optimization strategies that enhance the performance and efficiency of NLP models.
+               Level: 3
+               # of Papers: 95
+               Example Papers: [(49, "Integrating Plutchik's Theory with Mixture of Experts for Enhancing Emotion Classification"), (57, 'BlendFilter: Advancing Retrieval-Augmented Large Language Models via Query Generation Blending and Knowledge Filtering'), (122, 'Optimizing Code Retrieval: High-Quality and Scalable Dataset Annotation through Large Language Models')]
+               ----------------------------------------
+               Label: meta_learning
+               Dimension: methodologies
+               Description: This cluster includes methodologies that leverage meta-learning approaches to improve model adaptability and learning efficiency in NLP tasks.
+               Level: 3
+               # of Papers: 2
+               Example Papers: [(199, 'Unsupervised Human Preference Learning'), (720, 'CoGen: Learning from Feedback with Coupled Comprehension and Generation')]
+               ----------------------------------------
+               Label: prompt_optimization
+               Dimension: methodologies
+               Description: This cluster focuses on methodologies that optimize prompts to enhance the performance of language models in generating relevant outputs.
+               Level: 3
+               # of Papers: 14
+               Example Papers: [(225, 'PRompt Optimization in Multi-Step Tasks (PROMST): Integrating Human Feedback and Heuristic-based Sampling'), (249, 'PromptReps: Prompting Large Language Models to Generate Dense and Sparse Representations for Zero-Shot Document Retrieval'), (319, 'Synergizing In-context Learning with Hints for End-to-end Task-oriented Dialog Systems')]
+               ----------------------------------------
+               Label: multi_agent_learning
+               Dimension: methodologies
+               Description: This cluster covers methodologies that involve multiple agents working collaboratively to improve learning outcomes in NLP applications.
+               Level: 3
+               # of Papers: 6
+               Example Papers: [(157, 'An Electoral Approach to Diversify LLM-based Multi-Agent Collective Decision-Making'), (457, 'AdaSwitch: Adaptive Switching between Small and Large Agents for Effective Cloud-Local Collaborative Learning'), (1431, 'PEARL: Preference Extraction with Exemplar Augmentation and Retrieval with LLM Agents')]
+               ----------------------------------------
+               Label: adversarial_learning
+               Dimension: methodologies
+               Description: This cluster includes methodologies that utilize adversarial techniques to strengthen NLP models against potential vulnerabilities and improve robustness.
+               Level: 3
+               # of Papers: 2
+               Example Papers: [(2181, 'AuriSRec: Adversarial User Intention Learning in Sequential Recommendation'), (2416, 'ToxiCraft: A Novel Framework for Synthetic Generation of Harmful Information')]
+               ----------------------------------------
+          ----------------------------------------
+     ----------------------------------------
+----------------------------------------
