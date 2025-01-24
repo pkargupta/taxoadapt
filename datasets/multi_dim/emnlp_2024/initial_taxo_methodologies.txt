@@ -11,7 +11,7 @@ Children:
      ----------------------------------------
      Label: machine_learning_approaches
      Dimension: methodologies
-     Description: This methodology encompasses various machine learning techniques, including supervised and unsupervised learning, to develop models that can understand and generate human language.
+     Description: This methodology encompasses various machine learning techniques, including supervised, unsupervised, and reinforcement learning, to develop models that can understand and generate human language.
      Level: 1
      ----------------------------------------
      Label: deep_learning_techniques
@@ -21,12 +21,12 @@ Children:
      ----------------------------------------
      Label: rule-based_systems
      Dimension: methodologies
-     Description: This methodology involves the creation of systems that apply predefined linguistic rules to process and analyze text, often used in applications like grammar checking and information extraction.
+     Description: This methodology involves the creation of systems that use predefined linguistic rules to process and analyze text, often employed in applications like grammar checking and information extraction.
      Level: 1
      ----------------------------------------
      Label: hybrid_approaches
      Dimension: methodologies
-     Description: This methodology combines elements from different paradigms, such as statistical, rule-based, and machine learning methods, to create more robust and flexible natural language processing systems.
+     Description: This methodology combines elements from both statistical and rule-based methods, integrating the strengths of each to improve the accuracy and robustness of natural language processing tasks.
      Level: 1
      ----------------------------------------
 ----------------------------------------

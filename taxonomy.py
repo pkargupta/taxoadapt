@@ -193,7 +193,7 @@ class Node:
             print(f"{indent}Label: {self.label}")
             return
         
-        output_dict = {"name": self.name,
+        output_dict = {"label": self.label,
                        "description": self.description,
                        "level":self.level}
         

@@ -6,6 +6,7 @@ import argparse
 from pydantic import BaseModel, StringConstraints
 from typing_extensions import Annotated
 from typing import Dict
+from collections import Counter
 
 
 width_system_instruction = """You are an assistant that is provided a list of class labels. You determine whether or not a given paper's primary topic exists within the input class label list. If it does exist, output that topic label name. If not, then suggest a new topic at the same level of specificity. By specificity, we mean that your class_label and the existing_class_options are "equally specific": the topics are at the same level of detail or abstraction; they are on the same conceptual plane without overlap. In other words, they could be sibling nodes within a topical taxonomy.
@@ -16,7 +17,7 @@ class WidthExpansionSchema(BaseModel):
 
 
 def width_main_prompt(paper, node, nl='\n'):
-   out = f"""Given the following paper title and abstract, suggest for a new {node.dimension} class label to be added to the list of existing_class_options. All of these class labels (existing_class_options and your new class) should fall under the {node.dimension} topic: {node.label}.
+   out = f"""Given the following paper title and abstract, identify its {node.dimension} class label from the existing_class_options or, if it does not exist, suggest a new {node.dimension} class_label that falls under {node.label} ({node.description}). IF you suggest a new class_label, it should be at a similar topical level to the existing_class_options (e.g., subtopics of {node.label} are: {", ".join([f"{c}" for c in node.get_children()])}, and <class_label>).
 
 "Title": "{paper.title}"
 "Abstract": "{paper.abstract}"
@@ -48,22 +49,26 @@ class ClusterListSchema(BaseModel):
 
 def cluster_main_prompt(options, node, nl='\n'):
    siblings = node.get_children()
-   out = f"""Given the following set of candidate node labels, can you identify the most popular, unique but MINIMAL set of clusters that best represent all candidate_node_labels and are highly likely to be siblings (same level of depth/specificity) of the following existing nodes within a taxonomy (existing_sibling_nodes)? Each new cluster topic that you suggest should be a more specific subtopic under the parent topic node, {node.label}, and be a type of {node.dimension}. By minimal, we mean no duplicate or overlapping topics.\n
-
-existing_sibling_nodes: {str(siblings)}
+   print(options)
+   out = f"""Below is a dictionary of candidate node labels, where each key is the candidate node label and value is number of papers which are mapped to that candidate node:
 
 candidate_node_labels:\n{str(options)}
+
+
+Given the above set of candidate node labels, can you identify the non-overlapping clusters that best represent and partition all of candidate_node_labels (maximize the number of papers that are mapped to each). They should all be siblings (same level of depth/specificity) of the following existing nodes within a taxonomy (existing_sibling_nodes)? Each new cluster topic that you suggest should be a more specific subtopic under the parent topic node, {node.label}, and be a type of {node.dimension}. However, they should all be equally unique (non-duplicates) and no single paper should be able to fall into both clusters easily.\n
+
+existing_sibling_nodes: {str(siblings)}
 
 
 Your output should be in the following JSON format:
 {{
   "new_cluster_topics":
   {{
-    "<key type is string; string is the first new cluster topic label that is the paper's true primary topic at the same level of depth/specificity as the other class labels in existing_class_options>": {{
+    "<key type is string; string is the first new cluster topic label based on the candidate_node_labels and is at the same level of depth/specificity as the other class labels in existing_class_options>": {{
       "cluster_topic_description": "<generate a string sentence-long description of your new first cluster topic>"
     }},
     ...,
-    "<key type is string; string is the kth (max 5th) new cluster topic label that is the paper's true primary topic at the same level of depth/specificity as the other class labels in existing_class_options>": {{
+    "<key type is string; string is the kth (max 5th) new cluster topic label based on the candidate_node_labels and is at the same level of depth/specificity as the other class labels in existing_class_options>": {{
       "cluster_topic_description": "<generate a string sentence-long description of your new kth cluster topic>"
     }},
   }}
@@ -94,13 +99,14 @@ def expandNodeWidth(args, node, id2node, label2node):
                    if "```" in c else json.loads(c.strip())['class_label'].replace(' ', '_').lower() 
                    for c in exp_outputs]
     
-    exp_outputs = [w for w in exp_outputs if w not in label2node]
+    exp_outputs = [w for w in exp_outputs if w + f"_{node.dimension}" not in label2node]
+    if len(exp_outputs) == 0:
+        return []
+    freq_options = Counter(exp_outputs)
 
     # FILTERING OF EXPANSION OUTPUTS
-
-    width_options = list(set(exp_outputs))
     args.llm = 'gpt'
-    clustered_prompt = [constructPrompt(args, cluster_system_instruction, cluster_main_prompt(width_options, node))]
+    clustered_prompt = [constructPrompt(args, cluster_system_instruction, cluster_main_prompt(freq_options, node))]
     success = False
     attempts = 0
     while (not success) and (attempts < 5):
@@ -171,12 +177,13 @@ class NodeListSchema(BaseModel):
 def depth_main_prompt(node, ancestors, subtopics):
 
    out = f"""Your parent node (root_topic) is a type of {node.dimension}: {node.label}\nWe define {node.label} as: {node.description}. The path to parent node, "{node.label}", in the taxonomy is: {ancestors}.\nA subtopic is a specific division within a broader category that organizes related items or concepts more precisely. 
-   
-You are provided with a set of potential subtopics of {node.label} below that you may use for reference:
+
+Below is a dictionary of candidate subtopics of {node.label}, where each key is the candidate subtopic and the value is the number of papers which fall under that subtopic:
+
 {subtopics}
 
-Given the above set of candidate subtopics, can you identify up to five most popular, unique but MINIMAL set of cluster topics that best 
-represent all candidate subtopics and are highly likely to be siblings (same level of depth/specificity) within a taxonomy? Each new cluster topic that you suggest should be a more specific subtopic under the parent topic node (root_topic), {node.label}, and be a type of {node.dimension}. By minimal, we mean no duplicate or overlapping topics.
+
+Given the above set of candidate subtopics as reference, can you identify the non-overlapping cluster subtopics of parent topic "{node.label}" that best represent and partition all of candidates above (maximize the number of papers that are mapped to each). They should all be siblings (same level of depth/specificity) within the taxonomy (no cluster subtopic should fall under another cluster subtopic)? Each new cluster topic that you suggest should be a more specific subtopic under the parent topic node, {node.label}, and be a type of {node.dimension}. However, they should all be equally unique (non-duplicates) and no single paper should be able to fall into both clusters easily.\n
 
 Generate corresponding sentence-long descriptions for each cluster topic. 
 
@@ -216,7 +223,12 @@ Your output should be in the following JSON format:
    return out
 
 def expandNodeDepth(args, node, id2node, label2node):
-    ancestors = " -> ".join([ancestor.label for ancestor in node.get_ancestors().reverse()])
+    node_ancestors = node.get_ancestors()
+    if node_ancestors is None:
+        ancestors = "None"
+    else:
+        node_ancestors.reverse()
+        ancestors = " -> ".join([ancestor.label for ancestor in node_ancestors])
     
     # identify potential subtopic options from list of papers
     args.llm = 'vllm'
@@ -228,11 +240,16 @@ def expandNodeDepth(args, node, id2node, label2node):
                    if "```" in c else json.loads(c.strip())['subtopic'].replace(' ', '_').lower() 
                    for c in subtopic_outputs]
     
-    subtopic_outputs = [w for w in subtopic_outputs if w not in label2node]
+    subtopic_outputs = [w for w in subtopic_outputs if w + f"_{node.dimension}" not in label2node]
+
+    if len(subtopic_outputs) == 0:
+        return []
+    
+    freq_options = Counter(subtopic_outputs)
 
     args.llm = 'gpt'
 
-    prompts = [constructPrompt(args, depth_system_instruction, depth_main_prompt(node, ancestors, subtopic_outputs))]
+    prompts = [constructPrompt(args, depth_system_instruction, depth_main_prompt(node, ancestors, freq_options))]
 
     success = False
     attempts = 0

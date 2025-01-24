@@ -9,9 +9,9 @@ class ClassifySchema(BaseModel):
 
 nl = '\n'
 
-init_classify_prompt = """You are a helpful classification assistant that classifies a given paper with either one of the existing labels, or "None" if none of them tightly describe the paper. Overall, you identify if any of the class labels should be mapped the provided NLP research paper, performing multi-label classification."""
+init_classify_prompt = """You are a helpful classification assistant that classifies a given paper with either one of the existing labels, or "None" if none of them tightly describe the paper. Overall, you identify if any of the class labels should be mapped to the provided NLP research paper, performing multi-label classification."""
 
-main_classify_prompt = lambda node, paper: f'''Given the 'title' and 'abstract' (provided below) of an NLP research paper about {node.label}, determine which of the class labels (tag 'class_options') should be assigned to this paper (multi-label classification). If the research paper SHOULD NOT be labeled with any of the classes in 'class_options', then output 'None'. Else, if at least one class is a primary topic of the paper, then output it. We provide additional information for each class option for your reference.
+main_classify_prompt = lambda node, paper: f'''Given the 'title' and 'abstract' (provided below) of an NLP research paper about {node.label}, determine which, if any, of the class labels (tag 'class_options') should be assigned to this paper (multi-label classification). If the research paper SHOULD NOT be labeled with any of the classes in 'class_options', then output 'None'. Else, if at least one class is a primary topic of the paper, then output it. Be picky in your judgement, if the paper does not TIGHTLY fall under a class_option, then DO NOT include it. We provide additional information for each class option for your reference.
 
 ---
 paper_id: {paper.id}
