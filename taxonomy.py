@@ -11,7 +11,7 @@ from classification import ClassifySchema
 
 
 class Node:
-    def __init__(self, id, label, dimension, description=None, children=None, parents=None):
+    def __init__(self, id, label, dimension, description=None, children=None, parents=None, source=None):
         """
         Initialize a Node based on the provided JSON schema.
 
@@ -28,9 +28,10 @@ class Node:
         self.dimension = dimension
         self.children = children if children else {}
         self.parents = parents if parents else []
-        self.level = 0 if not self.parents else min(parent.level for parent in self.parents) + 1
+        self.level = 0 if not self.parents else max(parent.level for parent in self.parents) + 1
 
         self.papers = {}
+        self.source = source
 
     def add_child(self, label, child_node):
         """
@@ -190,12 +191,14 @@ class Node:
         if visited is None:
             visited = set()
         if self.id in visited:
-            print(f"{indent}Label: {self.label}")
+            print(f"{indent}Label (Visited): {self.label}")
             return
         
         output_dict = {"label": self.label,
                        "description": self.description,
-                       "level":self.level}
+                       "level":self.level,
+                       "source":"initial" if self.source is None else self.source
+                       }
         
         visited.add(self.id)
 
@@ -203,6 +206,8 @@ class Node:
         print(f"{indent}Dimension: {self.dimension}")
         print(f"{indent}Description: {self.description}")
         print(f"{indent}Level: {self.level}")
+        print(f"{indent}Source: {'Initial' if self.source is None else self.source}")
+
         if len(self.papers) > 0:
             example_papers = [(p.id, unidecode(p.title)) for p in self.papers.values()]
             output_dict['example_papers'] = example_papers[:10]

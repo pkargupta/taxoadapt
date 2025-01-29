@@ -71,7 +71,7 @@ def initialize_DAG(args):
         # expand
         system_instruction, main_prompt, json_output_format = multi_dim_prompt(curr_node)
         prompts = [constructPrompt(args, system_instruction, main_prompt + "\n\n" + json_output_format)]
-        outputs = promptLLM(args=args, prompts=prompts, schema=NodeListSchema, max_new_tokens=3000, json_mode=True, temperature=0.1, top_p=0.99)[0]
+        outputs = promptLLM(args=args, prompts=prompts, schema=NodeListSchema, max_new_tokens=3000, json_mode=True, temperature=0.01, top_p=1.0)[0]
         outputs = json.loads(clean_json_string(outputs)) if "```" in outputs else json.loads(outputs.strip())
         outputs = outputs['root_topic'] if 'root_topic' in outputs else outputs[label]
 

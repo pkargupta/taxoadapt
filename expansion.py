@@ -9,6 +9,53 @@ from typing import Dict
 from collections import Counter
 
 
+code_width_instruction = lambda node, candidate_subtopics: f"""You are attempting to identify subtopics for parent topic, {node.label}, that best represent and partition a pool of papers.
+The parent topic already has the following {node.dimension} subtopics (existing_subtopics):
+
+existing_subtopics: {"; ".join([f"{c}" for c in node.get_children()])}
+
+You have the following candidate subtopics with their corresponding number of papers:
+
+{candidate_subtopics}
+
+
+Given the above set of candidate subtopics as reference, can you identify the non-overlapping cluster subtopics of parent {node.dimension} topic {node.label} that best represent and partition all of the candidates above (maximize the number of papers that are mapped to each). They should all be siblings of each other and the existing_subtopics (same level of depth/specificity) within the taxonomy (no cluster subtopic should fall under another cluster subtopic)? Each new cluster topic that you suggest should be a more specific subtopic under the parent topic node, {node.label}, and be a type of task. However, they should all be equally unique (non-duplicates) and no single paper should be able to fall into both clusters easily."""
+
+code_depth_instruction = lambda node, candidate_subtopics: f"""You are attempting to identify subtopics for parent topic, {node.label}, that best represent and partition a pool of papers.
+You have the following candidate subtopics with their corresponding number of papers:
+
+{candidate_subtopics}
+
+
+Given the above set of candidate subtopics as reference, can you identify the non-overlapping cluster subtopics of parent {node.dimension} topic {node.label} that best represent and partition all of the candidates above (maximize the number of papers that are mapped to each). They should all be siblings of each other (same level of depth/specificity) within the taxonomy (no cluster subtopic should fall under another cluster subtopic)? Each new cluster topic that you suggest should be a more specific subtopic under the parent topic node, {node.label}, and be a type of task. However, they should all be equally unique (non-duplicates) and no single paper should be able to fall into both clusters easily."""
+
+code_prompt = lambda node: f"""
+Treat this as a quantitative reasoning (optimization) problem. Select subtopics that MINIMIZE the TOTAL NUMBER of subtopics needed yet simultaneously MAXIMIZE the number of total papers mapped. In the "subtopic_reasoning", explain your quantitative reasoning, using the candidate subtopics as variables with their integer values equal to the number of papers mapped to the respective topics.
+
+Use code to show your quantitative work.
+
+Output your final answer in following XML and JSON format:
+
+<code>
+<include all of your code for your quantitative reasoning here>
+</code>
+
+<subtopic_json>
+{{
+    "subtopics_of_{node.label}": [
+        {{
+        "mapped_papers": <integer value; using the candidate subtopics as variables with the number of papers mapped to them as their integer values, compute the number of papers mapped to this subtopic>
+         "subtopic_label": <string value; 2-5 word subtopic label (a type of task)>,
+         "subtopic_description": <string value; sentence-long description of subtopic>
+        }},
+        ...
+    ]
+}}
+</subtopic_json>
+"""
+
+
+
 width_system_instruction = """You are an assistant that is provided a list of class labels. You determine whether or not a given paper's primary topic exists within the input class label list. If it does exist, output that topic label name. If not, then suggest a new topic at the same level of specificity. By specificity, we mean that your class_label and the existing_class_options are "equally specific": the topics are at the same level of detail or abstraction; they are on the same conceptual plane without overlap. In other words, they could be sibling nodes within a topical taxonomy.
 """
 
@@ -30,7 +77,7 @@ Here is some additional information about each existing class option:
 
 Your output should be in the following JSON format:
 {{
-  "class_label": <value type is string; string is either an existing_class from existing_class_options or the new topic label that is the paper's true primary topic at the same level of depth/specificity as the other class labels in existing_class_options>,
+  "class_label": <value type is string; string is either an existing_class from existing_class_options or the new topic label (a type of {node.dimension}) that is the paper's true primary topic at the same level of depth/specificity as the other class labels in existing_class_options>,
 }}
 """
    return out
@@ -64,11 +111,11 @@ Your output should be in the following JSON format:
 {{
   "new_cluster_topics":
   {{
-    "<key type is string; string is the first new cluster topic label based on the candidate_node_labels and is at the same level of depth/specificity as the other class labels in existing_class_options>": {{
+    "<key type is string; string is the first new cluster topic label (a type of {node.dimension}) based on the candidate_node_labels and is at the same level of depth/specificity as the other class labels in existing_class_options>": {{
       "cluster_topic_description": "<generate a string sentence-long description of your new first cluster topic>"
     }},
     ...,
-    "<key type is string; string is the kth (max 5th) new cluster topic label based on the candidate_node_labels and is at the same level of depth/specificity as the other class labels in existing_class_options>": {{
+    "<key type is string; string is the kth (max 5th) new cluster topic label (a type of {node.dimension}) based on the candidate_node_labels and is at the same level of depth/specificity as the other class labels in existing_class_options>": {{
       "cluster_topic_description": "<generate a string sentence-long description of your new kth cluster topic>"
     }},
   }}
@@ -144,7 +191,8 @@ def expandNodeWidth(args, node, id2node, label2node):
                     label=mod_key,
                     dimension=dim,
                     description=sibling_desc,
-                    parents=[node]
+                    parents=[node],
+                    source='width'
                 )
             node.add_child(mod_key, child_node)
             id2node[child_node.id] = child_node
@@ -191,11 +239,11 @@ Output your taxonomy ONLY in the following JSON format, replacing each label nam
 {{
   root_topic:
   {{
-    "<label name of your first cluster subtopic>": {{
+    "<label name of your first cluster subtopic (a type of {node.dimension})>": {{
       "description": "<generate a string description of your cluster subtopic>"
     }},
     ...,
-    "<label name of your kth (max 5th) cluster subtopic>": {{
+    "<label name of your kth (max 5th) cluster subtopic (a type of {node.dimension})>": {{
       "description": "<generate a string description of cluster subtopic_k>"
     }},
   }}
@@ -203,7 +251,7 @@ Output your taxonomy ONLY in the following JSON format, replacing each label nam
 """
    return out
 
-subtopic_system_instruction = lambda node, ancestors: f"""You are an assistant that is provided with a {node.label} paper's title and abstract. We define {node.label} as {node.description}, where the path of ancestors to reach {node.label} is: {ancestors}. Your task is to identify the subtopic discussed by the paper that falls under the parent topic, {node.label}."""
+subtopic_system_instruction = lambda node, ancestors: f"""You are an assistant that is provided with a {node.label} paper's title and abstract. We define {node.label} as {node.description}, where the path of ancestors to reach {node.label} is: {ancestors}. Your task is to identify the subtopic discussed by the paper that falls under the parent topic, {node.label}. DO NOT JUST OUTPUT THE PARENT TOPIC {node.label}."""
 
 class SubtopicSchema(BaseModel):
   subtopic: Annotated[str, StringConstraints(strip_whitespace=True, max_length=100)]
@@ -217,7 +265,7 @@ def subtopic_main_prompt(paper, node, nl='\n'):
 
 Your output should be in the following JSON format:
 {{
-  "subtopic": <value type is string; the string's value is the paper's subtopic label (lowercase, underscore format: subtopic_name)>,
+  "subtopic": <value type is string; the string's value is the paper's subtopic label UNDER {node.label} (a type of {node.dimension}; lowercase, underscore format: subtopic_name)>,
 }}
 """
    return out
@@ -285,7 +333,8 @@ def expandNodeDepth(args, node, id2node, label2node):
                     label=child_label,
                     dimension=dim,
                     description=child_desc,
-                    parents=[node]
+                    parents=[node],
+                    source='depth'
                 )
             node.add_child(child_label, child_node)
             id2node[child_node.id] = child_node
