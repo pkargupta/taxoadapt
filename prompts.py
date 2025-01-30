@@ -291,12 +291,12 @@ str_schema = {
   }
 }
 
-quant_width_instruction = lambda node, candidate_subtopics: f"""You are attempting to identify subtopics for parent topic, {node.label}, that best represent and partition a pool of papers. A subtopic is a specific division within a broader category that organizes related items or concepts more precisely.
+quant_width_instruction = lambda node, candidate_subtopics, existing: f"""You are attempting to identify subtopics for parent topic, {node.label}, that best represent and partition a pool of papers. A subtopic is a specific division within a broader category that organizes related items or concepts more precisely.
 We define {node.label} (a type of {node.dimension}) as: {node.description}
 
 The parent topic already has the following {node.dimension} subtopics (existing_subtopics), so your chosen subtopics should expand upon the current list:
 
-existing_subtopics: {"; ".join([f"{c}" for c in node.get_children()])}
+existing_subtopics: {existing}
 
 You have the following candidate subtopics with their corresponding number of papers:
 
@@ -305,14 +305,14 @@ You have the following candidate subtopics with their corresponding number of pa
 
 Given the above set of candidate subtopics as reference, can you identify the non-overlapping cluster subtopics of parent {node.dimension} topic {node.label} that best represent and partition all of the candidates above (maximize the number of papers that are mapped to each). They should all be siblings of each other and the existing_subtopics (same level of depth/specificity) within the taxonomy (no cluster subtopic should fall under another cluster subtopic)? Each new cluster topic that you suggest should be a more specific subtopic under the parent topic node, {node.label}, and be a type of task. However, they should all be equally unique (non-duplicates) and no single paper should be able to fall into both clusters easily.
 
-Treat this as a quantitative reasoning (optimization) problem. Select subtopics that MINIMIZE the TOTAL NUMBER of subtopics needed yet simultaneously MAXIMIZE the number of total papers mapped (where the maximum value possible is the total number of papers which do not fall under existing_subtopics). In the tags <quantitative_reasoning></quantitative_reasoning>, explain your quantitative reasoning, using the candidate subtopics as variables with their integer values equal to the number of papers mapped to the respective topics.
+Treat this as a quantitative clustering (optimization) problem. Select subtopics that MINIMIZE the TOTAL NUMBER of subtopics needed yet simultaneously MAXIMIZE the number of total papers mapped (where the maximum value possible is the total number of papers which do not fall under existing_subtopics). In the tags <quantitative_reasoning></quantitative_reasoning>, explain your quantitative reasoning, using the candidate subtopics as variables with their integer values equal to the number of papers mapped to the respective topics. REMEMBER that all candidate subtopics under a cluster you form SHOULD BE RELATED.
 
 Here are two example inputs and outputs:
 
 <example_1>
 <example_input>
-Parent Topic: text_classification (a type of task)
-
+Parent Topic: text_classification
+Parent Topic Dimension Type: Task
 existing_subtopics: named_entity_recognition
 
 
@@ -382,7 +382,8 @@ Reduced variables: 8 -> 3.
 
 <example_2>
 <example_input>
-Parent Topic: statistical_approaches (a type of methodologies)
+Parent Topic: statistical_approaches
+Parent Topic Dimension Type: Methodologies
 existing_subtopics: probabilistic_modeling
 
 Input Candidate Dictionary:
@@ -450,16 +451,16 @@ You have the following candidate subtopics with their corresponding number of pa
 {candidate_subtopics}
 
 
-Given the above set of candidate subtopics as reference, can you identify the non-overlapping cluster subtopics of parent {node.dimension} topic {node.label} that best represent and partition all of the candidates above (maximize the number of papers that are mapped to each). They should all be siblings of each other (same level of depth/specificity) within the taxonomy (no cluster subtopic should fall under another cluster subtopic)? Each new cluster topic that you suggest should be a more specific subtopic under the parent topic node, {node.label}, and be a type of task. However, they should all be equally unique (non-duplicates) and no single paper should be able to fall into both clusters easily.
+Given the parent node, an input set of candidate subtopics and their dimension type (e.g., either a task, methodology, dataset, real_world_domain, or evaluation_method) as reference, can you identify the non-overlapping cluster subtopics of parent {node.dimension} topic {node.label} that best represent and partition all of the candidates above (maximize the number of papers that are mapped to each). They should all be siblings of each other (same level of depth/specificity) within the taxonomy (no cluster subtopic should fall under another cluster subtopic)? Each new cluster topic that you suggest should be a more specific subtopic under the parent topic node, {node.label}, and be a type of task. However, they should all be equally unique (non-duplicates) and no single paper should be able to fall into both clusters easily.
 
-Treat this as a quantitative reasoning (optimization) problem. Select subtopics that MINIMIZE the TOTAL NUMBER of subtopics needed yet simultaneously MAXIMIZE the number of total papers mapped (where the maximum value possible is the total number of papers). In the tags <quantitative_reasoning></quantitative_reasoning>, explain your quantitative reasoning, using the candidate subtopics as variables with their integer values equal to the number of papers mapped to the respective topics.
+Treat this as a quantitative clustering (optimization) problem. Select subtopics that MINIMIZE the TOTAL NUMBER of subtopics needed yet simultaneously MAXIMIZE the number of total papers mapped (where the maximum value possible is the total number of papers). In the tags <quantitative_reasoning></quantitative_reasoning>, explain your quantitative reasoning, using the candidate subtopics as variables with their integer values equal to the number of papers mapped to the respective topics. REMEMBER that all candidate subtopics under a cluster you form SHOULD BE RELATED.
 
 Here are three input and output examples:
 
 <example_1>
 <example_input>
-Parent Topic: text_classification (a type of task)
-
+Parent Topic: text_classification
+Parent Topic Dimension Type: Task
 Input Candidate Dictionary:
 {{
   "sentiment_analysis": 10,
@@ -533,7 +534,9 @@ Reduced variables: 8 -> 4.
 
 <example_2>
 <example_input>
-Parent Topic: text_classification (a type of dataset)
+Parent Topic: text_classification
+Parent Topic Dimension Type: dataset
+
 Input Candidate Dictionary:
 {{
     "IMDB_reviews": 15,
@@ -607,7 +610,8 @@ Reduced variables: 9 -> 4.
 
 <example_3>
 <example_input>
-Parent Topic: deep_learning_approaches (a type of methodologies)
+Parent Topic: deep_learning_approaches
+Parent Topic Dimension Type: Methodologies
 Input Candidate Dictionary:
 {{
     "convolutional_neural_networks": 12,
@@ -683,9 +687,21 @@ Reduced variables: 10 -> 4.
 
 """
 
-quant_prompt = lambda node: f"""For your own input, determine the minimal set of subtopics which maximizes the number of papers covered by following the same quantitative reasoning format in <example></example> and include it inside the tags, <quantitative_reasoning></quantitative_reasoning>
+quant_width_prompt = lambda node, candidate_subtopics, existing: f"""For your own input, determine the minimal set of subtopics which maximizes the number of papers covered by following the same quantitative reasoning format in <example></example> and include it inside the tags, <quantitative_reasoning></quantitative_reasoning>
+
+<input>
+Parent Topic: {node.label}
+Parent Topic Dimension Type: {node.dimension}
+existing_subtopics: {existing}
+
+Input Candidate Dictionary:
+{candidate_subtopics}
+
+</input>
 
 Output your final answer in following XML and JSON format:
+
+<final_output>
 
 <quantitative_reasoning>
 <include your quantitative reasoning in the same format as the example here>
@@ -696,11 +712,46 @@ Output your final answer in following XML and JSON format:
     "subtopics_of_{node.label}": [
         {{
         "mapped_papers": <integer value; using the candidate subtopics as variables with the number of papers mapped to them as their integer values, compute the number of papers mapped to this subtopic>
-         "subtopic_label": <string value; 2-5 word subtopic label (a type of task)>,
-         "subtopic_description": <string value; sentence-long description of subtopic>
+         "subtopic_label": <string value; 2-5 word cluster subtopic label (a type of {node.dimension}) that falls under {node.label} and is at the same level of depth/specificity as {existing}>,
+         "subtopic_description": <string value; sentence-long description of cluster subtopic>
         }},
         ...
     ]
 }}
 </subtopic_json>
+</final_output>
+"""
+
+quant_depth_prompt = lambda node, candidate_subtopics: f"""For your own input, determine the minimal set of subtopics which maximizes the number of papers covered by following the same quantitative reasoning format in <example></example> and include it inside the tags, <quantitative_reasoning></quantitative_reasoning>
+
+<input>
+Parent Topic: {node.label}
+Parent Topic Dimension Type: {node.dimension}
+
+Input Candidate Dictionary:
+{candidate_subtopics}
+
+</input>
+
+Output your final answer in following XML and JSON format:
+
+<final_output>
+
+<quantitative_reasoning>
+<include your quantitative reasoning in the same format as the example here>
+</quantitative_reasoning>
+
+<subtopic_json>
+{{
+    "subtopics_of_{node.label}": [
+        {{
+        "mapped_papers": <integer value; using the candidate subtopics as variables with the number of papers mapped to them as their integer values, compute the number of papers mapped to this subtopic>
+         "subtopic_label": <string value; 2-5 word cluster subtopic label (a type of {node.dimension}) that falls under {node.label}>,
+         "subtopic_description": <string value; sentence-long description of cluster subtopic>
+        }},
+        ...
+    ]
+}}
+</subtopic_json>
+</final_output>
 """

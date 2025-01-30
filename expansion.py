@@ -8,7 +8,7 @@ from typing_extensions import Annotated
 from typing import Dict
 from collections import Counter
 import re
-from prompts import quant_depth_instruction, quant_width_instruction, quant_prompt
+from prompts import quant_depth_instruction, quant_width_instruction, quant_width_prompt, quant_depth_prompt
 
 def extract_subtopic_json(text):
     """Extracts and parses the subtopic_json content from a given string."""
@@ -128,9 +128,11 @@ def expandNodeWidth(args, node, id2node, label2node):
         return []
     freq_options = dict(Counter(exp_outputs))
 
+    existing = "; ".join([f'{c}' for c in node.get_children()])
+
     # FILTERING OF EXPANSION OUTPUTS
     args.llm = 'gpt'
-    clustered_prompt = [constructPrompt(args, quant_width_instruction(node, freq_options), quant_prompt(node))]
+    clustered_prompt = [constructPrompt(args, quant_width_instruction(node, freq_options, existing), quant_width_prompt(node, freq_options, existing))]
     success = False
     attempts = 0
     while (not success) and (attempts < 5):
@@ -276,7 +278,7 @@ def expandNodeDepth(args, node, id2node, label2node):
 
     args.llm = 'gpt'
 
-    prompts = [constructPrompt(args, quant_depth_instruction(node, freq_options, ancestors), quant_prompt(node))]
+    prompts = [constructPrompt(args, quant_depth_instruction(node, freq_options, ancestors), quant_depth_prompt(node, freq_options))]
 
     success = False
     attempts = 0
