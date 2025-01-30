@@ -290,3 +290,417 @@ str_schema = {
     }
   }
 }
+
+quant_width_instruction = lambda node, candidate_subtopics: f"""You are attempting to identify subtopics for parent topic, {node.label}, that best represent and partition a pool of papers. A subtopic is a specific division within a broader category that organizes related items or concepts more precisely.
+We define {node.label} (a type of {node.dimension}) as: {node.description}
+
+The parent topic already has the following {node.dimension} subtopics (existing_subtopics), so your chosen subtopics should expand upon the current list:
+
+existing_subtopics: {"; ".join([f"{c}" for c in node.get_children()])}
+
+You have the following candidate subtopics with their corresponding number of papers:
+
+{candidate_subtopics}
+
+
+Given the above set of candidate subtopics as reference, can you identify the non-overlapping cluster subtopics of parent {node.dimension} topic {node.label} that best represent and partition all of the candidates above (maximize the number of papers that are mapped to each). They should all be siblings of each other and the existing_subtopics (same level of depth/specificity) within the taxonomy (no cluster subtopic should fall under another cluster subtopic)? Each new cluster topic that you suggest should be a more specific subtopic under the parent topic node, {node.label}, and be a type of task. However, they should all be equally unique (non-duplicates) and no single paper should be able to fall into both clusters easily.
+
+Treat this as a quantitative reasoning (optimization) problem. Select subtopics that MINIMIZE the TOTAL NUMBER of subtopics needed yet simultaneously MAXIMIZE the number of total papers mapped (where the maximum value possible is the total number of papers which do not fall under existing_subtopics). In the tags <quantitative_reasoning></quantitative_reasoning>, explain your quantitative reasoning, using the candidate subtopics as variables with their integer values equal to the number of papers mapped to the respective topics.
+
+Here are two example inputs and outputs:
+
+<example_1>
+<example_input>
+Parent Topic: text_classification (a type of task)
+
+existing_subtopics: named_entity_recognition
+
+
+Input Candidate Dictionary:
+{{
+  "sentiment_analysis": 10,
+  "spam_detection": 3,
+  "emotion_detection": 2,
+  "news_type_classification": 4,
+  "junk_mail_detection": 10,
+  "social_media_sentiment_detection": 2,
+  "event_classification": 8,
+  "entity_classification": 20
+}}
+</example_input>
+
+<example_quantitative_reasoning>
+Step 1: Define Variables
+x_1: sentiment_analysis (10)
+x_2: spam_detection (3)
+x_3: emotion_detection (2)
+x_4: news_type_classification (4)
+x_5: junk_mail_detection (10)
+x_6: social_media_sentiment_detection (2)
+x_7: event_classification (8)
+x_8: entity_classification (20) # we are not considering entity_classification in any clusters since it is already contained within an existing subtopic, named_entity_recognition.
+
+Step 2: Semantic Clustering
+Cluster 1 (S_1): x_1 (sentiment_analysis), x_3 (emotion_detection), x_6 (social_media_sentiment_detection). Theme: Sentiment-related classification tasks.
+Cluster 2 (S_2): x_2 (spam_detection), x_5 (junk_mail_detection). Theme: Detection of unwanted messages.
+Cluster 3 (S_3): x_4 (news_type_classification), x_7 (event_classification). Theme: Classification of events or news categories.
+
+Step 3: Aggregate Frequencies
+F_1 = 10 + 2 + 2 = 14 -> Label: "sentiment_analysis"
+F_2 = 3 + 10 = 13 -> Label: "spam_detection"
+F_3 = 4 + 8 = 12 -> Label: "event_classification"
+
+Step 4: Optimization Result
+Total papers covered: 14 + 13 + 12 = 39 (matches the total input papers which do not fall under existing_subtopics).
+Reduced variables: 8 -> 3.
+
+</example_quantitative_reasoning>
+
+<example_final_output>
+{{
+  "subtopics_of_text_classification": [
+    {{
+      "mapped_papers": 14,
+      "subtopic_label": "sentiment_analysis",
+      "subtopic_description": "A task focused on identifying sentiment, emotion, or social media sentiment in text."
+    }},
+    {{
+      "mapped_papers": 13,
+      "subtopic_label": "spam_detection",
+      "subtopic_description": "A task focused on detecting unwanted messages, including spam and junk mail."
+    }},
+    {{
+      "mapped_papers": 12,
+      "subtopic_label": "event_classification",
+      "subtopic_description": "A task focused on classifying news articles or events in text."
+    }}
+  ]
+}}
+</example_final_output>
+
+</example_1>
+
+<example_2>
+<example_input>
+Parent Topic: statistical_approaches (a type of methodologies)
+existing_subtopics: probabilistic_modeling
+
+Input Candidate Dictionary:
+{{
+	"hidden_markov_models": 15,
+	"naive_bayes_classification": 12,
+	"conditional_random_fields": 8,
+	"bayesian_networks": 9,
+	"maximum_entropy_models": 6,
+	"latent_dirichlet_allocation": 10,
+	"gaussian_mixture_models": 7,
+	"markov_chain_monte_carlo": 5
+}}
+</example_input>
+
+<example_quantitative_reasoning>
+Step 1: Define Variables
+x_1: hidden_markov_models (15)
+x_2: naive_bayes_classification (12) # we are not considering naive_bayes_classification in any clusters since it is already contained within an existing subtopic, probabilistic_modeling.
+x_3: conditional_random_fields (8)
+x_4: bayesian_networks (9) # we are not considering bayesian_networks in any clusters since it is already contained within an existing subtopic, probabilistic_modeling.
+x_5: maximum_entropy_models (6) # we are not considering maximum_entropy_models in any clusters since it is already contained within an existing subtopic, probabilistic_modeling.
+x_6: latent_dirichlet_allocation (10)
+x_7: gaussian_mixture_models (7)
+x_8: markov_chain_monte_carlo (5)
+
+Step 2: Semantic Clustering
+Cluster 1 (S_1): x_1 (hidden_markov_models), x_3 (conditional_random_fields), x_8 (markov_chain_monte_carlo). Theme: Sequence modeling and Markov-based approaches.
+Cluster 2 (S_2): x_6 (latent_dirichlet_allocation), x_7 (gaussian_mixture_models). Theme: Topic modeling and mixture models.
+
+Step 3: Aggregate Frequencies
+F_1 = 15 + 8 + 5 = 28 -> Label: "sequence_modeling"
+F_2 = 10 + 7 = 17 -> Label: "topic_modeling"
+
+Step 4: Optimization Result
+Total papers covered: 28 + 17 = 63 (matches the total input papers which do not fall under existing_subtopics).
+Reduced variables: 8 -> 2.
+</example_quantitative_reasoning>
+
+<example_final_output>
+{{
+	"subtopics_of_statistical_approaches": [
+		{{
+			"mapped_papers": 28,
+			"subtopic_label": "sequence_modeling",
+			"subtopic_description": "A task focused on modeling sequences using Markov-based approaches, such as hidden Markov models and conditional random fields."
+		}},
+		{{
+			"mapped_papers": 17,
+			"subtopic_label": "topic_modeling",
+			"subtopic_description": "A task focused on identifying topics in text using mixture models, such as latent Dirichlet allocation and Gaussian mixture models."
+		}}
+	]
+}}
+</example_final_output>
+</example_2>
+"""
+
+quant_depth_instruction = lambda node, candidate_subtopics, ancestors: f"""You are attempting to identify subtopics for parent topic, {node.label}, that best represent and partition a pool of papers. A subtopic is a specific division within a broader category that organizes related items or concepts more precisely.
+We define {node.label} (a type of {node.dimension}) as: {node.description}
+The path to parent node, "{node.label}", in the taxonomy is: {ancestors}.
+
+You have the following candidate subtopics with their corresponding number of papers:
+
+{candidate_subtopics}
+
+
+Given the above set of candidate subtopics as reference, can you identify the non-overlapping cluster subtopics of parent {node.dimension} topic {node.label} that best represent and partition all of the candidates above (maximize the number of papers that are mapped to each). They should all be siblings of each other (same level of depth/specificity) within the taxonomy (no cluster subtopic should fall under another cluster subtopic)? Each new cluster topic that you suggest should be a more specific subtopic under the parent topic node, {node.label}, and be a type of task. However, they should all be equally unique (non-duplicates) and no single paper should be able to fall into both clusters easily.
+
+Treat this as a quantitative reasoning (optimization) problem. Select subtopics that MINIMIZE the TOTAL NUMBER of subtopics needed yet simultaneously MAXIMIZE the number of total papers mapped (where the maximum value possible is the total number of papers). In the tags <quantitative_reasoning></quantitative_reasoning>, explain your quantitative reasoning, using the candidate subtopics as variables with their integer values equal to the number of papers mapped to the respective topics.
+
+Here are three input and output examples:
+
+<example_1>
+<example_input>
+Parent Topic: text_classification (a type of task)
+
+Input Candidate Dictionary:
+{{
+  "sentiment_analysis": 10,
+  "spam_detection": 3,
+  "emotion_detection": 2,
+  "news_type_classification": 4,
+  "junk_mail_detection": 10,
+  "social_media_sentiment_detection": 2,
+  "event_classification": 8,
+  "named_entity_recognition": 20
+}}
+</example_input>
+
+<example_quantitative_reasoning>
+Step 1: Define Variables
+x_1: sentiment_analysis (10)
+x_2: spam_detection (3)
+x_3: emotion_detection (2)
+x_4: news_type_classification (4)
+x_5: junk_mail_detection (10)
+x_6: social_media_sentiment_detection (2)
+x_7: event_classification (8)
+x_8: named_entity_recognition (20)
+
+Step 2: Semantic Clustering
+Cluster 1 (S_1): x_1 (sentiment_analysis), x_3 (emotion_detection), x_6 (social_media_sentiment_detection). Theme: Sentiment-related classification tasks.
+Cluster 2 (S_2): x_2 (spam_detection), x_5 (junk_mail_detection). Theme: Detection of unwanted messages.
+Cluster 3 (S_3): x_4 (news_type_classification), x_7 (event_classification). Theme: Classification of events or news categories.
+Cluster 4 (S_4): x_8 (named_entity_recognition). Theme: Entity recognition (no overlap with other labels).
+
+Step 3: Aggregate Frequencies
+F_1 = 10 + 2 + 2 = 14 -> Label: "sentiment_analysis"
+F_2 = 3 + 10 = 13 -> Label: "spam_detection"
+F_3 = 4 + 8 = 12 -> Label: "event_classification"
+F_4 = 20 -> Label: "named_entity_recognition"
+
+Step 4: Optimization Result
+Total papers covered: 14 + 13 + 12 + 20 = 59 (matches total input papers).
+Reduced variables: 8 -> 4.
+
+</example_quantitative_reasoning>
+
+<example_final_output>
+{{
+  "subtopics_of_text_classification": [
+    {{
+      "mapped_papers": 20,
+      "subtopic_label": "named_entity_recognition",
+      "subtopic_description": "A task focused on identifying named entities such as people, organizations, or locations in text."
+    }},
+    {{
+      "mapped_papers": 14,
+      "subtopic_label": "sentiment_analysis",
+      "subtopic_description": "A task focused on identifying sentiment, emotion, or social media sentiment in text."
+    }},
+    {{
+      "mapped_papers": 13,
+      "subtopic_label": "spam_detection",
+      "subtopic_description": "A task focused on detecting unwanted messages, including spam and junk mail."
+    }},
+    {{
+      "mapped_papers": 12,
+      "subtopic_label": "event_classification",
+      "subtopic_description": "A task focused on classifying news articles or events in text."
+    }}
+  ]
+}}
+</example_final_output>
+
+</example_1>
+
+<example_2>
+<example_input>
+Parent Topic: text_classification (a type of dataset)
+Input Candidate Dictionary:
+{{
+    "IMDB_reviews": 15,
+    "Yelp_reviews": 10,
+    "AG_News": 8,
+    "20_Newsgroups": 5,
+    "MIMIC_III_notes": 12,
+    "PubMed_abstracts": 7,
+    "Twitter_sentiment": 6,
+    "Reddit_comments": 4,
+    "SpamAssassin": 10
+}}
+</example_input>
+
+<example_quantitative_reasoning>
+Step 1: Define Variables
+x_1: IMDB_reviews (15)
+x_2: Yelp_reviews (10)
+x_3: AG_News (8)
+x_4: 20_Newsgroups (5)
+x_5: MIMIC_III_notes (12)
+x_6: PubMed_abstracts (7)
+x_7: Twitter_sentiment (6)
+x_8: Reddit_comments (4)
+x_9: SpamAssassin (10)
+
+Step 2: Semantic Clustering
+Cluster 1 (S_1): x_1 (IMDB_reviews), x_2 (Yelp_reviews), x_7 (Twitter_sentiment), x_8 (Reddit_comments). Theme: Sentiment analysis datasets from reviews or social media.
+Cluster 2 (S_2): x_3 (AG_News), x_4 (20_Newsgroups). Theme: News article classification datasets.
+Cluster 3 (S_3): x_5 (MIMIC_III_notes), x_6 (PubMed_abstracts). Theme: Medical text classification datasets.
+Cluster 4 (S_4): x_9 (SpamAssassin). Theme: Spam detection dataset (no overlap with other domains).
+
+Step 3: Aggregate Frequencies
+F_1 = 15 + 10 + 6 + 4 = 35 -> Label: "sentiment_analysis_datasets"
+F_2 = 8 + 5 = 13 -> Label: "news_classification_datasets"
+F_3 = 12 + 7 = 19 -> Label: "medical_text_datasets"
+F_4 = 10 -> Label: "spam_detection_datasets"
+
+Step 4: Optimization Result
+Total papers covered: 35 + 13 + 19 + 10 = 77 (matches total input papers).
+Reduced variables: 9 -> 4.
+</example_quantitative_reasoning>
+
+<example_final_output>
+{{
+    "subtopics_of_text_classification": [
+        {{
+            "mapped_papers": 35,
+            "subtopic_label": "sentiment_analysis_datasets",
+            "subtopic_description": "Datasets containing reviews or social media text labeled for sentiment analysis tasks."
+        }},
+        {{
+            "mapped_papers": 19,
+            "subtopic_label": "medical_text_datasets",
+            "subtopic_description": "Datasets comprising clinical notes or scientific abstracts for medical text classification."
+        }},
+        {{
+            "mapped_papers": 13,
+            "subtopic_label": "news_classification_datasets",
+            "subtopic_description": "Datasets with news articles categorized by topic or event for classification tasks."
+        }},
+        {{
+            "mapped_papers": 10,
+            "subtopic_label": "spam_detection_datasets",
+            "subtopic_description": "Datasets focused on identifying spam or unwanted content in text."
+        }}
+    ]
+}}
+</example_final_output>
+</example_2>
+
+<example_3>
+<example_input>
+Parent Topic: deep_learning_approaches (a type of methodologies)
+Input Candidate Dictionary:
+{{
+    "convolutional_neural_networks": 12,
+    "recurrent_neural_networks": 18,
+    "long_short_term_memory": 15,
+    "gated_recurrent_units": 10,
+    "transformers": 25,
+    "attention_mechanisms": 20,
+    "autoencoders": 8,
+    "generative_adversarial_networks": 7,
+    "bert": 22,
+    "gpt": 18
+}}
+</example_input>
+
+<example_quantitative_reasoning>
+Step 1: Define Variables
+x_1: convolutional_neural_networks (12)
+x_2: recurrent_neural_networks (18)
+x_3: long_short_term_memory (15)
+x_4: gated_recurrent_units (10)
+x_5: transformers (25)
+x_6: attention_mechanisms (20)
+x_7: autoencoders (8)
+x_8: generative_adversarial_networks (7)
+x_9: bert (22)
+x_10: gpt (18)
+
+Step 2: Semantic Clustering
+Cluster 1 (S_1): x_1 (convolutional_neural_networks). Theme: Convolutional-based deep learning approaches.
+Cluster 2 (S_2): x_2 (recurrent_neural_networks), x_3 (long_short_term_memory), x_4 (gated_recurrent_units). Theme: Recurrent-based deep learning approaches.
+Cluster 3 (S_3): x_5 (transformers), x_6 (attention_mechanisms), x_9 (bert), x_10 (gpt). Theme: Transformer and attention-based deep learning approaches.
+Cluster 4 (S_4): x_7 (autoencoders), x_8 (generative_adversarial_networks). Theme: Generative deep learning approaches.
+
+Step 3: Aggregate Frequencies
+F_1 = 12 -> Label: "convolutional_neural_networks"
+F_2 = 18 + 15 + 10 = 43 -> Label: "recurrent_based_approaches"
+F_3 = 25 + 20 + 22 + 18 = 85 -> Label: "transformer_based_approaches"
+F_4 = 8 + 7 = 15 -> Label: "generative_approaches"
+
+Step 4: Optimization Result
+Total papers covered: 12 + 43 + 85 + 15 = 155 (matches total input papers).
+Reduced variables: 10 -> 4.
+</example_quantitative_reasoning>
+
+<example_final_output>
+{{
+    "subtopics_of_deep_learning_approaches": [
+        {{
+            "mapped_papers": 85,
+            "subtopic_label": "transformer_based_approaches",
+            "subtopic_description": "Deep learning approaches leveraging transformers, attention mechanisms, and models like BERT and GPT."
+        }},
+        {{
+            "mapped_papers": 43,
+            "subtopic_label": "recurrent_based_approaches",
+            "subtopic_description": "Deep learning approaches utilizing recurrent neural networks, LSTMs, and GRUs for sequential data."
+        }},
+        {{
+            "mapped_papers": 15,
+            "subtopic_label": "generative_approaches",
+            "subtopic_description": "Deep learning approaches focused on generative models, including autoencoders and GANs."
+        }},
+        {{
+            "mapped_papers": 12,
+            "subtopic_label": "convolutional_neural_networks",
+            "subtopic_description": "Deep learning approaches employing convolutional neural networks for feature extraction."
+        }}
+    ]
+}}
+</example_final_output>
+</example_3>
+
+"""
+
+quant_prompt = lambda node: f"""For your own input, determine the minimal set of subtopics which maximizes the number of papers covered by following the same quantitative reasoning format in <example></example> and include it inside the tags, <quantitative_reasoning></quantitative_reasoning>
+
+Output your final answer in following XML and JSON format:
+
+<quantitative_reasoning>
+<include your quantitative reasoning in the same format as the example here>
+</quantitative_reasoning>
+
+<subtopic_json>
+{{
+    "subtopics_of_{node.label}": [
+        {{
+        "mapped_papers": <integer value; using the candidate subtopics as variables with the number of papers mapped to them as their integer values, compute the number of papers mapped to this subtopic>
+         "subtopic_label": <string value; 2-5 word subtopic label (a type of task)>,
+         "subtopic_description": <string value; sentence-long description of subtopic>
+        }},
+        ...
+    ]
+}}
+</subtopic_json>
+"""

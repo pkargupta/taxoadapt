@@ -7,56 +7,31 @@ from pydantic import BaseModel, StringConstraints
 from typing_extensions import Annotated
 from typing import Dict
 from collections import Counter
+import re
+from prompts import quant_depth_instruction, quant_width_instruction, quant_prompt
 
-
-code_width_instruction = lambda node, candidate_subtopics: f"""You are attempting to identify subtopics for parent topic, {node.label}, that best represent and partition a pool of papers.
-The parent topic already has the following {node.dimension} subtopics (existing_subtopics):
-
-existing_subtopics: {"; ".join([f"{c}" for c in node.get_children()])}
-
-You have the following candidate subtopics with their corresponding number of papers:
-
-{candidate_subtopics}
-
-
-Given the above set of candidate subtopics as reference, can you identify the non-overlapping cluster subtopics of parent {node.dimension} topic {node.label} that best represent and partition all of the candidates above (maximize the number of papers that are mapped to each). They should all be siblings of each other and the existing_subtopics (same level of depth/specificity) within the taxonomy (no cluster subtopic should fall under another cluster subtopic)? Each new cluster topic that you suggest should be a more specific subtopic under the parent topic node, {node.label}, and be a type of task. However, they should all be equally unique (non-duplicates) and no single paper should be able to fall into both clusters easily."""
-
-code_depth_instruction = lambda node, candidate_subtopics: f"""You are attempting to identify subtopics for parent topic, {node.label}, that best represent and partition a pool of papers.
-You have the following candidate subtopics with their corresponding number of papers:
-
-{candidate_subtopics}
-
-
-Given the above set of candidate subtopics as reference, can you identify the non-overlapping cluster subtopics of parent {node.dimension} topic {node.label} that best represent and partition all of the candidates above (maximize the number of papers that are mapped to each). They should all be siblings of each other (same level of depth/specificity) within the taxonomy (no cluster subtopic should fall under another cluster subtopic)? Each new cluster topic that you suggest should be a more specific subtopic under the parent topic node, {node.label}, and be a type of task. However, they should all be equally unique (non-duplicates) and no single paper should be able to fall into both clusters easily."""
-
-code_prompt = lambda node: f"""
-Treat this as a quantitative reasoning (optimization) problem. Select subtopics that MINIMIZE the TOTAL NUMBER of subtopics needed yet simultaneously MAXIMIZE the number of total papers mapped. In the "subtopic_reasoning", explain your quantitative reasoning, using the candidate subtopics as variables with their integer values equal to the number of papers mapped to the respective topics.
-
-Use code to show your quantitative work.
-
-Output your final answer in following XML and JSON format:
-
-<code>
-<include all of your code for your quantitative reasoning here>
-</code>
-
-<subtopic_json>
-{{
-    "subtopics_of_{node.label}": [
-        {{
-        "mapped_papers": <integer value; using the candidate subtopics as variables with the number of papers mapped to them as their integer values, compute the number of papers mapped to this subtopic>
-         "subtopic_label": <string value; 2-5 word subtopic label (a type of task)>,
-         "subtopic_description": <string value; sentence-long description of subtopic>
-        }},
-        ...
-    ]
-}}
-</subtopic_json>
-"""
+def extract_subtopic_json(text):
+    """Extracts and parses the subtopic_json content from a given string."""
+    # Define the regex pattern to capture JSON content inside <subtopic_json> tags
+    pattern = r"<subtopic_json>\s*\n*([\S\s]*)<\/subtopic_json>"
+    match = re.findall(pattern, text, re.IGNORECASE)[0]
+    
+    if match:
+        try:
+            parsed_json = json.loads(match)
+            return parsed_json
+        except json.JSONDecodeError as e:
+            print(f"Error decoding JSON: {e}")
+            print(match)
+            return None
+    else:
+        print("No <subtopic_json> section found.")
+        print(text)
+        return None
 
 
 
-width_system_instruction = """You are an assistant that is provided a list of class labels. You determine whether or not a given paper's primary topic exists within the input class label list. If it does exist, output that topic label name. If not, then suggest a new topic at the same level of specificity. By specificity, we mean that your class_label and the existing_class_options are "equally specific": the topics are at the same level of detail or abstraction; they are on the same conceptual plane without overlap. In other words, they could be sibling nodes within a topical taxonomy.
+width_system_instruction = """You are an assistant that is provided a list of class labels. You determine whether or not a given paper's primary topic exists within the input class label list. If it does confidently exist, output that topic label name. If not or you are not sure, then suggest a new topic at the same level of specificity. By specificity, we mean that your class_label and the existing_class_options are "equally specific": the topics are at the same level of detail or abstraction; they are on the same conceptual plane without overlap. In other words, they could be sibling nodes within a topical taxonomy.
 """
 
 class WidthExpansionSchema(BaseModel):
@@ -146,25 +121,27 @@ def expandNodeWidth(args, node, id2node, label2node):
                    if "```" in c else json.loads(c.strip())['class_label'].replace(' ', '_').lower() 
                    for c in exp_outputs]
     
+    print(Counter(exp_outputs))
+
     exp_outputs = [w for w in exp_outputs if w + f"_{node.dimension}" not in label2node]
     if len(exp_outputs) == 0:
         return []
-    freq_options = Counter(exp_outputs)
+    freq_options = dict(Counter(exp_outputs))
 
     # FILTERING OF EXPANSION OUTPUTS
     args.llm = 'gpt'
-    clustered_prompt = [constructPrompt(args, cluster_system_instruction, cluster_main_prompt(freq_options, node))]
+    clustered_prompt = [constructPrompt(args, quant_width_instruction(node, freq_options), quant_prompt(node))]
     success = False
     attempts = 0
     while (not success) and (attempts < 5):
         try:
-            cluster_topics = promptLLM(args=args, prompts=clustered_prompt, schema=ClusterListSchema, max_new_tokens=3000, json_mode=True, temperature=0.1, top_p=0.99)[0]
-            cluster_outputs = json.loads(clean_json_string(cluster_topics)) if "```" in cluster_topics else json.loads(cluster_topics.strip())
+            cluster_topics = promptLLM(args=args, prompts=clustered_prompt, schema=ClusterListSchema, max_new_tokens=3000, json_mode=False, temperature=0.1, top_p=1.0)[0]
+            cluster_outputs = extract_subtopic_json(cluster_topics)
+            assert cluster_outputs is not None
             success = True
         except Exception as e:
             success = False
             print(f'failed clustering attempt #{attempts}!')
-            print(cluster_topics)
             print(str(e))
         attempts += 1
     
@@ -175,13 +152,13 @@ def expandNodeWidth(args, node, id2node, label2node):
         return []
     
     print('clusters:\n', cluster_outputs)
-    cluster_outputs = cluster_outputs['new_cluster_topics']
+    cluster_outputs = cluster_outputs[f'subtopics_of_{node.label}']
     final_expansion = []
     dim = node.dimension
 
-    for key, value in cluster_outputs.items():
-        sibling_label = key
-        sibling_desc = value['cluster_topic_description'] if 'cluster_topic_description' in value else value['description']
+    for subtopic in cluster_outputs:
+        sibling_label = subtopic['subtopic_label']
+        sibling_desc = subtopic['subtopic_description']
         mod_key = sibling_label.replace(' ', '_').lower()
         mod_full_key = sibling_label.replace(' ', '_').lower() + f"_{dim}"
         
@@ -288,28 +265,29 @@ def expandNodeDepth(args, node, id2node, label2node):
                    if "```" in c else json.loads(c.strip())['subtopic'].replace(' ', '_').lower() 
                    for c in subtopic_outputs]
     
+    print(Counter(subtopic_outputs))
+
     subtopic_outputs = [w for w in subtopic_outputs if w + f"_{node.dimension}" not in label2node]
 
     if len(subtopic_outputs) == 0:
         return []
     
-    freq_options = Counter(subtopic_outputs)
+    freq_options = dict(Counter(subtopic_outputs))
 
     args.llm = 'gpt'
 
-    prompts = [constructPrompt(args, depth_system_instruction, depth_main_prompt(node, ancestors, freq_options))]
+    prompts = [constructPrompt(args, quant_depth_instruction(node, freq_options, ancestors), quant_prompt(node))]
 
     success = False
     attempts = 0
     while (not success) and (attempts < 5):
         try:
-            outputs = promptLLM(args=args, prompts=prompts, schema=NodeListSchema, max_new_tokens=3000, json_mode=True, temperature=0.1, top_p=0.99)[0]
-            gen_child = json.loads(clean_json_string(outputs)) if "```" in outputs else json.loads(outputs.strip())
-            gen_child = gen_child['root_topic'] if 'root_topic' in gen_child else gen_child[node.label]
+            cluster_outputs = promptLLM(args=args, prompts=prompts, schema=NodeListSchema, max_new_tokens=3000, json_mode=False, temperature=0.1, top_p=1.0)[0]
+            gen_child = extract_subtopic_json(cluster_outputs)
+            assert gen_child is not None
             success = True
         except Exception as e:
             success = False
-            print(outputs)
             print(f'failed depth expansion attempt #{attempts}!')
             print(str(e))
 
@@ -318,13 +296,15 @@ def expandNodeDepth(args, node, id2node, label2node):
         print(f'FAILED DEPTH EXPANSION!')
         return [], False
 
+    print('clusters:\n', gen_child)
+    child_outputs = gen_child[f'subtopics_of_{node.label}']
     final_expansion = []
     dim = node.dimension
 
-    for key, value in gen_child.items():
-        child_label = key.replace(' ', '_').lower()
+    for subtopic in child_outputs:
+        child_label = subtopic['subtopic_label'].replace(' ', '_').lower()
         child_full_label = child_label + f"_{dim}"
-        child_desc = value['description']
+        child_desc = subtopic['subtopic_description']
         if child_label == node.dimension:
           continue
         if child_full_label not in label2node:

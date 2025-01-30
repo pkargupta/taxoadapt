@@ -218,7 +218,7 @@ if __name__ == "__main__":
     # args.dimensions = ["tasks", "datasets", "methodologies"]
 
     args.dataset = "emnlp_2024"
-    args.data_dir = f"datasets/multi_dim/{args.dataset.lower().replace(' ', '_')}"
+    args.data_dir = f"datasets/{args.dataset.lower().replace(' ', '_')}"
     args.internal = f"{args.dataset}.txt"
     # args.external = f"{args.dataset}_external.txt"
     # args.groundtruth = "groundtruth.txt"
