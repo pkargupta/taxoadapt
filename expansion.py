@@ -1,103 +1,17 @@
-from taxonomy import Node
 import json
-from utils import clean_json_string
-from model_definitions import constructPrompt, promptLLM
 import argparse
 from pydantic import BaseModel, StringConstraints
 from typing_extensions import Annotated
 from typing import Dict
 from collections import Counter
-import re
-from prompts import quant_depth_instruction, quant_width_instruction, quant_width_prompt, quant_depth_prompt
 
-def extract_subtopic_json(text):
-    """Extracts and parses the subtopic_json content from a given string."""
-    # Define the regex pattern to capture JSON content inside <subtopic_json> tags
-    pattern = r"<subtopic_json>\s*\n*([\S\s]*)<\/subtopic_json>"
-    match = re.findall(pattern, text, re.IGNORECASE)[0]
-    
-    if match:
-        try:
-            parsed_json = json.loads(match)
-            return parsed_json
-        except json.JSONDecodeError as e:
-            print(f"Error decoding JSON: {e}")
-            print(match)
-            return None
-    else:
-        print("No <subtopic_json> section found.")
-        print(text)
-        return None
+from taxonomy import Node
+from utils import clean_json_string
+from model_definitions import constructPrompt, promptLLM
+from prompts import width_system_instruction, width_main_prompt, WidthExpansionSchema, width_cluster_system_instruction, width_cluster_main_prompt, WidthClusterListSchema
+from prompts import depth_system_instruction, depth_main_prompt, DepthExpansionSchema, depth_cluster_system_instruction, depth_cluster_main_prompt, DepthClusterListSchema
 
-
-
-width_system_instruction = """You are an assistant that is provided a list of class labels. You determine whether or not a given paper's primary topic exists within the input class label list. If it does confidently exist, output that topic label name. If not or you are not sure, then suggest a new topic at the same level of specificity. By specificity, we mean that your class_label and the existing_class_options are "equally specific": the topics are at the same level of detail or abstraction; they are on the same conceptual plane without overlap. In other words, they could be sibling nodes within a topical taxonomy.
-"""
-
-class WidthExpansionSchema(BaseModel):
-  class_label: Annotated[str, StringConstraints(strip_whitespace=True, max_length=100)]
-
-
-def width_main_prompt(paper, node, nl='\n'):
-   out = f"""Given the following paper title and abstract, identify its {node.dimension} class label from the existing_class_options or, if it does not exist, suggest a new {node.dimension} class_label that falls under {node.label} ({node.description}). IF you suggest a new class_label, it should be at a similar topical level to the existing_class_options (e.g., subtopics of {node.label} are: {", ".join([f"{c}" for c in node.get_children()])}, and <class_label>).
-
-"Title": "{paper.title}"
-"Abstract": "{paper.abstract}"
-
-existing_class_options (list of existing class labels): {"; ".join([f"{c}" for c in node.get_children()])}
-
-Here is some additional information about each existing class option:
-{nl.join([f"{c_label}:{nl}{nl}Description of {c_label}: {c.description}{nl}" for c_label, c in node.get_children().items()])}
-
-
-Your output should be in the following JSON format:
-{{
-  "class_label": <value type is string; string is either an existing_class from existing_class_options or the new topic label (a type of {node.dimension}) that is the paper's true primary topic at the same level of depth/specificity as the other class labels in existing_class_options>,
-}}
-"""
-   return out
-
-# {nl.join([f"{c_label}:{nl}{nl}Description of {c_label}: {c.description}{nl}Example phrases used in {c_label} papers: {c.phrases}{nl}Example sentences used in {c_label} papers: {c.sentences}" for c_label, c in node.get_children().items()])}
-
-cluster_system_instruction = "You are a clusterer, identifying unique clusters formed from an input set of labels. For each cluster you identify, you must provide a cluster name (in similar format to the input labels) as its key and a 1 sentence description of the cluster name."
-
-class ClusterSchema(BaseModel):
-    cluster_topic_description: Annotated[str, StringConstraints(strip_whitespace=True, max_length=250)]
-
-class ClusterListSchema(BaseModel):
-    new_cluster_topics: Dict[str, ClusterSchema]
-
-
-
-def cluster_main_prompt(options, node, nl='\n'):
-   siblings = node.get_children()
-   print(options)
-   out = f"""Below is a dictionary of candidate node labels, where each key is the candidate node label and value is number of papers which are mapped to that candidate node:
-
-candidate_node_labels:\n{str(options)}
-
-
-Given the above set of candidate node labels, can you identify the non-overlapping clusters that best represent and partition all of candidate_node_labels (maximize the number of papers that are mapped to each). They should all be siblings (same level of depth/specificity) of the following existing nodes within a taxonomy (existing_sibling_nodes)? Each new cluster topic that you suggest should be a more specific subtopic under the parent topic node, {node.label}, and be a type of {node.dimension}. However, they should all be equally unique (non-duplicates) and no single paper should be able to fall into both clusters easily.\n
-
-existing_sibling_nodes: {str(siblings)}
-
-
-Your output should be in the following JSON format:
-{{
-  "new_cluster_topics":
-  {{
-    "<key type is string; string is the first new cluster topic label (a type of {node.dimension}) based on the candidate_node_labels and is at the same level of depth/specificity as the other class labels in existing_class_options>": {{
-      "cluster_topic_description": "<generate a string sentence-long description of your new first cluster topic>"
-    }},
-    ...,
-    "<key type is string; string is the kth (max 5th) new cluster topic label (a type of {node.dimension}) based on the candidate_node_labels and is at the same level of depth/specificity as the other class labels in existing_class_options>": {{
-      "cluster_topic_description": "<generate a string sentence-long description of your new kth cluster topic>"
-    }},
-  }}
-}}
-"""
-   return out
-
+######################## WIDTH EXPANSION ########################
 
 def expandNodeWidth(args, node, id2node, label2node):
     unlabeled_papers = {}
@@ -109,41 +23,46 @@ def expandNodeWidth(args, node, id2node, label2node):
                 break
         if unlabeled:
             unlabeled_papers[idx] = p
+    
+    node_ancestors = node.get_ancestors()
+    if node_ancestors is None:
+        ancestors = "None"
+    else:
+        node_ancestors.reverse()
+        ancestors = " -> ".join([ancestor.label for ancestor in node_ancestors])
 
     print(f'node {node.label} ({node.dimension}) has {len(unlabeled_papers)} unlabeled papers!')
 
     if len(unlabeled_papers) <= args.max_density:
         return [] 
     
-    exp_prompts = [constructPrompt(args, width_system_instruction, width_main_prompt(paper, node)) for paper in unlabeled_papers.values()]
+    exp_prompts = [constructPrompt(args, width_system_instruction, width_main_prompt(paper, node, ancestors)) for paper in unlabeled_papers.values()]
     exp_outputs = promptLLM(args=args, prompts=exp_prompts, schema=WidthExpansionSchema, max_new_tokens=300, json_mode=True, temperature=0.1, top_p=0.99)
-    exp_outputs = [json.loads(clean_json_string(c))['class_label'].replace(' ', '_').lower() 
-                   if "```" in c else json.loads(c.strip())['class_label'].replace(' ', '_').lower() 
+    exp_outputs = [json.loads(clean_json_string(c))['new_subtopic_label'].replace(' ', '_').lower() 
+                   if "```" in c else json.loads(c.strip())['new_subtopic_label'].replace(' ', '_').lower() 
                    for c in exp_outputs]
-    
-    print(Counter(exp_outputs))
 
     exp_outputs = [w for w in exp_outputs if w + f"_{node.dimension}" not in label2node]
     if len(exp_outputs) == 0:
         return []
     freq_options = dict(Counter(exp_outputs))
 
-    existing = "; ".join([f'{c}' for c in node.get_children()])
+    print(freq_options)
 
     # FILTERING OF EXPANSION OUTPUTS
     args.llm = 'gpt'
-    clustered_prompt = [constructPrompt(args, quant_width_instruction(node, freq_options, existing), quant_width_prompt(node, freq_options, existing))]
+    clustered_prompt = [constructPrompt(args, width_cluster_system_instruction, width_cluster_main_prompt(freq_options, node, ancestors))]
     success = False
     attempts = 0
     while (not success) and (attempts < 5):
         try:
-            cluster_topics = promptLLM(args=args, prompts=clustered_prompt, schema=ClusterListSchema, max_new_tokens=3000, json_mode=False, temperature=0.1, top_p=1.0)[0]
-            cluster_outputs = extract_subtopic_json(cluster_topics)
-            assert cluster_outputs is not None
+            cluster_topics = promptLLM(args=args, prompts=clustered_prompt, schema=WidthClusterListSchema, max_new_tokens=3000, json_mode=True, temperature=0.1, top_p=0.99)[0]
+            cluster_outputs = json.loads(clean_json_string(cluster_topics)) if "```" in cluster_topics else json.loads(cluster_topics.strip())
             success = True
         except Exception as e:
             success = False
-            print(f'failed clustering attempt #{attempts}!')
+            print(f'failed width expansion clustering attempt #{attempts}!')
+            print(cluster_topics)
             print(str(e))
         attempts += 1
     
@@ -154,13 +73,13 @@ def expandNodeWidth(args, node, id2node, label2node):
         return []
     
     print('clusters:\n', cluster_outputs)
-    cluster_outputs = cluster_outputs[f'subtopics_of_{node.label}']
+    cluster_outputs = cluster_outputs['new_cluster_topics']
     final_expansion = []
     dim = node.dimension
 
-    for subtopic in cluster_outputs:
-        sibling_label = subtopic['subtopic_label']
-        sibling_desc = subtopic['subtopic_description']
+    for subtopic_cluster in cluster_outputs:
+        sibling_label = subtopic_cluster[f"sub-{node.dimension}_label"]
+        sibling_desc = subtopic_cluster[f"sub-{node.dimension}_description"]
         mod_key = sibling_label.replace(' ', '_').lower()
         mod_full_key = sibling_label.replace(' ', '_').lower() + f"_{dim}"
         
@@ -191,63 +110,9 @@ def expandNodeWidth(args, node, id2node, label2node):
     return final_expansion
 
 
-depth_system_instruction = """You are an assistant that performs depth expansion of taxonomies. Depth expansion in taxonomies adds subcategory nodes deeper to a given root_topic node, these being children concepts/topics which EXCLUSIVELY fall under the specified parent node and not the parent\'s siblings. For example, given a taxonomy of NLP tasks, expanding "text_classification" depth-wise (where its siblings are [\"named_entity_recognition\", \"machine_translation\", and \"question_answering\"]) would create the children nodes, [\"sentiment_analysis\", \"spam_detection\", and \"document_classification\"] (any suitable number of children). On the other hand, \"open_domain_question_answering\" SHOULD NOT be added as it belongs to sibling, \"question_answering\".
-"""
-
-class NodeSchema(BaseModel):
-    description: Annotated[str, StringConstraints(strip_whitespace=True, max_length=250)]
-
-class NodeListSchema(BaseModel):
-    root_topic: Dict[str, NodeSchema]
 
 
-def depth_main_prompt(node, ancestors, subtopics):
-
-   out = f"""Your parent node (root_topic) is a type of {node.dimension}: {node.label}\nWe define {node.label} as: {node.description}. The path to parent node, "{node.label}", in the taxonomy is: {ancestors}.\nA subtopic is a specific division within a broader category that organizes related items or concepts more precisely. 
-
-Below is a dictionary of candidate subtopics of {node.label}, where each key is the candidate subtopic and the value is the number of papers which fall under that subtopic:
-
-{subtopics}
-
-
-Given the above set of candidate subtopics as reference, can you identify the non-overlapping cluster subtopics of parent topic "{node.label}" that best represent and partition all of candidates above (maximize the number of papers that are mapped to each). They should all be siblings (same level of depth/specificity) within the taxonomy (no cluster subtopic should fall under another cluster subtopic)? Each new cluster topic that you suggest should be a more specific subtopic under the parent topic node, {node.label}, and be a type of {node.dimension}. However, they should all be equally unique (non-duplicates) and no single paper should be able to fall into both clusters easily.\n
-
-Generate corresponding sentence-long descriptions for each cluster topic. 
-
-Output your taxonomy ONLY in the following JSON format, replacing each label name key with its correct subcategory label name:\n
-{{
-  root_topic:
-  {{
-    "<label name of your first cluster subtopic (a type of {node.dimension})>": {{
-      "description": "<generate a string description of your cluster subtopic>"
-    }},
-    ...,
-    "<label name of your kth (max 5th) cluster subtopic (a type of {node.dimension})>": {{
-      "description": "<generate a string description of cluster subtopic_k>"
-    }},
-  }}
-}}
-"""
-   return out
-
-subtopic_system_instruction = lambda node, ancestors: f"""You are an assistant that is provided with a {node.label} paper's title and abstract. We define {node.label} as {node.description}, where the path of ancestors to reach {node.label} is: {ancestors}. Your task is to identify the subtopic discussed by the paper that falls under the parent topic, {node.label}. DO NOT JUST OUTPUT THE PARENT TOPIC {node.label}."""
-
-class SubtopicSchema(BaseModel):
-  subtopic: Annotated[str, StringConstraints(strip_whitespace=True, max_length=100)]
-
-
-def subtopic_main_prompt(paper, node, nl='\n'):
-   out = f"""What {node.dimension} subtopic of parent topic, {node.label}, is the following paper title and abstract discussing?
-
-"Title": "{paper.title}"
-"Abstract": "{paper.abstract}"
-
-Your output should be in the following JSON format:
-{{
-  "subtopic": <value type is string; the string's value is the paper's subtopic label UNDER {node.label} (a type of {node.dimension}; lowercase, underscore format: subtopic_name)>,
-}}
-"""
-   return out
+######################## DEPTH EXPANSION ########################
 
 def expandNodeDepth(args, node, id2node, label2node):
     node_ancestors = node.get_ancestors()
@@ -259,16 +124,14 @@ def expandNodeDepth(args, node, id2node, label2node):
     
     # identify potential subtopic options from list of papers
     args.llm = 'vllm'
-    subtopic_prompts = [constructPrompt(args, subtopic_system_instruction(node, ancestors), subtopic_main_prompt(paper, node)) 
+    subtopic_prompts = [constructPrompt(args, depth_system_instruction, depth_main_prompt(paper, node, ancestors)) 
                    for paper in node.papers.values()]
-    subtopic_outputs = promptLLM(args=args, prompts=subtopic_prompts, schema=SubtopicSchema, max_new_tokens=300, json_mode=True, temperature=0.1, top_p=0.99)
+    subtopic_outputs = promptLLM(args=args, prompts=subtopic_prompts, schema=DepthExpansionSchema, max_new_tokens=300, json_mode=True, temperature=0.1, top_p=0.99)
 
-    subtopic_outputs = [json.loads(clean_json_string(c))['subtopic'].replace(' ', '_').lower() 
-                   if "```" in c else json.loads(c.strip())['subtopic'].replace(' ', '_').lower() 
+    subtopic_outputs = [json.loads(clean_json_string(c))['new_subtopic_label'].replace(' ', '_').lower() 
+                   if "```" in c else json.loads(c.strip())['new_subtopic_label'].replace(' ', '_').lower() 
                    for c in subtopic_outputs]
     
-    print(Counter(subtopic_outputs))
-
     subtopic_outputs = [w for w in subtopic_outputs if w + f"_{node.dimension}" not in label2node]
 
     if len(subtopic_outputs) == 0:
@@ -276,21 +139,23 @@ def expandNodeDepth(args, node, id2node, label2node):
     
     freq_options = dict(Counter(subtopic_outputs))
 
+    print(freq_options)
+
     args.llm = 'gpt'
 
-    prompts = [constructPrompt(args, quant_depth_instruction(node, freq_options, ancestors), quant_depth_prompt(node, freq_options))]
+    prompts = [constructPrompt(args, depth_cluster_system_instruction, depth_cluster_main_prompt(freq_options, node, ancestors))]
 
     success = False
     attempts = 0
     while (not success) and (attempts < 5):
         try:
-            cluster_outputs = promptLLM(args=args, prompts=prompts, schema=NodeListSchema, max_new_tokens=3000, json_mode=False, temperature=0.1, top_p=1.0)[0]
-            gen_child = extract_subtopic_json(cluster_outputs)
-            assert gen_child is not None
+            cluster_topics = promptLLM(args=args, prompts=prompts, schema=DepthClusterListSchema, max_new_tokens=3000, json_mode=True, temperature=0.1, top_p=0.99)[0]
+            cluster_outputs = json.loads(clean_json_string(cluster_topics)) if "```" in cluster_topics else json.loads(cluster_topics.strip())
             success = True
         except Exception as e:
             success = False
             print(f'failed depth expansion attempt #{attempts}!')
+            print(cluster_outputs)
             print(str(e))
 
         attempts += 1
@@ -298,15 +163,15 @@ def expandNodeDepth(args, node, id2node, label2node):
         print(f'FAILED DEPTH EXPANSION!')
         return [], False
 
-    print('clusters:\n', gen_child)
-    child_outputs = gen_child[f'subtopics_of_{node.label}']
     final_expansion = []
+    cluster_outputs = cluster_outputs['new_cluster_topics']
     dim = node.dimension
 
-    for subtopic in child_outputs:
-        child_label = subtopic['subtopic_label'].replace(' ', '_').lower()
+    for subtopic_cluster in cluster_outputs:
+        child_label = subtopic_cluster[f"sub-{node.dimension}_label"].replace(' ', '_').lower()
+        child_desc = subtopic_cluster[f"sub-{node.dimension}_description"]
         child_full_label = child_label + f"_{dim}"
-        child_desc = subtopic['subtopic_description']
+
         if child_label == node.dimension:
           continue
         if child_full_label not in label2node:

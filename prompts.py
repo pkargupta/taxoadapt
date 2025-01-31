@@ -755,3 +755,211 @@ Output your final answer in following XML and JSON format:
 </subtopic_json>
 </final_output>
 """
+
+
+######################## WIDTH EXPANSION ########################
+
+width_system_instruction = """You are an assistant that is performing taxonomy width expansion, which is defined as the process of increasing the number of distinct categories or branches within a taxonomy to capture a broader range of concepts, topics, or entities. It adds new sibling nodes—categories that share the same parent node as existing ones—to broaden the scope of a taxonomy while maintaining its hierarchical structure.
+
+You are provided a list of siblings under a parent node and a paper's title & abstract. What subtopic of the parent node does the paper discuss, which is at the same level of specificity as the existing siblings? By specificity, we mean that your new_subtopic_label and the existing_siblings are "equally specific": the topics are at the same level of detail or abstraction; they are on the same conceptual plane without overlap. In other words, they would be sibling nodes within a topical taxonomy.
+"""
+
+class WidthExpansionSchema(BaseModel):
+  new_subtopic_label: Annotated[str, StringConstraints(strip_whitespace=True, max_length=100)]
+
+
+def width_main_prompt(paper, node, ancestors, nl='\n'):
+   out = f"""
+<input>
+<parent_node>
+{node.label}
+</parent_node>
+<parent_node_description>
+{node.label} is a type of {node.dimension}: {node.description}
+</parent_node_description>
+<type_definition>
+{node.dimension}: {dimension_definitions[node.dimension]}
+</type_definition>
+<path_to_parent_node>
+{ancestors}
+</path_to_parent_node>
+
+<paper_title>
+{paper.title}
+</paper_title>
+
+<paper_abstract>
+{paper.abstract}
+</paper_abstract>
+
+<existing_siblings>
+{nl.join([f"{c_label}:{nl}{nl}Description of {c_label}: {c.description}{nl}" for c_label, c in node.get_children().items()])}
+</existing_siblings>
+
+</input>
+
+Given the input paper title and abstract, identify its {node.dimension} class label that falls under the parent_node, {node.label}, and is a sibling topic to the existing_siblings. In other words, answer the question: what type of {node.label} {node.dimension} does the paper propose?
+
+Your output should be in the following JSON format:
+{{
+  "new_subtopic_label": <value type is string; string is a new topic label (a type of {node.dimension}) that is the paper's true primary topic at the same level of depth/specificity as the other class labels in existing_siblings>,
+}}
+"""
+   return out
+
+width_cluster_system_instruction = """You are an clusterer that is performing taxonomy width expansion, which is defined as the process of increasing the number of distinct categories or branches within a taxonomy to capture a broader range of concepts, topics, or entities. It adds new sibling nodes—categories that share the same parent node as existing ones—to broaden the scope of a taxonomy while maintaining its hierarchical structure.
+
+You are choosing your new sibling topic clusters based on which subtopics are covered by papers that discuss the parent node. Your job is to identify unique clusters formed from the input set of paper topics. For each cluster you identify, you must provide a cluster name (in similar format to the paper_topics) as its key, a 1 sentence description of the cluster name, and a list of all the input paper_topics covered within the cluster. Your new topic clusters should have a topic name that is a sibling topic to the existing_siblings."""
+
+class WidthClusterSchema(BaseModel):
+   cluster_topic_description: Annotated[str, StringConstraints(strip_whitespace=True, max_length=250)]
+
+class WidthClusterListSchema(BaseModel):
+   new_cluster_topics: Dict[str, WidthClusterSchema]
+
+
+
+def width_cluster_main_prompt(options, node, ancestors, nl='\n'):
+  out = f"""
+<input>
+<parent_node>
+{node.label}
+</parent_node>
+<parent_node_description>
+{node.label} is a type of {node.dimension}: {node.description}
+</parent_node_description>
+<type_definition>
+{node.dimension}: {dimension_definitions[node.dimension]}
+</type_definition>
+<path_to_parent_node>
+{ancestors}
+</path_to_parent_node>
+
+<existing_siblings>
+{nl.join([f"{c_label}:{nl}{nl}Description of {c_label}: {c.description}{nl}" for c_label, c in node.get_children().items()])}
+</existing_siblings>
+
+<paper_topics>
+Below is a dictionary of paper topics, where each key is the candidate node label and value is number of papers which are mapped to that candidate node:
+candidate_node_labels:\n{str(options)}
+</paper_topics>
+
+</input>
+
+What are the primary sub-{node.dimension} topic clusters under the parent_node topic, {node.label}, that would best encompass the above <paper_topics>?
+These should be non-overlapping topic clusters that best represent and partition all of paper_topics (maximize the number of papers that are mapped to each). They should all be siblings (same level of depth/specificity) of the existing_siblings within the taxonomy. Each new cluster topic that you suggest should be a more specific subtopic under the parent_node, {node.label}, and be a type of {node.dimension}. However, they should all be equally unique (non-duplicates) and no single paper should be able to fall into both clusters easily.\n
+
+Your output should be in the following JSON format with a minimum of one subtopic cluster and a maximum of five:
+{{
+  "new_cluster_topics":
+  [
+    {{
+    "sub-{node.dimension}_label": <string sub-{node.dimension} label at the same level of depth/specificity as the other topics in existing_siblings>,
+    "sub-{node.dimension}_description": <string sub-{node.dimension} sentence-long description>,
+    "covered_paper_topics": <list of all the input paper_topics covered within this sub-{node.dimension}>
+    }},
+    ...
+  ]
+}}
+"""
+  return out
+
+######################## DEPTH EXPANSION ########################
+
+depth_system_instruction = """You are an assistant that is performing taxonomy depth expansion, which is defined as adding subcategory nodes deeper to a given root_topic node, these being children concepts/topics which EXCLUSIVELY fall under the specified parent node and not the parent\'s siblings. For example, given a taxonomy of NLP tasks, expanding "text_classification" depth-wise (where its siblings are [\"named_entity_recognition\", \"machine_translation\", and \"question_answering\"]) would create the children nodes, [\"sentiment_analysis\", \"spam_detection\", and \"document_classification\"] (any suitable number of children). On the other hand, \"open_domain_question_answering\" SHOULD NOT be added as it belongs to sibling, \"question_answering\".
+
+You are provided a parent node and a paper's title & abstract. What subtopic of the parent_node does the paper discuss, which is more specific than the parent node? In other words, they would have a parent-child node relationship within a topical taxonomy.
+"""
+
+class DepthExpansionSchema(BaseModel):
+  new_subtopic_label: Annotated[str, StringConstraints(strip_whitespace=True, max_length=100)]
+
+def depth_main_prompt(paper, node, ancestors, nl='\n'):
+   out = f"""
+<input>
+<parent_node>
+{node.label}
+</parent_node>
+<parent_node_description>
+{node.label} is a type of {node.dimension}: {node.description}
+</parent_node_description>
+<type_definition>
+{node.dimension}: {dimension_definitions[node.dimension]}
+</type_definition>
+<path_to_parent_node>
+{ancestors}
+</path_to_parent_node>
+
+<paper_title>
+{paper.title}
+</paper_title>
+
+<paper_abstract>
+{paper.abstract}
+</paper_abstract>
+
+</input>
+
+Given the input paper title and abstract, identify its {node.dimension} class label that falls under the parent_node, {node.label}. In other words, answer the question: what type of {node.label} {node.dimension} does the paper propose?
+
+Your output should be in the following JSON format:
+{{
+  "new_subtopic_label": <value type is string; string is a new topic label (a type of {node.dimension}) that is the paper's true primary topic at the deeper/more specific level than {node.label}>,
+}}
+"""
+   return out
+
+depth_cluster_system_instruction = """You are an clusterer that is performing taxonomy depth expansion, which is defined as adding subcategory nodes deeper to a given root_topic node, these being children concepts/topics which EXCLUSIVELY fall under the specified parent node and not the parent\'s siblings. For example, given a taxonomy of NLP tasks, expanding "text_classification" depth-wise (where its siblings are [\"named_entity_recognition\", \"machine_translation\", and \"question_answering\"]) would create the children nodes, [\"sentiment_analysis\", \"spam_detection\", and \"document_classification\"] (any suitable number of children). On the other hand, \"open_domain_question_answering\" SHOULD NOT be added as it belongs to sibling, \"question_answering\".
+
+You are choosing your new subtopic clusters based on which subtopics of the parent topic are covered by papers that discuss the parent node. Your job is to identify unique clusters formed from the input set of paper topics. For each cluster you identify, you must provide a cluster name (in similar format to the paper_topics) as its key, a 1 sentence description of the cluster name, and a list of all the input paper_topics covered within the cluster."""
+
+class DepthClusterSchema(BaseModel):
+   cluster_topic_description: Annotated[str, StringConstraints(strip_whitespace=True, max_length=250)]
+
+class DepthClusterListSchema(BaseModel):
+   new_cluster_topics: Dict[str, WidthClusterSchema]
+
+
+
+def depth_cluster_main_prompt(options, node, ancestors):
+  out = f"""
+<input>
+<parent_node>
+{node.label}
+</parent_node>
+<parent_node_description>
+{node.label} is a type of {node.dimension}: {node.description}
+</parent_node_description>
+<type_definition>
+{node.dimension}: {dimension_definitions[node.dimension]}
+</type_definition>
+<path_to_parent_node>
+{ancestors}
+</path_to_parent_node>
+
+<paper_topics>
+Below is a dictionary of paper topics, where each key is the candidate node label and value is number of papers which are mapped to that candidate node:
+candidate_node_labels:\n{str(options)}
+</paper_topics>
+
+</input>
+
+What are the primary sub-{node.dimension} topic clusters under the parent_node topic, {node.label}, that would best encompass the above <paper_topics>?
+These should be non-overlapping topic clusters that best represent and partition all of paper_topics (maximize the number of papers that are mapped to each). They should all be siblings (same level of depth/specificity) under the parent_node within the taxonomy. Each new cluster topic that you suggest should be a more specific subtopic under the parent_node, {node.label}, and be a type of {node.dimension}. However, they should all be equally unique (non-duplicates) and no single paper should be able to fall into both clusters easily.\n
+
+Your output should be in the following JSON format with a minimum of one subtopic cluster and a maximum of five:
+{{
+  "new_cluster_topics":
+  [
+    {{
+      "sub-{node.dimension}_label": <string sub-{node.dimension} label at the deeper level of depth/specificity as the parent_node, {node.label}>,
+      "sub-{node.dimension}_description": <string sub-{node.dimension} sentence-long description>,
+      "covered_paper_topics": <list of all the input paper_topics covered within this sub-{node.dimension}>
+    }},
+    ...
+  ]
+}}
+"""
+  return out
+
+
