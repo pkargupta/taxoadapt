@@ -215,7 +215,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     args.dimensions = ["tasks", "datasets", "methodologies", "evaluation_methods", "real_world_domains"]
-    # args.dimensions = ["tasks", "datasets", "methodologies"]
+    # args.dimensions = ["evaluation_methods"]
 
     args.dataset = "emnlp_2024"
     args.data_dir = f"datasets/{args.dataset.lower().replace(' ', '_')}"

@@ -23,6 +23,15 @@ dimension_definitions = {
     'evaluation_methods': """Evaluation Methods: a paper that assesses the performance, limitations, or biases of models, methods, or datasets using systematic experiments or analyses. It focuses on benchmarking, comparative studies, or proposing new evaluation metrics or frameworks to provide insights and improve understanding in the field.""",
     'real_world_domains': """Real-World Domains: demonstrates the use of NLP techniques to solve specific, real-world problems or address specific domain challenges. It focuses on practical implementation, impact, and insights gained from applying NLP methods in various contexts. Examples include: product recommendation systems, medical record summarization, etc."""
     }
+
+node_dimension_definitions = {
+    'tasks': """Defines and categorizes research efforts aimed at solving specific problems or objectives within a given field, such as classification, prediction, or optimization.""",
+    'methodologies': """Types of techniques, models, or approaches used to address various challenges, including algorithmic innovations, frameworks, and optimization strategies.""",
+    'datasets': """Ways to structure data collections used in research, including ways to curate or analyze datasets, detailing their properties, intended use, and role in advancing the field.""",
+    'evaluation_methods': """Types of methods for assessing the performance of models, datasets, or techniques, including new metrics, benchmarking techniques, or comparative performance studies.""",
+    'real_world_domains': """Types of practical or industry-specific domains in which techniques and methodologies can be applied, exploring implementation, impact, and challenges of real-world problems."""
+}
+
   
 def multi_dim_prompt(node):
     topic = node.label
@@ -778,7 +787,7 @@ def width_main_prompt(paper, node, ancestors, nl='\n'):
 {node.label} is a type of {node.dimension}: {node.description}
 </parent_node_description>
 <type_definition>
-{node.dimension}: {dimension_definitions[node.dimension]}
+{node.dimension}: {node_dimension_definitions[node.dimension]}
 </type_definition>
 <path_to_parent_node>
 {ancestors}
@@ -829,7 +838,7 @@ def width_cluster_main_prompt(options, node, ancestors, nl='\n'):
 {node.label} is a type of {node.dimension}: {node.description}
 </parent_node_description>
 <type_definition>
-{node.dimension}: {dimension_definitions[node.dimension]}
+{node.dimension}: {node_dimension_definitions[node.dimension]}
 </type_definition>
 <path_to_parent_node>
 {ancestors}
@@ -884,7 +893,7 @@ def depth_main_prompt(paper, node, ancestors, nl='\n'):
 {node.label} is a type of {node.dimension}: {node.description}
 </parent_node_description>
 <type_definition>
-{node.dimension}: {dimension_definitions[node.dimension]}
+{node.dimension}: {node_dimension_definitions[node.dimension]}
 </type_definition>
 <path_to_parent_node>
 {ancestors}
@@ -931,7 +940,7 @@ def depth_cluster_main_prompt(options, node, ancestors):
 {node.label} is a type of {node.dimension}: {node.description}
 </parent_node_description>
 <type_definition>
-{node.dimension}: {dimension_definitions[node.dimension]}
+{node.dimension}: {node_dimension_definitions[node.dimension]}
 </type_definition>
 <path_to_parent_node>
 {ancestors}
