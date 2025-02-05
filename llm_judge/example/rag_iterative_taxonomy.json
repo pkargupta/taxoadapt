@@ -1,0 +1,105 @@
+{
+    "aspect_name": "The Pfizer COVID-19 vaccine is better than the Moderna COVID-19 vaccine.",
+    "children": [
+        {
+            "aspect_name": "Efficacy",
+            "children": [
+                {
+                    "aspect_name": "Efficacy percentage"
+                },
+                {
+                    "aspect_name": "Age approval"
+                },
+                {
+                    "aspect_name": "Immune response"
+                },
+                {
+                    "aspect_name": "Adverse effects"
+                },
+                {
+                    "aspect_name": "Storage requirements"
+                }
+            ]
+        },
+        {
+            "aspect_name": "Adverse Effects",
+            "children": [
+                {
+                    "aspect_name": "incidence of adverse effects"
+                },
+                {
+                    "aspect_name": "severity of adverse effects"
+                },
+                {
+                    "aspect_name": "specific adverse effects (e.g."
+                },
+                {
+                    "aspect_name": "demographic factors (age"
+                },
+                {
+                    "aspect_name": "comparison of adverse effects between different doses"
+                }
+            ]
+        },
+        {
+            "aspect_name": "Age Group Differences",
+            "children": [
+                {
+                    "aspect_name": "Age Group Differences"
+                },
+                {
+                    "aspect_name": "Effectiveness Across Age Groups"
+                },
+                {
+                    "aspect_name": "Selection Effects"
+                },
+                {
+                    "aspect_name": "Dose Differences and Immune Response"
+                },
+                {
+                    "aspect_name": "Side Effects and Safety Profiles"
+                }
+            ]
+        },
+        {
+            "aspect_name": "Cost and Accessibility",
+            "children": [
+                {
+                    "aspect_name": "Cost comparison between Pfizer and Moderna vaccines"
+                },
+                {
+                    "aspect_name": "Accessibility in terms of age approval for Pfizer and Moderna vaccines"
+                },
+                {
+                    "aspect_name": "Global affordability considerations for Pfizer and Moderna vaccines"
+                },
+                {
+                    "aspect_name": "Transport and storage requirements for Pfizer and Moderna vaccines"
+                },
+                {
+                    "aspect_name": "Incidence of adverse effects in Pfizer versus Moderna vaccines"
+                }
+            ]
+        },
+        {
+            "aspect_name": "Storage and Transport Requirements",
+            "children": [
+                {
+                    "aspect_name": "temperature requirements"
+                },
+                {
+                    "aspect_name": "transportation logistics"
+                },
+                {
+                    "aspect_name": "shelf life"
+                },
+                {
+                    "aspect_name": "cost implications"
+                },
+                {
+                    "aspect_name": "energy requirements"
+                }
+            ]
+        }
+    ]
+}
