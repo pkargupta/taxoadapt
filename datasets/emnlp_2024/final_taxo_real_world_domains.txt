@@ -1,0 +1,404 @@
+Label: natural_language_processing
+Dimension: real_world_domains
+Description: None
+Level: 0
+Source: Initial
+# of Papers: 1049
+Example Papers: [(0, 'UniGen: Universal Domain Generalization for Sentiment Classification via Zero-shot Dataset Generation'), (5, 'ImageInWords: Unlocking Hyper-Detailed Image Descriptions'), (6, 'LLM-Based Agent Society Investigation: Collaboration and Confrontation in Avalon Gameplay')]
+----------------------------------------
+Children:
+     Label: healthcare
+     Dimension: real_world_domains
+     Description: NLP techniques are applied in healthcare to analyze medical records, assist in clinical decision-making, and improve patient outcomes through automated summarization and information extraction.
+     Level: 1
+     Source: Initial
+     # of Papers: 16
+     Example Papers: [(263, 'PsyGUARD: An Automated System for Suicide Detection and Risk Assessment in Psychological Counseling'), (398, 'Generative Models for Automatic Medical Decision Rule Extraction from Text'), (435, 'Middleware for LLMs: Tools Are Instrumental for Language Agents in Complex Environments')]
+     ----------------------------------------
+     Label: finance
+     Dimension: real_world_domains
+     Description: In the finance sector, NLP is utilized for sentiment analysis of market trends, fraud detection, and automating customer service through chatbots and virtual assistants.
+     Level: 1
+     Source: Initial
+     # of Papers: 22
+     Example Papers: [(62, 'CryptoTrade: A Reflective LLM-based Agent to Guide Zero-shot Cryptocurrency Trading'), (435, 'Middleware for LLMs: Tools Are Instrumental for Language Agents in Complex Environments'), (584, 'InferAligner: Inference-Time Alignment for Harmlessness through Cross-Model Guidance')]
+     ----------------------------------------
+     Label: e-commerce
+     Dimension: real_world_domains
+     Description: E-commerce platforms leverage NLP for product recommendation systems, customer feedback analysis, and enhancing user experience through personalized search functionalities.
+     Level: 1
+     Source: Initial
+     # of Papers: 31
+     Example Papers: [(85, 'Mitigating Matthew Effect: Multi-Hypergraph Boosted Multi-Interest Self-Supervised Learning for Conversational Recommendation'), (435, 'Middleware for LLMs: Tools Are Instrumental for Language Agents in Complex Environments'), (445, 'MIND: Multimodal Shopping Intention Distillation from Large Vision-language Models for E-commerce Purchase Understanding')]
+     ----------------------------------------
+     Label: legal
+     Dimension: real_world_domains
+     Description: NLP is used in the legal domain for document review, contract analysis, and legal research, helping to streamline processes and improve accuracy in legal proceedings.
+     Level: 1
+     Source: Initial
+     # of Papers: 47
+     Example Papers: [(72, 'Learning Interpretable Legal Case Retrieval via Knowledge-Guided Case Reformulation'), (97, 'SHIELD: Evaluation and Defense Strategies for Copyright Compliance in LLM Text Generation'), (194, 'GoldCoin: Grounding Large Language Models in Privacy Laws via Contextual Integrity Theory')]
+     ----------------------------------------
+     Children:
+          Label: contract_analysis
+          Dimension: real_world_domains
+          Description: This cluster focuses on the application of NLP techniques to analyze and review legal contracts, enhancing understanding and compliance.
+          Level: 2
+          Source: depth
+          # of Papers: 6
+          Example Papers: [(216, 'C3PA: An Open Dataset of Expert-Annotated and Regulation-Aware Privacy Policies to Enable Scalable Regulatory Compliance Audits'), (1885, 'On Evaluating Explanation Utility for Human-AI Decision Making in NLP'), (2648, 'Enhancing Contract Negotiations with LLM-Based Legal Document Comparison')]
+          ----------------------------------------
+          Label: legal_case_retrieval
+          Dimension: real_world_domains
+          Description: This cluster encompasses methods and technologies for retrieving relevant legal cases and documents efficiently.
+          Level: 2
+          Source: depth
+          # of Papers: 14
+          Example Papers: [(72, 'Learning Interpretable Legal Case Retrieval via Knowledge-Guided Case Reformulation'), (401, 'Enhancing Legal Case Retrieval via Scaling High-quality Synthetic Query-Candidate Pairs'), (1660, 'Incorporating Precedents for Legal Judgement Prediction on European Court of Human Rights Cases')]
+          ----------------------------------------
+          Label: judicial_efficiency
+          Dimension: real_world_domains
+          Description: This cluster examines the use of NLP to improve the efficiency of judicial processes and decision-making.
+          Level: 2
+          Source: depth
+          # of Papers: 22
+          Example Papers: [(194, 'GoldCoin: Grounding Large Language Models in Privacy Laws via Contextual Integrity Theory'), (900, 'TKGT: Redefinition and A New Way of Text-to-Table Tasks Based on Real World Demands and Knowledge Graphs Augmented LLMs'), (1489, 'Enabling Discriminative Reasoning in LLMs for Legal Judgment Prediction')]
+          ----------------------------------------
+          Label: intellectual_property
+          Dimension: real_world_domains
+          Description: This cluster focuses on the intersection of NLP and intellectual property law, addressing issues related to rights and protections.
+          Level: 2
+          Source: depth
+          # of Papers: 5
+          Example Papers: [(97, 'SHIELD: Evaluation and Defense Strategies for Copyright Compliance in LLM Text Generation'), (1146, 'Do LLMs Know to Respect Copyright Notice?'), (1420, 'Patentformer: A Novel Method to Automate the Generation of Patent Applications')]
+          ----------------------------------------
+     ----------------------------------------
+     Label: education
+     Dimension: real_world_domains
+     Description: In education, NLP applications include automated grading systems, personalized learning experiences, and tools for language learning that adapt to individual student needs.
+     Level: 1
+     Source: Initial
+     # of Papers: 26
+     Example Papers: [(93, 'Standardize: Aligning Language Models with Expert-Defined Standards for Content Generation'), (145, 'Large Language Model as an Assignment Evaluator: Insights, Feedback, and Challenges in a 1000+ Student Course'), (276, 'KidLM: Advancing Language Models for Children - Early Insights and Future Directions')]
+     ----------------------------------------
+     Label: social_media_analysis
+     Dimension: real_world_domains
+     Description: NLP techniques are applied in social media analysis to understand user sentiment, track trends, and detect misinformation across various platforms.
+     Level: 1
+     Source: width
+     # of Papers: 113
+     Example Papers: [(10, "Eyes Don't Lie: Subjective Hate Annotation and Detection with Gaze"), (70, 'ChatRetriever: Adapting Large Language Models for Generalized and Robust Conversational Dense Retrieval'), (135, 'Towards Low-Resource Harmful Meme Detection with LMM Agents')]
+     ----------------------------------------
+     Children:
+          Label: misinformation_detection
+          Dimension: real_world_domains
+          Description: This cluster focuses on techniques and methodologies for identifying and mitigating misinformation across social media platforms.
+          Level: 2
+          Source: depth
+          # of Papers: 22
+          Example Papers: [(135, 'Towards Low-Resource Harmful Meme Detection with LMM Agents'), (254, 'F^2RL: Factuality and Faithfulness Reinforcement Learning Framework for Claim-Guided Evidence-Supported Counterspeech Generation'), (255, 'Deciphering Rumors: A Multi-Task Learning Approach with Intent-aware Hierarchical Contrastive Learning')]
+          ----------------------------------------
+          Label: hate_speech_analysis
+          Dimension: real_world_domains
+          Description: This cluster encompasses various approaches to detect, counter, and moderate hate speech in social media interactions.
+          Level: 2
+          Source: depth
+          # of Papers: 23
+          Example Papers: [(10, "Eyes Don't Lie: Subjective Hate Annotation and Detection with Gaze"), (200, 'Is Safer Better? The Impact of Guardrails on the Argumentative Strength of LLMs in Hate Speech Countering'), (254, 'F^2RL: Factuality and Faithfulness Reinforcement Learning Framework for Claim-Guided Evidence-Supported Counterspeech Generation')]
+          ----------------------------------------
+          Label: sentiment_analysis
+          Dimension: real_world_domains
+          Description: This cluster involves analyzing user sentiments expressed on social media to gauge public opinion and emotional trends.
+          Level: 2
+          Source: depth
+          # of Papers: 7
+          Example Papers: [(723, 'OATH-Frames: Characterizing Online Attitudes Towards Homelessness with LLM Assistants'), (868, 'Understanding Slang with LLMs: Modelling Cross-Cultural Nuances through Paraphrasing'), (1170, 'I love pineapple on pizza != I hate pineapple on pizza: Stance-Aware Sentence Transformers for Opinion Mining')]
+          ----------------------------------------
+          Label: content_moderation
+          Dimension: real_world_domains
+          Description: This cluster focuses on the methodologies and technologies used to moderate content on social media platforms to ensure compliance with community standards.
+          Level: 2
+          Source: depth
+          # of Papers: 32
+          Example Papers: [(135, 'Towards Low-Resource Harmful Meme Detection with LMM Agents'), (208, 'Toxicity Detection is NOT all you Need: Measuring the Gaps to Supporting Volunteer Content Moderators through a User-Centric Method'), (258, 'Leveraging Conflicts in Social Media Posts: Unintended Offense Dataset')]
+          ----------------------------------------
+          Label: community_analysis
+          Dimension: real_world_domains
+          Description: This cluster examines the dynamics and behaviors within online communities, including user interactions and community structures.
+          Level: 2
+          Source: depth
+          # of Papers: 38
+          Example Papers: [(326, 'The Computational Anatomy of Humility: Modeling Intellectual Humility in Online Public Discourse'), (435, 'Middleware for LLMs: Tools Are Instrumental for Language Agents in Complex Environments'), (697, 'SLANG: New Concept Comprehension of Large Language Models')]
+          ----------------------------------------
+     ----------------------------------------
+     Label: multilingual_nlp
+     Dimension: real_world_domains
+     Description: Multilingual NLP focuses on developing techniques that enable natural language processing across multiple languages, enhancing accessibility and communication.
+     Level: 1
+     Source: width
+     # of Papers: 554
+     Example Papers: [(0, 'UniGen: Universal Domain Generalization for Sentiment Classification via Zero-shot Dataset Generation'), (5, 'ImageInWords: Unlocking Hyper-Detailed Image Descriptions'), (8, 'Speaking in Wavelet Domain: A Simple and Efficient Approach to Speed up Speech Diffusion Model')]
+     ----------------------------------------
+     Children:
+          Label: machine_translation
+          Dimension: real_world_domains
+          Description: Machine translation focuses on the automatic translation of text or speech from one language to another, leveraging multilingual NLP techniques.
+          Level: 2
+          Source: depth
+          # of Papers: 39
+          Example Papers: [(68, 'LLMs Are Zero-Shot Context-Aware Simultaneous Translators'), (749, 'Linguistic Bias in ChatGPT: Language Models Reinforce Dialect Discrimination'), (1001, 'What the Harm? Quantifying the Tangible Impact of Gender Bias in Machine Translation with a Human-centered Study')]
+          ----------------------------------------
+          Label: multilingual_conversational_ai
+          Dimension: real_world_domains
+          Description: Multilingual conversational AI encompasses systems designed to engage in dialogue across multiple languages, enhancing user interaction and accessibility.
+          Level: 2
+          Source: depth
+          # of Papers: 22
+          Example Papers: [(70, 'ChatRetriever: Adapting Large Language Models for Generalized and Robust Conversational Dense Retrieval'), (238, 'Teaching LLMs to Abstain across Languages via Multilingual Feedback'), (643, 'Beyond the Turn-Based Game: Enabling Real-Time Conversations with Duplex Models')]
+          ----------------------------------------
+          Label: cross_lingual_nlp
+          Dimension: real_world_domains
+          Description: Cross-lingual NLP focuses on techniques that enable understanding and processing of text across different languages, facilitating multilingual applications.
+          Level: 2
+          Source: depth
+          # of Papers: 33
+          Example Papers: [(60, 'Bridging Cultures in the Kitchen: A Framework and Benchmark for Cross-Cultural Recipe Retrieval'), (78, 'Reuse Your Rewards: Reward Model Transfer for Zero-Shot Cross-Lingual Alignment'), (185, 'Cross-lingual Transfer for Automatic Question Generation by Learning Interrogative Structures in Target Languages')]
+          ----------------------------------------
+          Label: multilingual_language_understanding
+          Dimension: real_world_domains
+          Description: Multilingual language understanding involves developing models that can comprehend and interpret text in multiple languages effectively.
+          Level: 2
+          Source: depth
+          # of Papers: 10
+          Example Papers: [(238, 'Teaching LLMs to Abstain across Languages via Multilingual Feedback'), (670, 'The Multilingual Alignment Prism: Aligning Global and Local Preferences to Reduce Harm'), (719, 'SPEED++: A Multilingual Event Extraction Framework for Epidemic Prediction and Preparedness')]
+          ----------------------------------------
+          Label: multilingual_text_processing
+          Dimension: real_world_domains
+          Description: Multilingual text processing focuses on techniques for analyzing and manipulating text data in various languages for diverse applications.
+          Level: 2
+          Source: depth
+          # of Papers: 27
+          Example Papers: [(60, 'Bridging Cultures in the Kitchen: A Framework and Benchmark for Cross-Cultural Recipe Retrieval'), (214, 'Performance-Guided LLM Knowledge Distillation for Efficient Text Classification at Scale'), (238, 'Teaching LLMs to Abstain across Languages via Multilingual Feedback')]
+          ----------------------------------------
+          Label: multilingual_image_description
+          Dimension: real_world_domains
+          Description: Multilingual image description focuses on generating textual descriptions of images in multiple languages, enhancing accessibility for diverse audiences.
+          Level: 2
+          Source: width
+          # of Papers: 8
+          Example Papers: [(5, 'ImageInWords: Unlocking Hyper-Detailed Image Descriptions'), (749, 'Linguistic Bias in ChatGPT: Language Models Reinforce Dialect Discrimination'), (1074, 'Altogether: Image Captioning via Re-aligning Alt-text')]
+          ----------------------------------------
+          Label: multilingual_video_qa
+          Dimension: real_world_domains
+          Description: Multilingual video question answering involves developing systems that can answer questions about video content in various languages.
+          Level: 2
+          Source: width
+          # of Papers: 4
+          Example Papers: [(226, 'Empowering Large Language Model for Continual Video Question Answering with Collaborative Prompting'), (543, 'TraveLER: A Modular Multi-LMM Agent Framework for Video Question-Answering'), (749, 'Linguistic Bias in ChatGPT: Language Models Reinforce Dialect Discrimination')]
+          ----------------------------------------
+          Label: multilingual_code_generation
+          Dimension: real_world_domains
+          Description: Multilingual code generation focuses on creating programming code in multiple languages, facilitating software development across linguistic barriers.
+          Level: 2
+          Source: width
+          # of Papers: 8
+          Example Papers: [(65, 'AMR-Evol: Adaptive Modular Response Evolution Elicits Better Knowledge Distillation for Large Language Models in Code Generation'), (266, 'How Do Humans Write Code? Large Models Do It the Same Way Too'), (461, 'Language-to-Code Translation with a Single Labeled Example')]
+          ----------------------------------------
+          Label: multilingual_nlp_for_african_languages
+          Dimension: real_world_domains
+          Description: Multilingual NLP for African languages aims to develop NLP techniques specifically tailored for the diverse languages spoken across the African continent.
+          Level: 2
+          Source: width
+          # of Papers: 6
+          Example Papers: [(250, 'Voices Unheard: NLP Resources and Models for Yoruba Regional Dialects'), (660, 'Towards a Greek Proverb Atlas: Computational Spatial Exploration and Attribution of Greek Proverbs'), (749, 'Linguistic Bias in ChatGPT: Language Models Reinforce Dialect Discrimination')]
+          ----------------------------------------
+          Label: multilingual_nlp_for_sustainability
+          Dimension: real_world_domains
+          Description: Multilingual NLP for sustainability focuses on applying NLP techniques to promote and analyze sustainability efforts across different languages.
+          Level: 2
+          Source: width
+          # of Papers: 58
+          Example Papers: [(96, 'Predicate Debiasing in Vision-Language Models Integration for Scene Graph Generation Enhancement'), (181, 'Autoregressive Pre-Training on Pixels and Texts'), (280, 'Crafting Personalized Agents through Retrieval-Augmented Generation on Editable Memory Graphs')]
+          ----------------------------------------
+     ----------------------------------------
+     Label: automated_customer_service
+     Dimension: real_world_domains
+     Description: This cluster encompasses NLP applications in automating customer service interactions, improving efficiency and user satisfaction.
+     Level: 1
+     Source: width
+     # of Papers: 334
+     Example Papers: [(0, 'UniGen: Universal Domain Generalization for Sentiment Classification via Zero-shot Dataset Generation'), (11, "NumeroLogic: Number Encoding for Enhanced LLMs' Numerical Reasoning"), (27, 'Clustering and Ranking: Diversity-preserved Instruction Selection through Expert-aligned Quality Estimation')]
+     ----------------------------------------
+     Children:
+          Label: customer_service_chatbots
+          Dimension: real_world_domains
+          Description: This cluster focuses on the development and implementation of chatbots specifically designed for customer service interactions.
+          Level: 2
+          Source: depth
+          # of Papers: 2
+          Example Papers: [(1277, 'TruthReader: Towards Trustworthy Document Assistant Chatbot with Reliable Attribution'), (1295, 'ChatHF: Collecting Rich Human Feedback from Real-time Conversations')]
+          ----------------------------------------
+          Label: dialogue_systems
+          Dimension: real_world_domains
+          Description: This cluster encompasses various dialogue systems aimed at enhancing customer service through interactive communication.
+          Level: 2
+          Source: depth
+          # of Papers: 85
+          Example Papers: [(48, 'Overcome Noise and Bias: Segmentation-Aided Multi-Granularity Denoising and Debiasing for Enhanced Quarduples Extraction in Dialogue'), (70, 'ChatRetriever: Adapting Large Language Models for Generalized and Robust Conversational Dense Retrieval'), (117, "Be Helpful but Don't Talk too Much - Enhancing Helpfulness in Conversations through Relevance in Multi-Turn Emotional Support")]
+          ----------------------------------------
+          Label: customer_service_improvement
+          Dimension: real_world_domains
+          Description: This cluster focuses on methodologies and technologies aimed at improving customer service efficiency and effectiveness.
+          Level: 2
+          Source: depth
+          # of Papers: 13
+          Example Papers: [(48, 'Overcome Noise and Bias: Segmentation-Aided Multi-Granularity Denoising and Debiasing for Enhanced Quarduples Extraction in Dialogue'), (117, "Be Helpful but Don't Talk too Much - Enhancing Helpfulness in Conversations through Relevance in Multi-Turn Emotional Support"), (422, 'Do Text-to-Vis Benchmarks Test Real Use of Visualisations?')]
+          ----------------------------------------
+          Label: sentiment_analysis_in_customer_service
+          Dimension: real_world_domains
+          Description: This cluster explores the application of sentiment analysis techniques to enhance customer service interactions.
+          Level: 2
+          Source: depth
+          # of Papers: 3
+          Example Papers: [(48, 'Overcome Noise and Bias: Segmentation-Aided Multi-Granularity Denoising and Debiasing for Enhanced Quarduples Extraction in Dialogue'), (108, 'An Effective Deployment of Diffusion LM for Data Augmentation in Low-Resource Sentiment Classification'), (2398, 'The Overlooked Repetitive Lengthening Form in Sentiment Analysis')]
+          ----------------------------------------
+          Label: dialogue_systems_for_automated_customer_service
+          Dimension: real_world_domains
+          Description: This cluster focuses on the specific application of dialogue systems tailored for automating customer service interactions.
+          Level: 2
+          Source: width
+          # of Papers: 264
+          Example Papers: [(11, "NumeroLogic: Number Encoding for Enhanced LLMs' Numerical Reasoning"), (27, 'Clustering and Ranking: Diversity-preserved Instruction Selection through Expert-aligned Quality Estimation'), (37, 'MSI-Agent: Incorporating Multi-Scale Insight into Embodied Agents for Superior Planning and Decision-Making')]
+          ----------------------------------------
+          Label: knowledge_distillation_in_customer_service
+          Dimension: real_world_domains
+          Description: This cluster explores the use of knowledge distillation techniques to enhance customer service models and their efficiency.
+          Level: 2
+          Source: width
+          # of Papers: 6
+          Example Papers: [(214, 'Performance-Guided LLM Knowledge Distillation for Efficient Text Classification at Scale'), (684, 'RA2FD: Distilling Faithfulness into Efficient Dialogue Systems'), (1379, "Probing the Depths of Language Models' Contact-Center Knowledge for Quality Assurance")]
+          ----------------------------------------
+          Label: code_refinement_in_customer_service
+          Dimension: real_world_domains
+          Description: This cluster examines the methodologies for refining code specifically within the context of customer service applications.
+          Level: 2
+          Source: width
+          ----------------------------------------
+          Label: fact_checking_in_customer_service
+          Dimension: real_world_domains
+          Description: This cluster investigates the implementation of fact-checking mechanisms to improve the reliability of customer service interactions.
+          Level: 2
+          Source: width
+          # of Papers: 7
+          Example Papers: [(893, 'FAME: Towards Factual Multi-Task Model Editing'), (1321, 'Two-tiered Encoder-based Hallucination Detection for Retrieval-Augmented Generation in the Wild'), (2162, 'Learning to Refine with Fine-Grained Natural Language Feedback')]
+          ----------------------------------------
+          Label: parameter_efficient_finetuning
+          Dimension: real_world_domains
+          Description: This cluster focuses on techniques for fine-tuning models efficiently, particularly in the context of customer service applications.
+          Level: 2
+          Source: width
+          # of Papers: 42
+          Example Papers: [(0, 'UniGen: Universal Domain Generalization for Sentiment Classification via Zero-shot Dataset Generation'), (56, 'RoseLoRA: Row and Column-wise Sparse Low-rank Adaptation of Pre-trained Language Model for Knowledge Editing and Fine-tuning'), (77, 'Model Balancing Helps Low-data Training and Fine-tuning')]
+          ----------------------------------------
+     ----------------------------------------
+     Label: healthcare_nlp
+     Dimension: real_world_domains
+     Description: NLP in healthcare focuses on processing medical data, enhancing patient care, and supporting clinical decision-making through advanced text analysis.
+     Level: 1
+     Source: width
+     # of Papers: 270
+     Example Papers: [(7, 'When LLMs Meets Acoustic Landmarks: An Efficient Approach to Integrate Speech into Large Language Models for Depression Detection'), (8, 'Speaking in Wavelet Domain: A Simple and Efficient Approach to Speed up Speech Diffusion Model'), (16, 'Studying and Mitigating Biases in Sign Language Understanding Models')]
+     ----------------------------------------
+     Children:
+          Label: medical_text_analysis
+          Dimension: real_world_domains
+          Description: This cluster focuses on the analysis of medical texts to extract meaningful information and insights for healthcare applications.
+          Level: 2
+          Source: depth
+          # of Papers: 161
+          Example Papers: [(8, 'Speaking in Wavelet Domain: A Simple and Efficient Approach to Speed up Speech Diffusion Model'), (40, 'FLIRT: Feedback Loop In-context Red Teaming'), (58, 'HEART-felt Narratives: Tracing Empathy and Narrative Style in Personal Stories with LLMs')]
+          ----------------------------------------
+          Label: clinical_decision_support
+          Dimension: real_world_domains
+          Description: This cluster encompasses tools and methodologies that assist healthcare professionals in making informed clinical decisions.
+          Level: 2
+          Source: depth
+          # of Papers: 54
+          Example Papers: [(41, 'Successfully Guiding Humans with Imperfect Instructions by Highlighting Potential Errors and Suggesting Corrections'), (279, 'An Unsupervised Approach to Achieve Supervised-Level Explainability in Healthcare Records'), (398, 'Generative Models for Automatic Medical Decision Rule Extraction from Text')]
+          ----------------------------------------
+          Label: mental_health_nlp
+          Dimension: real_world_domains
+          Description: This cluster focuses on the application of NLP techniques to address issues related to mental health and well-being.
+          Level: 2
+          Source: depth
+          # of Papers: 51
+          Example Papers: [(7, 'When LLMs Meets Acoustic Landmarks: An Efficient Approach to Integrate Speech into Large Language Models for Depression Detection'), (16, 'Studying and Mitigating Biases in Sign Language Understanding Models'), (117, "Be Helpful but Don't Talk too Much - Enhancing Helpfulness in Conversations through Relevance in Multi-Turn Emotional Support")]
+          ----------------------------------------
+          Label: medical_image_analysis
+          Dimension: real_world_domains
+          Description: This cluster involves the use of NLP and machine learning techniques to analyze and interpret medical imaging data.
+          Level: 2
+          Source: depth
+          # of Papers: 16
+          Example Papers: [(61, 'RULE: Reliable Multimodal RAG for Factuality in Medical Vision Language Models'), (96, 'Predicate Debiasing in Vision-Language Models Integration for Scene Graph Generation Enhancement'), (256, 'Visual Prompting in LLMs for Enhancing Emotion Recognition')]
+          ----------------------------------------
+          Label: public_health_analysis
+          Dimension: real_world_domains
+          Description: This cluster focuses on the use of NLP to analyze data related to public health issues and interventions.
+          Level: 2
+          Source: depth
+          # of Papers: 47
+          Example Papers: [(40, 'FLIRT: Feedback Loop In-context Red Teaming'), (58, 'HEART-felt Narratives: Tracing Empathy and Narrative Style in Personal Stories with LLMs'), (81, 'Towards Tool Use Alignment of Large Language Models')]
+          ----------------------------------------
+     ----------------------------------------
+     Label: education_technology
+     Dimension: real_world_domains
+     Description: This cluster includes NLP applications in education, such as personalized learning tools, automated grading, and language learning systems.
+     Level: 1
+     Source: width
+     # of Papers: 89
+     Example Papers: [(26, 'Impeding LLM-assisted Cheating in Introductory Programming Assignments via Adversarial Perturbation'), (36, 'Personality-aware Student Simulation for Conversational Intelligent Tutoring Systems'), (69, 'AgentReview: Exploring Peer Review Dynamics with LLM Agents')]
+     ----------------------------------------
+     Children:
+          Label: personalized_learning
+          Dimension: real_world_domains
+          Description: This cluster focuses on technologies and methodologies aimed at tailoring educational experiences to individual learner needs.
+          Level: 2
+          Source: depth
+          # of Papers: 9
+          Example Papers: [(345, 'Boosting Scientific Concepts Understanding: Can Analogy from Teacher Models Empower Student Models?'), (381, 'MirrorStories: Reflecting Diversity through Personalized Narrative Generation with Large Language Models'), (580, '"In-Dialogues We Learn": Towards Personalized Dialogue Without Pre-defined Profiles through In-Dialogue Learning')]
+          ----------------------------------------
+          Label: intelligent_tutoring_systems
+          Dimension: real_world_domains
+          Description: This cluster encompasses systems designed to provide personalized instruction and feedback to learners in real-time.
+          Level: 2
+          Source: depth
+          # of Papers: 22
+          Example Papers: [(36, 'Personality-aware Student Simulation for Conversational Intelligent Tutoring Systems'), (236, 'Teaching Embodied Reinforcement Learning Agents: Informativeness and Diversity of Language Use'), (345, 'Boosting Scientific Concepts Understanding: Can Analogy from Teacher Models Empower Student Models?')]
+          ----------------------------------------
+          Label: automated_grading
+          Dimension: real_world_domains
+          Description: This cluster includes technologies that automate the assessment and grading of student work to enhance efficiency in educational settings.
+          Level: 2
+          Source: depth
+          # of Papers: 8
+          Example Papers: [(26, 'Impeding LLM-assisted Cheating in Introductory Programming Assignments via Adversarial Perturbation'), (511, 'DiVERT: Distractor Generation with Variational Errors Represented as Text for Math Multiple-choice Questions'), (916, 'Autoregressive Multi-trait Essay Scoring via Reinforcement Learning with Scoring-aware Multiple Rewards')]
+          ----------------------------------------
+          Label: adaptive_learning_environments
+          Dimension: real_world_domains
+          Description: This cluster focuses on educational environments that adapt to the learning styles and paces of individual students.
+          Level: 2
+          Source: depth
+          # of Papers: 13
+          Example Papers: [(236, 'Teaching Embodied Reinforcement Learning Agents: Informativeness and Diversity of Language Use'), (783, 'KARL: Knowledge-Aware Retrieval and Representations aid Retention and Learning in Students'), (919, 'LM2: A Simple Society of Language Models Solves Complex Reasoning')]
+          ----------------------------------------
+          Label: online_education
+          Dimension: real_world_domains
+          Description: This cluster covers the use of digital platforms and tools to facilitate learning and teaching in an online format.
+          Level: 2
+          Source: depth
+          # of Papers: 25
+          Example Papers: [(69, 'AgentReview: Exploring Peer Review Dynamics with LLM Agents'), (96, 'Predicate Debiasing in Vision-Language Models Integration for Scene Graph Generation Enhancement'), (304, 'How Does the Textual Information Affect the Retrieval of Multimodal In-Context Learning?')]
+          ----------------------------------------
+     ----------------------------------------
+----------------------------------------

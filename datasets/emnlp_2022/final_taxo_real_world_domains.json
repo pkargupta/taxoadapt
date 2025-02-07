@@ -1,0 +1,1293 @@
+{
+    "label": "natural_language_processing",
+    "description": null,
+    "level": 0,
+    "source": "initial",
+    "example_papers": [
+        [
+            2,
+            "Transformer Feed-Forward Layers Build Predictions by Promoting Concepts in the Vocabulary Space"
+        ],
+        [
+            7,
+            "Toward Unifying Text Segmentation and Long Document Summarization"
+        ],
+        [
+            10,
+            "PAIR: Prompt-Aware margIn Ranking for Counselor Reflection Scoring in Motivational Interviewing"
+        ],
+        [
+            12,
+            "The Importance of Being Parameters: An Intra-Distillation Method for Serious Gains"
+        ],
+        [
+            15,
+            "Learning a Grammar Inducer from Massive Uncurated Instructional Videos"
+        ],
+        [
+            18,
+            "Multi-VQG: Generating Engaging Questions for Multiple Images"
+        ],
+        [
+            22,
+            "Certified Error Control of Candidate Set Pruning for Two-Stage Relevance Ranking"
+        ],
+        [
+            23,
+            "Linearizing Transformer with Key-Value Memory"
+        ],
+        [
+            24,
+            "Robustness of Fusion-based Multimodal Classifiers to Cross-Modal Content Dilutions"
+        ],
+        [
+            35,
+            "Aligning Recommendation and Conversation via Dual Imitation"
+        ]
+    ],
+    "paper_ids": [
+        2,
+        7,
+        10,
+        12,
+        15,
+        18,
+        22,
+        23,
+        24,
+        35,
+        42,
+        43,
+        50,
+        60,
+        61,
+        71,
+        73,
+        79,
+        82,
+        83,
+        85,
+        87,
+        95,
+        98,
+        107,
+        116,
+        119,
+        126,
+        127,
+        134,
+        138,
+        141,
+        143,
+        148,
+        155,
+        158,
+        162,
+        165,
+        182,
+        184,
+        189,
+        190,
+        194,
+        196,
+        200,
+        209,
+        212,
+        214,
+        215,
+        218,
+        224,
+        227,
+        237,
+        251,
+        253,
+        255,
+        266,
+        276,
+        279,
+        295,
+        301,
+        307,
+        308,
+        313,
+        314,
+        315,
+        325,
+        328,
+        332,
+        337,
+        340,
+        341,
+        350,
+        351,
+        364,
+        365,
+        367,
+        368,
+        371,
+        374,
+        380,
+        382,
+        389,
+        390,
+        395,
+        406,
+        408,
+        425,
+        430,
+        440,
+        446,
+        448,
+        456,
+        459,
+        472,
+        479,
+        485,
+        496,
+        499,
+        505,
+        510,
+        526,
+        531,
+        543,
+        546,
+        547,
+        548,
+        556,
+        563,
+        571,
+        572,
+        588,
+        600,
+        608,
+        611,
+        632,
+        636,
+        643,
+        653,
+        671,
+        674,
+        675,
+        676,
+        677,
+        685,
+        690,
+        693,
+        695,
+        699,
+        704,
+        715,
+        719,
+        720,
+        738,
+        740,
+        749,
+        760,
+        763,
+        765,
+        768,
+        774,
+        775,
+        783,
+        790,
+        794,
+        804,
+        819,
+        823,
+        824
+    ],
+    "children": [
+        {
+            "label": "healthcare",
+            "description": "NLP techniques are applied in healthcare to analyze medical records, assist in clinical decision-making, and improve patient outcomes through automated summarization and information extraction.",
+            "level": 1,
+            "source": "initial",
+            "example_papers": [
+                [
+                    10,
+                    "PAIR: Prompt-Aware margIn Ranking for Counselor Reflection Scoring in Motivational Interviewing"
+                ],
+                [
+                    155,
+                    "D4: a Chinese Dialogue Dataset for Depression-Diagnosis-Oriented Chat"
+                ],
+                [
+                    184,
+                    "PromptEHR: Conditional Electronic Healthcare Records Generation with Prompt Learning"
+                ],
+                [
+                    237,
+                    "That's the Wrong Lung! Evaluating and Improving the Interpretability of Unsupervised Multimodal Encoders for Medical Data"
+                ],
+                [
+                    255,
+                    "MedCLIP: Contrastive Learning from Unpaired Medical Images and Text"
+                ],
+                [
+                    479,
+                    "Factual Accuracy is not Enough: Planning Consistent Description Order for Radiology Report Generation"
+                ],
+                [
+                    676,
+                    "Symptom Identification for Interpretable Detection of Multiple Mental Disorders on Social Media"
+                ],
+                [
+                    804,
+                    "MedJEx: A Medical Jargon Extraction Model with Wiki's Hyperlink Span and Contextualized Masked Language Model Score"
+                ]
+            ],
+            "paper_ids": [
+                10,
+                155,
+                184,
+                237,
+                255,
+                479,
+                676,
+                804
+            ]
+        },
+        {
+            "label": "finance",
+            "description": "In the finance sector, NLP is utilized for sentiment analysis of market trends, fraud detection, and automating customer service through chatbots and virtual assistants.",
+            "level": 1,
+            "source": "initial"
+        },
+        {
+            "label": "e-commerce",
+            "description": "E-commerce platforms leverage NLP for product recommendation systems, customer feedback analysis, and enhancing user experience through personalized search functionalities.",
+            "level": 1,
+            "source": "initial",
+            "example_papers": [
+                [
+                    215,
+                    "A Joint Learning Framework for Restaurant Survival Prediction and Explanation"
+                ],
+                [
+                    608,
+                    "Argument Mining for Review Helpfulness Prediction"
+                ],
+                [
+                    824,
+                    "JDDC 2.1: A Multimodal Chinese Dialogue Dataset with Joint Tasks of Query Rewriting, Response Generation, Discourse Parsing, and Summarization"
+                ]
+            ],
+            "paper_ids": [
+                215,
+                608,
+                824
+            ]
+        },
+        {
+            "label": "legal",
+            "description": "The legal domain employs NLP for document review, contract analysis, and case law research, streamlining processes and improving accuracy in legal practices.",
+            "level": 1,
+            "source": "initial",
+            "example_papers": [
+                [
+                    50,
+                    "DocInfer: Document-level Natural Language Inference using Optimal Evidence Selection"
+                ],
+                [
+                    73,
+                    "Deconfounding Legal Judgment Prediction for European Court of Human Rights Cases Towards Better Alignment with Experts"
+                ],
+                [
+                    165,
+                    "ConReader: Exploring Implicit Relations in Contracts for Contract Clause Extraction"
+                ],
+                [
+                    315,
+                    "Towards Interactivity and Interpretability: A Rationale-based Legal Judgment Prediction Framework"
+                ],
+                [
+                    699,
+                    "A Fine-grained Chinese Software Privacy Policy Dataset for Sequence Labeling and Regulation Compliant Identification"
+                ],
+                [
+                    794,
+                    "Agent-Specific Deontic Modality Detection in Legal Language"
+                ]
+            ],
+            "paper_ids": [
+                50,
+                73,
+                165,
+                315,
+                699,
+                794
+            ]
+        },
+        {
+            "label": "education",
+            "description": "In education, NLP is used for automated grading, personalized learning experiences, and analyzing student feedback to enhance teaching methodologies.",
+            "level": 1,
+            "source": "initial",
+            "example_papers": [
+                [
+                    10,
+                    "PAIR: Prompt-Aware margIn Ranking for Counselor Reflection Scoring in Motivational Interviewing"
+                ],
+                [
+                    253,
+                    "Open-ended Knowledge Tracing for Computer Science Education"
+                ],
+                [
+                    276,
+                    "Automatic Generation of Socratic Subquestions for Teaching Math Word Problems"
+                ],
+                [
+                    774,
+                    "ScienceWorld: Is your Agent Smarter than a 5th Grader?"
+                ],
+                [
+                    775,
+                    "Improving Embeddings Representations for Comparing Higher Education Curricula: A Use Case in Computing"
+                ]
+            ],
+            "paper_ids": [
+                10,
+                253,
+                276,
+                774,
+                775
+            ]
+        },
+        {
+            "label": "social_media_analysis",
+            "description": "NLP techniques are applied in social media analysis to extract insights from user-generated content, monitor trends, and detect sentiments across various platforms.",
+            "level": 1,
+            "source": "width",
+            "example_papers": [
+                [
+                    79,
+                    "Affective Idiosyncratic Responses to Music"
+                ],
+                [
+                    87,
+                    "How well can Text-to-Image Generative Models understand Ethical Natural Language Interventions?"
+                ],
+                [
+                    218,
+                    "Face-Sensitive Image-to-Emotional-Text Cross-modal Translation for Multimodal Aspect-based Sentiment Analysis"
+                ],
+                [
+                    332,
+                    "Towards Multi-Modal Sarcasm Detection via Hierarchical Congruity Modeling with Knowledge Enhancement"
+                ],
+                [
+                    380,
+                    "Borrowing Human Senses: Comment-Aware Self-Training for Social Media Multimodal Classification"
+                ],
+                [
+                    499,
+                    "Unifying Data Perspectivism and Personalization: An Application to Social Norms"
+                ],
+                [
+                    505,
+                    "GREENER: Graph Neural Networks for News Media Profiling"
+                ],
+                [
+                    588,
+                    "Unsupervised Opinion Summarisation in the Wasserstein Space"
+                ],
+                [
+                    675,
+                    "Generative Entity-to-Entity Stance Detection with Knowledge Graph Augmentation"
+                ],
+                [
+                    676,
+                    "Symptom Identification for Interpretable Detection of Multiple Mental Disorders on Social Media"
+                ]
+            ],
+            "paper_ids": [
+                79,
+                87,
+                218,
+                332,
+                380,
+                499,
+                505,
+                588,
+                675,
+                676
+            ]
+        },
+        {
+            "label": "dialogue_systems_development",
+            "description": "This cluster focuses on the development and evaluation of dialogue systems, including chatbots and conversational agents, enhancing user interaction through natural language understanding.",
+            "level": 1,
+            "source": "width",
+            "example_papers": [
+                [
+                    18,
+                    "Multi-VQG: Generating Engaging Questions for Multiple Images"
+                ],
+                [
+                    35,
+                    "Aligning Recommendation and Conversation via Dual Imitation"
+                ],
+                [
+                    71,
+                    "Curriculum Prompt Learning with Self-Training for Abstractive Dialogue Summarization"
+                ],
+                [
+                    82,
+                    "DANLI: Deliberative Agent for Following Natural Language Instructions"
+                ],
+                [
+                    85,
+                    "PLM-based World Models for Text-based Games"
+                ],
+                [
+                    87,
+                    "How well can Text-to-Image Generative Models understand Ethical Natural Language Interventions?"
+                ],
+                [
+                    107,
+                    "SpeechUT: Bridging Speech and Text with Hidden-Unit for Encoder-Decoder Based Speech-Text Pre-training"
+                ],
+                [
+                    126,
+                    "Can Visual Context Improve Automatic Speech Recognition for an Embodied Agent?"
+                ],
+                [
+                    134,
+                    "Near-Negative Distinction: Giving a Second Life to Human Evaluation Datasets"
+                ],
+                [
+                    141,
+                    "Learning to Decompose: Hypothetical Question Decomposition Based on Comparable Texts"
+                ]
+            ],
+            "paper_ids": [
+                18,
+                35,
+                71,
+                82,
+                85,
+                87,
+                107,
+                126,
+                134,
+                141,
+                155,
+                182,
+                189,
+                194,
+                212,
+                214,
+                224,
+                251,
+                266,
+                279,
+                295,
+                301,
+                314,
+                328,
+                332,
+                395,
+                448,
+                459,
+                548,
+                563,
+                572,
+                636,
+                643,
+                693,
+                704,
+                720,
+                738,
+                765,
+                819,
+                824
+            ]
+        },
+        {
+            "label": "translation_and_multilingual_nlp",
+            "description": "This area encompasses the application of NLP in translation tasks, including multilingual neural machine translation and literary translation, facilitating cross-linguistic communication.",
+            "level": 1,
+            "source": "width",
+            "example_papers": [
+                [
+                    2,
+                    "Transformer Feed-Forward Layers Build Predictions by Promoting Concepts in the Vocabulary Space"
+                ],
+                [
+                    7,
+                    "Toward Unifying Text Segmentation and Long Document Summarization"
+                ],
+                [
+                    12,
+                    "The Importance of Being Parameters: An Intra-Distillation Method for Serious Gains"
+                ],
+                [
+                    23,
+                    "Linearizing Transformer with Key-Value Memory"
+                ],
+                [
+                    42,
+                    "A Unified Encoder-Decoder Framework with Entity Memory"
+                ],
+                [
+                    60,
+                    "Entity Extraction in Low Resource Domains with Selective Pre-training of Large Language Models"
+                ],
+                [
+                    82,
+                    "DANLI: Deliberative Agent for Following Natural Language Instructions"
+                ],
+                [
+                    83,
+                    "Tracing Semantic Variation in Slang"
+                ],
+                [
+                    85,
+                    "PLM-based World Models for Text-based Games"
+                ],
+                [
+                    87,
+                    "How well can Text-to-Image Generative Models understand Ethical Natural Language Interventions?"
+                ]
+            ],
+            "paper_ids": [
+                2,
+                7,
+                12,
+                23,
+                42,
+                60,
+                82,
+                83,
+                85,
+                87,
+                107,
+                119,
+                127,
+                134,
+                141,
+                143,
+                209,
+                218,
+                295,
+                307,
+                313,
+                325,
+                337,
+                341,
+                351,
+                365,
+                367,
+                368,
+                374,
+                380,
+                382,
+                389,
+                390,
+                406,
+                408,
+                430,
+                440,
+                472,
+                485,
+                496,
+                510,
+                526,
+                531,
+                546,
+                547,
+                563,
+                653,
+                671,
+                674,
+                685,
+                690,
+                704,
+                719,
+                740,
+                763,
+                765,
+                768,
+                783,
+                819
+            ],
+            "children": [
+                {
+                    "label": "machine_translation",
+                    "description": "This cluster focuses on the development and application of algorithms and models for translating text from one language to another.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            2,
+                            "Transformer Feed-Forward Layers Build Predictions by Promoting Concepts in the Vocabulary Space"
+                        ],
+                        [
+                            12,
+                            "The Importance of Being Parameters: An Intra-Distillation Method for Serious Gains"
+                        ],
+                        [
+                            23,
+                            "Linearizing Transformer with Key-Value Memory"
+                        ],
+                        [
+                            42,
+                            "A Unified Encoder-Decoder Framework with Entity Memory"
+                        ],
+                        [
+                            82,
+                            "DANLI: Deliberative Agent for Following Natural Language Instructions"
+                        ],
+                        [
+                            85,
+                            "PLM-based World Models for Text-based Games"
+                        ],
+                        [
+                            134,
+                            "Near-Negative Distinction: Giving a Second Life to Human Evaluation Datasets"
+                        ],
+                        [
+                            141,
+                            "Learning to Decompose: Hypothetical Question Decomposition Based on Comparable Texts"
+                        ],
+                        [
+                            143,
+                            "Gradient-based Constrained Sampling from Language Models"
+                        ],
+                        [
+                            313,
+                            "Neural-Symbolic Inference for Robust Autoregressive Graph Parsing via Compositional Uncertainty Quantification"
+                        ]
+                    ],
+                    "paper_ids": [
+                        2,
+                        12,
+                        23,
+                        42,
+                        82,
+                        85,
+                        134,
+                        141,
+                        143,
+                        313,
+                        325,
+                        351,
+                        367,
+                        382,
+                        472,
+                        485,
+                        496,
+                        510,
+                        531,
+                        546,
+                        547,
+                        563,
+                        671,
+                        690,
+                        719,
+                        740,
+                        765,
+                        819
+                    ]
+                },
+                {
+                    "label": "multilingual_neural_machine_translation",
+                    "description": "This cluster encompasses the use of neural networks to perform translation across multiple languages, enhancing the capabilities of machine translation systems.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            7,
+                            "Toward Unifying Text Segmentation and Long Document Summarization"
+                        ],
+                        [
+                            12,
+                            "The Importance of Being Parameters: An Intra-Distillation Method for Serious Gains"
+                        ],
+                        [
+                            23,
+                            "Linearizing Transformer with Key-Value Memory"
+                        ],
+                        [
+                            60,
+                            "Entity Extraction in Low Resource Domains with Selective Pre-training of Large Language Models"
+                        ],
+                        [
+                            127,
+                            "AfroLID: A Neural Language Identification Tool for African Languages"
+                        ],
+                        [
+                            209,
+                            "Rethinking Positional Encoding in Tree Transformer for Code Representation"
+                        ],
+                        [
+                            295,
+                            "Re3: Generating Longer Stories With Recursive Reprompting and Revision"
+                        ],
+                        [
+                            325,
+                            "Twist Decoding: Diverse Generators Guide Each Other"
+                        ],
+                        [
+                            337,
+                            "Contrastive Learning enhanced Author-Style Headline Generation"
+                        ],
+                        [
+                            341,
+                            "DRLK: Dynamic Hierarchical Reasoning with Language Model and Knowledge Graph for Question Answering"
+                        ]
+                    ],
+                    "paper_ids": [
+                        7,
+                        12,
+                        23,
+                        60,
+                        127,
+                        209,
+                        295,
+                        325,
+                        337,
+                        341,
+                        365,
+                        368,
+                        389,
+                        408,
+                        440,
+                        510,
+                        531,
+                        546,
+                        704,
+                        719,
+                        740,
+                        763
+                    ]
+                },
+                {
+                    "label": "speech_translation",
+                    "description": "This cluster deals with the translation of spoken language, integrating speech recognition and machine translation technologies.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            107,
+                            "SpeechUT: Bridging Speech and Text with Hidden-Unit for Encoder-Decoder Based Speech-Text Pre-training"
+                        ],
+                        [
+                            390,
+                            "T-Modules: Translation Modules for Zero-Shot Cross-Modal Machine Translation"
+                        ],
+                        [
+                            768,
+                            "Textless Speech Emotion Conversion using Discrete & Decomposed Representations"
+                        ]
+                    ],
+                    "paper_ids": [
+                        107,
+                        390,
+                        768
+                    ]
+                },
+                {
+                    "label": "multimodal_translation",
+                    "description": "This cluster explores the translation of content that involves multiple modes of communication, such as text and images, to enhance understanding across languages.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            87,
+                            "How well can Text-to-Image Generative Models understand Ethical Natural Language Interventions?"
+                        ],
+                        [
+                            218,
+                            "Face-Sensitive Image-to-Emotional-Text Cross-modal Translation for Multimodal Aspect-based Sentiment Analysis"
+                        ],
+                        [
+                            307,
+                            "Concadia: Towards Image-Based text generation with a Purpose"
+                        ],
+                        [
+                            374,
+                            "MuRAG: Multimodal Retrieval-Augmented Generator for Open Question Answering over Images and Text"
+                        ],
+                        [
+                            380,
+                            "Borrowing Human Senses: Comment-Aware Self-Training for Social Media Multimodal Classification"
+                        ],
+                        [
+                            390,
+                            "T-Modules: Translation Modules for Zero-Shot Cross-Modal Machine Translation"
+                        ],
+                        [
+                            653,
+                            "Evaluating and Improving Factuality in Multimodal Abstractive Summarization"
+                        ],
+                        [
+                            674,
+                            "VisToT: Vision-Augmented Table-to-text generation"
+                        ],
+                        [
+                            685,
+                            "Adaptive Contrastive Learning on Multimodal Transformer for Review Helpfulness Prediction"
+                        ],
+                        [
+                            740,
+                            "EdgeFormer: A Parameter-Efficient Transformer for On-Device Seq2seq Generation"
+                        ]
+                    ],
+                    "paper_ids": [
+                        87,
+                        218,
+                        307,
+                        374,
+                        380,
+                        390,
+                        653,
+                        674,
+                        685,
+                        740,
+                        783
+                    ]
+                },
+                {
+                    "label": "literary_translation",
+                    "description": "This cluster focuses on the translation of literary works, emphasizing the preservation of style, tone, and cultural nuances.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            406,
+                            "BERT in Plutarch's Shadows"
+                        ],
+                        [
+                            671,
+                            "Exploring Document-Level Literary Machine Translation with Parallel Paragraphs from World Literature"
+                        ]
+                    ],
+                    "paper_ids": [
+                        406,
+                        671
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "computational_social_sciences",
+            "description": "NLP is utilized in computational social sciences to analyze social phenomena, public opinion, and societal trends through large-scale text data.",
+            "level": 1,
+            "source": "width",
+            "example_papers": [
+                [
+                    61,
+                    "How Large Language Models are Transforming Machine-Paraphrase Plagiarism"
+                ],
+                [
+                    79,
+                    "Affective Idiosyncratic Responses to Music"
+                ],
+                [
+                    83,
+                    "Tracing Semantic Variation in Slang"
+                ],
+                [
+                    87,
+                    "How well can Text-to-Image Generative Models understand Ethical Natural Language Interventions?"
+                ],
+                [
+                    138,
+                    "Gendered Mental Health Stigma in Masked Language Models"
+                ],
+                [
+                    158,
+                    "Towards Climate Awareness in NLP Research"
+                ],
+                [
+                    224,
+                    "Red Teaming Language Models with Language Models"
+                ],
+                [
+                    227,
+                    "Discovering Differences in the Representation of People using Contextualized Semantic Axes"
+                ],
+                [
+                    266,
+                    "ProsocialDialog: A Prosocial Backbone for Conversational Agents"
+                ],
+                [
+                    308,
+                    "Context Matters for Image Descriptions for Accessibility: Challenges for Referenceless Evaluation Metrics"
+                ]
+            ],
+            "paper_ids": [
+                61,
+                79,
+                83,
+                87,
+                138,
+                158,
+                224,
+                227,
+                266,
+                308,
+                350,
+                364,
+                389,
+                446,
+                499,
+                505,
+                675,
+                676,
+                695,
+                760,
+                823
+            ]
+        },
+        {
+            "label": "information_retrieval_and_extraction",
+            "description": "This cluster focuses on the methodologies for information retrieval and extraction, enhancing the ability to find and summarize relevant data from large text corpora.",
+            "level": 1,
+            "source": "width",
+            "example_papers": [
+                [
+                    7,
+                    "Toward Unifying Text Segmentation and Long Document Summarization"
+                ],
+                [
+                    18,
+                    "Multi-VQG: Generating Engaging Questions for Multiple Images"
+                ],
+                [
+                    22,
+                    "Certified Error Control of Candidate Set Pruning for Two-Stage Relevance Ranking"
+                ],
+                [
+                    23,
+                    "Linearizing Transformer with Key-Value Memory"
+                ],
+                [
+                    43,
+                    "Segmenting Numerical Substitution Ciphers"
+                ],
+                [
+                    60,
+                    "Entity Extraction in Low Resource Domains with Selective Pre-training of Large Language Models"
+                ],
+                [
+                    61,
+                    "How Large Language Models are Transforming Machine-Paraphrase Plagiarism"
+                ],
+                [
+                    71,
+                    "Curriculum Prompt Learning with Self-Training for Abstractive Dialogue Summarization"
+                ],
+                [
+                    87,
+                    "How well can Text-to-Image Generative Models understand Ethical Natural Language Interventions?"
+                ],
+                [
+                    95,
+                    "Language Model Pre-Training with Sparse Latent Typing"
+                ]
+            ],
+            "paper_ids": [
+                7,
+                18,
+                22,
+                23,
+                43,
+                60,
+                61,
+                71,
+                87,
+                95,
+                98,
+                116,
+                119,
+                134,
+                141,
+                148,
+                158,
+                189,
+                196,
+                200,
+                209,
+                224,
+                301,
+                307,
+                308,
+                314,
+                328,
+                332,
+                337,
+                340,
+                341,
+                351,
+                364,
+                365,
+                367,
+                368,
+                371,
+                374,
+                389,
+                395,
+                408,
+                425,
+                440,
+                472,
+                496,
+                505,
+                571,
+                572,
+                600,
+                643,
+                674,
+                675,
+                685,
+                690,
+                693,
+                695,
+                704,
+                720,
+                760,
+                763,
+                783,
+                804,
+                823
+            ],
+            "children": [
+                {
+                    "label": "text_retrieval_and_extraction",
+                    "description": "This cluster focuses on techniques and methodologies for retrieving and extracting relevant text data from large corpora.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            7,
+                            "Toward Unifying Text Segmentation and Long Document Summarization"
+                        ],
+                        [
+                            23,
+                            "Linearizing Transformer with Key-Value Memory"
+                        ],
+                        [
+                            43,
+                            "Segmenting Numerical Substitution Ciphers"
+                        ],
+                        [
+                            60,
+                            "Entity Extraction in Low Resource Domains with Selective Pre-training of Large Language Models"
+                        ],
+                        [
+                            61,
+                            "How Large Language Models are Transforming Machine-Paraphrase Plagiarism"
+                        ],
+                        [
+                            71,
+                            "Curriculum Prompt Learning with Self-Training for Abstractive Dialogue Summarization"
+                        ],
+                        [
+                            98,
+                            "Extracted BERT Model Leaks More Information than You Think!"
+                        ],
+                        [
+                            116,
+                            "Modeling Information Change in Science Communication with Semantically Matched Paraphrases"
+                        ],
+                        [
+                            119,
+                            "Style Transfer as Data Augmentation: A Case Study on Named Entity Recognition"
+                        ],
+                        [
+                            141,
+                            "Learning to Decompose: Hypothetical Question Decomposition Based on Comparable Texts"
+                        ]
+                    ],
+                    "paper_ids": [
+                        7,
+                        23,
+                        43,
+                        60,
+                        61,
+                        71,
+                        98,
+                        116,
+                        119,
+                        141,
+                        148,
+                        189,
+                        196,
+                        200,
+                        209,
+                        224,
+                        307,
+                        314,
+                        328,
+                        332,
+                        337,
+                        351,
+                        364,
+                        365,
+                        367,
+                        368,
+                        371,
+                        374,
+                        389,
+                        395,
+                        408,
+                        425,
+                        440,
+                        472,
+                        496,
+                        571,
+                        572,
+                        600,
+                        643,
+                        674,
+                        675,
+                        685,
+                        690,
+                        693,
+                        695,
+                        720,
+                        760,
+                        763,
+                        783,
+                        804
+                    ]
+                },
+                {
+                    "label": "information_retrieval_metrics",
+                    "description": "This cluster encompasses methodologies for evaluating the effectiveness of information retrieval systems.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            61,
+                            "How Large Language Models are Transforming Machine-Paraphrase Plagiarism"
+                        ],
+                        [
+                            134,
+                            "Near-Negative Distinction: Giving a Second Life to Human Evaluation Datasets"
+                        ],
+                        [
+                            189,
+                            "ConvTrans: Transforming Web Search Sessions for Conversational Dense Retrieval"
+                        ],
+                        [
+                            308,
+                            "Context Matters for Image Descriptions for Accessibility: Challenges for Referenceless Evaluation Metrics"
+                        ]
+                    ],
+                    "paper_ids": [
+                        61,
+                        134,
+                        189,
+                        308
+                    ]
+                },
+                {
+                    "label": "question_answering_and_retrieval",
+                    "description": "This cluster focuses on techniques for retrieving information specifically in the context of question answering systems.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            18,
+                            "Multi-VQG: Generating Engaging Questions for Multiple Images"
+                        ],
+                        [
+                            61,
+                            "How Large Language Models are Transforming Machine-Paraphrase Plagiarism"
+                        ],
+                        [
+                            148,
+                            "Retrieval as Attention: End-to-end Learning of Retrieval and Reading within a Single Transformer"
+                        ],
+                        [
+                            189,
+                            "ConvTrans: Transforming Web Search Sessions for Conversational Dense Retrieval"
+                        ],
+                        [
+                            301,
+                            "Is a Question Decomposition Unit All We Need?"
+                        ],
+                        [
+                            328,
+                            "STRUDEL: Structured Dialogue Summarization for Dialogue Comprehension"
+                        ],
+                        [
+                            341,
+                            "DRLK: Dynamic Hierarchical Reasoning with Language Model and Knowledge Graph for Question Answering"
+                        ],
+                        [
+                            351,
+                            "LittleBird: Efficient Faster & Longer Transformer for Question Answering"
+                        ],
+                        [
+                            374,
+                            "MuRAG: Multimodal Retrieval-Augmented Generator for Open Question Answering over Images and Text"
+                        ],
+                        [
+                            572,
+                            "Learning to Explain Selectively: A Case Study on Question Answering"
+                        ]
+                    ],
+                    "paper_ids": [
+                        18,
+                        61,
+                        148,
+                        189,
+                        301,
+                        328,
+                        341,
+                        351,
+                        374,
+                        572,
+                        643,
+                        690,
+                        763
+                    ]
+                },
+                {
+                    "label": "text_classification_and_analysis",
+                    "description": "This cluster includes methodologies for classifying and analyzing text data to derive insights.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            61,
+                            "How Large Language Models are Transforming Machine-Paraphrase Plagiarism"
+                        ],
+                        [
+                            158,
+                            "Towards Climate Awareness in NLP Research"
+                        ],
+                        [
+                            440,
+                            "G-MAP: General Memory-Augmented Pre-trained Language Model for Domain Tasks"
+                        ],
+                        [
+                            695,
+                            "Dictionary-Assisted Supervised Contrastive Learning"
+                        ],
+                        [
+                            704,
+                            "MOCHA: A Multi-Task Training Approach for Coherent text generation from Cognitive Perspective"
+                        ],
+                        [
+                            823,
+                            "PAR: Political Actor Representation Learning with Social Context and Expert Knowledge"
+                        ]
+                    ],
+                    "paper_ids": [
+                        61,
+                        158,
+                        440,
+                        695,
+                        704,
+                        823
+                    ]
+                }
+            ]
+        }
+    ]
+}

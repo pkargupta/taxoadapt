@@ -1,0 +1,38 @@
+Label: natural_language_processing
+Dimension: tasks
+Description: None
+Level: 0
+Source: Initial
+----------------------------------------
+Children:
+     Label: text_classification
+     Dimension: tasks
+     Description: The task of assigning predefined categories to text documents based on their content, often used in spam detection, sentiment analysis, and topic labeling.
+     Level: 1
+     Source: Initial
+     ----------------------------------------
+     Label: named_entity_recognition
+     Dimension: tasks
+     Description: The process of identifying and classifying key entities in text, such as names of people, organizations, locations, and other specific terms.
+     Level: 1
+     Source: Initial
+     ----------------------------------------
+     Label: machine_translation
+     Dimension: tasks
+     Description: The task of automatically translating text from one language to another while preserving its meaning and context.
+     Level: 1
+     Source: Initial
+     ----------------------------------------
+     Label: sentiment_analysis
+     Dimension: tasks
+     Description: The task of determining the emotional tone behind a series of words, used to understand the attitudes, opinions, and emotions expressed in text.
+     Level: 1
+     Source: Initial
+     ----------------------------------------
+     Label: text_summarization
+     Dimension: tasks
+     Description: The process of creating a concise and coherent summary of a longer text document, capturing the main ideas and essential information.
+     Level: 1
+     Source: Initial
+     ----------------------------------------
+----------------------------------------

@@ -1,0 +1,448 @@
+Label: natural_language_processing
+Dimension: datasets
+Description: None
+Level: 0
+Source: Initial
+# of Papers: 680
+Example Papers: [(1, 'Multi-News+: Cost-efficient Dataset Cleansing via LLM-based Data Annotation'), (4, 'Table Question Answering for Low-resourced Indic Languages'), (5, 'ImageInWords: Unlocking Hyper-Detailed Image Descriptions')]
+----------------------------------------
+Children:
+     Label: text_classification_datasets
+     Dimension: datasets
+     Description: These datasets are designed for training models to categorize text into predefined classes, often used in sentiment analysis, topic detection, and spam detection.
+     Level: 1
+     Source: Initial
+     # of Papers: 85
+     Example Papers: [(1, 'Multi-News+: Cost-efficient Dataset Cleansing via LLM-based Data Annotation'), (38, 'CoCoLoFa: A Dataset of News Comments with Common Logical Fallacies Written by LLM-Assisted Crowds'), (64, 'DocHieNet: A Large and Diverse Dataset for Document Hierarchy Parsing')]
+     ----------------------------------------
+     Children:
+          Label: sentiment_analysis_datasets
+          Dimension: datasets
+          Description: Datasets specifically designed for training models to analyze and classify sentiments expressed in text.
+          Level: 2
+          Source: depth
+          # of Papers: 11
+          Example Papers: [(909, 'WorryWords: Norms of Anxiety Association for over 44k English Words'), (1040, 'Semantics and Sentiment: Cross-lingual Variations in Emoji Use'), (2353, 'Shoes-ACOSI: A Dataset for Aspect-Based Sentiment Analysis with Implicit Opinion Extraction')]
+          ----------------------------------------
+          Label: document_classification_datasets
+          Dimension: datasets
+          Description: Datasets focused on categorizing entire documents into predefined classes for various applications.
+          Level: 2
+          Source: depth
+          # of Papers: 31
+          Example Papers: [(38, 'CoCoLoFa: A Dataset of News Comments with Common Logical Fallacies Written by LLM-Assisted Crowds'), (64, 'DocHieNet: A Large and Diverse Dataset for Document Hierarchy Parsing'), (216, 'C3PA: An Open Dataset of Expert-Annotated and Regulation-Aware Privacy Policies to Enable Scalable Regulatory Compliance Audits')]
+          ----------------------------------------
+          Label: multi_label_classification_datasets
+          Dimension: datasets
+          Description: Datasets that allow for the classification of text into multiple categories simultaneously.
+          Level: 2
+          Source: depth
+          # of Papers: 23
+          Example Papers: [(38, 'CoCoLoFa: A Dataset of News Comments with Common Logical Fallacies Written by LLM-Assisted Crowds'), (289, 'FOOL ME IF YOU CAN! An Adversarial Dataset to Investigate the Robustness of LMs in Word Sense Disambiguation'), (521, 'RuBLiMP: Russian Benchmark of Linguistic Minimal Pairs')]
+          ----------------------------------------
+          Label: topic_classification_datasets
+          Dimension: datasets
+          Description: Datasets aimed at categorizing text based on specific topics or themes.
+          Level: 2
+          Source: depth
+          # of Papers: 15
+          Example Papers: [(1, 'Multi-News+: Cost-efficient Dataset Cleansing via LLM-based Data Annotation'), (150, 'Surveying the Dead Minds: Historical-Psychological Text Analysis with Contextualized Construct Representation (CCR) for Classical Chinese'), (607, 'Diversity Over Size: On the Effect of Sample and Topic Sizes for Topic-Dependent Argument Mining Datasets')]
+          ----------------------------------------
+          Label: text_simplification_datasets
+          Dimension: datasets
+          Description: Datasets designed for simplifying text while retaining its original meaning, often used in accessibility applications.
+          Level: 2
+          Source: depth
+          # of Papers: 5
+          Example Papers: [(1363, 'Refining App Reviews: Dataset, Methodology, and Evaluation'), (2323, 'ARTS: Assessing Readability & Text Simplicity'), (2784, 'CompLex-ZH: A New Dataset for Lexical Complexity Prediction in Mandarin and Cantonese')]
+          ----------------------------------------
+     ----------------------------------------
+     Label: named_entity_recognition_datasets
+     Dimension: datasets
+     Description: These datasets provide annotated text for training models to identify and classify named entities such as people, organizations, and locations within the text.
+     Level: 1
+     Source: Initial
+     # of Papers: 19
+     Example Papers: [(354, 'Contrastive Entity Coreference and Disambiguation for Historical Texts'), (602, 'GlobeSumm: A Challenging Benchmark Towards Unifying Multi-lingual, Cross-lingual and Multi-document News Summarization'), (719, 'SPEED++: A Multilingual Event Extraction Framework for Epidemic Prediction and Preparedness')]
+     ----------------------------------------
+     Label: machine_translation_datasets
+     Dimension: datasets
+     Description: These datasets consist of parallel corpora in multiple languages, enabling the training and evaluation of models for translating text from one language to another.
+     Level: 1
+     Source: Initial
+     # of Papers: 55
+     Example Papers: [(237, 'MiTTenS: A Dataset for Evaluating Gender Mistranslation'), (250, 'Voices Unheard: NLP Resources and Models for Yoruba Regional Dialects'), (277, 'Using Language Models to Disambiguate Lexical Choices in Translation')]
+     ----------------------------------------
+     Children:
+          Label: parallel_corpora
+          Dimension: datasets
+          Description: This cluster includes datasets that consist of parallel texts in multiple languages, essential for training machine translation models.
+          Level: 2
+          Source: depth
+          # of Papers: 7
+          Example Papers: [(1247, 'Simultaneous Interpretation Corpus Construction by Large Language Models in Distant Language Pair'), (2211, 'Benchmarking Machine Translation with Cultural Awareness'), (2854, 'A High-quality Seed Dataset for Italian Machine Translation')]
+          ----------------------------------------
+          Label: low_resource_machine_translation_datasets
+          Dimension: datasets
+          Description: This cluster focuses on datasets specifically designed for low-resource languages, facilitating machine translation in underrepresented languages.
+          Level: 2
+          Source: depth
+          # of Papers: 17
+          Example Papers: [(250, 'Voices Unheard: NLP Resources and Models for Yoruba Regional Dialects'), (823, 'Building Resources for Emakhuwa: Machine Translation and News Classification Benchmarks'), (1960, 'Low-Resource Machine Translation through the Lens of Personalized Federated Learning')]
+          ----------------------------------------
+          Label: multilingual_translation_datasets
+          Dimension: datasets
+          Description: This cluster encompasses datasets that support translation tasks across multiple languages, enhancing multilingual capabilities in machine translation.
+          Level: 2
+          Source: depth
+          # of Papers: 13
+          Example Papers: [(237, 'MiTTenS: A Dataset for Evaluating Gender Mistranslation'), (602, 'GlobeSumm: A Challenging Benchmark Towards Unifying Multi-lingual, Cross-lingual and Multi-document News Summarization'), (823, 'Building Resources for Emakhuwa: Machine Translation and News Classification Benchmarks')]
+          ----------------------------------------
+          Label: evaluation_datasets
+          Dimension: datasets
+          Description: This cluster includes datasets specifically designed for evaluating the performance of machine translation systems.
+          Level: 2
+          Source: depth
+          # of Papers: 25
+          Example Papers: [(237, 'MiTTenS: A Dataset for Evaluating Gender Mistranslation'), (361, "Verba volant, scripta volant? Don't worry! There are computational solutions for protoword reconstruction"), (602, 'GlobeSumm: A Challenging Benchmark Towards Unifying Multi-lingual, Cross-lingual and Multi-document News Summarization')]
+          ----------------------------------------
+     ----------------------------------------
+     Label: question_answering_datasets
+     Dimension: datasets
+     Description: These datasets contain questions paired with context passages and corresponding answers, facilitating the development of models that can understand and respond to queries based on provided information.
+     Level: 1
+     Source: Initial
+     # of Papers: 65
+     Example Papers: [(152, 'QUITE: Quantifying Uncertainty in Natural Language Text in Bayesian Reasoning Scenarios'), (173, "The Accuracy Paradox in RLHF: When Better Reward Models Don't Yield Better Language Models"), (233, 'When Context Leads but Parametric Memory Follows in Large Language Models')]
+     ----------------------------------------
+     Children:
+          Label: multilingual_question_answering_datasets
+          Dimension: datasets
+          Description: This cluster includes datasets designed for question answering tasks across multiple languages, facilitating the development of multilingual models.
+          Level: 2
+          Source: depth
+          # of Papers: 14
+          Example Papers: [(602, 'GlobeSumm: A Challenging Benchmark Towards Unifying Multi-lingual, Cross-lingual and Multi-document News Summarization'), (624, 'Unlocking Markets: A Multilingual Benchmark to Cross-Market Question Answering'), (646, 'SciEx: Benchmarking Large Language Models on Scientific Exams with Human Expert Grading and Automatic Grading')]
+          ----------------------------------------
+          Label: visual_question_answering
+          Dimension: datasets
+          Description: This cluster encompasses datasets that involve answering questions based on visual inputs, integrating computer vision with question answering.
+          Level: 2
+          Source: depth
+          # of Papers: 9
+          Example Papers: [(328, 'Benchmarking Vision Language Models for Cultural Understanding'), (399, 'Encoding and Controlling Global Semantics for Long-form Video Question Answering'), (536, 'Attribute Diversity Determines the Systematicity Gap in VQA')]
+          ----------------------------------------
+          Label: long_form_question_answering_datasets
+          Dimension: datasets
+          Description: This cluster focuses on datasets that require answering questions based on long-form texts or documents, challenging models to extract relevant information.
+          Level: 2
+          Source: depth
+          # of Papers: 19
+          Example Papers: [(248, 'RAG-QA Arena: Evaluating Domain Robustness for Long-form Retrieval Augmented Question Answering'), (287, 'Hierarchical Deconstruction of LLM Reasoning: A Graph-Based Framework for Analyzing Knowledge Utilization'), (399, 'Encoding and Controlling Global Semantics for Long-form Video Question Answering')]
+          ----------------------------------------
+          Label: commonsense_question_answering_datasets
+          Dimension: datasets
+          Description: This cluster includes datasets that require models to utilize commonsense knowledge to answer questions accurately.
+          Level: 2
+          Source: depth
+          # of Papers: 3
+          Example Papers: [(531, 'Susu Box or Piggy Bank: Assessing Cultural Commonsense Knowledge between Ghana and the US'), (1144, 'Can LLM Generate Culturally Relevant Commonsense QA Data? Case Study in Indonesian and Sundanese'), (1477, 'Few shot chain-of-thought driven reasoning to prompt LLMs for open-ended medical question answering')]
+          ----------------------------------------
+          Label: contextual_question_answering_datasets
+          Dimension: datasets
+          Description: This cluster consists of datasets that focus on answering questions based on specific contextual information provided in the dataset.
+          Level: 2
+          Source: depth
+          # of Papers: 13
+          Example Papers: [(152, 'QUITE: Quantifying Uncertainty in Natural Language Text in Bayesian Reasoning Scenarios'), (173, "The Accuracy Paradox in RLHF: When Better Reward Models Don't Yield Better Language Models"), (233, 'When Context Leads but Parametric Memory Follows in Large Language Models')]
+          ----------------------------------------
+     ----------------------------------------
+     Label: text_generation_datasets
+     Dimension: datasets
+     Description: These datasets are used to train models for generating coherent and contextually relevant text, often sourced from diverse domains such as literature, news articles, or conversational data.
+     Level: 1
+     Source: Initial
+     # of Papers: 124
+     Example Papers: [(5, 'ImageInWords: Unlocking Hyper-Detailed Image Descriptions'), (58, 'HEART-felt Narratives: Tracing Empathy and Narrative Style in Personal Stories with LLMs'), (97, 'SHIELD: Evaluation and Defense Strategies for Copyright Compliance in LLM Text Generation')]
+     ----------------------------------------
+     Children:
+          Label: story_generation_datasets
+          Dimension: datasets
+          Description: Datasets specifically designed for generating narratives and stories, often used in creative writing and entertainment applications.
+          Level: 2
+          Source: depth
+          # of Papers: 10
+          Example Papers: [(58, 'HEART-felt Narratives: Tracing Empathy and Narrative Style in Personal Stories with LLMs'), (381, 'MirrorStories: Reflecting Diversity through Personalized Narrative Generation with Large Language Models'), (455, 'Evaluating Character Understanding of Large Language Models via Character Profiling from Fictional Works')]
+          ----------------------------------------
+          Label: long_form_text_generation_datasets
+          Dimension: datasets
+          Description: Datasets focused on generating extended pieces of text, such as essays or articles, that require coherence and depth.
+          Level: 2
+          Source: depth
+          # of Papers: 34
+          Example Papers: [(58, 'HEART-felt Narratives: Tracing Empathy and Narrative Style in Personal Stories with LLMs'), (98, 'MatchTime: Towards Automatic Soccer Game Commentary Generation'), (139, 'In Search of the Long-Tail: Systematic Generation of Long-Tail Inferential Knowledge via Logical Rule Guided Search')]
+          ----------------------------------------
+          Label: summarization_datasets
+          Dimension: datasets
+          Description: Datasets aimed at generating concise summaries from larger texts, applicable in various domains like news and academic writing.
+          Level: 2
+          Source: depth
+          # of Papers: 18
+          Example Papers: [(316, 'NLEBench+NorGLM: A Comprehensive Empirical Analysis and Benchmark Dataset for Generative Language Models in Norwegian'), (522, 'Text-Tuple-Table: Towards Information Integration in Text-to-Table Generation via Global Tuple Extraction'), (556, 'STORYSUMM: Evaluating Faithfulness in Story Summarization')]
+          ----------------------------------------
+          Label: code_generation_datasets
+          Dimension: datasets
+          Description: Datasets tailored for generating code snippets or entire programs, often used in software development and education.
+          Level: 2
+          Source: depth
+          # of Papers: 12
+          Example Papers: [(273, 'MuMath-Code: Combining Tool-Use Large Language Models with Multi-perspective Data Augmentation for Mathematical Reasoning'), (748, 'Leveraging Context-Aware Prompting for Commit Message Generation'), (776, 'How Do Your Code LLMs perform? Empowering Code Instruction Tuning with Really Good Data')]
+          ----------------------------------------
+          Label: text_style_transfer_datasets
+          Dimension: datasets
+          Description: Datasets designed for generating text that adheres to specific stylistic guidelines or transformations.
+          Level: 2
+          Source: depth
+          # of Papers: 15
+          Example Papers: [(240, 'StyleRemix: Interpretable Authorship Obfuscation via Distillation and Perturbation of Style Elements'), (682, 'GlossLM: A Massively Multilingual Corpus and Pretrained Model for Interlinear Glossed Text'), (773, 'TRoTR: A Framework for Evaluating the Re-contextualization of Text Reuse')]
+          ----------------------------------------
+          Label: data_narration_datasets
+          Dimension: datasets
+          Description: Datasets focused on generating narratives or descriptions from structured data, often used in data storytelling and visualization.
+          Level: 2
+          Source: width
+          # of Papers: 7
+          Example Papers: [(496, 'Jellyfish: Instruction-Tuning Local Large Language Models for Data Preprocessing'), (600, 'DataTales: A Benchmark for Real-World Intelligent Data Narration'), (2137, 'Large Language Models Can Not Perform Well in Understanding and Manipulating Natural Language at Both Character and Word Levels?')]
+          ----------------------------------------
+          Label: argument_extraction_datasets
+          Dimension: datasets
+          Description: Datasets designed for generating arguments and extracting reasoning from texts, applicable in fields like debate and legal analysis.
+          Level: 2
+          Source: width
+          # of Papers: 7
+          Example Papers: [(585, 'Belief Revision: The Adaptability of Large Language Models Reasoning'), (914, 'Exploring the Compositional Deficiency of Large Language Models in Mathematical Reasoning Through Trap Problems'), (1777, 'Gender Bias in Decision-Making with Large Language Models: A Study of Relationship Conflicts')]
+          ----------------------------------------
+          Label: customer_service_text_generation_datasets
+          Dimension: datasets
+          Description: Datasets aimed at generating responses for customer service interactions, enhancing automated support systems.
+          Level: 2
+          Source: width
+          # of Papers: 11
+          Example Papers: [(1364, 'TelBench: A Benchmark for Evaluating Telco-Specific Large Language Models'), (1391, "Don't be my Doctor! Recognizing Healthcare Advice in Large Language Models"), (1402, 'Generating Vehicular Icon Descriptions and Indications Using Large Vision-Language Models')]
+          ----------------------------------------
+          Label: query_generation_datasets
+          Dimension: datasets
+          Description: Datasets that focus on generating queries for information retrieval systems, improving search and data access.
+          Level: 2
+          Source: width
+          # of Papers: 7
+          Example Papers: [(1436, 'GraphQL Query Generation: A Large Training and Benchmarking Dataset'), (1707, 'RoQLlama: A Lightweight Romanian Adapted Language Model'), (2137, 'Large Language Models Can Not Perform Well in Understanding and Manipulating Natural Language at Both Character and Word Levels?')]
+          ----------------------------------------
+          Label: political_bias_reduction_datasets
+          Dimension: datasets
+          Description: Datasets aimed at generating politically neutral text, useful for applications in journalism and media.
+          Level: 2
+          Source: width
+          # of Papers: 7
+          Example Papers: [(411, 'Aligning Large Language Models with Diverse Political Viewpoints'), (1777, 'Gender Bias in Decision-Making with Large Language Models: A Study of Relationship Conflicts'), (2137, 'Large Language Models Can Not Perform Well in Understanding and Manipulating Natural Language at Both Character and Word Levels?')]
+          ----------------------------------------
+     ----------------------------------------
+     Label: hate_speech_detection_datasets
+     Dimension: datasets
+     Description: These datasets are specifically designed to identify and analyze hate speech in various forms of text, contributing to the development of models that can detect harmful language.
+     Level: 1
+     Source: width
+     # of Papers: 26
+     Example Papers: [(9, 'Hateful Word in Context Classification'), (10, "Eyes Don't Lie: Subjective Hate Annotation and Detection with Gaze"), (131, 'Oddballs and Misfits: Detecting Implicit Abuse in Which Identity Groups are Depicted as Deviating from the Norm')]
+     ----------------------------------------
+     Label: intent_understanding_datasets
+     Dimension: datasets
+     Description: These datasets focus on understanding user intent in natural language, enabling the development of models that can accurately interpret and respond to user queries.
+     Level: 1
+     Source: width
+     # of Papers: 19
+     Example Papers: [(13, 'A Usage-centric Take on Intent Understanding in E-Commerce'), (21, '"We Demand Justice!": Towards Social Context Grounding of Political Texts'), (209, 'A User-Centric Multi-Intent Benchmark for Evaluating Large Language Models')]
+     ----------------------------------------
+     Label: fact_checking_datasets
+     Dimension: datasets
+     Description: These datasets are used to train models for verifying the accuracy of claims made in text, playing a crucial role in combating misinformation.
+     Level: 1
+     Source: width
+     # of Papers: 97
+     Example Papers: [(38, 'CoCoLoFa: A Dataset of News Comments with Common Logical Fallacies Written by LLM-Assisted Crowds'), (112, 'Do We Need Language-Specific Fact-Checking Models? The Case of Chinese'), (216, 'C3PA: An Open Dataset of Expert-Annotated and Regulation-Aware Privacy Policies to Enable Scalable Regulatory Compliance Audits')]
+     ----------------------------------------
+     Children:
+          Label: multilingual_fact_checking_datasets
+          Dimension: datasets
+          Description: Datasets specifically designed for fact-checking across multiple languages, facilitating the verification of claims in diverse linguistic contexts.
+          Level: 2
+          Source: depth
+          # of Papers: 5
+          Example Papers: [(246, 'An Analysis of Multilingual FActScore'), (602, 'GlobeSumm: A Challenging Benchmark Towards Unifying Multi-lingual, Cross-lingual and Multi-document News Summarization'), (2147, 'Cross-Lingual Multi-Hop Knowledge Editing')]
+          ----------------------------------------
+          Label: medical_fact_checking_datasets
+          Dimension: datasets
+          Description: Datasets focused on verifying medical claims and information, crucial for ensuring the accuracy of health-related content.
+          Level: 2
+          Source: depth
+          # of Papers: 3
+          Example Papers: [(479, 'CliMedBench: A Large-Scale Chinese Benchmark for Evaluating Medical Large Language Models in Clinical Scenarios'), (993, 'CURE: Context- and Uncertainty-Aware Mental Disorder Detection'), (2747, 'DiversityMedQA: A Benchmark for Assessing Demographic Biases in Medical Diagnosis using Large Language Models')]
+          ----------------------------------------
+          Label: legal_domain_fact_checking_datasets
+          Dimension: datasets
+          Description: Datasets tailored for fact-checking within the legal domain, addressing the verification of legal claims and information.
+          Level: 2
+          Source: depth
+          # of Papers: 6
+          Example Papers: [(401, 'Enhancing Legal Case Retrieval via Scaling High-quality Synthetic Query-Candidate Pairs'), (428, 'More Than Catastrophic Forgetting: Integrating General Capabilities For Domain-Specific LLMs'), (1765, 'Developing a Pragmatic Benchmark for Assessing Korean Legal Language Understanding in Large Language Models')]
+          ----------------------------------------
+          Label: disinformation_detection
+          Dimension: datasets
+          Description: Datasets aimed at identifying and analyzing disinformation, playing a key role in combating false narratives.
+          Level: 2
+          Source: depth
+          # of Papers: 11
+          Example Papers: [(112, 'Do We Need Language-Specific Fact-Checking Models? The Case of Chinese'), (473, 'Humans or LLMs as the Judge? A Study on Judgement Bias'), (493, '"Flex Tape Can\'t Fix That": Bias and Misinformation in Edited Language Models')]
+          ----------------------------------------
+          Label: fact_verification_datasets
+          Dimension: datasets
+          Description: Datasets specifically designed for the task of fact verification, providing resources for assessing the truthfulness of claims.
+          Level: 2
+          Source: depth
+          # of Papers: 43
+          Example Papers: [(112, 'Do We Need Language-Specific Fact-Checking Models? The Case of Chinese'), (281, 'EVEDIT: Event-based Knowledge Editing for Deterministic Knowledge Propagation'), (447, '"Image, Tell me your story!" Predicting the original meta-context of visual misinformation')]
+          ----------------------------------------
+     ----------------------------------------
+     Label: dialogue_systems_datasets
+     Dimension: datasets
+     Description: These datasets are designed for training dialogue systems, facilitating the development of conversational agents that can engage in meaningful interactions with users.
+     Level: 1
+     Source: width
+     # of Papers: 83
+     Example Papers: [(51, "What's Mine becomes Yours: Defining, Annotating and Detecting Context-Dependent Paraphrases in News Interview Dialogs"), (81, 'Towards Tool Use Alignment of Large Language Models'), (309, 'Dialog2Flow: Pre-training Soft-Contrastive Action-Driven Sentence Embeddings for Automatic Dialog Flow Extraction')]
+     ----------------------------------------
+     Children:
+          Label: task_oriented_dialogue_datasets
+          Dimension: datasets
+          Description: Datasets specifically designed for training dialogue systems that focus on completing specific tasks through conversation.
+          Level: 2
+          Source: depth
+          # of Papers: 13
+          Example Papers: [(309, 'Dialog2Flow: Pre-training Soft-Contrastive Action-Driven Sentence Embeddings for Automatic Dialog Flow Extraction'), (642, 'Repairs in a Block World: A New Benchmark for Handling User Corrections with Multi-Modal Language Models'), (709, 'TransferTOD: A Generalizable Chinese Multi-Domain Task-Oriented Dialogue System with Transfer Capabilities')]
+          ----------------------------------------
+          Label: conversational_datasets
+          Dimension: datasets
+          Description: General datasets that encompass various forms of conversational interactions for training dialogue systems.
+          Level: 2
+          Source: depth
+          # of Papers: 14
+          Example Papers: [(504, 'AssistantBench: Can Web Agents Solve Realistic and Time-Consuming Tasks?'), (553, 'Into the Unknown Unknowns: Engaged Human Learning through Participation in Language Model Agent Conversations'), (602, 'GlobeSumm: A Challenging Benchmark Towards Unifying Multi-lingual, Cross-lingual and Multi-document News Summarization')]
+          ----------------------------------------
+          Label: dialogue_systems_datasets_for_healthcare
+          Dimension: datasets
+          Description: Datasets tailored for dialogue systems used in healthcare settings to facilitate patient interactions.
+          Level: 2
+          Source: depth
+          # of Papers: 8
+          Example Papers: [(935, 'MediTOD: An English Dialogue Dataset for Medical History Taking with Comprehensive Annotations'), (1251, 'ABLE: Personalized Disability Support with Politeness and Empathy Integration'), (1480, 'SMILE: Single-turn to Multi-turn Inclusive Language Expansion via ChatGPT for Mental Health Support')]
+          ----------------------------------------
+          Label: dialogue_systems_datasets_for_paraphrase_detection
+          Dimension: datasets
+          Description: Datasets aimed at training dialogue systems to detect and understand paraphrased statements.
+          Level: 2
+          Source: depth
+          # of Papers: 2
+          Example Papers: [(51, "What's Mine becomes Yours: Defining, Annotating and Detecting Context-Dependent Paraphrases in News Interview Dialogs"), (2159, 'CantTalkAboutThis: Aligning Language Models to Stay on Topic in Dialogues')]
+          ----------------------------------------
+          Label: conversational_question_answering_datasets
+          Dimension: datasets
+          Description: Datasets designed for training dialogue systems to effectively answer questions in a conversational manner.
+          Level: 2
+          Source: depth
+          # of Papers: 2
+          Example Papers: [(978, 'MP2D: An Automated Topic Shift Dialogue Generation Framework Leveraging Knowledge Graphs'), (2159, 'CantTalkAboutThis: Aligning Language Models to Stay on Topic in Dialogues')]
+          ----------------------------------------
+          Label: conversational_emotion_recognition_datasets
+          Dimension: datasets
+          Description: Datasets designed for training dialogue systems to recognize and interpret emotions expressed in conversations.
+          Level: 2
+          Source: width
+          # of Papers: 1
+          Example Papers: [(2159, 'CantTalkAboutThis: Aligning Language Models to Stay on Topic in Dialogues')]
+          ----------------------------------------
+          Label: dialogue_systems_datasets_for_error_detection
+          Dimension: datasets
+          Description: Datasets focused on training dialogue systems to identify and correct errors in conversational exchanges.
+          Level: 2
+          Source: width
+          # of Papers: 4
+          Example Papers: [(477, 'Stepwise Verification and Remediation of Student Reasoning Errors with Large Language Model Tutors'), (642, 'Repairs in a Block World: A New Benchmark for Handling User Corrections with Multi-Modal Language Models'), (1480, 'SMILE: Single-turn to Multi-turn Inclusive Language Expansion via ChatGPT for Mental Health Support')]
+          ----------------------------------------
+          Label: web_dialogue_datasets
+          Dimension: datasets
+          Description: Datasets that capture dialogues occurring in web-based environments, useful for training online conversational agents.
+          Level: 2
+          Source: width
+          # of Papers: 2
+          Example Papers: [(504, 'AssistantBench: Can Web Agents Solve Realistic and Time-Consuming Tasks?'), (2159, 'CantTalkAboutThis: Aligning Language Models to Stay on Topic in Dialogues')]
+          ----------------------------------------
+          Label: conversational_information_discovery_datasets
+          Dimension: datasets
+          Description: Datasets aimed at enhancing dialogue systems' ability to discover and retrieve information through conversation.
+          Level: 2
+          Source: width
+          # of Papers: 2
+          Example Papers: [(553, 'Into the Unknown Unknowns: Engaged Human Learning through Participation in Language Model Agent Conversations'), (2159, 'CantTalkAboutThis: Aligning Language Models to Stay on Topic in Dialogues')]
+          ----------------------------------------
+          Label: open_domain_dialogue_datasets
+          Dimension: datasets
+          Description: Datasets that support training dialogue systems capable of engaging in conversations across a wide range of topics.
+          Level: 2
+          Source: width
+          # of Papers: 7
+          Example Papers: [(504, 'AssistantBench: Can Web Agents Solve Realistic and Time-Consuming Tasks?'), (553, 'Into the Unknown Unknowns: Engaged Human Learning through Participation in Language Model Agent Conversations'), (978, 'MP2D: An Automated Topic Shift Dialogue Generation Framework Leveraging Knowledge Graphs')]
+          ----------------------------------------
+     ----------------------------------------
+     Label: multimodal_datasets
+     Dimension: datasets
+     Description: These datasets integrate multiple modalities, such as text, images, and audio, to enhance the understanding and generation of information across different formats.
+     Level: 1
+     Source: width
+     # of Papers: 95
+     Example Papers: [(43, 'GeoGPT4V: Towards Geometric Multi-modal Large Language Models with Geometric Image Generation'), (60, 'Bridging Cultures in the Kitchen: A Framework and Benchmark for Cross-Cultural Recipe Retrieval'), (105, 'TopViewRS: Vision-Language Models as Top-View Spatial Reasoners')]
+     ----------------------------------------
+     Children:
+          Label: vision_language_datasets
+          Dimension: datasets
+          Description: Datasets that integrate visual and textual information to enhance understanding and generation across these modalities.
+          Level: 2
+          Source: depth
+          # of Papers: 20
+          Example Papers: [(357, 'VLFeedback: A Large-Scale AI Feedback Dataset for Large Vision-Language Models Alignment'), (368, 'UOUO: Uncontextualized Uncommon Objects for Measuring Knowledge Horizons of Vision Language Models'), (417, 'Towards Injecting Medical Visual Knowledge into Multimodal LLMs at Scale')]
+          ----------------------------------------
+          Label: multimodal_speech_recognition_datasets
+          Dimension: datasets
+          Description: Datasets specifically designed for recognizing and processing speech across multiple modalities.
+          Level: 2
+          Source: depth
+          # of Papers: 7
+          Example Papers: [(425, 'Multi-Dialect Vietnamese: Task, Dataset, Baseline Models and Challenges'), (613, 'Towards Probing Speech-Specific Risks in Large Multimodal Models: A Taxonomy, Benchmark, and Insights'), (667, 'Multi-Level Cross-Modal Alignment for Speech Relation Extraction')]
+          ----------------------------------------
+          Label: multimodal_classification_datasets
+          Dimension: datasets
+          Description: Datasets focused on classification tasks that involve multiple modalities.
+          Level: 2
+          Source: depth
+          # of Papers: 31
+          Example Papers: [(142, 'Selective Vision is the Challenge for Visual Reasoning: A Benchmark for Visual Argument Understanding'), (310, 'Words Worth a Thousand Pictures: Measuring and Understanding Perceptual Variability in Text-to-Image Generation'), (425, 'Multi-Dialect Vietnamese: Task, Dataset, Baseline Models and Challenges')]
+          ----------------------------------------
+          Label: multimodal_benchmark
+          Dimension: datasets
+          Description: Datasets that serve as benchmarks for evaluating multimodal models and tasks.
+          Level: 2
+          Source: depth
+          # of Papers: 66
+          Example Papers: [(43, 'GeoGPT4V: Towards Geometric Multi-modal Large Language Models with Geometric Image Generation'), (60, 'Bridging Cultures in the Kitchen: A Framework and Benchmark for Cross-Cultural Recipe Retrieval'), (105, 'TopViewRS: Vision-Language Models as Top-View Spatial Reasoners')]
+          ----------------------------------------
+     ----------------------------------------
+----------------------------------------

@@ -217,7 +217,7 @@ if __name__ == "__main__":
     args.dimensions = ["tasks", "datasets", "methodologies", "evaluation_methods", "real_world_domains"]
     # args.dimensions = ["evaluation_methods"]
 
-    args.dataset = "emnlp_2024"
+    args.dataset = "emnlp_2022"
     args.data_dir = f"datasets/{args.dataset.lower().replace(' ', '_')}"
     args.internal = f"{args.dataset}.txt"
     # args.external = f"{args.dataset}_external.txt"

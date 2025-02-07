@@ -1,0 +1,38 @@
+Label: natural_language_processing
+Dimension: datasets
+Description: None
+Level: 0
+Source: Initial
+----------------------------------------
+Children:
+     Label: text_classification_datasets
+     Dimension: datasets
+     Description: These datasets are designed for training models to categorize text into predefined classes, often used in applications like sentiment analysis, spam detection, and topic categorization.
+     Level: 1
+     Source: Initial
+     ----------------------------------------
+     Label: named_entity_recognition_datasets
+     Dimension: datasets
+     Description: These datasets provide annotated text for training models to identify and classify named entities such as people, organizations, and locations within the text.
+     Level: 1
+     Source: Initial
+     ----------------------------------------
+     Label: machine_translation_datasets
+     Dimension: datasets
+     Description: These datasets consist of parallel corpora in multiple languages, enabling the training and evaluation of models for translating text from one language to another.
+     Level: 1
+     Source: Initial
+     ----------------------------------------
+     Label: question_answering_datasets
+     Dimension: datasets
+     Description: These datasets contain questions paired with context passages and corresponding answers, facilitating the development of models that can understand and respond to queries based on provided information.
+     Level: 1
+     Source: Initial
+     ----------------------------------------
+     Label: text_generation_datasets
+     Dimension: datasets
+     Description: These datasets are used to train models for generating coherent and contextually relevant text, often sourced from diverse domains such as literature, news articles, or conversational data.
+     Level: 1
+     Source: Initial
+     ----------------------------------------
+----------------------------------------

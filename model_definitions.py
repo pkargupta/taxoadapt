@@ -1,6 +1,6 @@
 from transformers import pipeline
 from sentence_transformers import SentenceTransformer
-from outlines.serve.vllm import JSONLogitsProcessor
+# from outlines.serve.vllm import JSONLogitsProcessor
 from vllm import LLM, SamplingParams
 import numpy as np
 import torch
@@ -10,8 +10,9 @@ from tqdm import tqdm
 import openai
 from openai import OpenAI
 from keys import openai_key, samba_api_key
+from vllm.sampling_params import GuidedDecodingParams
 
-os.environ["CUDA_VISIBLE_DEVICES"]="0,1,2,3"
+os.environ["CUDA_VISIBLE_DEVICES"]="0,5,6,7"
 os.environ['HF_HOME'] = '/shared/data3/pk36/.cache'
 
 # llama_8b_model = pipeline("text-generation", 
@@ -122,8 +123,8 @@ def promptLlama(prompts, max_new_tokens=1024):
 def initializeLLM(args):
 	args.client = {}
 
-	args.client['vllm'] = LLM(model="meta-llama/Meta-Llama-3.1-8B-Instruct", tensor_parallel_size=4, gpu_memory_utilization=0.9, 
-						   max_num_batched_tokens=8192, max_num_seqs=1500, enable_prefix_caching=True)
+	args.client['vllm'] = LLM(model="meta-llama/Meta-Llama-3.1-8B-Instruct", tensor_parallel_size=4, gpu_memory_utilization=0.5, 
+						   max_num_batched_tokens=2048, max_num_seqs=500, enable_prefix_caching=True)
 
 	if args.llm == 'samba':
 		args.client[args.llm] = openai.OpenAI(
@@ -163,10 +164,10 @@ def promptLlamaVLLM(args, prompts, schema=None, max_new_tokens=1024, temperature
     if schema is None:
         sampling_params = SamplingParams(temperature=temperature, top_p=top_p, max_tokens=max_new_tokens)
     else:
-        logits_processor = JSONLogitsProcessor(schema=schema, llm=args.client['vllm'].llm_engine)
-        # logits_processor.fsm.vocabulary = list(logits_processor.fsm.vocabulary)
+        # logits_processor = JSONLogitsProcessor(schema=schema, llm=args.client['vllm'].llm_engine)
+        guided_decoding_params = GuidedDecodingParams(json=schema.model_json_schema())
         sampling_params = SamplingParams(temperature=temperature, top_p=top_p, max_tokens=max_new_tokens, 
-                                    logits_processors=[logits_processor])
+                                    guided_decoding=guided_decoding_params)
     generations = args.client['vllm'].generate(prompts, sampling_params)
     
     outputs = []

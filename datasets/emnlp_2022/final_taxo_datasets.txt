@@ -1,0 +1,132 @@
+Label: natural_language_processing
+Dimension: datasets
+Description: None
+Level: 0
+Source: Initial
+# of Papers: 176
+Example Papers: [(1, 'CDConv: A Benchmark for Contradiction Detection in Chinese Conversations'), (10, 'PAIR: Prompt-Aware margIn Ranking for Counselor Reflection Scoring in Motivational Interviewing'), (18, 'Multi-VQG: Generating Engaging Questions for Multiple Images')]
+----------------------------------------
+Children:
+     Label: text_classification_datasets
+     Dimension: datasets
+     Description: These datasets are designed for training models to categorize text into predefined classes, often used in applications like sentiment analysis, spam detection, and topic categorization.
+     Level: 1
+     Source: Initial
+     # of Papers: 18
+     Example Papers: [(26, 'What Makes Instruction Learning Hard? An Investigation and a New Challenge in a Synthetic Environment'), (137, 'Stanceosaurus: Classifying Stance Towards Multicultural Misinformation'), (147, 'When FLUE Meets FLANG: Benchmarks and Large Pretrained Language Model for Financial Domain')]
+     ----------------------------------------
+     Label: named_entity_recognition_datasets
+     Dimension: datasets
+     Description: These datasets provide annotated text for training models to identify and classify named entities such as people, organizations, and locations within the text.
+     Level: 1
+     Source: Initial
+     # of Papers: 5
+     Example Papers: [(297, 'MasakhaNER 2.0: Africa-centric Transfer Learning for Named Entity Recognition'), (416, 'Simple Questions Generate Named Entity Recognition Datasets'), (637, 'Unsupervised Entity Linking with Guided Summarization and Multiple-Choice Selection')]
+     ----------------------------------------
+     Label: machine_translation_datasets
+     Dimension: datasets
+     Description: These datasets consist of parallel corpora in multiple languages, enabling the training and evaluation of models for translating text from one language to another.
+     Level: 1
+     Source: Initial
+     # of Papers: 9
+     Example Papers: [(183, 'LVP-M3: Language-aware Visual Prompt for Multilingual Multimodal Machine Translation'), (287, 'MT-GenEval: A Counterfactual and Contextual Dataset for Evaluating Gender Accuracy in Machine Translation'), (352, 'WeTS: A Benchmark for Translation Suggestion')]
+     ----------------------------------------
+     Label: question_answering_datasets
+     Dimension: datasets
+     Description: These datasets contain questions paired with context passages and corresponding answers, facilitating the development of models that can understand and respond to queries based on provided information.
+     Level: 1
+     Source: Initial
+     # of Papers: 20
+     Example Papers: [(18, 'Multi-VQG: Generating Engaging Questions for Multiple Images'), (41, 'Generative Language Models for Paragraph-Level Question Generation'), (124, 'Improving compositional generalization for multi-step quantitative reasoning in question answering')]
+     ----------------------------------------
+     Label: text_generation_datasets
+     Dimension: datasets
+     Description: These datasets are used to train models for generating coherent and contextually relevant text, often sourced from diverse domains such as literature, news articles, or conversational data.
+     Level: 1
+     Source: Initial
+     # of Papers: 30
+     Example Papers: [(74, 'SQuALITY: Building a Long-Document Summarization Dataset the Hard Way'), (87, 'How well can Text-to-Image Generative Models understand Ethical Natural Language Interventions?'), (153, 'SafeText: A Benchmark for Exploring Physical Safety in Language Models')]
+     ----------------------------------------
+     Label: dialogue_analysis_datasets
+     Dimension: datasets
+     Description: These datasets focus on analyzing and understanding dialogues, including conversational structures and interactions.
+     Level: 1
+     Source: width
+     # of Papers: 24
+     Example Papers: [(1, 'CDConv: A Benchmark for Contradiction Detection in Chinese Conversations'), (10, 'PAIR: Prompt-Aware margIn Ranking for Counselor Reflection Scoring in Motivational Interviewing'), (32, 'InstructDial: Improving Zero and Few-shot Generalization in Dialogue through Instruction Tuning')]
+     ----------------------------------------
+     Label: multilingual_nlp_datasets
+     Dimension: datasets
+     Description: These datasets are designed for natural language processing tasks across multiple languages, facilitating cross-lingual applications.
+     Level: 1
+     Source: width
+     # of Papers: 26
+     Example Papers: [(44, 'Crossmodal-3600: A Massively Multilingual Multimodal Evaluation Dataset'), (100, 'A Multilingual Perspective Towards the Evaluation of Attribution Methods in Natural Language Inference'), (127, 'AfroLID: A Neural Language Identification Tool for African Languages')]
+     ----------------------------------------
+     Label: semantic_analysis_datasets
+     Dimension: datasets
+     Description: These datasets are used for understanding and interpreting the meanings and nuances of text, often involving sentiment and context analysis.
+     Level: 1
+     Source: width
+     # of Papers: 26
+     Example Papers: [(50, 'DocInfer: Document-level Natural Language Inference using Optimal Evidence Selection'), (116, 'Modeling Information Change in Science Communication with Semantically Matched Paraphrases'), (227, 'Discovering Differences in the Representation of People using Contextualized Semantic Axes')]
+     ----------------------------------------
+     Label: event_detection_datasets
+     Dimension: datasets
+     Description: These datasets are aimed at identifying and classifying events within text, useful for applications in information extraction and summarization.
+     Level: 1
+     Source: width
+     # of Papers: 11
+     Example Papers: [(57, 'Cross-document Event Coreference Search: Task, Dataset and Modeling'), (59, 'MAVEN-ERE: A Unified Large-scale Dataset for Event Coreference, Temporal, Causal, and Subevent Relation Extraction'), (129, 'Large language models are few-shot clinical information extractors')]
+     ----------------------------------------
+     Label: evaluation_datasets
+     Dimension: datasets
+     Description: These datasets are utilized for assessing the performance of various NLP models and methodologies, providing benchmarks for comparison.
+     Level: 1
+     Source: width
+     # of Papers: 41
+     Example Papers: [(28, 'SNaC: Coherence Error Detection for Narrative Summarization'), (32, 'InstructDial: Improving Zero and Few-shot Generalization in Dialogue through Instruction Tuning'), (74, 'SQuALITY: Building a Long-Document Summarization Dataset the Hard Way')]
+     ----------------------------------------
+     Children:
+          Label: benchmark_datasets
+          Dimension: datasets
+          Description: Benchmark datasets are collections of data used to evaluate and compare the performance of various NLP models against established standards.
+          Level: 2
+          Source: depth
+          # of Papers: 12
+          Example Papers: [(147, 'When FLUE Meets FLANG: Benchmarks and Large Pretrained Language Model for Financial Domain'), (217, 'UniGeo: Unifying Geometry Logical Reasoning via Reformulating Mathematical Expression'), (273, 'CGoDial: A Large-Scale Benchmark for Chinese Goal-oriented Dialog Evaluation')]
+          ----------------------------------------
+          Label: dialogue_evaluation_datasets
+          Dimension: datasets
+          Description: Dialogue evaluation datasets are specialized datasets designed to assess the performance of models in dialogue systems and conversational agents.
+          Level: 2
+          Source: depth
+          # of Papers: 3
+          Example Papers: [(32, 'InstructDial: Improving Zero and Few-shot Generalization in Dialogue through Instruction Tuning'), (273, 'CGoDial: A Large-Scale Benchmark for Chinese Goal-oriented Dialog Evaluation'), (714, 'FlowEval: A Consensus-Based Dialogue Evaluation Framework Using Segment Act Flows')]
+          ----------------------------------------
+          Label: summarization_datasets
+          Dimension: datasets
+          Description: Summarization datasets are curated collections of texts used to evaluate the effectiveness of summarization algorithms and techniques.
+          Level: 2
+          Source: depth
+          # of Papers: 7
+          Example Papers: [(28, 'SNaC: Coherence Error Detection for Narrative Summarization'), (74, 'SQuALITY: Building a Long-Document Summarization Dataset the Hard Way'), (171, 'How Far are We from Robust Long Abstractive Summarization?')]
+          ----------------------------------------
+          Label: evaluation_metrics
+          Dimension: datasets
+          Description: Evaluation metrics datasets provide data and methodologies for assessing the quality and performance of NLP models through various metrics.
+          Level: 2
+          Source: depth
+          # of Papers: 3
+          Example Papers: [(171, 'How Far are We from Robust Long Abstractive Summarization?'), (613, 'Incorporating Relevance Feedback for Information-Seeking Retrieval using Few-Shot Document Re-Ranking'), (617, 'Detecting Label Errors by Using Pre-Trained Language Models')]
+          ----------------------------------------
+          Label: domain_specific_evaluation_datasets
+          Dimension: datasets
+          Description: Domain-specific evaluation datasets are tailored datasets that focus on specific fields or topics, such as finance or security, to evaluate model performance in those areas.
+          Level: 2
+          Source: depth
+          # of Papers: 13
+          Example Papers: [(147, 'When FLUE Meets FLANG: Benchmarks and Large Pretrained Language Model for Financial Domain'), (153, 'SafeText: A Benchmark for Exploring Physical Safety in Language Models'), (164, 'Whose Language Counts as High Quality? Measuring Language Ideologies in Text Data Selection')]
+          ----------------------------------------
+     ----------------------------------------
+----------------------------------------

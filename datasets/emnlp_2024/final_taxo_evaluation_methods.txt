@@ -1,0 +1,524 @@
+Label: natural_language_processing
+Dimension: evaluation_methods
+Description: None
+Level: 0
+Source: Initial
+# of Papers: 1965
+Example Papers: [(2, 'FIZZ: Factual Inconsistency Detection by Zoom-in Summary and Zoom-out Document'), (4, 'Table Question Answering for Low-resourced Indic Languages'), (5, 'ImageInWords: Unlocking Hyper-Detailed Image Descriptions')]
+----------------------------------------
+Children:
+     Label: benchmarking
+     Dimension: evaluation_methods
+     Description: This method involves systematically comparing the performance of different NLP models or algorithms on standardized datasets to establish performance baselines and identify strengths and weaknesses.
+     Level: 1
+     Source: Initial
+     # of Papers: 830
+     Example Papers: [(6, 'LLM-Based Agent Society Investigation: Collaboration and Confrontation in Avalon Gameplay'), (10, "Eyes Don't Lie: Subjective Hate Annotation and Detection with Gaze"), (13, 'A Usage-centric Take on Intent Understanding in E-Commerce')]
+     ----------------------------------------
+     Children:
+          Label: benchmarking_techniques
+          Dimension: evaluation_methods
+          Description: This cluster focuses on various methodologies and frameworks used for benchmarking NLP models and algorithms.
+          Level: 2
+          Source: depth
+          # of Papers: 568
+          Example Papers: [(13, 'A Usage-centric Take on Intent Understanding in E-Commerce'), (18, 'RoTBench: A Multi-Level Benchmark for Evaluating the Robustness of Large Language Models in Tool Learning'), (21, '"We Demand Justice!": Towards Social Context Grounding of Political Texts')]
+          ----------------------------------------
+          Label: comparative_performance_studies
+          Dimension: evaluation_methods
+          Description: This cluster encompasses studies that systematically compare the performance of different NLP models or algorithms.
+          Level: 2
+          Source: depth
+          # of Papers: 503
+          Example Papers: [(6, 'LLM-Based Agent Society Investigation: Collaboration and Confrontation in Avalon Gameplay'), (10, "Eyes Don't Lie: Subjective Hate Annotation and Detection with Gaze"), (21, '"We Demand Justice!": Towards Social Context Grounding of Political Texts')]
+          ----------------------------------------
+          Label: robustness_evaluation
+          Dimension: evaluation_methods
+          Description: This cluster includes methods focused on evaluating the robustness and reliability of NLP models under various conditions.
+          Level: 2
+          Source: depth
+          # of Papers: 370
+          Example Papers: [(10, "Eyes Don't Lie: Subjective Hate Annotation and Detection with Gaze"), (18, 'RoTBench: A Multi-Level Benchmark for Evaluating the Robustness of Large Language Models in Tool Learning'), (21, '"We Demand Justice!": Towards Social Context Grounding of Political Texts')]
+          ----------------------------------------
+          Label: performance_metrics
+          Dimension: evaluation_methods
+          Description: This cluster focuses on the development and application of metrics used to assess the performance of NLP models.
+          Level: 2
+          Source: depth
+          # of Papers: 169
+          Example Papers: [(21, '"We Demand Justice!": Towards Social Context Grounding of Political Texts'), (24, 'Consolidating Ranking and Relevance Predictions of Large Language Models through Post-Processing'), (79, 'Large Language Models as Foundations for Next-Gen Dense Retrieval: A Comprehensive Empirical Assessment')]
+          ----------------------------------------
+     ----------------------------------------
+     Label: comparative_studies
+     Dimension: evaluation_methods
+     Description: This approach focuses on analyzing and contrasting various NLP techniques or models to understand their relative effectiveness and applicability in specific tasks or domains.
+     Level: 1
+     Source: Initial
+     # of Papers: 648
+     Example Papers: [(6, 'LLM-Based Agent Society Investigation: Collaboration and Confrontation in Avalon Gameplay'), (14, 'Fine-Tuning or Retrieval? Comparing Knowledge Injection in LLMs'), (15, 'Systematic Biases in LLM Simulations of Debates')]
+     ----------------------------------------
+     Children:
+          Label: cross_lingual_comparative_studies
+          Dimension: evaluation_methods
+          Description: This cluster focuses on comparative studies that analyze and evaluate models and techniques across different languages.
+          Level: 2
+          Source: depth
+          # of Papers: 110
+          Example Papers: [(23, 'Fine-Tuning Large Language Models to Translate: Will a Touch of Noisy Data in Misaligned Languages Suffice?'), (52, 'Language Models Learn Rare Phenomena from Less Rare Phenomena: The Case of the Missing AANNs'), (75, 'QUDSELECT: Selective Decoding for Questions Under Discussion Parsing')]
+          ----------------------------------------
+          Label: model_comparison
+          Dimension: evaluation_methods
+          Description: This cluster encompasses studies that focus on the comparative evaluation of various model architectures and their performance.
+          Level: 2
+          Source: depth
+          # of Papers: 177
+          Example Papers: [(14, 'Fine-Tuning or Retrieval? Comparing Knowledge Injection in LLMs'), (34, 'Mitigating the Alignment Tax of RLHF'), (39, 'Tokenization Is More Than Compression')]
+          ----------------------------------------
+          Label: multilingual_comparative_studies
+          Dimension: evaluation_methods
+          Description: This cluster includes studies that compare the performance and effectiveness of NLP techniques across multiple languages.
+          Level: 2
+          Source: depth
+          # of Papers: 140
+          Example Papers: [(23, 'Fine-Tuning Large Language Models to Translate: Will a Touch of Noisy Data in Misaligned Languages Suffice?'), (39, 'Tokenization Is More Than Compression'), (52, 'Language Models Learn Rare Phenomena from Less Rare Phenomena: The Case of the Missing AANNs')]
+          ----------------------------------------
+          Label: bias_analysis_and_evaluation
+          Dimension: evaluation_methods
+          Description: This cluster focuses on the comparative analysis and evaluation of bias in NLP models and techniques.
+          Level: 2
+          Source: depth
+          # of Papers: 50
+          Example Papers: [(15, 'Systematic Biases in LLM Simulations of Debates'), (200, 'Is Safer Better? The Impact of Guardrails on the Argumentative Strength of LLMs in Hate Speech Countering'), (243, "Hidden Persuaders: LLMs' Political Leaning and Their Influence on Voters")]
+          ----------------------------------------
+          Label: cross_cultural_comparative_studies
+          Dimension: evaluation_methods
+          Description: This cluster examines comparative studies that analyze NLP techniques in the context of different cultural representations.
+          Level: 2
+          Source: depth
+          # of Papers: 24
+          Example Papers: [(238, 'Teaching LLMs to Abstain across Languages via Multilingual Feedback'), (336, 'Fine-Grained Detection of Solidarity for Women and Migrants in 155 Years of German Parliamentary Debates'), (381, 'MirrorStories: Reflecting Diversity through Personalized Narrative Generation with Large Language Models')]
+          ----------------------------------------
+          Label: knowledge_guided_comparative_studies
+          Dimension: evaluation_methods
+          Description: This cluster focuses on comparative studies that leverage domain knowledge to enhance the evaluation of NLP techniques.
+          Level: 2
+          Source: width
+          # of Papers: 28
+          Example Papers: [(72, 'Learning Interpretable Legal Case Retrieval via Knowledge-Guided Case Reformulation'), (180, 'From Insights to Actions: The Impact of Interpretability and Analysis Research on NLP'), (269, 'Retrieve-Plan-Generation: An Iterative Planning and Answering Framework for Knowledge-Intensive LLM Generation')]
+          ----------------------------------------
+          Label: multimodal_comparative_studies
+          Dimension: evaluation_methods
+          Description: This cluster encompasses studies that compare the effectiveness of NLP techniques across different modalities, such as text, audio, and visual data.
+          Level: 2
+          Source: width
+          # of Papers: 53
+          Example Papers: [(132, 'By My Eyes: Grounding Multimodal Large Language Models with Sensor Data via Visual Prompting'), (157, 'An Electoral Approach to Diversify LLM-based Multi-Agent Collective Decision-Making'), (166, 'With Ears to See and Eyes to Hear: Sound Symbolism Experiments with Multimodal Large Language Models')]
+          ----------------------------------------
+          Label: cross_model_comparative_studies
+          Dimension: evaluation_methods
+          Description: This cluster includes studies that focus on the comparative evaluation of different model architectures and their performance in various tasks.
+          Level: 2
+          Source: width
+          # of Papers: 327
+          Example Papers: [(14, 'Fine-Tuning or Retrieval? Comparing Knowledge Injection in LLMs'), (20, 'Scaling Properties of Speech Language Models'), (24, 'Consolidating Ranking and Relevance Predictions of Large Language Models through Post-Processing')]
+          ----------------------------------------
+          Label: prompt_comparison
+          Dimension: evaluation_methods
+          Description: This cluster examines the comparative effectiveness of various prompting techniques in NLP tasks.
+          Level: 2
+          Source: width
+          # of Papers: 70
+          Example Papers: [(24, 'Consolidating Ranking and Relevance Predictions of Large Language Models through Post-Processing'), (26, 'Impeding LLM-assisted Cheating in Introductory Programming Assignments via Adversarial Perturbation'), (32, 'Evaluating the Instruction-Following Robustness of Large Language Models to Prompt Injection')]
+          ----------------------------------------
+          Label: domain_robustness_evaluation
+          Dimension: evaluation_methods
+          Description: This cluster focuses on the evaluation of NLP models' robustness across different domains and contexts.
+          Level: 2
+          Source: width
+          # of Papers: 33
+          Example Papers: [(32, 'Evaluating the Instruction-Following Robustness of Large Language Models to Prompt Injection'), (208, 'Toxicity Detection is NOT all you Need: Measuring the Gaps to Supporting Volunteer Content Moderators through a User-Centric Method'), (305, 'How Far Can We Extract Diverse Perspectives from Large Language Models?')]
+          ----------------------------------------
+     ----------------------------------------
+     Label: user_studies
+     Dimension: evaluation_methods
+     Description: This evaluation method gathers feedback from end-users to assess the usability, effectiveness, and satisfaction of NLP applications, providing insights into real-world performance and user experience.
+     Level: 1
+     Source: Initial
+     # of Papers: 45
+     Example Papers: [(41, 'Successfully Guiding Humans with Imperfect Instructions by Highlighting Potential Errors and Suggesting Corrections'), (130, "I Need Help! Evaluating LLM's Ability to Ask for Users' Support: A Case Study on Text-to-SQL Generation"), (145, 'Large Language Model as an Assignment Evaluator: Insights, Feedback, and Challenges in a 1000+ Student Course')]
+     ----------------------------------------
+     Children:
+          Label: user_experience_evaluation
+          Dimension: evaluation_methods
+          Description: This cluster focuses on evaluating the overall user experience and satisfaction with NLP applications.
+          Level: 2
+          Source: depth
+          # of Papers: 1
+          Example Papers: [(2272, 'Active Listening: Personalized Question Generation in Open-Domain Social Conversation with User Model Based Prompting')]
+          ----------------------------------------
+          Label: user_study
+          Dimension: evaluation_methods
+          Description: This cluster encompasses studies that gather direct feedback from users to assess various aspects of NLP applications.
+          Level: 2
+          Source: depth
+          # of Papers: 42
+          Example Papers: [(41, 'Successfully Guiding Humans with Imperfect Instructions by Highlighting Potential Errors and Suggesting Corrections'), (130, "I Need Help! Evaluating LLM's Ability to Ask for Users' Support: A Case Study on Text-to-SQL Generation"), (145, 'Large Language Model as an Assignment Evaluator: Insights, Feedback, and Challenges in a 1000+ Student Course')]
+          ----------------------------------------
+          Label: human-centered_evaluation
+          Dimension: evaluation_methods
+          Description: This cluster includes evaluations that prioritize human perspectives and interactions in the assessment of NLP systems.
+          Level: 2
+          Source: depth
+          # of Papers: 14
+          Example Papers: [(209, 'A User-Centric Multi-Intent Benchmark for Evaluating Large Language Models'), (326, 'The Computational Anatomy of Humility: Modeling Intellectual Humility in Online Public Discourse'), (553, 'Into the Unknown Unknowns: Engaged Human Learning through Participation in Language Model Agent Conversations')]
+          ----------------------------------------
+          Label: user_bias_evaluation
+          Dimension: evaluation_methods
+          Description: This cluster focuses on evaluating biases in user interactions and perceptions related to NLP applications.
+          Level: 2
+          Source: depth
+          # of Papers: 3
+          Example Papers: [(749, 'Linguistic Bias in ChatGPT: Language Models Reinforce Dialect Discrimination'), (1001, 'What the Harm? Quantifying the Tangible Impact of Gender Bias in Machine Translation with a Human-centered Study'), (1089, 'Adaptable Moral Stances of Large Language Models on Sexist Content: Implications for Society and Gender Discourse')]
+          ----------------------------------------
+          Label: human_guidance_evaluation
+          Dimension: evaluation_methods
+          Description: This cluster examines the effectiveness of human guidance in enhancing user interactions with NLP systems.
+          Level: 2
+          Source: depth
+          # of Papers: 2
+          Example Papers: [(41, 'Successfully Guiding Humans with Imperfect Instructions by Highlighting Potential Errors and Suggesting Corrections'), (1229, 'The LLM Effect: Are Humans Truly Using LLMs, or Are They Being Influenced By Them Instead?')]
+          ----------------------------------------
+     ----------------------------------------
+     Label: error_analysis
+     Dimension: evaluation_methods
+     Description: This method involves a detailed examination of the errors made by NLP models to identify common failure modes and areas for improvement, guiding future model development and refinement.
+     Level: 1
+     Source: Initial
+     # of Papers: 439
+     Example Papers: [(2, 'FIZZ: Factual Inconsistency Detection by Zoom-in Summary and Zoom-out Document'), (18, 'RoTBench: A Multi-Level Benchmark for Evaluating the Robustness of Large Language Models in Tool Learning'), (26, 'Impeding LLM-assisted Cheating in Introductory Programming Assignments via Adversarial Perturbation')]
+     ----------------------------------------
+     Children:
+          Label: hallucination_analysis
+          Dimension: evaluation_methods
+          Description: This cluster focuses on the evaluation methods aimed at identifying and analyzing hallucinations produced by NLP models.
+          Level: 2
+          Source: depth
+          # of Papers: 20
+          Example Papers: [(66, 'EFUF: Efficient Fine-Grained Unlearning Framework for Mitigating Hallucinations in Multimodal Large Language Models'), (83, 'Lookback Lens: Detecting and Mitigating Contextual Hallucinations in Large Language Models Using Only Attention Maps'), (151, 'Knowledge Verification to Nip Hallucination in the Bud')]
+          ----------------------------------------
+          Label: error_analysis_methodology
+          Dimension: evaluation_methods
+          Description: This cluster encompasses various methodologies specifically designed for conducting error analysis in NLP models.
+          Level: 2
+          Source: depth
+          # of Papers: 417
+          Example Papers: [(2, 'FIZZ: Factual Inconsistency Detection by Zoom-in Summary and Zoom-out Document'), (18, 'RoTBench: A Multi-Level Benchmark for Evaluating the Robustness of Large Language Models in Tool Learning'), (26, 'Impeding LLM-assisted Cheating in Introductory Programming Assignments via Adversarial Perturbation')]
+          ----------------------------------------
+          Label: performance_analysis
+          Dimension: evaluation_methods
+          Description: This cluster includes methods that assess and analyze the performance of NLP models, focusing on their strengths and weaknesses.
+          Level: 2
+          Source: depth
+          # of Papers: 55
+          Example Papers: [(193, 'Pixology: Probing the Linguistic and Visual Capabilities of Pixel-based Language Models'), (208, 'Toxicity Detection is NOT all you Need: Measuring the Gaps to Supporting Volunteer Content Moderators through a User-Centric Method'), (213, 'What do Large Language Models Need for Machine Translation Evaluation?')]
+          ----------------------------------------
+          Label: error_detection
+          Dimension: evaluation_methods
+          Description: This cluster focuses on methods for detecting various types of errors in NLP models, including grammatical and factual errors.
+          Level: 2
+          Source: depth
+          # of Papers: 100
+          Example Papers: [(2, 'FIZZ: Factual Inconsistency Detection by Zoom-in Summary and Zoom-out Document'), (32, 'Evaluating the Instruction-Following Robustness of Large Language Models to Prompt Injection'), (41, 'Successfully Guiding Humans with Imperfect Instructions by Highlighting Potential Errors and Suggesting Corrections')]
+          ----------------------------------------
+          Label: diagnostic_evaluation
+          Dimension: evaluation_methods
+          Description: This cluster involves evaluation methods that diagnose the underlying issues and failure modes of NLP models.
+          Level: 2
+          Source: depth
+          # of Papers: 122
+          Example Papers: [(32, 'Evaluating the Instruction-Following Robustness of Large Language Models to Prompt Injection'), (83, 'Lookback Lens: Detecting and Mitigating Contextual Hallucinations in Large Language Models Using Only Attention Maps'), (115, 'Embedding and Gradient Say Wrong: A White-Box Method for Hallucination Detection')]
+          ----------------------------------------
+     ----------------------------------------
+     Label: proposed_metrics
+     Dimension: evaluation_methods
+     Description: This category includes the development of new evaluation metrics or frameworks specifically designed to measure the performance of NLP models in ways that traditional metrics may not capture effectively.
+     Level: 1
+     Source: Initial
+     # of Papers: 514
+     Example Papers: [(2, 'FIZZ: Factual Inconsistency Detection by Zoom-in Summary and Zoom-out Document'), (17, 'Uncertainty in Language Models: Assessment through Rank-Calibration'), (18, 'RoTBench: A Multi-Level Benchmark for Evaluating the Robustness of Large Language Models in Tool Learning')]
+     ----------------------------------------
+     Children:
+          Label: calibration_metrics
+          Dimension: evaluation_methods
+          Description: This cluster focuses on metrics that assess the calibration of model predictions, ensuring that predicted probabilities reflect true outcomes.
+          Level: 2
+          Source: depth
+          # of Papers: 18
+          Example Papers: [(17, 'Uncertainty in Language Models: Assessment through Rank-Calibration'), (172, 'Calibrating the Confidence of Large Language Models by Eliciting Fidelity'), (299, 'Pretraining Data Detection for Large Language Models: A Divergence-based Calibration Method')]
+          ----------------------------------------
+          Label: novel_metrics
+          Dimension: evaluation_methods
+          Description: This cluster encompasses newly proposed metrics aimed at improving the evaluation of NLP models beyond traditional approaches.
+          Level: 2
+          Source: depth
+          # of Papers: 414
+          Example Papers: [(2, 'FIZZ: Factual Inconsistency Detection by Zoom-in Summary and Zoom-out Document'), (17, 'Uncertainty in Language Models: Assessment through Rank-Calibration'), (18, 'RoTBench: A Multi-Level Benchmark for Evaluating the Robustness of Large Language Models in Tool Learning')]
+          ----------------------------------------
+          Label: explainability_metrics
+          Dimension: evaluation_methods
+          Description: This cluster includes metrics designed to evaluate the explainability and interpretability of NLP models and their outputs.
+          Level: 2
+          Source: depth
+          # of Papers: 63
+          Example Papers: [(35, 'Evaluating Readability and Faithfulness of Concept-based Explanations'), (49, "Integrating Plutchik's Theory with Mixture of Experts for Enhancing Emotion Classification"), (94, 'Cross-domain NER with Generated Task-Oriented Knowledge: An Empirical Study from Information Density Perspective')]
+          ----------------------------------------
+          Label: factuality_metrics
+          Dimension: evaluation_methods
+          Description: This cluster focuses on metrics that assess the factual accuracy of generated content in NLP applications.
+          Level: 2
+          Source: depth
+          # of Papers: 68
+          Example Papers: [(2, 'FIZZ: Factual Inconsistency Detection by Zoom-in Summary and Zoom-out Document'), (30, 'On Fake News Detection with LLM Enhanced Semantics Mining'), (61, 'RULE: Reliable Multimodal RAG for Factuality in Medical Vision Language Models')]
+          ----------------------------------------
+          Label: human_evaluation
+          Dimension: evaluation_methods
+          Description: This cluster encompasses methods and metrics for evaluating NLP models based on human judgment and preferences.
+          Level: 2
+          Source: depth
+          # of Papers: 58
+          Example Papers: [(71, 'Fairer Preferences Elicit Improved Human-Aligned Large Language Model Judgments'), (126, 'VideoScore: Building Automatic Metrics to Simulate Fine-grained Human Feedback for Video Generation'), (199, 'Unsupervised Human Preference Learning')]
+          ----------------------------------------
+     ----------------------------------------
+     Label: evaluation_metrics
+     Dimension: evaluation_methods
+     Description: This cluster focuses on the development and application of various metrics for evaluating the performance of NLP models, including new and traditional approaches.
+     Level: 1
+     Source: width
+     # of Papers: 756
+     Example Papers: [(2, 'FIZZ: Factual Inconsistency Detection by Zoom-in Summary and Zoom-out Document'), (10, "Eyes Don't Lie: Subjective Hate Annotation and Detection with Gaze"), (12, '"Thinking" Fair and Slow: On the Efficacy of Structured Prompts for Debiasing Language Models')]
+     ----------------------------------------
+     Children:
+          Label: performance_evaluation_metrics
+          Dimension: evaluation_methods
+          Description: This cluster focuses on metrics specifically designed to evaluate the performance of NLP models across various tasks.
+          Level: 2
+          Source: depth
+          # of Papers: 610
+          Example Papers: [(2, 'FIZZ: Factual Inconsistency Detection by Zoom-in Summary and Zoom-out Document'), (10, "Eyes Don't Lie: Subjective Hate Annotation and Detection with Gaze"), (30, 'On Fake News Detection with LLM Enhanced Semantics Mining')]
+          ----------------------------------------
+          Label: bias_evaluation_metrics
+          Dimension: evaluation_methods
+          Description: This cluster encompasses metrics aimed at assessing and evaluating bias in NLP models and datasets.
+          Level: 2
+          Source: depth
+          # of Papers: 26
+          Example Papers: [(12, '"Thinking" Fair and Slow: On the Efficacy of Structured Prompts for Debiasing Language Models'), (33, 'A Study of Nationality Bias in Names and Perplexity using Off-the-Shelf Affect-related Tweet Classifiers'), (107, 'Evaluating Psychological Safety of Large Language Models')]
+          ----------------------------------------
+          Label: explanation_evaluation_metrics
+          Dimension: evaluation_methods
+          Description: This cluster focuses on metrics that evaluate the quality and effectiveness of explanations provided by NLP models.
+          Level: 2
+          Source: depth
+          # of Papers: 30
+          Example Papers: [(35, 'Evaluating Readability and Faithfulness of Concept-based Explanations'), (171, 'Verification and Refinement of Natural Language Explanations through LLM-Symbolic Theorem Proving'), (346, 'Model Internals-based Answer Attribution for Trustworthy Retrieval-Augmented Generation')]
+          ----------------------------------------
+          Label: uncertainty_metrics
+          Dimension: evaluation_methods
+          Description: This cluster includes metrics that assess the uncertainty and confidence levels of NLP model predictions.
+          Level: 2
+          Source: depth
+          # of Papers: 21
+          Example Papers: [(17, 'Uncertainty in Language Models: Assessment through Rank-Calibration'), (172, 'Calibrating the Confidence of Large Language Models by Eliciting Fidelity'), (298, 'LUQ: Long-text Uncertainty Quantification for LLMs')]
+          ----------------------------------------
+          Label: translation_quality_metrics
+          Dimension: evaluation_methods
+          Description: This cluster focuses on metrics specifically designed to evaluate the quality of machine translation outputs.
+          Level: 2
+          Source: depth
+          # of Papers: 59
+          Example Papers: [(23, 'Fine-Tuning Large Language Models to Translate: Will a Touch of Noisy Data in Misaligned Languages Suffice?'), (29, 'EmphAssess : a Prosodic Benchmark on Assessing Emphasis Transfer in Speech-to-Speech Models'), (187, 'Word Alignment as Preference for Machine Translation')]
+          ----------------------------------------
+     ----------------------------------------
+     Label: bias_analysis_and_mitigation
+     Dimension: evaluation_methods
+     Description: This cluster encompasses methods for analyzing and mitigating bias in NLP models, addressing ethical considerations in model performance.
+     Level: 1
+     Source: width
+     # of Papers: 268
+     Example Papers: [(9, 'Hateful Word in Context Classification'), (12, '"Thinking" Fair and Slow: On the Efficacy of Structured Prompts for Debiasing Language Models'), (15, 'Systematic Biases in LLM Simulations of Debates')]
+     ----------------------------------------
+     Children:
+          Label: bias_detection
+          Dimension: evaluation_methods
+          Description: This cluster focuses on methods and techniques for identifying bias in various NLP models and datasets.
+          Level: 2
+          Source: depth
+          # of Papers: 70
+          Example Papers: [(15, 'Systematic Biases in LLM Simulations of Debates'), (28, 'On the Influence of Gender and Race in Romantic Relationship Prediction from Large Language Models'), (33, 'A Study of Nationality Bias in Names and Perplexity using Off-the-Shelf Affect-related Tweet Classifiers')]
+          ----------------------------------------
+          Label: bias_mitigation
+          Dimension: evaluation_methods
+          Description: This cluster encompasses strategies and methods aimed at reducing or eliminating bias in NLP systems.
+          Level: 2
+          Source: depth
+          # of Papers: 157
+          Example Papers: [(12, '"Thinking" Fair and Slow: On the Efficacy of Structured Prompts for Debiasing Language Models'), (15, 'Systematic Biases in LLM Simulations of Debates'), (16, 'Studying and Mitigating Biases in Sign Language Understanding Models')]
+          ----------------------------------------
+          Label: bias_evaluation
+          Dimension: evaluation_methods
+          Description: This cluster includes methods for assessing and evaluating the presence and impact of bias in NLP models.
+          Level: 2
+          Source: depth
+          # of Papers: 114
+          Example Papers: [(15, 'Systematic Biases in LLM Simulations of Debates'), (23, 'Fine-Tuning Large Language Models to Translate: Will a Touch of Noisy Data in Misaligned Languages Suffice?'), (69, 'AgentReview: Exploring Peer Review Dynamics with LLM Agents')]
+          ----------------------------------------
+          Label: fairness_evaluation
+          Dimension: evaluation_methods
+          Description: This cluster focuses on methods for evaluating fairness in NLP models and ensuring equitable outcomes.
+          Level: 2
+          Source: depth
+          # of Papers: 22
+          Example Papers: [(112, 'Do We Need Language-Specific Fact-Checking Models? The Case of Chinese'), (243, "Hidden Persuaders: LLMs' Political Leaning and Their Influence on Voters"), (255, 'Deciphering Rumors: A Multi-Task Learning Approach with Intent-aware Hierarchical Contrastive Learning')]
+          ----------------------------------------
+          Label: interpretability_analysis
+          Dimension: evaluation_methods
+          Description: This cluster encompasses methods for analyzing and interpreting bias in NLP models to enhance transparency.
+          Level: 2
+          Source: depth
+          # of Papers: 44
+          Example Papers: [(112, 'Do We Need Language-Specific Fact-Checking Models? The Case of Chinese'), (242, 'STOP! Benchmarking Large Language Models with Sensitivity Testing on Offensive Progressions'), (255, 'Deciphering Rumors: A Multi-Task Learning Approach with Intent-aware Hierarchical Contrastive Learning')]
+          ----------------------------------------
+     ----------------------------------------
+     Label: adversarial_evaluation
+     Dimension: evaluation_methods
+     Description: This cluster includes methods for evaluating the robustness of NLP models against adversarial attacks and understanding their vulnerabilities.
+     Level: 1
+     Source: width
+     # of Papers: 110
+     Example Papers: [(26, 'Impeding LLM-assisted Cheating in Introductory Programming Assignments via Adversarial Perturbation'), (32, 'Evaluating the Instruction-Following Robustness of Large Language Models to Prompt Injection'), (40, 'FLIRT: Feedback Loop In-context Red Teaming')]
+     ----------------------------------------
+     Children:
+          Label: adversarial_attack_evaluation
+          Dimension: evaluation_methods
+          Description: This cluster focuses on methods for evaluating the effectiveness and impact of various adversarial attacks on NLP models.
+          Level: 2
+          Source: depth
+          # of Papers: 70
+          Example Papers: [(26, 'Impeding LLM-assisted Cheating in Introductory Programming Assignments via Adversarial Perturbation'), (32, 'Evaluating the Instruction-Following Robustness of Large Language Models to Prompt Injection'), (40, 'FLIRT: Feedback Loop In-context Red Teaming')]
+          ----------------------------------------
+          Label: model_robustness_evaluation
+          Dimension: evaluation_methods
+          Description: This cluster encompasses methods aimed at assessing the robustness of models against adversarial threats and vulnerabilities.
+          Level: 2
+          Source: depth
+          # of Papers: 74
+          Example Papers: [(26, 'Impeding LLM-assisted Cheating in Introductory Programming Assignments via Adversarial Perturbation'), (32, 'Evaluating the Instruction-Following Robustness of Large Language Models to Prompt Injection'), (106, 'DA^3: A Distribution-Aware Adversarial Attack against Language Models')]
+          ----------------------------------------
+          Label: vulnerability_understanding
+          Dimension: evaluation_methods
+          Description: This cluster includes methods that focus on understanding the vulnerabilities of NLP models to adversarial attacks.
+          Level: 2
+          Source: depth
+          # of Papers: 62
+          Example Papers: [(26, 'Impeding LLM-assisted Cheating in Introductory Programming Assignments via Adversarial Perturbation'), (32, 'Evaluating the Instruction-Following Robustness of Large Language Models to Prompt Injection'), (40, 'FLIRT: Feedback Loop In-context Red Teaming')]
+          ----------------------------------------
+          Label: defensive_evaluation
+          Dimension: evaluation_methods
+          Description: This cluster covers evaluation methods specifically designed to assess the effectiveness of defenses against adversarial attacks.
+          Level: 2
+          Source: depth
+          # of Papers: 61
+          Example Papers: [(26, 'Impeding LLM-assisted Cheating in Introductory Programming Assignments via Adversarial Perturbation'), (32, 'Evaluating the Instruction-Following Robustness of Large Language Models to Prompt Injection'), (40, 'FLIRT: Feedback Loop In-context Red Teaming')]
+          ----------------------------------------
+     ----------------------------------------
+     Label: dataset_creation_and_analysis
+     Dimension: evaluation_methods
+     Description: This cluster focuses on the methodologies for creating and analyzing datasets used in NLP, including considerations for multilingual and cross-linguistic contexts.
+     Level: 1
+     Source: width
+     # of Papers: 1068
+     Example Papers: [(4, 'Table Question Answering for Low-resourced Indic Languages'), (5, 'ImageInWords: Unlocking Hyper-Detailed Image Descriptions'), (7, 'When LLMs Meets Acoustic Landmarks: An Efficient Approach to Integrate Speech into Large Language Models for Depression Detection')]
+     ----------------------------------------
+     Children:
+          Label: dataset_creation
+          Dimension: evaluation_methods
+          Description: This cluster focuses on the methodologies and practices involved in the creation of datasets for various NLP tasks.
+          Level: 2
+          Source: depth
+          # of Papers: 759
+          Example Papers: [(4, 'Table Question Answering for Low-resourced Indic Languages'), (5, 'ImageInWords: Unlocking Hyper-Detailed Image Descriptions'), (7, 'When LLMs Meets Acoustic Landmarks: An Efficient Approach to Integrate Speech into Large Language Models for Depression Detection')]
+          ----------------------------------------
+          Label: dataset_evaluation
+          Dimension: evaluation_methods
+          Description: This cluster encompasses various methods and metrics used to evaluate the quality and effectiveness of datasets in NLP.
+          Level: 2
+          Source: depth
+          # of Papers: 179
+          Example Papers: [(127, 'LogicAsker: Evaluating and Improving the Logical Reasoning Ability of Large Language Models'), (174, 'How Hard is this Test Set? NLI Characterization by Exploiting Training Dynamics'), (186, 'ScalingFilter: Assessing Data Quality through Inverse Utilization of Scaling Laws')]
+          ----------------------------------------
+          Label: dataset_analysis
+          Dimension: evaluation_methods
+          Description: This cluster focuses on the analytical techniques used to assess and interpret datasets in NLP.
+          Level: 2
+          Source: depth
+          # of Papers: 377
+          Example Papers: [(5, 'ImageInWords: Unlocking Hyper-Detailed Image Descriptions'), (7, 'When LLMs Meets Acoustic Landmarks: An Efficient Approach to Integrate Speech into Large Language Models for Depression Detection'), (9, 'Hateful Word in Context Classification')]
+          ----------------------------------------
+          Label: evaluation_benchmarking
+          Dimension: evaluation_methods
+          Description: This cluster includes methods and frameworks for benchmarking datasets and models in NLP.
+          Level: 2
+          Source: depth
+          # of Papers: 39
+          Example Papers: [(242, 'STOP! Benchmarking Large Language Models with Sensitivity Testing on Offensive Progressions'), (321, 'Leave No Document Behind: Benchmarking Long-Context LLMs with Extended Multi-Doc QA'), (356, 'Evaluating LLMs for Targeted Concept Simplification for Domain-Specific Texts')]
+          ----------------------------------------
+          Label: evaluation_frameworks
+          Dimension: evaluation_methods
+          Description: This cluster focuses on the design and implementation of frameworks for evaluating datasets and models in NLP.
+          Level: 2
+          Source: depth
+          # of Papers: 18
+          Example Papers: [(690, 'ABSEval: An Agent-based Framework for Script Evaluation'), (1084, 'Re-Evaluating Evaluation for Multilingual Summarization'), (1165, 'PREDICT: Multi-Agent-based Debate Simulation for Generalized Hate Speech Detection')]
+          ----------------------------------------
+          Label: dataset_bias_analysis
+          Dimension: evaluation_methods
+          Description: This cluster focuses on the examination of biases present in datasets and their implications for NLP applications.
+          Level: 2
+          Source: width
+          # of Papers: 31
+          Example Papers: [(112, 'Do We Need Language-Specific Fact-Checking Models? The Case of Chinese'), (242, 'STOP! Benchmarking Large Language Models with Sensitivity Testing on Offensive Progressions'), (470, 'Resampled Datasets Are Not Enough: Mitigating Societal Bias Beyond Single Attributes')]
+          ----------------------------------------
+          Label: dataset_impact_analysis
+          Dimension: evaluation_methods
+          Description: This cluster investigates the effects and implications of datasets on model performance and outcomes in NLP.
+          Level: 2
+          Source: width
+          # of Papers: 14
+          Example Papers: [(493, '"Flex Tape Can\'t Fix That": Bias and Misinformation in Edited Language Models'), (520, 'LLM See, LLM Do: Leveraging Active Inheritance to Target Non-Differentiable Objectives'), (678, 'Do LLMs Overcome Shortcut Learning? An Evaluation of Shortcut Challenges in Large Language Models')]
+          ----------------------------------------
+          Label: dataset_modularization
+          Dimension: evaluation_methods
+          Description: This cluster explores the strategies for breaking down datasets into modular components for improved analysis and usability.
+          Level: 2
+          Source: width
+          # of Papers: 12
+          Example Papers: [(239, 'Modular Pluralism: Pluralistic Alignment via Multi-LLM Collaboration'), (373, 'Neuron Specialization: Leveraging Intrinsic Task Modularity for Multilingual Machine Translation'), (1165, 'PREDICT: Multi-Agent-based Debate Simulation for Generalized Hate Speech Detection')]
+          ----------------------------------------
+          Label: dataset_improvement
+          Dimension: evaluation_methods
+          Description: This cluster focuses on methodologies aimed at enhancing the quality and effectiveness of datasets for NLP tasks.
+          Level: 2
+          Source: width
+          # of Papers: 22
+          Example Papers: [(127, 'LogicAsker: Evaluating and Improving the Logical Reasoning Ability of Large Language Models'), (407, 'Python is Not Always the Best Choice: Embracing Multilingual Program of Thoughts'), (424, 'Strategic Demonstration Selection for Improved Fairness in LLM In-Context Learning')]
+          ----------------------------------------
+          Label: dataset_validation
+          Dimension: evaluation_methods
+          Description: This cluster encompasses methods for validating the integrity and reliability of datasets used in NLP.
+          Level: 2
+          Source: width
+          # of Papers: 11
+          Example Papers: [(1165, 'PREDICT: Multi-Agent-based Debate Simulation for Generalized Hate Speech Detection'), (1296, 'KMatrix: A Flexible Heterogeneous Knowledge Enhancement Toolkit for Large Language Model'), (1310, 'RAGLAB: A Modular and Research-Oriented Unified Framework for Retrieval-Augmented Generation')]
+          ----------------------------------------
+     ----------------------------------------
+----------------------------------------

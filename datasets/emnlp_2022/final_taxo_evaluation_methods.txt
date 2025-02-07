@@ -1,0 +1,202 @@
+Label: natural_language_processing
+Dimension: evaluation_methods
+Description: None
+Level: 0
+Source: Initial
+# of Papers: 445
+Example Papers: [(0, 'Generative Knowledge Graph Construction: A Review'), (1, 'CDConv: A Benchmark for Contradiction Detection in Chinese Conversations'), (5, 'Backdoor Attacks in Federated Learning by Rare Embeddings and Gradient Ensembling')]
+----------------------------------------
+Children:
+     Label: benchmarking
+     Dimension: evaluation_methods
+     Description: Benchmarking involves the systematic comparison of different models or algorithms on standardized datasets to evaluate their performance and identify strengths and weaknesses.
+     Level: 1
+     Source: Initial
+     # of Papers: 123
+     Example Papers: [(1, 'CDConv: A Benchmark for Contradiction Detection in Chinese Conversations'), (7, 'Toward Unifying Text Segmentation and Long Document Summarization'), (10, 'PAIR: Prompt-Aware margIn Ranking for Counselor Reflection Scoring in Motivational Interviewing')]
+     ----------------------------------------
+     Children:
+          Label: benchmarking_techniques
+          Dimension: evaluation_methods
+          Description: This cluster focuses on various methodologies and approaches used for benchmarking models and algorithms in natural language processing.
+          Level: 2
+          Source: depth
+          # of Papers: 100
+          Example Papers: [(1, 'CDConv: A Benchmark for Contradiction Detection in Chinese Conversations'), (7, 'Toward Unifying Text Segmentation and Long Document Summarization'), (10, 'PAIR: Prompt-Aware margIn Ranking for Counselor Reflection Scoring in Motivational Interviewing')]
+          ----------------------------------------
+          Label: cross-lingual_benchmarking
+          Dimension: evaluation_methods
+          Description: This cluster encompasses benchmarking methods that evaluate models across different languages and linguistic contexts.
+          Level: 2
+          Source: depth
+          # of Papers: 10
+          Example Papers: [(44, 'Crossmodal-3600: A Massively Multilingual Multimodal Evaluation Dataset'), (131, 'GeoMLAMA: Geo-Diverse Commonsense Probing on Multilingual Pre-Trained Language Models'), (137, 'Stanceosaurus: Classifying Stance Towards Multicultural Misinformation')]
+          ----------------------------------------
+          Label: robustness_evaluation
+          Dimension: evaluation_methods
+          Description: This cluster includes methods aimed at assessing the robustness and reliability of models under various conditions.
+          Level: 2
+          Source: depth
+          # of Papers: 11
+          Example Papers: [(44, 'Crossmodal-3600: A Massively Multilingual Multimodal Evaluation Dataset'), (131, 'GeoMLAMA: Geo-Diverse Commonsense Probing on Multilingual Pre-Trained Language Models'), (137, 'Stanceosaurus: Classifying Stance Towards Multicultural Misinformation')]
+          ----------------------------------------
+          Label: domain_adaptation_benchmarking
+          Dimension: evaluation_methods
+          Description: This cluster focuses on benchmarking techniques specifically designed for evaluating model performance in different domains.
+          Level: 2
+          Source: depth
+          # of Papers: 11
+          Example Papers: [(41, 'Generative Language Models for Paragraph-Level Question Generation'), (62, 'M2D2: A Massively Multi-Domain Language Modeling Dataset'), (131, 'GeoMLAMA: Geo-Diverse Commonsense Probing on Multilingual Pre-Trained Language Models')]
+          ----------------------------------------
+          Label: few-shot_benchmarking
+          Dimension: evaluation_methods
+          Description: This cluster covers benchmarking methods that evaluate model performance in few-shot learning scenarios.
+          Level: 2
+          Source: depth
+          # of Papers: 6
+          Example Papers: [(68, 'Multilingual Relation Classification via Efficient and Effective Prompting'), (129, 'Large language models are few-shot clinical information extractors'), (131, 'GeoMLAMA: Geo-Diverse Commonsense Probing on Multilingual Pre-Trained Language Models')]
+          ----------------------------------------
+     ----------------------------------------
+     Label: comparative_studies
+     Dimension: evaluation_methods
+     Description: Comparative studies assess the performance of various natural language processing methods against each other, providing insights into their relative effectiveness and applicability in different contexts.
+     Level: 1
+     Source: Initial
+     # of Papers: 284
+     Example Papers: [(1, 'CDConv: A Benchmark for Contradiction Detection in Chinese Conversations'), (6, 'Generating Natural Language Proofs with Verifier-Guided Search'), (7, 'Toward Unifying Text Segmentation and Long Document Summarization')]
+     ----------------------------------------
+     Children:
+          Label: comparative_performance_studies
+          Dimension: evaluation_methods
+          Description: This cluster focuses on studies that compare the performance of various NLP models and techniques across different tasks and datasets.
+          Level: 2
+          Source: depth
+          # of Papers: 166
+          Example Papers: [(6, 'Generating Natural Language Proofs with Verifier-Guided Search'), (8, 'The Geometry of Multilingual Language Model Representations'), (15, 'Learning a Grammar Inducer from Massive Uncurated Instructional Videos')]
+          ----------------------------------------
+          Label: cross-lingual_transfer_evaluation
+          Dimension: evaluation_methods
+          Description: This cluster encompasses evaluations that assess the effectiveness of models in cross-lingual transfer scenarios.
+          Level: 2
+          Source: depth
+          # of Papers: 23
+          Example Papers: [(44, 'Crossmodal-3600: A Massively Multilingual Multimodal Evaluation Dataset'), (100, 'A Multilingual Perspective Towards the Evaluation of Attribution Methods in Natural Language Inference'), (166, 'Training Dynamics for Curriculum Learning: A Study on Monolingual and Cross-lingual NLU')]
+          ----------------------------------------
+          Label: comparative_analysis
+          Dimension: evaluation_methods
+          Description: This cluster includes studies that perform comparative analyses of different NLP methods, focusing on their strengths and weaknesses.
+          Level: 2
+          Source: depth
+          # of Papers: 138
+          Example Papers: [(1, 'CDConv: A Benchmark for Contradiction Detection in Chinese Conversations'), (7, 'Toward Unifying Text Segmentation and Long Document Summarization'), (8, 'The Geometry of Multilingual Language Model Representations')]
+          ----------------------------------------
+          Label: fairness_evaluation
+          Dimension: evaluation_methods
+          Description: This cluster is dedicated to evaluating the fairness of NLP models and techniques through comparative studies.
+          Level: 2
+          Source: depth
+          # of Papers: 4
+          Example Papers: [(9, 'Improving Complex Knowledge Base Question Answering via Question-to-Action and Question-to-Question Alignment'), (100, 'A Multilingual Perspective Towards the Evaluation of Attribution Methods in Natural Language Inference'), (532, 'Bridging Fairness and Environmental Sustainability in Natural Language Processing')]
+          ----------------------------------------
+     ----------------------------------------
+     Label: error_analysis
+     Dimension: evaluation_methods
+     Description: Error analysis focuses on identifying and categorizing the types of errors made by NLP models, helping researchers understand limitations and areas for improvement.
+     Level: 1
+     Source: Initial
+     # of Papers: 111
+     Example Papers: [(13, 'Interpreting Language Models with Contrastive Explanations'), (22, 'Certified Error Control of Candidate Set Pruning for Two-Stage Relevance Ranking'), (24, 'Robustness of Fusion-based Multimodal Classifiers to Cross-Modal Content Dilutions')]
+     ----------------------------------------
+     Children:
+          Label: bias_analysis
+          Dimension: evaluation_methods
+          Description: Bias analysis focuses on identifying and mitigating biases present in NLP models, ensuring fairness and equity in model predictions.
+          Level: 2
+          Source: depth
+          # of Papers: 7
+          Example Papers: [(132, 'The (Undesired) Attenuation of Human Biases by Multilinguality'), (138, 'Gendered Mental Health Stigma in Masked Language Models'), (244, 'BERTScore is Unfair: On Social Bias in Language Model-Based Metrics for text generation')]
+          ----------------------------------------
+          Label: error_characterization
+          Dimension: evaluation_methods
+          Description: Error characterization involves categorizing and understanding the types of errors made by NLP models to improve their performance.
+          Level: 2
+          Source: depth
+          # of Papers: 14
+          Example Papers: [(40, 'When Can Transformers Ground and Compose: Insights from Compositional Generalization Benchmarks'), (127, 'AfroLID: A Neural Language Identification Tool for African Languages'), (169, 'Calibrating Zero-shot Cross-lingual (Un-)structured Predictions')]
+          ----------------------------------------
+          Label: model_evaluation
+          Dimension: evaluation_methods
+          Description: Model evaluation encompasses various methods for assessing the overall performance and limitations of NLP models.
+          Level: 2
+          Source: depth
+          # of Papers: 9
+          Example Papers: [(63, "``Will You Find These Shortcuts?'' A Protocol for Evaluating the Faithfulness of Input Salience Methods for Text Classification"), (169, 'Calibrating Zero-shot Cross-lingual (Un-)structured Predictions'), (237, "That's the Wrong Lung! Evaluating and Improving the Interpretability of Unsupervised Multimodal Encoders for Medical Data")]
+          ----------------------------------------
+          Label: error_analysis_method
+          Dimension: evaluation_methods
+          Description: Error analysis methods focus on specific techniques and frameworks for conducting error analysis in NLP models.
+          Level: 2
+          Source: depth
+          # of Papers: 88
+          Example Papers: [(13, 'Interpreting Language Models with Contrastive Explanations'), (22, 'Certified Error Control of Candidate Set Pruning for Two-Stage Relevance Ranking'), (26, 'What Makes Instruction Learning Hard? An Investigation and a New Challenge in a Synthetic Environment')]
+          ----------------------------------------
+     ----------------------------------------
+     Label: user_studies
+     Dimension: evaluation_methods
+     Description: User studies evaluate the usability and effectiveness of NLP applications by gathering feedback from end-users, which can inform design and development decisions.
+     Level: 1
+     Source: Initial
+     # of Papers: 7
+     Example Papers: [(79, 'Affective Idiosyncratic Responses to Music'), (133, 'Entailer: Answering Questions with Faithful and Truthful Chains of Reasoning'), (214, 'Robots-Dont-Cry: Understanding Falsely Anthropomorphic Utterances in Dialog Systems')]
+     ----------------------------------------
+     Label: proposed_evaluation_metrics
+     Dimension: evaluation_methods
+     Description: Proposed evaluation metrics involve the introduction of new quantitative measures to assess the performance of NLP models, aiming to provide more nuanced insights than traditional metrics.
+     Level: 1
+     Source: Initial
+     # of Papers: 204
+     Example Papers: [(10, 'PAIR: Prompt-Aware margIn Ranking for Counselor Reflection Scoring in Motivational Interviewing'), (13, 'Interpreting Language Models with Contrastive Explanations'), (14, 'RankGen: Improving text generation with Large Ranking Models')]
+     ----------------------------------------
+     Children:
+          Label: novel_evaluation_metrics
+          Dimension: evaluation_methods
+          Description: This cluster focuses on the introduction of new evaluation metrics designed to enhance the assessment of NLP models beyond traditional methods.
+          Level: 2
+          Source: depth
+          # of Papers: 198
+          Example Papers: [(10, 'PAIR: Prompt-Aware margIn Ranking for Counselor Reflection Scoring in Motivational Interviewing'), (13, 'Interpreting Language Models with Contrastive Explanations'), (14, 'RankGen: Improving text generation with Large Ranking Models')]
+          ----------------------------------------
+          Label: interpretability_metrics
+          Dimension: evaluation_methods
+          Description: This cluster encompasses metrics aimed at evaluating the interpretability of NLP models and their outputs.
+          Level: 2
+          Source: depth
+          # of Papers: 2
+          Example Papers: [(13, 'Interpreting Language Models with Contrastive Explanations'), (250, 'Logical Reasoning with Span-Level Predictions for Interpretable and Robust NLI Models')]
+          ----------------------------------------
+          Label: cross-modal_embedding_based_metrics
+          Dimension: evaluation_methods
+          Description: This cluster includes metrics that evaluate models based on cross-modal embeddings, assessing their performance across different data modalities.
+          Level: 2
+          Source: depth
+          # of Papers: 1
+          Example Papers: [(25, 'Translation between Molecules and Natural Language')]
+          ----------------------------------------
+          Label: quality_estimation
+          Dimension: evaluation_methods
+          Description: This cluster focuses on metrics that estimate the quality of generated outputs in NLP tasks.
+          Level: 2
+          Source: depth
+          # of Papers: 3
+          Example Papers: [(244, 'BERTScore is Unfair: On Social Bias in Language Model-Based Metrics for text generation'), (329, 'Competency-Aware Neural Machine Translation: Can Machine Translation Know its Own Translation Quality?'), (766, 'PreQuEL: Quality Estimation of Machine Translation Outputs in Advance')]
+          ----------------------------------------
+          Label: reference-free_evaluation_metrics
+          Dimension: evaluation_methods
+          Description: This cluster includes metrics that evaluate NLP models without relying on reference outputs, providing a more flexible assessment approach.
+          Level: 2
+          Source: depth
+          # of Papers: 12
+          Example Papers: [(100, 'A Multilingual Perspective Towards the Evaluation of Attribution Methods in Natural Language Inference'), (200, 'Opinion Summarization by Weak-Supervision from Mix-structured Data'), (204, 'Revisiting Pre-trained Language Models and their Evaluation for Arabic Natural Language Processing')]
+          ----------------------------------------
+     ----------------------------------------
+----------------------------------------

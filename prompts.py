@@ -27,7 +27,7 @@ dimension_definitions = {
 node_dimension_definitions = {
     'tasks': """Defines and categorizes research efforts aimed at solving specific problems or objectives within a given field, such as classification, prediction, or optimization.""",
     'methodologies': """Types of techniques, models, or approaches used to address various challenges, including algorithmic innovations, frameworks, and optimization strategies.""",
-    'datasets': """Ways to structure data collections used in research, including ways to curate or analyze datasets, detailing their properties, intended use, and role in advancing the field.""",
+    'datasets': """Types of methods to structure data collections used in research, including ways to curate or analyze datasets, detailing their properties, intended use, and role in advancing the field.""",
     'evaluation_methods': """Types of methods for assessing the performance of models, datasets, or techniques, including new metrics, benchmarking techniques, or comparative performance studies.""",
     'real_world_domains': """Types of practical or industry-specific domains in which techniques and methodologies can be applied, exploring implementation, impact, and challenges of real-world problems."""
 }

@@ -1,0 +1,4248 @@
+{
+    "label": "natural_language_processing",
+    "description": null,
+    "level": 0,
+    "source": "initial",
+    "example_papers": [
+        [
+            1,
+            "Multi-News+: Cost-efficient Dataset Cleansing via LLM-based Data Annotation"
+        ],
+        [
+            4,
+            "Table Question Answering for Low-resourced Indic Languages"
+        ],
+        [
+            5,
+            "ImageInWords: Unlocking Hyper-Detailed Image Descriptions"
+        ],
+        [
+            9,
+            "Hateful Word in Context Classification"
+        ],
+        [
+            10,
+            "Eyes Don't Lie: Subjective Hate Annotation and Detection with Gaze"
+        ],
+        [
+            13,
+            "A Usage-centric Take on Intent Understanding in E-Commerce"
+        ],
+        [
+            21,
+            "\"We Demand Justice!\": Towards Social Context Grounding of Political Texts"
+        ],
+        [
+            38,
+            "CoCoLoFa: A Dataset of News Comments with Common Logical Fallacies Written by LLM-Assisted Crowds"
+        ],
+        [
+            43,
+            "GeoGPT4V: Towards Geometric Multi-modal Large Language Models with Geometric Image Generation"
+        ],
+        [
+            51,
+            "What's Mine becomes Yours: Defining, Annotating and Detecting Context-Dependent Paraphrases in News Interview Dialogs"
+        ]
+    ],
+    "paper_ids": [
+        1,
+        4,
+        5,
+        9,
+        10,
+        13,
+        21,
+        38,
+        43,
+        51,
+        58,
+        60,
+        64,
+        81,
+        97,
+        98,
+        105,
+        112,
+        122,
+        126,
+        131,
+        136,
+        139,
+        142,
+        143,
+        149,
+        150,
+        152,
+        153,
+        162,
+        173,
+        176,
+        195,
+        209,
+        216,
+        230,
+        233,
+        237,
+        240,
+        241,
+        242,
+        246,
+        248,
+        250,
+        258,
+        263,
+        271,
+        273,
+        276,
+        277,
+        281,
+        283,
+        285,
+        287,
+        289,
+        291,
+        295,
+        309,
+        310,
+        316,
+        328,
+        330,
+        344,
+        354,
+        356,
+        357,
+        361,
+        368,
+        372,
+        379,
+        381,
+        384,
+        391,
+        399,
+        401,
+        410,
+        411,
+        417,
+        425,
+        428,
+        431,
+        445,
+        447,
+        452,
+        455,
+        473,
+        477,
+        479,
+        487,
+        493,
+        496,
+        498,
+        504,
+        508,
+        510,
+        517,
+        519,
+        521,
+        522,
+        530,
+        531,
+        533,
+        536,
+        537,
+        539,
+        553,
+        556,
+        569,
+        572,
+        576,
+        585,
+        591,
+        595,
+        600,
+        602,
+        607,
+        608,
+        613,
+        624,
+        627,
+        633,
+        638,
+        639,
+        642,
+        643,
+        645,
+        646,
+        647,
+        653,
+        660,
+        666,
+        667,
+        672,
+        674,
+        679,
+        681,
+        682,
+        683,
+        685,
+        690,
+        693,
+        695,
+        701,
+        706,
+        708,
+        709,
+        719,
+        721,
+        724,
+        725,
+        740,
+        748,
+        758,
+        761,
+        770,
+        773,
+        776,
+        777,
+        783,
+        795,
+        797,
+        798,
+        800,
+        802,
+        808,
+        811,
+        814,
+        817,
+        820,
+        823,
+        826,
+        832,
+        835,
+        838,
+        839,
+        842,
+        863,
+        872,
+        879,
+        883,
+        886,
+        888,
+        890,
+        893,
+        897,
+        900,
+        901,
+        903,
+        909,
+        913,
+        914,
+        930,
+        935,
+        936,
+        941,
+        943,
+        947,
+        955,
+        956,
+        957,
+        958,
+        960,
+        967,
+        968,
+        978,
+        993,
+        995,
+        1010,
+        1017,
+        1021,
+        1022,
+        1025,
+        1028,
+        1034,
+        1040,
+        1049,
+        1062,
+        1065,
+        1070,
+        1071,
+        1072,
+        1082,
+        1084,
+        1099,
+        1102,
+        1104,
+        1105,
+        1110,
+        1112,
+        1114,
+        1121,
+        1122,
+        1124,
+        1125,
+        1127,
+        1132,
+        1138,
+        1141,
+        1144,
+        1145,
+        1146,
+        1154,
+        1159,
+        1162,
+        1164,
+        1172,
+        1174,
+        1183,
+        1194,
+        1197,
+        1202,
+        1203,
+        1210,
+        1211,
+        1215,
+        1227,
+        1228,
+        1230,
+        1237,
+        1238,
+        1242,
+        1246,
+        1247,
+        1249,
+        1251,
+        1253,
+        1255,
+        1261,
+        1262,
+        1267,
+        1273,
+        1276,
+        1292,
+        1295,
+        1321,
+        1324,
+        1328,
+        1332,
+        1335,
+        1336,
+        1345,
+        1347,
+        1359,
+        1363,
+        1364,
+        1367,
+        1373,
+        1384,
+        1391,
+        1397,
+        1402,
+        1403,
+        1407,
+        1408,
+        1420,
+        1424,
+        1425,
+        1426,
+        1427,
+        1436,
+        1438,
+        1440,
+        1460,
+        1462,
+        1466,
+        1470,
+        1471,
+        1477,
+        1480,
+        1481,
+        1482,
+        1486,
+        1488,
+        1492,
+        1496,
+        1498,
+        1503,
+        1510,
+        1512,
+        1514,
+        1515,
+        1519,
+        1520,
+        1522,
+        1525,
+        1531,
+        1534,
+        1535,
+        1540,
+        1552,
+        1553,
+        1556,
+        1557,
+        1562,
+        1569,
+        1571,
+        1572,
+        1574,
+        1583,
+        1589,
+        1596,
+        1600,
+        1602,
+        1604,
+        1605,
+        1609,
+        1615,
+        1619,
+        1621,
+        1624,
+        1631,
+        1635,
+        1642,
+        1645,
+        1647,
+        1650,
+        1656,
+        1662,
+        1665,
+        1673,
+        1676,
+        1678,
+        1685,
+        1687,
+        1689,
+        1696,
+        1701,
+        1702,
+        1704,
+        1707,
+        1710,
+        1711,
+        1713,
+        1714,
+        1718,
+        1721,
+        1726,
+        1729,
+        1734,
+        1735,
+        1736,
+        1740,
+        1746,
+        1752,
+        1760,
+        1761,
+        1765,
+        1766,
+        1769,
+        1771,
+        1773,
+        1775,
+        1777,
+        1778,
+        1789,
+        1792,
+        1802,
+        1809,
+        1811,
+        1812,
+        1816,
+        1820,
+        1823,
+        1824,
+        1833,
+        1841,
+        1852,
+        1854,
+        1857,
+        1859,
+        1860,
+        1870,
+        1877,
+        1885,
+        1888,
+        1907,
+        1919,
+        1928,
+        1931,
+        1935,
+        1940,
+        1941,
+        1947,
+        1952,
+        1956,
+        1960,
+        1961,
+        1968,
+        1972,
+        1975,
+        1991,
+        1994,
+        1995,
+        1999,
+        2006,
+        2008,
+        2011,
+        2013,
+        2015,
+        2017,
+        2019,
+        2024,
+        2027,
+        2039,
+        2045,
+        2056,
+        2057,
+        2071,
+        2074,
+        2084,
+        2087,
+        2095,
+        2097,
+        2106,
+        2109,
+        2110,
+        2113,
+        2115,
+        2118,
+        2120,
+        2121,
+        2126,
+        2127,
+        2129,
+        2130,
+        2134,
+        2135,
+        2137,
+        2147,
+        2148,
+        2153,
+        2154,
+        2156,
+        2158,
+        2159,
+        2161,
+        2164,
+        2165,
+        2172,
+        2173,
+        2174,
+        2176,
+        2177,
+        2183,
+        2185,
+        2186,
+        2189,
+        2190,
+        2205,
+        2209,
+        2211,
+        2216,
+        2217,
+        2218,
+        2219,
+        2221,
+        2226,
+        2228,
+        2234,
+        2243,
+        2246,
+        2251,
+        2253,
+        2255,
+        2261,
+        2268,
+        2272,
+        2276,
+        2278,
+        2279,
+        2284,
+        2285,
+        2292,
+        2299,
+        2301,
+        2302,
+        2305,
+        2308,
+        2321,
+        2323,
+        2326,
+        2331,
+        2336,
+        2343,
+        2348,
+        2350,
+        2351,
+        2353,
+        2355,
+        2356,
+        2357,
+        2359,
+        2360,
+        2365,
+        2368,
+        2370,
+        2374,
+        2376,
+        2380,
+        2384,
+        2387,
+        2390,
+        2392,
+        2398,
+        2399,
+        2405,
+        2406,
+        2412,
+        2413,
+        2416,
+        2419,
+        2425,
+        2426,
+        2430,
+        2435,
+        2442,
+        2472,
+        2475,
+        2480,
+        2487,
+        2491,
+        2493,
+        2494,
+        2502,
+        2504,
+        2511,
+        2521,
+        2523,
+        2524,
+        2529,
+        2537,
+        2545,
+        2549,
+        2550,
+        2552,
+        2559,
+        2565,
+        2569,
+        2572,
+        2577,
+        2582,
+        2584,
+        2587,
+        2597,
+        2598,
+        2599,
+        2606,
+        2607,
+        2613,
+        2625,
+        2626,
+        2628,
+        2642,
+        2644,
+        2645,
+        2647,
+        2649,
+        2650,
+        2651,
+        2653,
+        2655,
+        2659,
+        2660,
+        2667,
+        2669,
+        2673,
+        2676,
+        2679,
+        2680,
+        2683,
+        2687,
+        2688,
+        2689,
+        2695,
+        2697,
+        2699,
+        2702,
+        2706,
+        2707,
+        2711,
+        2715,
+        2717,
+        2719,
+        2720,
+        2729,
+        2732,
+        2733,
+        2736,
+        2738,
+        2739,
+        2743,
+        2745,
+        2747,
+        2752,
+        2753,
+        2761,
+        2774,
+        2775,
+        2780,
+        2781,
+        2782,
+        2784,
+        2786,
+        2790,
+        2797,
+        2800,
+        2801,
+        2803,
+        2804,
+        2805,
+        2807,
+        2808,
+        2814,
+        2815,
+        2817,
+        2829,
+        2838,
+        2848,
+        2852,
+        2853,
+        2854,
+        2855,
+        2856,
+        2857,
+        2858,
+        2859,
+        2860,
+        2861,
+        2865,
+        2869,
+        2921,
+        2924,
+        2926,
+        2928,
+        2931,
+        2937,
+        2940,
+        2943,
+        2950,
+        2951
+    ],
+    "children": [
+        {
+            "label": "text_classification_datasets",
+            "description": "These datasets are designed for training models to categorize text into predefined classes, often used in sentiment analysis, topic detection, and spam detection.",
+            "level": 1,
+            "source": "initial",
+            "example_papers": [
+                [
+                    1,
+                    "Multi-News+: Cost-efficient Dataset Cleansing via LLM-based Data Annotation"
+                ],
+                [
+                    38,
+                    "CoCoLoFa: A Dataset of News Comments with Common Logical Fallacies Written by LLM-Assisted Crowds"
+                ],
+                [
+                    64,
+                    "DocHieNet: A Large and Diverse Dataset for Document Hierarchy Parsing"
+                ],
+                [
+                    150,
+                    "Surveying the Dead Minds: Historical-Psychological Text Analysis with Contextualized Construct Representation (CCR) for Classical Chinese"
+                ],
+                [
+                    216,
+                    "C3PA: An Open Dataset of Expert-Annotated and Regulation-Aware Privacy Policies to Enable Scalable Regulatory Compliance Audits"
+                ],
+                [
+                    230,
+                    "Private Language Models via Truncated Laplacian Mechanism"
+                ],
+                [
+                    289,
+                    "FOOL ME IF YOU CAN! An Adversarial Dataset to Investigate the Robustness of LMs in Word Sense Disambiguation"
+                ],
+                [
+                    391,
+                    "CareCorpus+: Expanding and Augmenting Caregiver Strategy Data to Support Pediatric Rehabilitation"
+                ],
+                [
+                    521,
+                    "RuBLiMP: Russian Benchmark of Linguistic Minimal Pairs"
+                ],
+                [
+                    591,
+                    "The Lou Dataset - Exploring the Impact of Gender-Fair Language in German Text Classification"
+                ]
+            ],
+            "paper_ids": [
+                1,
+                38,
+                64,
+                150,
+                216,
+                230,
+                289,
+                391,
+                521,
+                591,
+                595,
+                602,
+                607,
+                638,
+                646,
+                653,
+                681,
+                683,
+                777,
+                795,
+                798,
+                823,
+                909,
+                930,
+                1040,
+                1070,
+                1112,
+                1122,
+                1138,
+                1197,
+                1328,
+                1335,
+                1345,
+                1359,
+                1363,
+                1397,
+                1462,
+                1503,
+                1572,
+                1604,
+                1645,
+                1726,
+                1734,
+                1765,
+                1816,
+                1833,
+                1972,
+                2174,
+                2189,
+                2251,
+                2255,
+                2321,
+                2323,
+                2326,
+                2353,
+                2356,
+                2357,
+                2374,
+                2390,
+                2398,
+                2502,
+                2523,
+                2524,
+                2607,
+                2626,
+                2673,
+                2676,
+                2679,
+                2680,
+                2683,
+                2695,
+                2697,
+                2707,
+                2717,
+                2719,
+                2732,
+                2739,
+                2761,
+                2781,
+                2784,
+                2786,
+                2790,
+                2804,
+                2950,
+                2951
+            ],
+            "children": [
+                {
+                    "label": "sentiment_analysis_datasets",
+                    "description": "Datasets specifically designed for training models to analyze and classify sentiments expressed in text.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            909,
+                            "WorryWords: Norms of Anxiety Association for over 44k English Words"
+                        ],
+                        [
+                            1040,
+                            "Semantics and Sentiment: Cross-lingual Variations in Emoji Use"
+                        ],
+                        [
+                            2353,
+                            "Shoes-ACOSI: A Dataset for Aspect-Based Sentiment Analysis with Implicit Opinion Extraction"
+                        ],
+                        [
+                            2398,
+                            "The Overlooked Repetitive Lengthening Form in Sentiment Analysis"
+                        ],
+                        [
+                            2523,
+                            "Advancing Arabic Sentiment Analysis: ArSen Benchmark and the Improved Fuzzy Deep Hybrid Network"
+                        ],
+                        [
+                            2607,
+                            "Towards a new Benchmark for Emotion Detection in NLP: A Unifying Framework of Recent Corpora"
+                        ],
+                        [
+                            2676,
+                            "Constructing a Sentiment-Annotated Corpus of Austrian Historical Newspapers: Challenges, Tools, and Annotator Experience"
+                        ],
+                        [
+                            2695,
+                            "A Two-Model Approach for Humour Style Recognition"
+                        ],
+                        [
+                            2717,
+                            "Assessing the Performance of ChatGPT-4, Fine-tuned BERT and Traditional ML Models on Moroccan Arabic Sentiment Analysis"
+                        ],
+                        [
+                            2761,
+                            "The Moral Foundations Weibo Corpus"
+                        ]
+                    ],
+                    "paper_ids": [
+                        909,
+                        1040,
+                        2353,
+                        2398,
+                        2523,
+                        2607,
+                        2676,
+                        2695,
+                        2717,
+                        2761,
+                        2781
+                    ]
+                },
+                {
+                    "label": "document_classification_datasets",
+                    "description": "Datasets focused on categorizing entire documents into predefined classes for various applications.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            38,
+                            "CoCoLoFa: A Dataset of News Comments with Common Logical Fallacies Written by LLM-Assisted Crowds"
+                        ],
+                        [
+                            64,
+                            "DocHieNet: A Large and Diverse Dataset for Document Hierarchy Parsing"
+                        ],
+                        [
+                            216,
+                            "C3PA: An Open Dataset of Expert-Annotated and Regulation-Aware Privacy Policies to Enable Scalable Regulatory Compliance Audits"
+                        ],
+                        [
+                            230,
+                            "Private Language Models via Truncated Laplacian Mechanism"
+                        ],
+                        [
+                            391,
+                            "CareCorpus+: Expanding and Augmenting Caregiver Strategy Data to Support Pediatric Rehabilitation"
+                        ],
+                        [
+                            591,
+                            "The Lou Dataset - Exploring the Impact of Gender-Fair Language in German Text Classification"
+                        ],
+                        [
+                            777,
+                            "MAIR: A Massive Benchmark for Evaluating Instructed Retrieval"
+                        ],
+                        [
+                            795,
+                            "More DWUGs: Extending and Evaluating Word Usage Graph Datasets in Multiple Languages"
+                        ],
+                        [
+                            798,
+                            "Distractor Generation in Multiple-Choice Tasks: A Survey of Methods, Datasets, and Evaluation"
+                        ],
+                        [
+                            1112,
+                            "The Empirical Variability of Narrative Perceptions of Social Media Texts"
+                        ]
+                    ],
+                    "paper_ids": [
+                        38,
+                        64,
+                        216,
+                        230,
+                        391,
+                        591,
+                        777,
+                        795,
+                        798,
+                        1112,
+                        1197,
+                        1328,
+                        1345,
+                        1462,
+                        1604,
+                        1726,
+                        1734,
+                        1765,
+                        1816,
+                        1833,
+                        1972,
+                        2174,
+                        2326,
+                        2502,
+                        2626,
+                        2673,
+                        2679,
+                        2683,
+                        2697,
+                        2707,
+                        2732
+                    ]
+                },
+                {
+                    "label": "multi_label_classification_datasets",
+                    "description": "Datasets that allow for the classification of text into multiple categories simultaneously.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            38,
+                            "CoCoLoFa: A Dataset of News Comments with Common Logical Fallacies Written by LLM-Assisted Crowds"
+                        ],
+                        [
+                            289,
+                            "FOOL ME IF YOU CAN! An Adversarial Dataset to Investigate the Robustness of LMs in Word Sense Disambiguation"
+                        ],
+                        [
+                            521,
+                            "RuBLiMP: Russian Benchmark of Linguistic Minimal Pairs"
+                        ],
+                        [
+                            591,
+                            "The Lou Dataset - Exploring the Impact of Gender-Fair Language in German Text Classification"
+                        ],
+                        [
+                            602,
+                            "GlobeSumm: A Challenging Benchmark Towards Unifying Multi-lingual, Cross-lingual and Multi-document News Summarization"
+                        ],
+                        [
+                            646,
+                            "SciEx: Benchmarking Large Language Models on Scientific Exams with Human Expert Grading and Automatic Grading"
+                        ],
+                        [
+                            681,
+                            "ReadMe++: Benchmarking Multilingual Language Models for Multi-Domain Readability Assessment"
+                        ],
+                        [
+                            795,
+                            "More DWUGs: Extending and Evaluating Word Usage Graph Datasets in Multiple Languages"
+                        ],
+                        [
+                            930,
+                            "Still Not Quite There! Evaluating Large Language Models for Comorbid Mental Health Diagnosis"
+                        ],
+                        [
+                            1328,
+                            "INDUS: Effective and Efficient Language Models for Scientific Applications"
+                        ]
+                    ],
+                    "paper_ids": [
+                        38,
+                        289,
+                        521,
+                        591,
+                        602,
+                        646,
+                        681,
+                        795,
+                        930,
+                        1328,
+                        1335,
+                        1397,
+                        1503,
+                        1572,
+                        1645,
+                        1734,
+                        2251,
+                        2255,
+                        2321,
+                        2390,
+                        2502,
+                        2719,
+                        2951
+                    ]
+                },
+                {
+                    "label": "topic_classification_datasets",
+                    "description": "Datasets aimed at categorizing text based on specific topics or themes.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            1,
+                            "Multi-News+: Cost-efficient Dataset Cleansing via LLM-based Data Annotation"
+                        ],
+                        [
+                            150,
+                            "Surveying the Dead Minds: Historical-Psychological Text Analysis with Contextualized Construct Representation (CCR) for Classical Chinese"
+                        ],
+                        [
+                            607,
+                            "Diversity Over Size: On the Effect of Sample and Topic Sizes for Topic-Dependent Argument Mining Datasets"
+                        ],
+                        [
+                            638,
+                            "DECOR: Improving Coherence in L2 English Writing with a Novel Benchmark for Incoherence Detection, Reasoning, and Rewriting"
+                        ],
+                        [
+                            795,
+                            "More DWUGs: Extending and Evaluating Word Usage Graph Datasets in Multiple Languages"
+                        ],
+                        [
+                            823,
+                            "Building Resources for Emakhuwa: Machine Translation and News Classification Benchmarks"
+                        ],
+                        [
+                            1070,
+                            "SynthesizRR: Generating Diverse Datasets with Retrieval Augmentation"
+                        ],
+                        [
+                            1112,
+                            "The Empirical Variability of Narrative Perceptions of Social Media Texts"
+                        ],
+                        [
+                            1122,
+                            "Multilingual Topic Classification in X: Dataset and Analysis"
+                        ],
+                        [
+                            1328,
+                            "INDUS: Effective and Efficient Language Models for Scientific Applications"
+                        ]
+                    ],
+                    "paper_ids": [
+                        1,
+                        150,
+                        607,
+                        638,
+                        795,
+                        823,
+                        1070,
+                        1112,
+                        1122,
+                        1328,
+                        1734,
+                        2357,
+                        2680,
+                        2739,
+                        2804
+                    ]
+                },
+                {
+                    "label": "text_simplification_datasets",
+                    "description": "Datasets designed for simplifying text while retaining its original meaning, often used in accessibility applications.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            1363,
+                            "Refining App Reviews: Dataset, Methodology, and Evaluation"
+                        ],
+                        [
+                            2323,
+                            "ARTS: Assessing Readability & Text Simplicity"
+                        ],
+                        [
+                            2784,
+                            "CompLex-ZH: A New Dataset for Lexical Complexity Prediction in Mandarin and Cantonese"
+                        ],
+                        [
+                            2786,
+                            "Cochrane-auto: An Aligned Dataset for the Simplification of Biomedical Abstracts"
+                        ],
+                        [
+                            2790,
+                            "Lexical Complexity Prediction and Lexical Simplification for Catalan and Spanish: Resource Creation, Quality Assessment, and Ethical Considerations"
+                        ]
+                    ],
+                    "paper_ids": [
+                        1363,
+                        2323,
+                        2784,
+                        2786,
+                        2790
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "named_entity_recognition_datasets",
+            "description": "These datasets provide annotated text for training models to identify and classify named entities such as people, organizations, and locations within the text.",
+            "level": 1,
+            "source": "initial",
+            "example_papers": [
+                [
+                    354,
+                    "Contrastive Entity Coreference and Disambiguation for Historical Texts"
+                ],
+                [
+                    602,
+                    "GlobeSumm: A Challenging Benchmark Towards Unifying Multi-lingual, Cross-lingual and Multi-document News Summarization"
+                ],
+                [
+                    719,
+                    "SPEED++: A Multilingual Event Extraction Framework for Epidemic Prediction and Preparedness"
+                ],
+                [
+                    725,
+                    "SciER: An Entity and Relation Extraction Dataset for Datasets, Methods, and Tasks in Scientific Documents"
+                ],
+                [
+                    835,
+                    "RaTEScore: A Metric for Radiology Report Generation"
+                ],
+                [
+                    1010,
+                    "NoiseBench: Benchmarking the Impact of Real Label Noise on Named Entity Recognition"
+                ],
+                [
+                    1049,
+                    "NeuroTrialNER: An Annotated Corpus for Neurological Diseases and Therapies in Clinical Trial Registries"
+                ],
+                [
+                    1127,
+                    "VIEWS: Entity-Aware News Video Captioning"
+                ],
+                [
+                    1267,
+                    "Entity Insertion in Multilingual Linked Corpora: The Case of Wikipedia"
+                ],
+                [
+                    1324,
+                    "Predicting Entity Salience in Extremely Short Documents"
+                ]
+            ],
+            "paper_ids": [
+                354,
+                602,
+                719,
+                725,
+                835,
+                1010,
+                1049,
+                1127,
+                1267,
+                1324,
+                1328,
+                1481,
+                1702,
+                1765,
+                2251,
+                2529,
+                2645,
+                2667,
+                2807
+            ]
+        },
+        {
+            "label": "machine_translation_datasets",
+            "description": "These datasets consist of parallel corpora in multiple languages, enabling the training and evaluation of models for translating text from one language to another.",
+            "level": 1,
+            "source": "initial",
+            "example_papers": [
+                [
+                    237,
+                    "MiTTenS: A Dataset for Evaluating Gender Mistranslation"
+                ],
+                [
+                    250,
+                    "Voices Unheard: NLP Resources and Models for Yoruba Regional Dialects"
+                ],
+                [
+                    277,
+                    "Using Language Models to Disambiguate Lexical Choices in Translation"
+                ],
+                [
+                    361,
+                    "Verba volant, scripta volant? Don't worry! There are computational solutions for protoword reconstruction"
+                ],
+                [
+                    602,
+                    "GlobeSumm: A Challenging Benchmark Towards Unifying Multi-lingual, Cross-lingual and Multi-document News Summarization"
+                ],
+                [
+                    633,
+                    "MMTE: Corpus and Metrics for Evaluating Machine Translation Quality of Metaphorical Language"
+                ],
+                [
+                    802,
+                    "Modeling User Preferences with Automatic Metrics: Creating a High-Quality Preference Dataset for Machine Translation"
+                ],
+                [
+                    823,
+                    "Building Resources for Emakhuwa: Machine Translation and News Classification Benchmarks"
+                ],
+                [
+                    913,
+                    "Towards Cross-Cultural Machine Translation with Retrieval-Augmented Generation from Multilingual Knowledge Graphs"
+                ],
+                [
+                    1084,
+                    "Re-Evaluating Evaluation for Multilingual Summarization"
+                ]
+            ],
+            "paper_ids": [
+                237,
+                250,
+                277,
+                361,
+                602,
+                633,
+                802,
+                823,
+                913,
+                1084,
+                1237,
+                1247,
+                1574,
+                1583,
+                1615,
+                1619,
+                1631,
+                1761,
+                1765,
+                1857,
+                1960,
+                1968,
+                2127,
+                2211,
+                2251,
+                2305,
+                2625,
+                2628,
+                2797,
+                2814,
+                2815,
+                2817,
+                2829,
+                2838,
+                2848,
+                2852,
+                2853,
+                2854,
+                2855,
+                2856,
+                2857,
+                2858,
+                2859,
+                2860,
+                2861,
+                2865,
+                2869,
+                2921,
+                2924,
+                2926,
+                2928,
+                2931,
+                2937,
+                2940,
+                2943
+            ],
+            "children": [
+                {
+                    "label": "parallel_corpora",
+                    "description": "This cluster includes datasets that consist of parallel texts in multiple languages, essential for training machine translation models.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            1247,
+                            "Simultaneous Interpretation Corpus Construction by Large Language Models in Distant Language Pair"
+                        ],
+                        [
+                            2211,
+                            "Benchmarking Machine Translation with Cultural Awareness"
+                        ],
+                        [
+                            2854,
+                            "A High-quality Seed Dataset for Italian Machine Translation"
+                        ],
+                        [
+                            2859,
+                            "Open Language Data Initiative: Advancing Low-Resource Machine Translation for Karakalpak"
+                        ],
+                        [
+                            2861,
+                            "Spanish Corpus and Provenance with Computer-Aided Translation for the WMT24 OLDI Shared Task"
+                        ],
+                        [
+                            2937,
+                            "Introducing the NewsPaLM MBR and QE Dataset: LLM-Generated High-Quality Parallel Data Outperforms Traditional Web-Crawled Data"
+                        ],
+                        [
+                            2943,
+                            "Neural Methods for Aligning Large-Scale Parallel Corpora from the Web for South and East Asian Languages"
+                        ]
+                    ],
+                    "paper_ids": [
+                        1247,
+                        2211,
+                        2854,
+                        2859,
+                        2861,
+                        2937,
+                        2943
+                    ]
+                },
+                {
+                    "label": "low_resource_machine_translation_datasets",
+                    "description": "This cluster focuses on datasets specifically designed for low-resource languages, facilitating machine translation in underrepresented languages.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            250,
+                            "Voices Unheard: NLP Resources and Models for Yoruba Regional Dialects"
+                        ],
+                        [
+                            823,
+                            "Building Resources for Emakhuwa: Machine Translation and News Classification Benchmarks"
+                        ],
+                        [
+                            1960,
+                            "Low-Resource Machine Translation through the Lens of Personalized Federated Learning"
+                        ],
+                        [
+                            2127,
+                            "\"Vorbesti Romaneste?\" A Recipe to Train Powerful Romanian LLMs with English Instructions"
+                        ],
+                        [
+                            2251,
+                            "One Model is All You Need: ByT5-Sanskrit, a Unified Model for Sanskrit NLP Tasks"
+                        ],
+                        [
+                            2305,
+                            "BanglaTLit: A Benchmark Dataset for Back-Transliteration of Romanized Bangla"
+                        ],
+                        [
+                            2628,
+                            "Bridging the Bosphorus: Advancing Turkish Large Language Models through Strategies for Low-Resource Language Adaptation and Benchmarking"
+                        ],
+                        [
+                            2797,
+                            "Machine Translation Of Marathi Dialects: A Case Study Of Kadodi"
+                        ],
+                        [
+                            2829,
+                            "Cogs in a Machine, Doing What They're Meant to Do - the AMI Submission to the WMT24 General Translation Task"
+                        ],
+                        [
+                            2852,
+                            "Expanding the FLORES+ Multilingual Benchmark with Translations for Aragonese, Aranese, Asturian, and Valencian"
+                        ]
+                    ],
+                    "paper_ids": [
+                        250,
+                        823,
+                        1960,
+                        2127,
+                        2251,
+                        2305,
+                        2628,
+                        2797,
+                        2829,
+                        2852,
+                        2853,
+                        2856,
+                        2857,
+                        2858,
+                        2859,
+                        2865,
+                        2943
+                    ]
+                },
+                {
+                    "label": "multilingual_translation_datasets",
+                    "description": "This cluster encompasses datasets that support translation tasks across multiple languages, enhancing multilingual capabilities in machine translation.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            237,
+                            "MiTTenS: A Dataset for Evaluating Gender Mistranslation"
+                        ],
+                        [
+                            602,
+                            "GlobeSumm: A Challenging Benchmark Towards Unifying Multi-lingual, Cross-lingual and Multi-document News Summarization"
+                        ],
+                        [
+                            823,
+                            "Building Resources for Emakhuwa: Machine Translation and News Classification Benchmarks"
+                        ],
+                        [
+                            913,
+                            "Towards Cross-Cultural Machine Translation with Retrieval-Augmented Generation from Multilingual Knowledge Graphs"
+                        ],
+                        [
+                            1237,
+                            "Simul-MuST-C: Simultaneous Multilingual Speech Translation Corpus Using Large Language Model"
+                        ],
+                        [
+                            1574,
+                            "Improving Multilingual Instruction Finetuning via Linguistically Natural and Diverse Datasets"
+                        ],
+                        [
+                            1583,
+                            "AnyTrans: Translate AnyText in the Image with Large Scale Models"
+                        ],
+                        [
+                            1857,
+                            "Breaking Language Barriers in Multilingual Mathematical Reasoning: Insights and Observations"
+                        ],
+                        [
+                            1968,
+                            "Datasets for Multilingual Answer Sentence Selection"
+                        ],
+                        [
+                            2251,
+                            "One Model is All You Need: ByT5-Sanskrit, a Unified Model for Sanskrit NLP Tasks"
+                        ]
+                    ],
+                    "paper_ids": [
+                        237,
+                        602,
+                        823,
+                        913,
+                        1237,
+                        1574,
+                        1583,
+                        1857,
+                        1968,
+                        2251,
+                        2625,
+                        2815,
+                        2860
+                    ]
+                },
+                {
+                    "label": "evaluation_datasets",
+                    "description": "This cluster includes datasets specifically designed for evaluating the performance of machine translation systems.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            237,
+                            "MiTTenS: A Dataset for Evaluating Gender Mistranslation"
+                        ],
+                        [
+                            361,
+                            "Verba volant, scripta volant? Don't worry! There are computational solutions for protoword reconstruction"
+                        ],
+                        [
+                            602,
+                            "GlobeSumm: A Challenging Benchmark Towards Unifying Multi-lingual, Cross-lingual and Multi-document News Summarization"
+                        ],
+                        [
+                            633,
+                            "MMTE: Corpus and Metrics for Evaluating Machine Translation Quality of Metaphorical Language"
+                        ],
+                        [
+                            802,
+                            "Modeling User Preferences with Automatic Metrics: Creating a High-Quality Preference Dataset for Machine Translation"
+                        ],
+                        [
+                            823,
+                            "Building Resources for Emakhuwa: Machine Translation and News Classification Benchmarks"
+                        ],
+                        [
+                            1084,
+                            "Re-Evaluating Evaluation for Multilingual Summarization"
+                        ],
+                        [
+                            1615,
+                            "Evaluating Automatic Metrics with Incremental Machine Translation Systems"
+                        ],
+                        [
+                            1631,
+                            "Contrastive Token Learning with Similarity Decay for Repetition Suppression in Machine Translation"
+                        ],
+                        [
+                            1968,
+                            "Datasets for Multilingual Answer Sentence Selection"
+                        ]
+                    ],
+                    "paper_ids": [
+                        237,
+                        361,
+                        602,
+                        633,
+                        802,
+                        823,
+                        1084,
+                        1615,
+                        1631,
+                        1968,
+                        2211,
+                        2625,
+                        2814,
+                        2838,
+                        2848,
+                        2855,
+                        2856,
+                        2857,
+                        2860,
+                        2869,
+                        2921,
+                        2924,
+                        2928,
+                        2931,
+                        2940
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "question_answering_datasets",
+            "description": "These datasets contain questions paired with context passages and corresponding answers, facilitating the development of models that can understand and respond to queries based on provided information.",
+            "level": 1,
+            "source": "initial",
+            "example_papers": [
+                [
+                    152,
+                    "QUITE: Quantifying Uncertainty in Natural Language Text in Bayesian Reasoning Scenarios"
+                ],
+                [
+                    173,
+                    "The Accuracy Paradox in RLHF: When Better Reward Models Don't Yield Better Language Models"
+                ],
+                [
+                    233,
+                    "When Context Leads but Parametric Memory Follows in Large Language Models"
+                ],
+                [
+                    241,
+                    "I Could've Asked That: Reformulating Unanswerable Questions"
+                ],
+                [
+                    248,
+                    "RAG-QA Arena: Evaluating Domain Robustness for Long-form Retrieval Augmented Question Answering"
+                ],
+                [
+                    287,
+                    "Hierarchical Deconstruction of LLM Reasoning: A Graph-Based Framework for Analyzing Knowledge Utilization"
+                ],
+                [
+                    328,
+                    "Benchmarking Vision Language Models for Cultural Understanding"
+                ],
+                [
+                    399,
+                    "Encoding and Controlling Global Semantics for Long-form Video Question Answering"
+                ],
+                [
+                    531,
+                    "Susu Box or Piggy Bank: Assessing Cultural Commonsense Knowledge between Ghana and the US"
+                ],
+                [
+                    536,
+                    "Attribute Diversity Determines the Systematicity Gap in VQA"
+                ]
+            ],
+            "paper_ids": [
+                152,
+                173,
+                233,
+                241,
+                248,
+                287,
+                328,
+                399,
+                531,
+                536,
+                602,
+                624,
+                646,
+                740,
+                761,
+                797,
+                839,
+                872,
+                888,
+                955,
+                960,
+                968,
+                1022,
+                1025,
+                1144,
+                1162,
+                1328,
+                1332,
+                1460,
+                1477,
+                1557,
+                1571,
+                1596,
+                1602,
+                1662,
+                1676,
+                1746,
+                1752,
+                1765,
+                1778,
+                1811,
+                1823,
+                1859,
+                1968,
+                1994,
+                2008,
+                2039,
+                2109,
+                2113,
+                2205,
+                2216,
+                2251,
+                2302,
+                2359,
+                2384,
+                2419,
+                2494,
+                2552,
+                2597,
+                2599,
+                2642,
+                2649,
+                2651,
+                2747,
+                2752
+            ],
+            "children": [
+                {
+                    "label": "multilingual_question_answering_datasets",
+                    "description": "This cluster includes datasets designed for question answering tasks across multiple languages, facilitating the development of multilingual models.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            602,
+                            "GlobeSumm: A Challenging Benchmark Towards Unifying Multi-lingual, Cross-lingual and Multi-document News Summarization"
+                        ],
+                        [
+                            624,
+                            "Unlocking Markets: A Multilingual Benchmark to Cross-Market Question Answering"
+                        ],
+                        [
+                            646,
+                            "SciEx: Benchmarking Large Language Models on Scientific Exams with Human Expert Grading and Automatic Grading"
+                        ],
+                        [
+                            1025,
+                            "CasiMedicos-Arg: A Medical Question Answering Dataset Annotated with Explanatory Argumentative Structures"
+                        ],
+                        [
+                            1144,
+                            "Can LLM Generate Culturally Relevant Commonsense QA Data? Case Study in Indonesian and Sundanese"
+                        ],
+                        [
+                            1752,
+                            "Evaluation of Question Answer Generation for Portuguese: Insights and Datasets"
+                        ],
+                        [
+                            1765,
+                            "Developing a Pragmatic Benchmark for Assessing Korean Legal Language Understanding in Large Language Models"
+                        ],
+                        [
+                            1811,
+                            "M2QA: Multi-domain Multilingual Question Answering"
+                        ],
+                        [
+                            1859,
+                            "TurkishMMLU: Measuring Massive Multitask Language Understanding in Turkish"
+                        ],
+                        [
+                            1968,
+                            "Datasets for Multilingual Answer Sentence Selection"
+                        ]
+                    ],
+                    "paper_ids": [
+                        602,
+                        624,
+                        646,
+                        1025,
+                        1144,
+                        1752,
+                        1765,
+                        1811,
+                        1859,
+                        1968,
+                        2494,
+                        2599,
+                        2642,
+                        2752
+                    ]
+                },
+                {
+                    "label": "visual_question_answering",
+                    "description": "This cluster encompasses datasets that involve answering questions based on visual inputs, integrating computer vision with question answering.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            328,
+                            "Benchmarking Vision Language Models for Cultural Understanding"
+                        ],
+                        [
+                            399,
+                            "Encoding and Controlling Global Semantics for Long-form Video Question Answering"
+                        ],
+                        [
+                            536,
+                            "Attribute Diversity Determines the Systematicity Gap in VQA"
+                        ],
+                        [
+                            740,
+                            "CommVQA: Situating Visual Question Answering in Communicative Contexts"
+                        ],
+                        [
+                            797,
+                            "ECIS-VQG: Generation of Entity-centric Information-seeking Questions from Videos"
+                        ],
+                        [
+                            872,
+                            "ERVQA: A Dataset to Benchmark the Readiness of Large Vision Language Models in Hospital Environments"
+                        ],
+                        [
+                            1460,
+                            "SnapNTell: Enhancing Entity-Centric Visual Question Answering with Retrieval Augmented Multimodal LLM"
+                        ],
+                        [
+                            2205,
+                            "Synthetic Multimodal Question Generation"
+                        ],
+                        [
+                            2419,
+                            "Unraveling the Truth: Do VLMs really Understand Charts? A Deep Dive into Consistency and Robustness"
+                        ]
+                    ],
+                    "paper_ids": [
+                        328,
+                        399,
+                        536,
+                        740,
+                        797,
+                        872,
+                        1460,
+                        2205,
+                        2419
+                    ]
+                },
+                {
+                    "label": "long_form_question_answering_datasets",
+                    "description": "This cluster focuses on datasets that require answering questions based on long-form texts or documents, challenging models to extract relevant information.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            248,
+                            "RAG-QA Arena: Evaluating Domain Robustness for Long-form Retrieval Augmented Question Answering"
+                        ],
+                        [
+                            287,
+                            "Hierarchical Deconstruction of LLM Reasoning: A Graph-Based Framework for Analyzing Knowledge Utilization"
+                        ],
+                        [
+                            399,
+                            "Encoding and Controlling Global Semantics for Long-form Video Question Answering"
+                        ],
+                        [
+                            960,
+                            "StorySparkQA: Expert-Annotated QA Pairs with Real-World Knowledge for Children's Story-Based Learning"
+                        ],
+                        [
+                            1162,
+                            "SciDQA: A Deep Reading Comprehension Dataset over Scientific Papers"
+                        ],
+                        [
+                            1332,
+                            "PDFTriage: Question Answering over Long, Structured Documents"
+                        ],
+                        [
+                            1477,
+                            "Few shot chain-of-thought driven reasoning to prompt LLMs for open-ended medical question answering"
+                        ],
+                        [
+                            1557,
+                            "LLMs Cannot (Yet) Match the Specificity and Simplicity of Online Communities in Long Form Question Answering"
+                        ],
+                        [
+                            1596,
+                            "MC-indexing: Effective Long Document Retrieval via Multi-view Content-aware Indexing"
+                        ],
+                        [
+                            1676,
+                            "CLongEval: A Chinese Benchmark for Evaluating Long-Context Large Language Models"
+                        ]
+                    ],
+                    "paper_ids": [
+                        248,
+                        287,
+                        399,
+                        960,
+                        1162,
+                        1332,
+                        1477,
+                        1557,
+                        1596,
+                        1676,
+                        1823,
+                        1994,
+                        2109,
+                        2113,
+                        2216,
+                        2302,
+                        2384,
+                        2552,
+                        2649
+                    ]
+                },
+                {
+                    "label": "commonsense_question_answering_datasets",
+                    "description": "This cluster includes datasets that require models to utilize commonsense knowledge to answer questions accurately.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            531,
+                            "Susu Box or Piggy Bank: Assessing Cultural Commonsense Knowledge between Ghana and the US"
+                        ],
+                        [
+                            1144,
+                            "Can LLM Generate Culturally Relevant Commonsense QA Data? Case Study in Indonesian and Sundanese"
+                        ],
+                        [
+                            1477,
+                            "Few shot chain-of-thought driven reasoning to prompt LLMs for open-ended medical question answering"
+                        ]
+                    ],
+                    "paper_ids": [
+                        531,
+                        1144,
+                        1477
+                    ]
+                },
+                {
+                    "label": "contextual_question_answering_datasets",
+                    "description": "This cluster consists of datasets that focus on answering questions based on specific contextual information provided in the dataset.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            152,
+                            "QUITE: Quantifying Uncertainty in Natural Language Text in Bayesian Reasoning Scenarios"
+                        ],
+                        [
+                            173,
+                            "The Accuracy Paradox in RLHF: When Better Reward Models Don't Yield Better Language Models"
+                        ],
+                        [
+                            233,
+                            "When Context Leads but Parametric Memory Follows in Large Language Models"
+                        ],
+                        [
+                            740,
+                            "CommVQA: Situating Visual Question Answering in Communicative Contexts"
+                        ],
+                        [
+                            888,
+                            "Can LLMs replace Neil deGrasse Tyson? Evaluating the Reliability of LLMs as Science Communicators"
+                        ],
+                        [
+                            955,
+                            "Adaptive Question Answering: Enhancing Language Model Proficiency for Addressing Knowledge Conflicts with Source Citations"
+                        ],
+                        [
+                            960,
+                            "StorySparkQA: Expert-Annotated QA Pairs with Real-World Knowledge for Children's Story-Based Learning"
+                        ],
+                        [
+                            1328,
+                            "INDUS: Effective and Efficient Language Models for Scientific Applications"
+                        ],
+                        [
+                            1602,
+                            "BoolQuestions: Does Dense Retrieval Understand Boolean Logic in Language?"
+                        ],
+                        [
+                            1778,
+                            "Evaluating Biases in Context-Dependent Sexual and Reproductive Health Questions"
+                        ]
+                    ],
+                    "paper_ids": [
+                        152,
+                        173,
+                        233,
+                        740,
+                        888,
+                        955,
+                        960,
+                        1328,
+                        1602,
+                        1778,
+                        2113,
+                        2597,
+                        2651
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "text_generation_datasets",
+            "description": "These datasets are used to train models for generating coherent and contextually relevant text, often sourced from diverse domains such as literature, news articles, or conversational data.",
+            "level": 1,
+            "source": "initial",
+            "example_papers": [
+                [
+                    5,
+                    "ImageInWords: Unlocking Hyper-Detailed Image Descriptions"
+                ],
+                [
+                    58,
+                    "HEART-felt Narratives: Tracing Empathy and Narrative Style in Personal Stories with LLMs"
+                ],
+                [
+                    97,
+                    "SHIELD: Evaluation and Defense Strategies for Copyright Compliance in LLM Text Generation"
+                ],
+                [
+                    98,
+                    "MatchTime: Towards Automatic Soccer Game Commentary Generation"
+                ],
+                [
+                    139,
+                    "In Search of the Long-Tail: Systematic Generation of Long-Tail Inferential Knowledge via Logical Rule Guided Search"
+                ],
+                [
+                    149,
+                    "Collaborative Performance Prediction for Large Language Models"
+                ],
+                [
+                    176,
+                    "CUTE: Measuring LLMs' Understanding of Their Tokens"
+                ],
+                [
+                    240,
+                    "StyleRemix: Interpretable Authorship Obfuscation via Distillation and Perturbation of Style Elements"
+                ],
+                [
+                    273,
+                    "MuMath-Code: Combining Tool-Use Large Language Models with Multi-perspective Data Augmentation for Mathematical Reasoning"
+                ],
+                [
+                    291,
+                    "LLMs Assist NLP Researchers: Critique Paper (Meta-)Reviewing"
+                ]
+            ],
+            "paper_ids": [
+                5,
+                58,
+                97,
+                98,
+                139,
+                149,
+                176,
+                240,
+                273,
+                291,
+                316,
+                379,
+                381,
+                411,
+                431,
+                455,
+                496,
+                519,
+                522,
+                537,
+                556,
+                576,
+                585,
+                600,
+                602,
+                672,
+                679,
+                682,
+                685,
+                690,
+                724,
+                748,
+                773,
+                776,
+                879,
+                890,
+                901,
+                914,
+                1065,
+                1104,
+                1105,
+                1121,
+                1211,
+                1215,
+                1227,
+                1230,
+                1238,
+                1253,
+                1261,
+                1364,
+                1384,
+                1391,
+                1402,
+                1420,
+                1436,
+                1438,
+                1470,
+                1471,
+                1486,
+                1498,
+                1503,
+                1510,
+                1520,
+                1540,
+                1574,
+                1589,
+                1609,
+                1650,
+                1673,
+                1685,
+                1689,
+                1707,
+                1760,
+                1765,
+                1777,
+                1841,
+                1860,
+                1870,
+                1877,
+                1907,
+                1935,
+                1940,
+                1941,
+                2015,
+                2024,
+                2106,
+                2120,
+                2137,
+                2173,
+                2183,
+                2218,
+                2226,
+                2246,
+                2251,
+                2253,
+                2261,
+                2285,
+                2301,
+                2321,
+                2331,
+                2348,
+                2360,
+                2376,
+                2387,
+                2392,
+                2425,
+                2426,
+                2442,
+                2480,
+                2491,
+                2493,
+                2504,
+                2545,
+                2628,
+                2647,
+                2650,
+                2660,
+                2669,
+                2702,
+                2711,
+                2720,
+                2729,
+                2743,
+                2800
+            ],
+            "children": [
+                {
+                    "label": "story_generation_datasets",
+                    "description": "Datasets specifically designed for generating narratives and stories, often used in creative writing and entertainment applications.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            58,
+                            "HEART-felt Narratives: Tracing Empathy and Narrative Style in Personal Stories with LLMs"
+                        ],
+                        [
+                            381,
+                            "MirrorStories: Reflecting Diversity through Personalized Narrative Generation with Large Language Models"
+                        ],
+                        [
+                            455,
+                            "Evaluating Character Understanding of Large Language Models via Character Profiling from Fictional Works"
+                        ],
+                        [
+                            690,
+                            "ABSEval: An Agent-based Framework for Script Evaluation"
+                        ],
+                        [
+                            1215,
+                            "Do LLMs Plan Like Human Writers? Comparing Journalist Coverage of Press Releases with LLMs"
+                        ],
+                        [
+                            1907,
+                            "Multilingual Fine-Grained News Headline Hallucination Detection"
+                        ],
+                        [
+                            2137,
+                            "Large Language Models Can Not Perform Well in Understanding and Manipulating Natural Language at Both Character and Word Levels?"
+                        ],
+                        [
+                            2729,
+                            "PG-Story: Taxonomy, Dataset, and Evaluation for Ensuring Child-Safe Content for Story Generation"
+                        ],
+                        [
+                            2743,
+                            "Crafting Tomorrow's Headlines: Neural News Generation and Detection in English, Turkish, Hungarian, and Persian"
+                        ],
+                        [
+                            2800,
+                            "BordIRlines: A Dataset for Evaluating Cross-lingual Retrieval Augmented Generation"
+                        ]
+                    ],
+                    "paper_ids": [
+                        58,
+                        381,
+                        455,
+                        690,
+                        1215,
+                        1907,
+                        2137,
+                        2729,
+                        2743,
+                        2800
+                    ]
+                },
+                {
+                    "label": "long_form_text_generation_datasets",
+                    "description": "Datasets focused on generating extended pieces of text, such as essays or articles, that require coherence and depth.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            58,
+                            "HEART-felt Narratives: Tracing Empathy and Narrative Style in Personal Stories with LLMs"
+                        ],
+                        [
+                            98,
+                            "MatchTime: Towards Automatic Soccer Game Commentary Generation"
+                        ],
+                        [
+                            139,
+                            "In Search of the Long-Tail: Systematic Generation of Long-Tail Inferential Knowledge via Logical Rule Guided Search"
+                        ],
+                        [
+                            316,
+                            "NLEBench+NorGLM: A Comprehensive Empirical Analysis and Benchmark Dataset for Generative Language Models in Norwegian"
+                        ],
+                        [
+                            431,
+                            "XplainLLM: A Knowledge-Augmented Dataset for Reliable Grounded Explanations in LLMs"
+                        ],
+                        [
+                            537,
+                            "ArxivDIGESTables: Synthesizing Scientific Literature into Tables using Language Models"
+                        ],
+                        [
+                            576,
+                            "KNN-Instruct: Automatic Instruction Construction with K Nearest Neighbor Deduction"
+                        ],
+                        [
+                            685,
+                            "Subjective Topic meets LLMs: Unleashing Comprehensive, Reflective and Creative Thinking through the Negation of Negation"
+                        ],
+                        [
+                            690,
+                            "ABSEval: An Agent-based Framework for Script Evaluation"
+                        ],
+                        [
+                            1215,
+                            "Do LLMs Plan Like Human Writers? Comparing Journalist Coverage of Press Releases with LLMs"
+                        ]
+                    ],
+                    "paper_ids": [
+                        58,
+                        98,
+                        139,
+                        316,
+                        431,
+                        537,
+                        576,
+                        685,
+                        690,
+                        1215,
+                        1420,
+                        1520,
+                        1540,
+                        1689,
+                        1777,
+                        1841,
+                        1860,
+                        2015,
+                        2106,
+                        2137,
+                        2183,
+                        2251,
+                        2253,
+                        2261,
+                        2331,
+                        2376,
+                        2426,
+                        2480,
+                        2628,
+                        2647,
+                        2650,
+                        2702,
+                        2743,
+                        2800
+                    ]
+                },
+                {
+                    "label": "summarization_datasets",
+                    "description": "Datasets aimed at generating concise summaries from larger texts, applicable in various domains like news and academic writing.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            316,
+                            "NLEBench+NorGLM: A Comprehensive Empirical Analysis and Benchmark Dataset for Generative Language Models in Norwegian"
+                        ],
+                        [
+                            522,
+                            "Text-Tuple-Table: Towards Information Integration in Text-to-Table Generation via Global Tuple Extraction"
+                        ],
+                        [
+                            556,
+                            "STORYSUMM: Evaluating Faithfulness in Story Summarization"
+                        ],
+                        [
+                            602,
+                            "GlobeSumm: A Challenging Benchmark Towards Unifying Multi-lingual, Cross-lingual and Multi-document News Summarization"
+                        ],
+                        [
+                            890,
+                            "Themis: A Reference-free NLG Evaluation Language Model with Flexibility and Interpretability"
+                        ],
+                        [
+                            1105,
+                            "Towards Enhancing Coherence in Extractive Summarization: Dataset and Experiments with LLMs"
+                        ],
+                        [
+                            1470,
+                            "Disordered-DABS: A Benchmark for Dynamic Aspect-Based Summarization in Disordered Texts"
+                        ],
+                        [
+                            1574,
+                            "Improving Multilingual Instruction Finetuning via Linguistically Natural and Diverse Datasets"
+                        ],
+                        [
+                            1673,
+                            "UniSumEval: Towards Unified, Fine-grained, Multi-dimensional Summarization Evaluation for LLMs"
+                        ],
+                        [
+                            1877,
+                            "Event-Keyed Summarization"
+                        ]
+                    ],
+                    "paper_ids": [
+                        316,
+                        522,
+                        556,
+                        602,
+                        890,
+                        1105,
+                        1470,
+                        1574,
+                        1673,
+                        1877,
+                        1940,
+                        2024,
+                        2137,
+                        2628,
+                        2647,
+                        2669,
+                        2743,
+                        2800
+                    ]
+                },
+                {
+                    "label": "code_generation_datasets",
+                    "description": "Datasets tailored for generating code snippets or entire programs, often used in software development and education.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            273,
+                            "MuMath-Code: Combining Tool-Use Large Language Models with Multi-perspective Data Augmentation for Mathematical Reasoning"
+                        ],
+                        [
+                            748,
+                            "Leveraging Context-Aware Prompting for Commit Message Generation"
+                        ],
+                        [
+                            776,
+                            "How Do Your Code LLMs perform? Empowering Code Instruction Tuning with Really Good Data"
+                        ],
+                        [
+                            901,
+                            "Free your mouse! Command Large Language Models to Generate Code to Format Word Documents"
+                        ],
+                        [
+                            1253,
+                            "Coffee-Gym: An Environment for Evaluating and Improving Natural Language Feedback on Erroneous Code"
+                        ],
+                        [
+                            1384,
+                            "ProConSuL: Project Context for Code Summarization with LLMs"
+                        ],
+                        [
+                            1589,
+                            "EvoR: Evolving Retrieval for Code Generation"
+                        ],
+                        [
+                            2137,
+                            "Large Language Models Can Not Perform Well in Understanding and Manipulating Natural Language at Both Character and Word Levels?"
+                        ],
+                        [
+                            2218,
+                            "On Leakage of Code Generation Evaluation Datasets"
+                        ],
+                        [
+                            2226,
+                            "SciDoc2Diagrammer-MAF: Towards Generation of Scientific Diagrams from Documents guided by Multi-Aspect Feedback Refinement"
+                        ]
+                    ],
+                    "paper_ids": [
+                        273,
+                        748,
+                        776,
+                        901,
+                        1253,
+                        1384,
+                        1589,
+                        2137,
+                        2218,
+                        2226,
+                        2348,
+                        2442
+                    ]
+                },
+                {
+                    "label": "text_style_transfer_datasets",
+                    "description": "Datasets designed for generating text that adheres to specific stylistic guidelines or transformations.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            240,
+                            "StyleRemix: Interpretable Authorship Obfuscation via Distillation and Perturbation of Style Elements"
+                        ],
+                        [
+                            682,
+                            "GlossLM: A Massively Multilingual Corpus and Pretrained Model for Interlinear Glossed Text"
+                        ],
+                        [
+                            773,
+                            "TRoTR: A Framework for Evaluating the Re-contextualization of Text Reuse"
+                        ],
+                        [
+                            1211,
+                            "Safety Arithmetic: A Framework for Test-time Safety Alignment of Language Models by Steering Parameters and Activations"
+                        ],
+                        [
+                            1227,
+                            "Holistic Evaluation for Interleaved Text-and-Image Generation"
+                        ],
+                        [
+                            1261,
+                            "`Quis custodiet ipsos custodes?' Who will watch the watchmen? On Detecting AI-generated peer-reviews"
+                        ],
+                        [
+                            1609,
+                            "AlignedCoT: Prompting Large Language Models via Native-Speaking Demonstrations"
+                        ],
+                        [
+                            1707,
+                            "RoQLlama: A Lightweight Romanian Adapted Language Model"
+                        ],
+                        [
+                            1935,
+                            "Towards Pareto-Efficient RLHF: Paying Attention to a Few High-Reward Samples with Reward Dropout"
+                        ],
+                        [
+                            1941,
+                            "PSST: A Benchmark for Evaluation-driven Text Public-Speaking Style Transfer"
+                        ]
+                    ],
+                    "paper_ids": [
+                        240,
+                        682,
+                        773,
+                        1211,
+                        1227,
+                        1261,
+                        1609,
+                        1707,
+                        1935,
+                        1941,
+                        2137,
+                        2183,
+                        2285,
+                        2743,
+                        2800
+                    ]
+                },
+                {
+                    "label": "data_narration_datasets",
+                    "description": "Datasets focused on generating narratives or descriptions from structured data, often used in data storytelling and visualization.",
+                    "level": 2,
+                    "source": "width",
+                    "example_papers": [
+                        [
+                            496,
+                            "Jellyfish: Instruction-Tuning Local Large Language Models for Data Preprocessing"
+                        ],
+                        [
+                            600,
+                            "DataTales: A Benchmark for Real-World Intelligent Data Narration"
+                        ],
+                        [
+                            2137,
+                            "Large Language Models Can Not Perform Well in Understanding and Manipulating Natural Language at Both Character and Word Levels?"
+                        ],
+                        [
+                            2226,
+                            "SciDoc2Diagrammer-MAF: Towards Generation of Scientific Diagrams from Documents guided by Multi-Aspect Feedback Refinement"
+                        ],
+                        [
+                            2261,
+                            "BLADE: Benchmarking Language Model Agents for Data-Driven Science"
+                        ],
+                        [
+                            2743,
+                            "Crafting Tomorrow's Headlines: Neural News Generation and Detection in English, Turkish, Hungarian, and Persian"
+                        ],
+                        [
+                            2800,
+                            "BordIRlines: A Dataset for Evaluating Cross-lingual Retrieval Augmented Generation"
+                        ]
+                    ],
+                    "paper_ids": [
+                        496,
+                        600,
+                        2137,
+                        2226,
+                        2261,
+                        2743,
+                        2800
+                    ]
+                },
+                {
+                    "label": "argument_extraction_datasets",
+                    "description": "Datasets designed for generating arguments and extracting reasoning from texts, applicable in fields like debate and legal analysis.",
+                    "level": 2,
+                    "source": "width",
+                    "example_papers": [
+                        [
+                            585,
+                            "Belief Revision: The Adaptability of Large Language Models Reasoning"
+                        ],
+                        [
+                            914,
+                            "Exploring the Compositional Deficiency of Large Language Models in Mathematical Reasoning Through Trap Problems"
+                        ],
+                        [
+                            1777,
+                            "Gender Bias in Decision-Making with Large Language Models: A Study of Relationship Conflicts"
+                        ],
+                        [
+                            2137,
+                            "Large Language Models Can Not Perform Well in Understanding and Manipulating Natural Language at Both Character and Word Levels?"
+                        ],
+                        [
+                            2493,
+                            "Critical Questions Generation: Motivation and Challenges"
+                        ],
+                        [
+                            2660,
+                            "Gaps or Hallucinations? Scrutinizing Machine-Generated Legal Analysis for Fine-grained Text Evaluations"
+                        ],
+                        [
+                            2800,
+                            "BordIRlines: A Dataset for Evaluating Cross-lingual Retrieval Augmented Generation"
+                        ]
+                    ],
+                    "paper_ids": [
+                        585,
+                        914,
+                        1777,
+                        2137,
+                        2493,
+                        2660,
+                        2800
+                    ]
+                },
+                {
+                    "label": "customer_service_text_generation_datasets",
+                    "description": "Datasets aimed at generating responses for customer service interactions, enhancing automated support systems.",
+                    "level": 2,
+                    "source": "width",
+                    "example_papers": [
+                        [
+                            1364,
+                            "TelBench: A Benchmark for Evaluating Telco-Specific Large Language Models"
+                        ],
+                        [
+                            1391,
+                            "Don't be my Doctor! Recognizing Healthcare Advice in Large Language Models"
+                        ],
+                        [
+                            1402,
+                            "Generating Vehicular Icon Descriptions and Indications Using Large Vision-Language Models"
+                        ],
+                        [
+                            1707,
+                            "RoQLlama: A Lightweight Romanian Adapted Language Model"
+                        ],
+                        [
+                            2137,
+                            "Large Language Models Can Not Perform Well in Understanding and Manipulating Natural Language at Both Character and Word Levels?"
+                        ],
+                        [
+                            2285,
+                            "LLMs to Replace Crowdsourcing For Parallel Data Creation? The Case of Text Detoxification"
+                        ],
+                        [
+                            2425,
+                            "Personalized Video Comment Generation"
+                        ],
+                        [
+                            2628,
+                            "Bridging the Bosphorus: Advancing Turkish Large Language Models through Strategies for Low-Resource Language Adaptation and Benchmarking"
+                        ],
+                        [
+                            2711,
+                            "Exploring Large Language Models for Qualitative Data Analysis"
+                        ],
+                        [
+                            2743,
+                            "Crafting Tomorrow's Headlines: Neural News Generation and Detection in English, Turkish, Hungarian, and Persian"
+                        ]
+                    ],
+                    "paper_ids": [
+                        1364,
+                        1391,
+                        1402,
+                        1707,
+                        2137,
+                        2285,
+                        2425,
+                        2628,
+                        2711,
+                        2743,
+                        2800
+                    ]
+                },
+                {
+                    "label": "query_generation_datasets",
+                    "description": "Datasets that focus on generating queries for information retrieval systems, improving search and data access.",
+                    "level": 2,
+                    "source": "width",
+                    "example_papers": [
+                        [
+                            1436,
+                            "GraphQL Query Generation: A Large Training and Benchmarking Dataset"
+                        ],
+                        [
+                            1707,
+                            "RoQLlama: A Lightweight Romanian Adapted Language Model"
+                        ],
+                        [
+                            2137,
+                            "Large Language Models Can Not Perform Well in Understanding and Manipulating Natural Language at Both Character and Word Levels?"
+                        ],
+                        [
+                            2246,
+                            "R^3-NL2GQL: A Model Coordination and Knowledge Graph Alignment Approach for NL2GQL"
+                        ],
+                        [
+                            2628,
+                            "Bridging the Bosphorus: Advancing Turkish Large Language Models through Strategies for Low-Resource Language Adaptation and Benchmarking"
+                        ],
+                        [
+                            2743,
+                            "Crafting Tomorrow's Headlines: Neural News Generation and Detection in English, Turkish, Hungarian, and Persian"
+                        ],
+                        [
+                            2800,
+                            "BordIRlines: A Dataset for Evaluating Cross-lingual Retrieval Augmented Generation"
+                        ]
+                    ],
+                    "paper_ids": [
+                        1436,
+                        1707,
+                        2137,
+                        2246,
+                        2628,
+                        2743,
+                        2800
+                    ]
+                },
+                {
+                    "label": "political_bias_reduction_datasets",
+                    "description": "Datasets aimed at generating politically neutral text, useful for applications in journalism and media.",
+                    "level": 2,
+                    "source": "width",
+                    "example_papers": [
+                        [
+                            411,
+                            "Aligning Large Language Models with Diverse Political Viewpoints"
+                        ],
+                        [
+                            1777,
+                            "Gender Bias in Decision-Making with Large Language Models: A Study of Relationship Conflicts"
+                        ],
+                        [
+                            2137,
+                            "Large Language Models Can Not Perform Well in Understanding and Manipulating Natural Language at Both Character and Word Levels?"
+                        ],
+                        [
+                            2628,
+                            "Bridging the Bosphorus: Advancing Turkish Large Language Models through Strategies for Low-Resource Language Adaptation and Benchmarking"
+                        ],
+                        [
+                            2720,
+                            "Generating Interpretations of Policy Announcements"
+                        ],
+                        [
+                            2743,
+                            "Crafting Tomorrow's Headlines: Neural News Generation and Detection in English, Turkish, Hungarian, and Persian"
+                        ],
+                        [
+                            2800,
+                            "BordIRlines: A Dataset for Evaluating Cross-lingual Retrieval Augmented Generation"
+                        ]
+                    ],
+                    "paper_ids": [
+                        411,
+                        1777,
+                        2137,
+                        2628,
+                        2720,
+                        2743,
+                        2800
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "hate_speech_detection_datasets",
+            "description": "These datasets are specifically designed to identify and analyze hate speech in various forms of text, contributing to the development of models that can detect harmful language.",
+            "level": 1,
+            "source": "width",
+            "example_papers": [
+                [
+                    9,
+                    "Hateful Word in Context Classification"
+                ],
+                [
+                    10,
+                    "Eyes Don't Lie: Subjective Hate Annotation and Detection with Gaze"
+                ],
+                [
+                    131,
+                    "Oddballs and Misfits: Detecting Implicit Abuse in Which Identity Groups are Depicted as Deviating from the Norm"
+                ],
+                [
+                    242,
+                    "STOP! Benchmarking Large Language Models with Sensitivity Testing on Offensive Progressions"
+                ],
+                [
+                    258,
+                    "Leveraging Conflicts in Social Media Posts: Unintended Offense Dataset"
+                ],
+                [
+                    263,
+                    "PsyGUARD: An Automated System for Suicide Detection and Risk Assessment in Psychological Counseling"
+                ],
+                [
+                    344,
+                    "ToxiCloakCN: Evaluating Robustness of Offensive Language Detection in Chinese with Cloaking Perturbations"
+                ],
+                [
+                    602,
+                    "GlobeSumm: A Challenging Benchmark Towards Unifying Multi-lingual, Cross-lingual and Multi-document News Summarization"
+                ],
+                [
+                    613,
+                    "Towards Probing Speech-Specific Risks in Large Multimodal Models: A Taxonomy, Benchmark, and Insights"
+                ],
+                [
+                    826,
+                    "A Closer Look at Multidimensional Online Political Incivility"
+                ]
+            ],
+            "paper_ids": [
+                9,
+                10,
+                131,
+                242,
+                258,
+                263,
+                344,
+                602,
+                613,
+                826,
+                1028,
+                1034,
+                1040,
+                1765,
+                1789,
+                1852,
+                2017,
+                2126,
+                2129,
+                2189,
+                2219,
+                2251,
+                2416,
+                2521,
+                2706,
+                2733
+            ]
+        },
+        {
+            "label": "intent_understanding_datasets",
+            "description": "These datasets focus on understanding user intent in natural language, enabling the development of models that can accurately interpret and respond to user queries.",
+            "level": 1,
+            "source": "width",
+            "example_papers": [
+                [
+                    13,
+                    "A Usage-centric Take on Intent Understanding in E-Commerce"
+                ],
+                [
+                    21,
+                    "\"We Demand Justice!\": Towards Social Context Grounding of Political Texts"
+                ],
+                [
+                    209,
+                    "A User-Centric Multi-Intent Benchmark for Evaluating Large Language Models"
+                ],
+                [
+                    445,
+                    "MIND: Multimodal Shopping Intention Distillation from Large Vision-language Models for E-commerce Purchase Understanding"
+                ],
+                [
+                    602,
+                    "GlobeSumm: A Challenging Benchmark Towards Unifying Multi-lingual, Cross-lingual and Multi-document News Summarization"
+                ],
+                [
+                    838,
+                    "Are Large Language Models Good Classifiers? A Study on Edit Intent Classification in Scientific Document Revisions"
+                ],
+                [
+                    1102,
+                    "MIPD: Exploring Manipulation and Intention In a Novel Corpus of Polish Disinformation"
+                ],
+                [
+                    1336,
+                    "Centrality-aware Product Retrieval and Ranking"
+                ],
+                [
+                    1347,
+                    "Detecting Ambiguous Utterances in an Intelligent Assistant"
+                ],
+                [
+                    1522,
+                    "CoXQL: A Dataset for Parsing Explanation Requests in Conversational XAI Systems"
+                ]
+            ],
+            "paper_ids": [
+                13,
+                21,
+                209,
+                445,
+                602,
+                838,
+                1102,
+                1336,
+                1347,
+                1522,
+                1535,
+                1569,
+                1721,
+                1765,
+                1860,
+                2251,
+                2365,
+                2550,
+                2720
+            ]
+        },
+        {
+            "label": "fact_checking_datasets",
+            "description": "These datasets are used to train models for verifying the accuracy of claims made in text, playing a crucial role in combating misinformation.",
+            "level": 1,
+            "source": "width",
+            "example_papers": [
+                [
+                    38,
+                    "CoCoLoFa: A Dataset of News Comments with Common Logical Fallacies Written by LLM-Assisted Crowds"
+                ],
+                [
+                    112,
+                    "Do We Need Language-Specific Fact-Checking Models? The Case of Chinese"
+                ],
+                [
+                    216,
+                    "C3PA: An Open Dataset of Expert-Annotated and Regulation-Aware Privacy Policies to Enable Scalable Regulatory Compliance Audits"
+                ],
+                [
+                    246,
+                    "An Analysis of Multilingual FActScore"
+                ],
+                [
+                    281,
+                    "EVEDIT: Event-based Knowledge Editing for Deterministic Knowledge Propagation"
+                ],
+                [
+                    401,
+                    "Enhancing Legal Case Retrieval via Scaling High-quality Synthetic Query-Candidate Pairs"
+                ],
+                [
+                    428,
+                    "More Than Catastrophic Forgetting: Integrating General Capabilities For Domain-Specific LLMs"
+                ],
+                [
+                    447,
+                    "\"Image, Tell me your story!\" Predicting the original meta-context of visual misinformation"
+                ],
+                [
+                    473,
+                    "Humans or LLMs as the Judge? A Study on Judgement Bias"
+                ],
+                [
+                    479,
+                    "CliMedBench: A Large-Scale Chinese Benchmark for Evaluating Medical Large Language Models in Clinical Scenarios"
+                ]
+            ],
+            "paper_ids": [
+                38,
+                112,
+                216,
+                246,
+                281,
+                401,
+                428,
+                447,
+                473,
+                479,
+                493,
+                498,
+                530,
+                585,
+                602,
+                666,
+                674,
+                693,
+                695,
+                701,
+                725,
+                808,
+                811,
+                814,
+                842,
+                883,
+                886,
+                893,
+                947,
+                993,
+                1021,
+                1102,
+                1110,
+                1146,
+                1154,
+                1159,
+                1242,
+                1321,
+                1328,
+                1367,
+                1425,
+                1492,
+                1496,
+                1510,
+                1556,
+                1656,
+                1665,
+                1678,
+                1721,
+                1729,
+                1736,
+                1765,
+                1792,
+                1809,
+                1857,
+                1885,
+                1961,
+                1991,
+                2019,
+                2024,
+                2039,
+                2056,
+                2071,
+                2097,
+                2118,
+                2134,
+                2147,
+                2158,
+                2164,
+                2165,
+                2185,
+                2219,
+                2251,
+                2261,
+                2276,
+                2284,
+                2308,
+                2399,
+                2412,
+                2430,
+                2472,
+                2565,
+                2569,
+                2572,
+                2577,
+                2582,
+                2584,
+                2587,
+                2628,
+                2644,
+                2655,
+                2667,
+                2719,
+                2743,
+                2747,
+                2801,
+                2805
+            ],
+            "children": [
+                {
+                    "label": "multilingual_fact_checking_datasets",
+                    "description": "Datasets specifically designed for fact-checking across multiple languages, facilitating the verification of claims in diverse linguistic contexts.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            246,
+                            "An Analysis of Multilingual FActScore"
+                        ],
+                        [
+                            602,
+                            "GlobeSumm: A Challenging Benchmark Towards Unifying Multi-lingual, Cross-lingual and Multi-document News Summarization"
+                        ],
+                        [
+                            2147,
+                            "Cross-Lingual Multi-Hop Knowledge Editing"
+                        ],
+                        [
+                            2158,
+                            "SAFARI: Cross-lingual Bias and Factuality Detection in News Media and News Articles"
+                        ],
+                        [
+                            2743,
+                            "Crafting Tomorrow's Headlines: Neural News Generation and Detection in English, Turkish, Hungarian, and Persian"
+                        ]
+                    ],
+                    "paper_ids": [
+                        246,
+                        602,
+                        2147,
+                        2158,
+                        2743
+                    ]
+                },
+                {
+                    "label": "medical_fact_checking_datasets",
+                    "description": "Datasets focused on verifying medical claims and information, crucial for ensuring the accuracy of health-related content.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            479,
+                            "CliMedBench: A Large-Scale Chinese Benchmark for Evaluating Medical Large Language Models in Clinical Scenarios"
+                        ],
+                        [
+                            993,
+                            "CURE: Context- and Uncertainty-Aware Mental Disorder Detection"
+                        ],
+                        [
+                            2747,
+                            "DiversityMedQA: A Benchmark for Assessing Demographic Biases in Medical Diagnosis using Large Language Models"
+                        ]
+                    ],
+                    "paper_ids": [
+                        479,
+                        993,
+                        2747
+                    ]
+                },
+                {
+                    "label": "legal_domain_fact_checking_datasets",
+                    "description": "Datasets tailored for fact-checking within the legal domain, addressing the verification of legal claims and information.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            401,
+                            "Enhancing Legal Case Retrieval via Scaling High-quality Synthetic Query-Candidate Pairs"
+                        ],
+                        [
+                            428,
+                            "More Than Catastrophic Forgetting: Integrating General Capabilities For Domain-Specific LLMs"
+                        ],
+                        [
+                            1765,
+                            "Developing a Pragmatic Benchmark for Assessing Korean Legal Language Understanding in Large Language Models"
+                        ],
+                        [
+                            2644,
+                            "The CLC-UKET Dataset: Benchmarking Case Outcome Prediction for the UK Employment Tribunal"
+                        ],
+                        [
+                            2655,
+                            "BLT: Can Large Language Models Handle Basic Legal Text?"
+                        ],
+                        [
+                            2667,
+                            "LegalLens Shared Task 2024: Legal Violation Identification in Unstructured Text"
+                        ]
+                    ],
+                    "paper_ids": [
+                        401,
+                        428,
+                        1765,
+                        2644,
+                        2655,
+                        2667
+                    ]
+                },
+                {
+                    "label": "disinformation_detection",
+                    "description": "Datasets aimed at identifying and analyzing disinformation, playing a key role in combating false narratives.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            112,
+                            "Do We Need Language-Specific Fact-Checking Models? The Case of Chinese"
+                        ],
+                        [
+                            473,
+                            "Humans or LLMs as the Judge? A Study on Judgement Bias"
+                        ],
+                        [
+                            493,
+                            "\"Flex Tape Can't Fix That\": Bias and Misinformation in Edited Language Models"
+                        ],
+                        [
+                            808,
+                            "Small Agent Can Also Rock! Empowering Small Language Models as Hallucination Detector"
+                        ],
+                        [
+                            1102,
+                            "MIPD: Exploring Manipulation and Intention In a Novel Corpus of Polish Disinformation"
+                        ],
+                        [
+                            1146,
+                            "Do LLMs Know to Respect Copyright Notice?"
+                        ],
+                        [
+                            1492,
+                            "Can LLMs Learn From Mistakes? An Empirical Study on Reasoning Tasks"
+                        ],
+                        [
+                            1792,
+                            "SecureSQL: Evaluating Data Leakage of Large Language Models as Natural Language Interfaces to Databases"
+                        ],
+                        [
+                            1991,
+                            "Towards Implicit Bias Detection and Mitigation in Multi-Agent LLM Interactions"
+                        ],
+                        [
+                            2056,
+                            "ShieldLM: Empowering LLMs as Aligned, Customizable and Explainable Safety Detectors"
+                        ]
+                    ],
+                    "paper_ids": [
+                        112,
+                        473,
+                        493,
+                        808,
+                        1102,
+                        1146,
+                        1492,
+                        1792,
+                        1991,
+                        2056,
+                        2308
+                    ]
+                },
+                {
+                    "label": "fact_verification_datasets",
+                    "description": "Datasets specifically designed for the task of fact verification, providing resources for assessing the truthfulness of claims.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            112,
+                            "Do We Need Language-Specific Fact-Checking Models? The Case of Chinese"
+                        ],
+                        [
+                            281,
+                            "EVEDIT: Event-based Knowledge Editing for Deterministic Knowledge Propagation"
+                        ],
+                        [
+                            447,
+                            "\"Image, Tell me your story!\" Predicting the original meta-context of visual misinformation"
+                        ],
+                        [
+                            493,
+                            "\"Flex Tape Can't Fix That\": Bias and Misinformation in Edited Language Models"
+                        ],
+                        [
+                            498,
+                            "MiniCheck: Efficient Fact-Checking of LLMs on Grounding Documents"
+                        ],
+                        [
+                            585,
+                            "Belief Revision: The Adaptability of Large Language Models Reasoning"
+                        ],
+                        [
+                            674,
+                            "Unknown Claims: Generation of Fact-Checking Training Examples from Unstructured and Structured Data"
+                        ],
+                        [
+                            693,
+                            "Enhancing Data Quality through Simple De-duplication: Navigating Responsible Computational Social Science Research"
+                        ],
+                        [
+                            808,
+                            "Small Agent Can Also Rock! Empowering Small Language Models as Hallucination Detector"
+                        ],
+                        [
+                            842,
+                            "AKEW: Assessing Knowledge Editing in the Wild"
+                        ]
+                    ],
+                    "paper_ids": [
+                        112,
+                        281,
+                        447,
+                        493,
+                        498,
+                        585,
+                        674,
+                        693,
+                        808,
+                        842,
+                        893,
+                        947,
+                        1102,
+                        1146,
+                        1154,
+                        1242,
+                        1328,
+                        1367,
+                        1492,
+                        1556,
+                        1656,
+                        1665,
+                        1678,
+                        1729,
+                        1792,
+                        1885,
+                        1961,
+                        1991,
+                        2039,
+                        2056,
+                        2118,
+                        2164,
+                        2276,
+                        2284,
+                        2412,
+                        2565,
+                        2569,
+                        2572,
+                        2582,
+                        2584,
+                        2587,
+                        2719,
+                        2805
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "dialogue_systems_datasets",
+            "description": "These datasets are designed for training dialogue systems, facilitating the development of conversational agents that can engage in meaningful interactions with users.",
+            "level": 1,
+            "source": "width",
+            "example_papers": [
+                [
+                    51,
+                    "What's Mine becomes Yours: Defining, Annotating and Detecting Context-Dependent Paraphrases in News Interview Dialogs"
+                ],
+                [
+                    81,
+                    "Towards Tool Use Alignment of Large Language Models"
+                ],
+                [
+                    309,
+                    "Dialog2Flow: Pre-training Soft-Contrastive Action-Driven Sentence Embeddings for Automatic Dialog Flow Extraction"
+                ],
+                [
+                    330,
+                    "Analyzing Key Factors Influencing Emotion Prediction Performance of VLLMs in Conversational Contexts"
+                ],
+                [
+                    477,
+                    "Stepwise Verification and Remediation of Student Reasoning Errors with Large Language Model Tutors"
+                ],
+                [
+                    504,
+                    "AssistantBench: Can Web Agents Solve Realistic and Time-Consuming Tasks?"
+                ],
+                [
+                    510,
+                    "Annotation alignment: Comparing LLM and human annotations of conversational safety"
+                ],
+                [
+                    533,
+                    "Ranking Manipulation for Conversational Search Engines"
+                ],
+                [
+                    553,
+                    "Into the Unknown Unknowns: Engaged Human Learning through Participation in Language Model Agent Conversations"
+                ],
+                [
+                    602,
+                    "GlobeSumm: A Challenging Benchmark Towards Unifying Multi-lingual, Cross-lingual and Multi-document News Summarization"
+                ]
+            ],
+            "paper_ids": [
+                51,
+                81,
+                309,
+                330,
+                477,
+                504,
+                510,
+                533,
+                553,
+                602,
+                627,
+                642,
+                643,
+                647,
+                708,
+                709,
+                935,
+                967,
+                978,
+                1017,
+                1099,
+                1114,
+                1121,
+                1174,
+                1251,
+                1276,
+                1328,
+                1373,
+                1403,
+                1408,
+                1424,
+                1426,
+                1427,
+                1480,
+                1522,
+                1525,
+                1535,
+                1552,
+                1562,
+                1710,
+                1711,
+                1713,
+                1735,
+                1740,
+                1765,
+                1820,
+                1975,
+                1995,
+                1999,
+                2013,
+                2084,
+                2120,
+                2130,
+                2135,
+                2148,
+                2154,
+                2159,
+                2177,
+                2186,
+                2190,
+                2228,
+                2243,
+                2251,
+                2261,
+                2272,
+                2278,
+                2292,
+                2299,
+                2336,
+                2355,
+                2368,
+                2413,
+                2435,
+                2487,
+                2537,
+                2549,
+                2598,
+                2613,
+                2628,
+                2738,
+                2774,
+                2775,
+                2780
+            ],
+            "children": [
+                {
+                    "label": "task_oriented_dialogue_datasets",
+                    "description": "Datasets specifically designed for training dialogue systems that focus on completing specific tasks through conversation.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            309,
+                            "Dialog2Flow: Pre-training Soft-Contrastive Action-Driven Sentence Embeddings for Automatic Dialog Flow Extraction"
+                        ],
+                        [
+                            642,
+                            "Repairs in a Block World: A New Benchmark for Handling User Corrections with Multi-Modal Language Models"
+                        ],
+                        [
+                            709,
+                            "TransferTOD: A Generalizable Chinese Multi-Domain Task-Oriented Dialogue System with Transfer Capabilities"
+                        ],
+                        [
+                            935,
+                            "MediTOD: An English Dialogue Dataset for Medical History Taking with Comprehensive Annotations"
+                        ],
+                        [
+                            1174,
+                            "Thoughts to Target: Enhance Planning for Target-driven Conversation"
+                        ],
+                        [
+                            1552,
+                            "Efficient Data Generation for Source-grounded Information-seeking Dialogs: A Use Case for Meeting Transcripts"
+                        ],
+                        [
+                            1710,
+                            "Learning from Implicit User Feedback, Emotions and Demographic Information in Task-Oriented and Document-Grounded Dialogues"
+                        ],
+                        [
+                            2159,
+                            "CantTalkAboutThis: Aligning Language Models to Stay on Topic in Dialogues"
+                        ],
+                        [
+                            2177,
+                            "Diverse and Effective Synthetic Data Generation for Adaptable Zero-Shot Dialogue State Tracking"
+                        ],
+                        [
+                            2292,
+                            "Mitigating Hallucination in Fictional Character Role-Play"
+                        ]
+                    ],
+                    "paper_ids": [
+                        309,
+                        642,
+                        709,
+                        935,
+                        1174,
+                        1552,
+                        1710,
+                        2159,
+                        2177,
+                        2292,
+                        2368,
+                        2413,
+                        2775
+                    ]
+                },
+                {
+                    "label": "conversational_datasets",
+                    "description": "General datasets that encompass various forms of conversational interactions for training dialogue systems.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            504,
+                            "AssistantBench: Can Web Agents Solve Realistic and Time-Consuming Tasks?"
+                        ],
+                        [
+                            553,
+                            "Into the Unknown Unknowns: Engaged Human Learning through Participation in Language Model Agent Conversations"
+                        ],
+                        [
+                            602,
+                            "GlobeSumm: A Challenging Benchmark Towards Unifying Multi-lingual, Cross-lingual and Multi-document News Summarization"
+                        ],
+                        [
+                            642,
+                            "Repairs in a Block World: A New Benchmark for Handling User Corrections with Multi-Modal Language Models"
+                        ],
+                        [
+                            1328,
+                            "INDUS: Effective and Efficient Language Models for Scientific Applications"
+                        ],
+                        [
+                            1408,
+                            "ConvKGYarn: Spinning Configurable and Scalable Conversational Knowledge Graph QA Datasets with Large Language Models"
+                        ],
+                        [
+                            1424,
+                            "RESTful-Llama: Connecting User Queries to RESTful APIs"
+                        ],
+                        [
+                            1480,
+                            "SMILE: Single-turn to Multi-turn Inclusive Language Expansion via ChatGPT for Mental Health Support"
+                        ],
+                        [
+                            1552,
+                            "Efficient Data Generation for Source-grounded Information-seeking Dialogs: A Use Case for Meeting Transcripts"
+                        ],
+                        [
+                            1735,
+                            "TOOLVERIFIER: Generalization to New Tools via Self-Verification"
+                        ]
+                    ],
+                    "paper_ids": [
+                        504,
+                        553,
+                        602,
+                        642,
+                        1328,
+                        1408,
+                        1424,
+                        1480,
+                        1552,
+                        1735,
+                        1740,
+                        2159,
+                        2177,
+                        2738
+                    ]
+                },
+                {
+                    "label": "dialogue_systems_datasets_for_healthcare",
+                    "description": "Datasets tailored for dialogue systems used in healthcare settings to facilitate patient interactions.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            935,
+                            "MediTOD: An English Dialogue Dataset for Medical History Taking with Comprehensive Annotations"
+                        ],
+                        [
+                            1251,
+                            "ABLE: Personalized Disability Support with Politeness and Empathy Integration"
+                        ],
+                        [
+                            1480,
+                            "SMILE: Single-turn to Multi-turn Inclusive Language Expansion via ChatGPT for Mental Health Support"
+                        ],
+                        [
+                            2120,
+                            "Ask the experts: sourcing a high-quality nutrition counseling dataset through Human-AI collaboration"
+                        ],
+                        [
+                            2159,
+                            "CantTalkAboutThis: Aligning Language Models to Stay on Topic in Dialogues"
+                        ],
+                        [
+                            2278,
+                            "Cactus: Towards Psychological Counseling Conversations using Cognitive Behavioral Theory"
+                        ],
+                        [
+                            2435,
+                            "BiMediX: Bilingual Medical Mixture of Experts LLM"
+                        ],
+                        [
+                            2780,
+                            "EHDChat: A Knowledge-Grounded, Empathy-Enhanced Language Model for Healthcare Interactions"
+                        ]
+                    ],
+                    "paper_ids": [
+                        935,
+                        1251,
+                        1480,
+                        2120,
+                        2159,
+                        2278,
+                        2435,
+                        2780
+                    ]
+                },
+                {
+                    "label": "dialogue_systems_datasets_for_paraphrase_detection",
+                    "description": "Datasets aimed at training dialogue systems to detect and understand paraphrased statements.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            51,
+                            "What's Mine becomes Yours: Defining, Annotating and Detecting Context-Dependent Paraphrases in News Interview Dialogs"
+                        ],
+                        [
+                            2159,
+                            "CantTalkAboutThis: Aligning Language Models to Stay on Topic in Dialogues"
+                        ]
+                    ],
+                    "paper_ids": [
+                        51,
+                        2159
+                    ]
+                },
+                {
+                    "label": "conversational_question_answering_datasets",
+                    "description": "Datasets designed for training dialogue systems to effectively answer questions in a conversational manner.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            978,
+                            "MP2D: An Automated Topic Shift Dialogue Generation Framework Leveraging Knowledge Graphs"
+                        ],
+                        [
+                            2159,
+                            "CantTalkAboutThis: Aligning Language Models to Stay on Topic in Dialogues"
+                        ]
+                    ],
+                    "paper_ids": [
+                        978,
+                        2159
+                    ]
+                },
+                {
+                    "label": "conversational_emotion_recognition_datasets",
+                    "description": "Datasets designed for training dialogue systems to recognize and interpret emotions expressed in conversations.",
+                    "level": 2,
+                    "source": "width",
+                    "example_papers": [
+                        [
+                            2159,
+                            "CantTalkAboutThis: Aligning Language Models to Stay on Topic in Dialogues"
+                        ]
+                    ],
+                    "paper_ids": [
+                        2159
+                    ]
+                },
+                {
+                    "label": "dialogue_systems_datasets_for_error_detection",
+                    "description": "Datasets focused on training dialogue systems to identify and correct errors in conversational exchanges.",
+                    "level": 2,
+                    "source": "width",
+                    "example_papers": [
+                        [
+                            477,
+                            "Stepwise Verification and Remediation of Student Reasoning Errors with Large Language Model Tutors"
+                        ],
+                        [
+                            642,
+                            "Repairs in a Block World: A New Benchmark for Handling User Corrections with Multi-Modal Language Models"
+                        ],
+                        [
+                            1480,
+                            "SMILE: Single-turn to Multi-turn Inclusive Language Expansion via ChatGPT for Mental Health Support"
+                        ],
+                        [
+                            2159,
+                            "CantTalkAboutThis: Aligning Language Models to Stay on Topic in Dialogues"
+                        ]
+                    ],
+                    "paper_ids": [
+                        477,
+                        642,
+                        1480,
+                        2159
+                    ]
+                },
+                {
+                    "label": "web_dialogue_datasets",
+                    "description": "Datasets that capture dialogues occurring in web-based environments, useful for training online conversational agents.",
+                    "level": 2,
+                    "source": "width",
+                    "example_papers": [
+                        [
+                            504,
+                            "AssistantBench: Can Web Agents Solve Realistic and Time-Consuming Tasks?"
+                        ],
+                        [
+                            2159,
+                            "CantTalkAboutThis: Aligning Language Models to Stay on Topic in Dialogues"
+                        ]
+                    ],
+                    "paper_ids": [
+                        504,
+                        2159
+                    ]
+                },
+                {
+                    "label": "conversational_information_discovery_datasets",
+                    "description": "Datasets aimed at enhancing dialogue systems' ability to discover and retrieve information through conversation.",
+                    "level": 2,
+                    "source": "width",
+                    "example_papers": [
+                        [
+                            553,
+                            "Into the Unknown Unknowns: Engaged Human Learning through Participation in Language Model Agent Conversations"
+                        ],
+                        [
+                            2159,
+                            "CantTalkAboutThis: Aligning Language Models to Stay on Topic in Dialogues"
+                        ]
+                    ],
+                    "paper_ids": [
+                        553,
+                        2159
+                    ]
+                },
+                {
+                    "label": "open_domain_dialogue_datasets",
+                    "description": "Datasets that support training dialogue systems capable of engaging in conversations across a wide range of topics.",
+                    "level": 2,
+                    "source": "width",
+                    "example_papers": [
+                        [
+                            504,
+                            "AssistantBench: Can Web Agents Solve Realistic and Time-Consuming Tasks?"
+                        ],
+                        [
+                            553,
+                            "Into the Unknown Unknowns: Engaged Human Learning through Participation in Language Model Agent Conversations"
+                        ],
+                        [
+                            978,
+                            "MP2D: An Automated Topic Shift Dialogue Generation Framework Leveraging Knowledge Graphs"
+                        ],
+                        [
+                            1427,
+                            "RAC: Retrieval-augmented Conversation Dataset for Open-domain Question Answering in Conversational Settings"
+                        ],
+                        [
+                            2130,
+                            "Soda-Eval: Open-Domain Dialogue Evaluation in the age of LLMs"
+                        ],
+                        [
+                            2159,
+                            "CantTalkAboutThis: Aligning Language Models to Stay on Topic in Dialogues"
+                        ],
+                        [
+                            2272,
+                            "Active Listening: Personalized Question Generation in Open-Domain Social Conversation with User Model Based Prompting"
+                        ]
+                    ],
+                    "paper_ids": [
+                        504,
+                        553,
+                        978,
+                        1427,
+                        2130,
+                        2159,
+                        2272
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "multimodal_datasets",
+            "description": "These datasets integrate multiple modalities, such as text, images, and audio, to enhance the understanding and generation of information across different formats.",
+            "level": 1,
+            "source": "width",
+            "example_papers": [
+                [
+                    43,
+                    "GeoGPT4V: Towards Geometric Multi-modal Large Language Models with Geometric Image Generation"
+                ],
+                [
+                    60,
+                    "Bridging Cultures in the Kitchen: A Framework and Benchmark for Cross-Cultural Recipe Retrieval"
+                ],
+                [
+                    105,
+                    "TopViewRS: Vision-Language Models as Top-View Spatial Reasoners"
+                ],
+                [
+                    126,
+                    "VideoScore: Building Automatic Metrics to Simulate Fine-grained Human Feedback for Video Generation"
+                ],
+                [
+                    142,
+                    "Selective Vision is the Challenge for Visual Reasoning: A Benchmark for Visual Argument Understanding"
+                ],
+                [
+                    143,
+                    "Can visual language models resolve textual ambiguity with visual cues? Let visual puns tell you!"
+                ],
+                [
+                    283,
+                    "From the Least to the Most: Building a Plug-and-Play Visual Reasoner via Data Synthesis"
+                ],
+                [
+                    295,
+                    "SEACrowd: A Multilingual Multimodal Data Hub and Benchmark Suite for Southeast Asian Languages"
+                ],
+                [
+                    310,
+                    "Words Worth a Thousand Pictures: Measuring and Understanding Perceptual Variability in Text-to-Image Generation"
+                ],
+                [
+                    357,
+                    "VLFeedback: A Large-Scale AI Feedback Dataset for Large Vision-Language Models Alignment"
+                ]
+            ],
+            "paper_ids": [
+                43,
+                60,
+                105,
+                126,
+                142,
+                143,
+                283,
+                295,
+                310,
+                357,
+                368,
+                372,
+                384,
+                417,
+                425,
+                487,
+                517,
+                572,
+                602,
+                608,
+                613,
+                639,
+                646,
+                667,
+                800,
+                820,
+                832,
+                863,
+                897,
+                903,
+                936,
+                943,
+                956,
+                958,
+                995,
+                1062,
+                1071,
+                1072,
+                1124,
+                1132,
+                1164,
+                1172,
+                1194,
+                1246,
+                1249,
+                1255,
+                1262,
+                1328,
+                1440,
+                1460,
+                1488,
+                1514,
+                1519,
+                1534,
+                1553,
+                1605,
+                1687,
+                1696,
+                1702,
+                1714,
+                1765,
+                1766,
+                1802,
+                1812,
+                1888,
+                1931,
+                1947,
+                1952,
+                1956,
+                2027,
+                2045,
+                2074,
+                2087,
+                2095,
+                2115,
+                2121,
+                2154,
+                2156,
+                2205,
+                2221,
+                2226,
+                2234,
+                2251,
+                2261,
+                2268,
+                2350,
+                2380,
+                2405,
+                2406,
+                2511,
+                2559,
+                2606,
+                2628,
+                2745,
+                2803
+            ],
+            "children": [
+                {
+                    "label": "vision_language_datasets",
+                    "description": "Datasets that integrate visual and textual information to enhance understanding and generation across these modalities.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            357,
+                            "VLFeedback: A Large-Scale AI Feedback Dataset for Large Vision-Language Models Alignment"
+                        ],
+                        [
+                            368,
+                            "UOUO: Uncontextualized Uncommon Objects for Measuring Knowledge Horizons of Vision Language Models"
+                        ],
+                        [
+                            417,
+                            "Towards Injecting Medical Visual Knowledge into Multimodal LLMs at Scale"
+                        ],
+                        [
+                            572,
+                            "An image speaks a thousand words, but can everyone listen? On image transcreation for cultural relevance"
+                        ],
+                        [
+                            863,
+                            "FineCops-Ref: A new Dataset and Task for Fine-Grained Compositional Referring Expression Comprehension"
+                        ],
+                        [
+                            943,
+                            "On Efficient Language and Vision Assistants for Visually-Situated Natural Language Understanding: What Matters in Reading and Reasoning"
+                        ],
+                        [
+                            995,
+                            "In-Context Compositional Generalization for Large Vision-Language Models"
+                        ],
+                        [
+                            1062,
+                            "FoodieQA: A Multimodal Dataset for Fine-Grained Understanding of Chinese Food Culture"
+                        ],
+                        [
+                            1164,
+                            "No Culture Left Behind: ArtELingo-28, a Benchmark of WikiArt with Captions in 28 Languages"
+                        ],
+                        [
+                            1246,
+                            "CELLO: Causal Evaluation of Large Vision-Language Models"
+                        ]
+                    ],
+                    "paper_ids": [
+                        357,
+                        368,
+                        417,
+                        572,
+                        863,
+                        943,
+                        995,
+                        1062,
+                        1164,
+                        1246,
+                        1931,
+                        1952,
+                        2027,
+                        2045,
+                        2095,
+                        2121,
+                        2154,
+                        2234,
+                        2559,
+                        2803
+                    ]
+                },
+                {
+                    "label": "multimodal_speech_recognition_datasets",
+                    "description": "Datasets specifically designed for recognizing and processing speech across multiple modalities.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            425,
+                            "Multi-Dialect Vietnamese: Task, Dataset, Baseline Models and Challenges"
+                        ],
+                        [
+                            613,
+                            "Towards Probing Speech-Specific Risks in Large Multimodal Models: A Taxonomy, Benchmark, and Insights"
+                        ],
+                        [
+                            667,
+                            "Multi-Level Cross-Modal Alignment for Speech Relation Extraction"
+                        ],
+                        [
+                            820,
+                            "VHASR: A Multimodal Speech Recognition System With Vision Hotwords"
+                        ],
+                        [
+                            1534,
+                            "MMAR: Multilingual and Multimodal Anaphora Resolution in Instructional Videos"
+                        ],
+                        [
+                            1802,
+                            "PolyWER: A Holistic Evaluation Framework for Code-Switched Speech Recognition"
+                        ],
+                        [
+                            2154,
+                            "Stark: Social Long-Term Multi-Modal Conversation with Persona Commonsense Knowledge"
+                        ]
+                    ],
+                    "paper_ids": [
+                        425,
+                        613,
+                        667,
+                        820,
+                        1534,
+                        1802,
+                        2154
+                    ]
+                },
+                {
+                    "label": "multimodal_classification_datasets",
+                    "description": "Datasets focused on classification tasks that involve multiple modalities.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            142,
+                            "Selective Vision is the Challenge for Visual Reasoning: A Benchmark for Visual Argument Understanding"
+                        ],
+                        [
+                            310,
+                            "Words Worth a Thousand Pictures: Measuring and Understanding Perceptual Variability in Text-to-Image Generation"
+                        ],
+                        [
+                            425,
+                            "Multi-Dialect Vietnamese: Task, Dataset, Baseline Models and Challenges"
+                        ],
+                        [
+                            487,
+                            "MEANT: Multimodal Encoder for Antecedent Information"
+                        ],
+                        [
+                            639,
+                            "Text2Chart31: Instruction Tuning for Chart Generation with Automatic Feedback"
+                        ],
+                        [
+                            667,
+                            "Multi-Level Cross-Modal Alignment for Speech Relation Extraction"
+                        ],
+                        [
+                            800,
+                            "ASL STEM Wiki: Dataset and Benchmark for Interpreting STEM Articles"
+                        ],
+                        [
+                            897,
+                            "VideoCLIP-XL: Advancing Long Description Understanding for Video CLIP Models"
+                        ],
+                        [
+                            936,
+                            "***YesBut***: A High-Quality Annotated Multimodal Dataset for evaluating Satire Comprehension capability of Vision-Language Models"
+                        ],
+                        [
+                            958,
+                            "MemeCLIP: Leveraging CLIP Representations for Multimodal Meme Classification"
+                        ]
+                    ],
+                    "paper_ids": [
+                        142,
+                        310,
+                        425,
+                        487,
+                        639,
+                        667,
+                        800,
+                        897,
+                        936,
+                        958,
+                        1062,
+                        1132,
+                        1172,
+                        1255,
+                        1440,
+                        1488,
+                        1514,
+                        1534,
+                        1553,
+                        1687,
+                        1714,
+                        1812,
+                        2087,
+                        2095,
+                        2154,
+                        2156,
+                        2205,
+                        2251,
+                        2268,
+                        2405,
+                        2745
+                    ]
+                },
+                {
+                    "label": "multimodal_benchmark",
+                    "description": "Datasets that serve as benchmarks for evaluating multimodal models and tasks.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            43,
+                            "GeoGPT4V: Towards Geometric Multi-modal Large Language Models with Geometric Image Generation"
+                        ],
+                        [
+                            60,
+                            "Bridging Cultures in the Kitchen: A Framework and Benchmark for Cross-Cultural Recipe Retrieval"
+                        ],
+                        [
+                            105,
+                            "TopViewRS: Vision-Language Models as Top-View Spatial Reasoners"
+                        ],
+                        [
+                            126,
+                            "VideoScore: Building Automatic Metrics to Simulate Fine-grained Human Feedback for Video Generation"
+                        ],
+                        [
+                            143,
+                            "Can visual language models resolve textual ambiguity with visual cues? Let visual puns tell you!"
+                        ],
+                        [
+                            283,
+                            "From the Least to the Most: Building a Plug-and-Play Visual Reasoner via Data Synthesis"
+                        ],
+                        [
+                            295,
+                            "SEACrowd: A Multilingual Multimodal Data Hub and Benchmark Suite for Southeast Asian Languages"
+                        ],
+                        [
+                            310,
+                            "Words Worth a Thousand Pictures: Measuring and Understanding Perceptual Variability in Text-to-Image Generation"
+                        ],
+                        [
+                            368,
+                            "UOUO: Uncontextualized Uncommon Objects for Measuring Knowledge Horizons of Vision Language Models"
+                        ],
+                        [
+                            372,
+                            "Unifying Multimodal Retrieval via Document Screenshot Embedding"
+                        ]
+                    ],
+                    "paper_ids": [
+                        43,
+                        60,
+                        105,
+                        126,
+                        143,
+                        283,
+                        295,
+                        310,
+                        368,
+                        372,
+                        384,
+                        417,
+                        487,
+                        608,
+                        639,
+                        646,
+                        800,
+                        832,
+                        863,
+                        897,
+                        903,
+                        956,
+                        958,
+                        1062,
+                        1071,
+                        1072,
+                        1124,
+                        1164,
+                        1172,
+                        1194,
+                        1246,
+                        1249,
+                        1262,
+                        1460,
+                        1488,
+                        1519,
+                        1534,
+                        1553,
+                        1696,
+                        1702,
+                        1714,
+                        1766,
+                        1812,
+                        1888,
+                        1947,
+                        1952,
+                        1956,
+                        2027,
+                        2074,
+                        2087,
+                        2095,
+                        2115,
+                        2154,
+                        2156,
+                        2205,
+                        2221,
+                        2226,
+                        2261,
+                        2268,
+                        2350,
+                        2380,
+                        2405,
+                        2406,
+                        2559,
+                        2606,
+                        2628
+                    ]
+                }
+            ]
+        }
+    ]
+}

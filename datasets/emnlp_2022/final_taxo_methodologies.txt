@@ -1,0 +1,208 @@
+Label: natural_language_processing
+Dimension: methodologies
+Description: None
+Level: 0
+Source: Initial
+# of Papers: 750
+Example Papers: [(0, 'Generative Knowledge Graph Construction: A Review'), (1, 'CDConv: A Benchmark for Contradiction Detection in Chinese Conversations'), (2, 'Transformer Feed-Forward Layers Build Predictions by Promoting Concepts in the Vocabulary Space')]
+----------------------------------------
+Children:
+     Label: statistical_methods
+     Dimension: methodologies
+     Description: This methodology focuses on the use of statistical techniques to analyze and model linguistic data, enabling the extraction of patterns and insights from large corpora.
+     Level: 1
+     Source: Initial
+     # of Papers: 16
+     Example Papers: [(22, 'Certified Error Control of Candidate Set Pruning for Two-Stage Relevance Ranking'), (103, 'Infinite SCAN: An Infinite Model of Diachronic Semantic Change'), (109, 'Unbiased and Efficient Sampling of Dependency Trees')]
+     ----------------------------------------
+     Label: machine_learning_approaches
+     Dimension: methodologies
+     Description: This methodology encompasses various machine learning techniques, including supervised and unsupervised learning, to develop models that can understand and generate human language.
+     Level: 1
+     Source: Initial
+     # of Papers: 530
+     Example Papers: [(1, 'CDConv: A Benchmark for Contradiction Detection in Chinese Conversations'), (3, 'Learning to Generate Question by Asking Question: A Primal-Dual Approach with Uncommon Word Generation'), (4, 'Graph-based Model Generation for Few-Shot Relation Extraction')]
+     ----------------------------------------
+     Children:
+          Label: supervised_learning
+          Dimension: methodologies
+          Description: Supervised learning encompasses techniques where models are trained on labeled data to make predictions or classifications.
+          Level: 2
+          Source: depth
+          # of Papers: 74
+          Example Papers: [(1, 'CDConv: A Benchmark for Contradiction Detection in Chinese Conversations'), (15, 'Learning a Grammar Inducer from Massive Uncurated Instructional Videos'), (28, 'SNaC: Coherence Error Detection for Narrative Summarization')]
+          ----------------------------------------
+          Label: unsupervised_learning
+          Dimension: methodologies
+          Description: Unsupervised learning involves techniques that identify patterns in data without labeled responses.
+          Level: 2
+          Source: depth
+          # of Papers: 46
+          Example Papers: [(33, 'Unsupervised Boundary-Aware Language Model Pretraining for Chinese Sequence Labeling'), (69, 'Topic-Regularized Authorship Representation Learning'), (96, 'On the Transformation of Latent Space in Fine-Tuned NLP Models')]
+          ----------------------------------------
+          Label: deep_learning
+          Dimension: methodologies
+          Description: Deep learning refers to a subset of machine learning that uses neural networks with many layers to model complex patterns in data.
+          Level: 2
+          Source: depth
+          # of Papers: 357
+          Example Papers: [(3, 'Learning to Generate Question by Asking Question: A Primal-Dual Approach with Uncommon Word Generation'), (4, 'Graph-based Model Generation for Few-Shot Relation Extraction'), (5, 'Backdoor Attacks in Federated Learning by Rare Embeddings and Gradient Ensembling')]
+          ----------------------------------------
+          Label: transfer_learning
+          Dimension: methodologies
+          Description: Transfer learning is a technique where a model developed for a particular task is reused as the starting point for a model on a second task.
+          Level: 2
+          Source: depth
+          # of Papers: 188
+          Example Papers: [(7, 'Toward Unifying Text Segmentation and Long Document Summarization'), (11, 'Co-guiding Net: Achieving Mutual Guidances between Multiple Intent Detection and Slot Filling via Heterogeneous Semantics-Label Graphs'), (12, 'The Importance of Being Parameters: An Intra-Distillation Method for Serious Gains')]
+          ----------------------------------------
+          Label: meta_learning
+          Dimension: methodologies
+          Description: Meta-learning, or learning to learn, focuses on developing algorithms that can adapt to new tasks quickly with minimal data.
+          Level: 2
+          Source: depth
+          # of Papers: 85
+          Example Papers: [(4, 'Graph-based Model Generation for Few-Shot Relation Extraction'), (9, 'Improving Complex Knowledge Base Question Answering via Question-to-Action and Question-to-Question Alignment'), (26, 'What Makes Instruction Learning Hard? An Investigation and a New Challenge in a Synthetic Environment')]
+          ----------------------------------------
+     ----------------------------------------
+     Label: deep_learning_techniques
+     Dimension: methodologies
+     Description: This methodology leverages deep neural networks, such as recurrent and transformer architectures, to achieve state-of-the-art performance in tasks like language translation and sentiment analysis.
+     Level: 1
+     Source: Initial
+     # of Papers: 564
+     Example Papers: [(0, 'Generative Knowledge Graph Construction: A Review'), (1, 'CDConv: A Benchmark for Contradiction Detection in Chinese Conversations'), (2, 'Transformer Feed-Forward Layers Build Predictions by Promoting Concepts in the Vocabulary Space')]
+     ----------------------------------------
+     Children:
+          Label: transformer_architectures
+          Dimension: methodologies
+          Description: This cluster focuses on methodologies that utilize transformer architectures for various NLP tasks, emphasizing their design and implementation.
+          Level: 2
+          Source: depth
+          # of Papers: 59
+          Example Papers: [(2, 'Transformer Feed-Forward Layers Build Predictions by Promoting Concepts in the Vocabulary Space'), (23, 'Linearizing Transformer with Key-Value Memory'), (38, 'UnifiedSKG: Unifying and Multi-Tasking Structured Knowledge Grounding with Text-to-Text Language Models')]
+          ----------------------------------------
+          Label: adversarial_training
+          Dimension: methodologies
+          Description: This cluster encompasses methodologies that apply adversarial training techniques to enhance model robustness and performance.
+          Level: 2
+          Source: depth
+          # of Papers: 26
+          Example Papers: [(5, 'Backdoor Attacks in Federated Learning by Rare Embeddings and Gradient Ensembling'), (39, 'Balanced Adversarial Training: Balancing Tradeoffs between Fickleness and Obstinacy in NLP Models'), (56, 'DropMix: A Textual Data Augmentation Combining Dropout with Mixup')]
+          ----------------------------------------
+          Label: self_supervised_learning
+          Dimension: methodologies
+          Description: This cluster includes methodologies that leverage self-supervised learning techniques to improve model training without extensive labeled data.
+          Level: 2
+          Source: depth
+          # of Papers: 169
+          Example Papers: [(8, 'The Geometry of Multilingual Language Model Representations'), (12, 'The Importance of Being Parameters: An Intra-Distillation Method for Serious Gains'), (17, 'Estimating Soft Labels for Out-of-Domain Intent Detection')]
+          ----------------------------------------
+          Label: knowledge_distillation
+          Dimension: methodologies
+          Description: This cluster focuses on methodologies that utilize knowledge distillation to transfer knowledge from larger models to smaller, more efficient ones.
+          Level: 2
+          Source: depth
+          # of Papers: 26
+          Example Papers: [(3, 'Learning to Generate Question by Asking Question: A Primal-Dual Approach with Uncommon Word Generation'), (52, 'Metric-guided Distillation: Distilling Knowledge from the Metric to Ranker and Retriever for Generative Commonsense Reasoning'), (54, 'Curriculum Knowledge Distillation for Emoji-supervised Cross-lingual Sentiment Analysis')]
+          ----------------------------------------
+          Label: multimodal_learning
+          Dimension: methodologies
+          Description: This cluster encompasses methodologies that integrate multiple modalities, such as text and images, to enhance learning and model performance.
+          Level: 2
+          Source: depth
+          # of Papers: 105
+          Example Papers: [(15, 'Learning a Grammar Inducer from Massive Uncurated Instructional Videos'), (16, 'Normalized Contrastive Learning for Text-Video Retrieval'), (20, 'Non-Parametric Domain Adaptation for End-to-End Speech Translation')]
+          ----------------------------------------
+          Label: graph_neural_networks
+          Dimension: methodologies
+          Description: This cluster focuses on methodologies that utilize graph neural networks to model and analyze complex relationships in data.
+          Level: 2
+          Source: width
+          # of Papers: 89
+          Example Papers: [(1, 'CDConv: A Benchmark for Contradiction Detection in Chinese Conversations'), (4, 'Graph-based Model Generation for Few-Shot Relation Extraction'), (11, 'Co-guiding Net: Achieving Mutual Guidances between Multiple Intent Detection and Slot Filling via Heterogeneous Semantics-Label Graphs')]
+          ----------------------------------------
+          Label: fine_tuning_generative_language_models
+          Dimension: methodologies
+          Description: This cluster encompasses methodologies that focus on fine-tuning generative language models for specific tasks to enhance performance.
+          Level: 2
+          Source: width
+          # of Papers: 108
+          Example Papers: [(14, 'RankGen: Improving text generation with Large Ranking Models'), (33, 'Unsupervised Boundary-Aware Language Model Pretraining for Chinese Sequence Labeling'), (34, 'RetroMAE: Pre-Training Retrieval-oriented Language Models Via Masked Auto-Encoder')]
+          ----------------------------------------
+          Label: interpretability_methods
+          Dimension: methodologies
+          Description: This cluster includes methodologies that aim to improve the interpretability of deep learning models, making their decisions more understandable.
+          Level: 2
+          Source: width
+          # of Papers: 33
+          Example Papers: [(13, 'Interpreting Language Models with Contrastive Explanations'), (63, "``Will You Find These Shortcuts?'' A Protocol for Evaluating the Faithfulness of Input Salience Methods for Text Classification"), (81, 'Maieutic Prompting: Logically Consistent Reasoning with Recursive Explanations')]
+          ----------------------------------------
+          Label: incremental_learning
+          Dimension: methodologies
+          Description: This cluster focuses on methodologies that enable models to learn incrementally from new data without forgetting previously learned information.
+          Level: 2
+          Source: width
+          # of Papers: 22
+          Example Papers: [(27, 'Sentence-Incremental Neural Coreference Resolution'), (38, 'UnifiedSKG: Unifying and Multi-Tasking Structured Knowledge Grounding with Text-to-Text Language Models'), (55, 'Correctable-DST: Mitigating Historical Context Mismatch between Training and Inference for Improved Dialogue State Tracking')]
+          ----------------------------------------
+          Label: extractive_summarization
+          Dimension: methodologies
+          Description: This cluster encompasses methodologies that focus on extractive summarization techniques to condense information from texts.
+          Level: 2
+          Source: width
+          # of Papers: 31
+          Example Papers: [(7, 'Toward Unifying Text Segmentation and Long Document Summarization'), (29, 'HydraSum: Disentangling Style Features in Text Summarization with Multi-Decoder Models'), (147, 'When FLUE Meets FLANG: Benchmarks and Large Pretrained Language Model for Financial Domain')]
+          ----------------------------------------
+     ----------------------------------------
+     Label: rule-based_systems
+     Dimension: methodologies
+     Description: This methodology involves the creation of systems that apply predefined linguistic rules to process and analyze text, often used in applications like grammar checking and information extraction.
+     Level: 1
+     Source: Initial
+     # of Papers: 21
+     Example Papers: [(6, 'Generating Natural Language Proofs with Verifier-Guided Search'), (43, 'Segmenting Numerical Substitution Ciphers'), (120, 'Linguistic Corpus Annotation for Automatic Text Simplification Evaluation')]
+     ----------------------------------------
+     Label: hybrid_approaches
+     Dimension: methodologies
+     Description: This methodology combines elements from both statistical and rule-based methods to create more robust natural language processing systems that can handle a wider range of linguistic phenomena.
+     Level: 1
+     Source: Initial
+     # of Papers: 80
+     Example Papers: [(6, 'Generating Natural Language Proofs with Verifier-Guided Search'), (23, 'Linearizing Transformer with Key-Value Memory'), (42, 'A Unified Encoder-Decoder Framework with Entity Memory')]
+     ----------------------------------------
+     Children:
+          Label: ensemble_methods
+          Dimension: methodologies
+          Description: Ensemble methods combine multiple models to improve the overall performance and robustness of natural language processing tasks.
+          Level: 2
+          Source: depth
+          # of Papers: 20
+          Example Papers: [(23, 'Linearizing Transformer with Key-Value Memory'), (93, 'M3: A Multi-View Fusion and Multi-Decoding Network for Multi-Document Reading Comprehension'), (168, 'Transfer Learning from Semantic Role Labeling to Event Argument Extraction with Template-based Slot Querying')]
+          ----------------------------------------
+          Label: multi-modal_approaches
+          Dimension: methodologies
+          Description: Multi-modal approaches integrate information from various modalities to enhance understanding and processing in natural language tasks.
+          Level: 2
+          Source: depth
+          # of Papers: 10
+          Example Papers: [(93, 'M3: A Multi-View Fusion and Multi-Decoding Network for Multi-Document Reading Comprehension'), (271, 'Syntactic Multi-view Learning for Open Information Extraction'), (363, 'TeleMelody: Lyric-to-Melody Generation with a Template-Based Two-Stage Method')]
+          ----------------------------------------
+          Label: neuro-symbolic_approaches
+          Dimension: methodologies
+          Description: Neuro-symbolic approaches leverage both neural networks and symbolic reasoning to tackle complex natural language processing challenges.
+          Level: 2
+          Source: depth
+          # of Papers: 19
+          Example Papers: [(6, 'Generating Natural Language Proofs with Verifier-Guided Search'), (46, 'GammaE: Gamma Embeddings for Logical Queries on Knowledge Graphs'), (82, 'DANLI: Deliberative Agent for Following Natural Language Instructions')]
+          ----------------------------------------
+          Label: knowledge-based_approaches
+          Dimension: methodologies
+          Description: Knowledge-based approaches utilize structured knowledge to enhance the performance of natural language processing systems.
+          Level: 2
+          Source: depth
+          # of Papers: 39
+          Example Papers: [(42, 'A Unified Encoder-Decoder Framework with Entity Memory'), (43, 'Segmenting Numerical Substitution Ciphers'), (51, 'LightEA: A Scalable, Robust, and Interpretable Entity Alignment Framework via Three-view Label Propagation')]
+          ----------------------------------------
+     ----------------------------------------
+----------------------------------------

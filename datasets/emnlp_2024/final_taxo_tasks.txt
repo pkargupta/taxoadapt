@@ -1,0 +1,531 @@
+Label: natural_language_processing
+Dimension: tasks
+Description: None
+Level: 0
+Source: Initial
+# of Papers: 2954
+Example Papers: [(0, 'UniGen: Universal Domain Generalization for Sentiment Classification via Zero-shot Dataset Generation'), (1, 'Multi-News+: Cost-efficient Dataset Cleansing via LLM-based Data Annotation'), (2, 'FIZZ: Factual Inconsistency Detection by Zoom-in Summary and Zoom-out Document')]
+----------------------------------------
+Children:
+     Label: text_classification
+     Dimension: tasks
+     Description: The task of assigning predefined categories to text documents based on their content, often used in spam detection, sentiment analysis, and topic labeling.
+     Level: 1
+     Source: Initial
+     # of Papers: 161
+     Example Papers: [(9, 'Hateful Word in Context Classification'), (21, '"We Demand Justice!": Towards Social Context Grounding of Political Texts'), (38, 'CoCoLoFa: A Dataset of News Comments with Common Logical Fallacies Written by LLM-Assisted Crowds')]
+     ----------------------------------------
+     Children:
+          Label: sentiment_analysis
+          Dimension: tasks
+          Description: The task of determining the emotional tone behind a series of words, used to understand the attitudes, opinions, and emotions expressed in text.
+          Level: 1
+          Source: Initial
+          # of Papers: 18
+          Example Papers: [(49, "Integrating Plutchik's Theory with Mixture of Experts for Enhancing Emotion Classification"), (161, 'Message Passing on Semantic-Anchor-Graphs for Fine-grained Emotion Representation Learning and Classification'), (256, 'Visual Prompting in LLMs for Enhancing Emotion Recognition')]
+          ----------------------------------------
+          Children:
+               Label: aspect_based_sentiment_analysis
+               Dimension: tasks
+               Description: Aspect-based sentiment analysis focuses on determining sentiment towards specific aspects or features of a product or service.
+               Level: 2
+               Source: depth
+               # of Papers: 2
+               Example Papers: [(1170, 'I love pineapple on pizza != I hate pineapple on pizza: Stance-Aware Sentence Transformers for Opinion Mining'), (1732, 'Stanceformer: Target-Aware Transformer for Stance Detection')]
+               ----------------------------------------
+               Label: emotion_classification
+               Dimension: tasks
+               Description: Emotion classification involves categorizing text based on the emotional states expressed within it.
+               Level: 2
+               Source: depth
+               # of Papers: 5
+               Example Papers: [(49, "Integrating Plutchik's Theory with Mixture of Experts for Enhancing Emotion Classification"), (161, 'Message Passing on Semantic-Anchor-Graphs for Fine-grained Emotion Representation Learning and Classification'), (256, 'Visual Prompting in LLMs for Enhancing Emotion Recognition')]
+               ----------------------------------------
+               Label: hate_speech_detection
+               Dimension: tasks
+               Description: Hate speech detection aims to identify and classify text that expresses hate or discrimination against individuals or groups.
+               Level: 2
+               Source: depth
+               ----------------------------------------
+               Label: multimodal_sentiment_analysis
+               Dimension: tasks
+               Description: Multimodal sentiment analysis integrates information from multiple modalities, such as text, audio, and visual data, to assess sentiment.
+               Level: 2
+               Source: depth
+               # of Papers: 1
+               Example Papers: [(2509, 'Continuous Attentive Multimodal Prompt Tuning for Few-Shot Multimodal Sarcasm Detection')]
+               ----------------------------------------
+               Label: binary_sentiment_classification
+               Dimension: tasks
+               Description: Binary sentiment classification involves categorizing text into two sentiment categories, typically positive or negative.
+               Level: 2
+               Source: depth
+               # of Papers: 4
+               Example Papers: [(1170, 'I love pineapple on pizza != I hate pineapple on pizza: Stance-Aware Sentence Transformers for Opinion Mining'), (2264, 'LexC-Gen: Generating Data for Extremely Low-Resource Languages with Large Language Models and Bilingual Lexicons'), (2450, 'Optimal and efficient text counterfactuals using Graph Neural Networks')]
+               ----------------------------------------
+          ----------------------------------------
+          Label: document_classification
+          Dimension: tasks
+          Description: Document classification involves categorizing entire documents into predefined classes based on their content, useful for organizing large datasets.
+          Level: 2
+          Source: depth
+          # of Papers: 70
+          Example Papers: [(21, '"We Demand Justice!": Towards Social Context Grounding of Political Texts'), (38, 'CoCoLoFa: A Dataset of News Comments with Common Logical Fallacies Written by LLM-Assisted Crowds'), (207, 'A Generic Method for Fine-grained Category Discovery in Natural Language Texts')]
+          ----------------------------------------
+          Label: multi_label_classification
+          Dimension: tasks
+          Description: Multi-label classification is the task of assigning multiple labels to a single instance, allowing for more complex categorization.
+          Level: 2
+          Source: depth
+          # of Papers: 69
+          Example Papers: [(38, 'CoCoLoFa: A Dataset of News Comments with Common Logical Fallacies Written by LLM-Assisted Crowds'), (51, "What's Mine becomes Yours: Defining, Annotating and Detecting Context-Dependent Paraphrases in News Interview Dialogs"), (153, 'African or European Swallow? Benchmarking Large Vision-Language Models for Fine-Grained Object Classification')]
+          ----------------------------------------
+          Label: abuse_detection
+          Dimension: tasks
+          Description: Abuse detection focuses on identifying harmful or abusive content in text, crucial for maintaining safe online environments.
+          Level: 2
+          Source: depth
+          # of Papers: 38
+          Example Papers: [(9, 'Hateful Word in Context Classification'), (131, 'Oddballs and Misfits: Detecting Implicit Abuse in Which Identity Groups are Depicted as Deviating from the Norm'), (258, 'Leveraging Conflicts in Social Media Posts: Unintended Offense Dataset')]
+          ----------------------------------------
+          Label: topic_classification
+          Dimension: tasks
+          Description: Topic classification involves categorizing text into specific topics, enabling better organization and retrieval of information.
+          Level: 2
+          Source: depth
+          # of Papers: 40
+          Example Papers: [(21, '"We Demand Justice!": Towards Social Context Grounding of Political Texts'), (218, 'Text Grafting: Near-Distribution Weak Supervision for Minority Classes in Text Classification'), (349, 'SciPrompt: Knowledge-augmented Prompting for Fine-grained Categorization of Scientific Topics')]
+          ----------------------------------------
+     ----------------------------------------
+     Label: named_entity_recognition
+     Dimension: tasks
+     Description: The process of identifying and classifying key entities in text, such as names of people, organizations, locations, and other specific terms.
+     Level: 1
+     Source: Initial
+     # of Papers: 50
+     Example Papers: [(33, 'A Study of Nationality Bias in Names and Perplexity using Off-the-Shelf Affect-related Tweet Classifiers'), (94, 'Cross-domain NER with Generated Task-Oriented Knowledge: An Empirical Study from Information Density Perspective'), (354, 'Contrastive Entity Coreference and Disambiguation for Historical Texts')]
+     ----------------------------------------
+     Children:
+          Label: cross_domain_named_entity_recognition
+          Dimension: tasks
+          Description: This cluster focuses on recognizing named entities across different domains and contexts.
+          Level: 2
+          Source: depth
+          # of Papers: 20
+          Example Papers: [(33, 'A Study of Nationality Bias in Names and Perplexity using Off-the-Shelf Affect-related Tweet Classifiers'), (94, 'Cross-domain NER with Generated Task-Oriented Knowledge: An Empirical Study from Information Density Perspective'), (354, 'Contrastive Entity Coreference and Disambiguation for Historical Texts')]
+          ----------------------------------------
+          Label: entity_disambiguation
+          Dimension: tasks
+          Description: This cluster encompasses tasks related to resolving ambiguities in entity identification and classification.
+          Level: 2
+          Source: depth
+          # of Papers: 4
+          Example Papers: [(354, 'Contrastive Entity Coreference and Disambiguation for Historical Texts'), (755, 'OneNet: A Fine-Tuning Free Framework for Few-Shot Entity Linking via Large Language Model Prompting'), (829, 'Unsupervised Named Entity Disambiguation for Low Resource Domains')]
+          ----------------------------------------
+          Label: medical_entity_recognition
+          Dimension: tasks
+          Description: This cluster is dedicated to the identification and classification of medical-related entities in text.
+          Level: 2
+          Source: depth
+          # of Papers: 5
+          Example Papers: [(587, 'Bio-RFX: Refining Biomedical Extraction via Advanced Relation Classification and Structural Constraints'), (835, 'RaTEScore: A Metric for Radiology Report Generation'), (1049, 'NeuroTrialNER: An Annotated Corpus for Neurological Diseases and Therapies in Clinical Trial Registries')]
+          ----------------------------------------
+          Label: legal_named_entity_recognition
+          Dimension: tasks
+          Description: This cluster focuses on the identification of named entities specifically within legal texts and contexts.
+          Level: 2
+          Source: depth
+          # of Papers: 7
+          Example Papers: [(2641, 'uOttawa at LegalLens-2024: Transformer-based Classification Experiments'), (2645, 'Information Extraction for Planning Court Cases'), (2658, 'Bonafide at LegalLens 2024 Shared Task: Using Lightweight DeBERTa Based Encoder For Legal Violation Detection and Resolution')]
+          ----------------------------------------
+          Label: nested_named_entity_recognition
+          Dimension: tasks
+          Description: This cluster deals with the recognition of entities that are nested within other entities in text.
+          Level: 2
+          Source: depth
+          # of Papers: 7
+          Example Papers: [(491, 'Exploring Nested Named Entity Recognition with Large Language Models: Methods, Challenges, and Insights'), (587, 'Bio-RFX: Refining Biomedical Extraction via Advanced Relation Classification and Structural Constraints'), (1086, 'A Fast and Sound Tagging Method for Discontinuous Named-Entity Recognition')]
+          ----------------------------------------
+     ----------------------------------------
+     Label: machine_translation
+     Dimension: tasks
+     Description: The task of automatically translating text from one language to another while preserving its meaning and context.
+     Level: 1
+     Source: Initial
+     # of Papers: 242
+     Example Papers: [(23, 'Fine-Tuning Large Language Models to Translate: Will a Touch of Noisy Data in Misaligned Languages Suffice?'), (54, 'Chain-of-Dictionary Prompting Elicits Translation in Large Language Models'), (68, 'LLMs Are Zero-Shot Context-Aware Simultaneous Translators')]
+     ----------------------------------------
+     Children:
+          Label: neural_machine_translation
+          Dimension: tasks
+          Description: This cluster focuses on the use of neural network architectures to perform machine translation tasks.
+          Level: 2
+          Source: depth
+          # of Papers: 193
+          Example Papers: [(23, 'Fine-Tuning Large Language Models to Translate: Will a Touch of Noisy Data in Misaligned Languages Suffice?'), (54, 'Chain-of-Dictionary Prompting Elicits Translation in Large Language Models'), (68, 'LLMs Are Zero-Shot Context-Aware Simultaneous Translators')]
+          ----------------------------------------
+          Label: evaluation
+          Dimension: tasks
+          Description: This cluster encompasses various methods and metrics for evaluating the quality and effectiveness of machine translation systems.
+          Level: 2
+          Source: depth
+          # of Papers: 79
+          Example Papers: [(187, 'Word Alignment as Preference for Machine Translation'), (213, 'What do Large Language Models Need for Machine Translation Evaluation?'), (288, 'Aligning Translation-Specific Understanding to General Understanding in Large Language Models')]
+          ----------------------------------------
+          Label: domain_adaptation
+          Dimension: tasks
+          Description: This cluster includes techniques aimed at adapting machine translation systems to specific domains or contexts.
+          Level: 2
+          Source: depth
+          # of Papers: 44
+          Example Papers: [(54, 'Chain-of-Dictionary Prompting Elicits Translation in Large Language Models'), (250, 'Voices Unheard: NLP Resources and Models for Yoruba Regional Dialects'), (334, 'Quantifying the Gaps Between Translation and Native Perception in Training for Multimodal, Multilingual Retrieval')]
+          ----------------------------------------
+          Label: multilingual_translation
+          Dimension: tasks
+          Description: This cluster focuses on translating text across multiple languages, often leveraging shared resources and techniques.
+          Level: 2
+          Source: depth
+          # of Papers: 87
+          Example Papers: [(23, 'Fine-Tuning Large Language Models to Translate: Will a Touch of Noisy Data in Misaligned Languages Suffice?'), (54, 'Chain-of-Dictionary Prompting Elicits Translation in Large Language Models'), (68, 'LLMs Are Zero-Shot Context-Aware Simultaneous Translators')]
+          ----------------------------------------
+          Label: creative_translation
+          Dimension: tasks
+          Description: This cluster explores innovative approaches to translation that emphasize creativity and cultural nuances.
+          Level: 2
+          Source: depth
+          # of Papers: 7
+          Example Papers: [(572, 'An image speaks a thousand words, but can everyone listen? On image transcreation for cultural relevance'), (1761, 'Sing it, Narrate it: Quality Musical Lyrics Translation'), (1990, 'Creative and Context-Aware Translation of East Asian Idioms with GPT-4')]
+          ----------------------------------------
+     ----------------------------------------
+     Label (Visited): sentiment_analysis
+     Label: text_summarization
+     Dimension: tasks
+     Description: The process of creating a concise and coherent summary of a longer text document, capturing the main ideas and essential information.
+     Level: 1
+     Source: Initial
+     # of Papers: 79
+     Example Papers: [(1, 'Multi-News+: Cost-efficient Dataset Cleansing via LLM-based Data Annotation'), (2, 'FIZZ: Factual Inconsistency Detection by Zoom-in Summary and Zoom-out Document'), (356, 'Evaluating LLMs for Targeted Concept Simplification for Domain-Specific Texts')]
+     ----------------------------------------
+     Children:
+          Label: abstractive_summarization
+          Dimension: tasks
+          Description: Abstractive summarization involves generating new sentences that capture the essence of the original text, rather than merely extracting portions of it.
+          Level: 2
+          Source: depth
+          # of Papers: 34
+          Example Papers: [(2, 'FIZZ: Factual Inconsistency Detection by Zoom-in Summary and Zoom-out Document'), (556, 'STORYSUMM: Evaluating Faithfulness in Story Summarization'), (727, 'Detecting Errors through Ensembling Prompts (DEEP): An End-to-End LLM Framework for Detecting Factual Errors')]
+          ----------------------------------------
+          Label: extractive_summarization
+          Dimension: tasks
+          Description: Extractive summarization focuses on identifying and extracting key sentences or phrases from the original text to create a summary.
+          Level: 2
+          Source: depth
+          # of Papers: 7
+          Example Papers: [(1105, 'Towards Enhancing Coherence in Extractive Summarization: Dataset and Experiments with LLMs'), (1877, 'Event-Keyed Summarization'), (2390, 'Multi-label Sequential Sentence Classification via Large Language Model')]
+          ----------------------------------------
+          Label: multi_document_summarization
+          Dimension: tasks
+          Description: Multi-document summarization aims to create a coherent summary from multiple documents on the same topic.
+          Level: 2
+          Source: depth
+          # of Papers: 13
+          Example Papers: [(1, 'Multi-News+: Cost-efficient Dataset Cleansing via LLM-based Data Annotation'), (551, 'Summary of a Haystack: A Challenge to Long-Context LLMs and RAG Systems'), (602, 'GlobeSumm: A Challenging Benchmark Towards Unifying Multi-lingual, Cross-lingual and Multi-document News Summarization')]
+          ----------------------------------------
+          Label: text_simplification
+          Dimension: tasks
+          Description: Text simplification involves modifying the original text to make it easier to read and understand while retaining the main ideas.
+          Level: 2
+          Source: depth
+          # of Papers: 22
+          Example Papers: [(356, 'Evaluating LLMs for Targeted Concept Simplification for Domain-Specific Texts'), (518, 'APPLS: Evaluating Evaluation Metrics for Plain Language Summarization'), (640, 'PrExMe! Large Scale Prompt Exploration of Open Source LLMs for Machine Translation and Summarization Evaluation')]
+          ----------------------------------------
+          Label: query-focused_summarization
+          Dimension: tasks
+          Description: Query-focused summarization generates summaries that are tailored to specific queries or information needs.
+          Level: 2
+          Source: depth
+          # of Papers: 13
+          Example Papers: [(551, 'Summary of a Haystack: A Challenge to Long-Context LLMs and RAG Systems'), (593, 'Evidence-Focused Fact Summarization for Knowledge-Augmented Zero-Shot Question Answering'), (837, 'Learning to Rank Salient Content for Query-focused Summarization')]
+          ----------------------------------------
+     ----------------------------------------
+     Label: question_answering
+     Dimension: tasks
+     Description: The task of automatically answering questions posed by humans in natural language, often leveraging large datasets and advanced algorithms.
+     Level: 1
+     Source: width
+     # of Papers: 285
+     Example Papers: [(4, 'Table Question Answering for Low-resourced Indic Languages'), (57, 'BlendFilter: Advancing Retrieval-Augmented Large Language Models via Query Generation Blending and Knowledge Filtering'), (70, 'ChatRetriever: Adapting Large Language Models for Generalized and Robust Conversational Dense Retrieval')]
+     ----------------------------------------
+     Children:
+          Label: open_domain_question_answering
+          Dimension: tasks
+          Description: This cluster focuses on question answering systems that can handle a wide range of topics and domains without being restricted to a specific context.
+          Level: 2
+          Source: depth
+          # of Papers: 124
+          Example Papers: [(57, 'BlendFilter: Advancing Retrieval-Augmented Large Language Models via Query Generation Blending and Knowledge Filtering'), (100, 'Triad: A Framework Leveraging a Multi-Role LLM-based Agent to Solve Knowledge Base Question Answering'), (109, 'Self-Bootstrapped Visual-Language Model for Knowledge Selection and Question Answering')]
+          ----------------------------------------
+          Label: visual_question_answering
+          Dimension: tasks
+          Description: This cluster encompasses question answering tasks that involve visual inputs, requiring the model to interpret and reason about images or videos.
+          Level: 2
+          Source: depth
+          # of Papers: 51
+          Example Papers: [(87, 'Exploring Union and Intersection of Visual Regions for Generating Questions, Answers, and Distractors'), (90, 'MAR: Matching-Augmented Reasoning for Enhancing Visual-based Entity Question Answering'), (109, 'Self-Bootstrapped Visual-Language Model for Knowledge Selection and Question Answering')]
+          ----------------------------------------
+          Label: conversational_question_answering
+          Dimension: tasks
+          Description: This cluster includes question answering systems designed for interactive dialogue, focusing on maintaining context and coherence in conversations.
+          Level: 2
+          Source: depth
+          # of Papers: 19
+          Example Papers: [(70, 'ChatRetriever: Adapting Large Language Models for Generalized and Robust Conversational Dense Retrieval'), (553, 'Into the Unknown Unknowns: Engaged Human Learning through Participation in Language Model Agent Conversations'), (630, 'PCQPR: Proactive Conversational Question Planning with Reflection')]
+          ----------------------------------------
+          Label: reasoning_in_question_answering
+          Dimension: tasks
+          Description: This cluster focuses on question answering tasks that require complex reasoning, including logical and causal reasoning.
+          Level: 2
+          Source: depth
+          # of Papers: 90
+          Example Papers: [(75, 'QUDSELECT: Selective Decoding for Questions Under Discussion Parsing'), (100, 'Triad: A Framework Leveraging a Multi-Role LLM-based Agent to Solve Knowledge Base Question Answering'), (146, 'Seemingly Plausible Distractors in Multi-Hop Reasoning: Are Large Language Models Attentive Readers?')]
+          ----------------------------------------
+          Label: extractive_question_answering
+          Dimension: tasks
+          Description: This cluster pertains to question answering tasks that involve extracting answers directly from a given text or document.
+          Level: 2
+          Source: depth
+          # of Papers: 66
+          Example Papers: [(4, 'Table Question Answering for Low-resourced Indic Languages'), (100, 'Triad: A Framework Leveraging a Multi-Role LLM-based Agent to Solve Knowledge Base Question Answering'), (204, 'CoTKR: Chain-of-Thought Enhanced Knowledge Rewriting for Complex Knowledge Graph Question Answering')]
+          ----------------------------------------
+     ----------------------------------------
+     Label: text_generation
+     Dimension: tasks
+     Description: The process of generating coherent and contextually relevant text based on a given input or prompt.
+     Level: 1
+     Source: width
+     # of Papers: 504
+     Example Papers: [(8, 'Speaking in Wavelet Domain: A Simple and Efficient Approach to Speed up Speech Diffusion Model'), (24, 'Consolidating Ranking and Relevance Predictions of Large Language Models through Post-Processing'), (26, 'Impeding LLM-assisted Cheating in Introductory Programming Assignments via Adversarial Perturbation')]
+     ----------------------------------------
+     Children:
+          Label: code_generation
+          Dimension: tasks
+          Description: The process of generating code snippets or entire programs based on given specifications or prompts.
+          Level: 2
+          Source: depth
+          # of Papers: 29
+          Example Papers: [(26, 'Impeding LLM-assisted Cheating in Introductory Programming Assignments via Adversarial Perturbation'), (65, 'AMR-Evol: Adaptive Modular Response Evolution Elicits Better Knowledge Distillation for Large Language Models in Code Generation'), (264, 'World to Code: Multi-modal Data Generation via Self-Instructed Compositional Captioning and Filtering')]
+          ----------------------------------------
+          Label: dialogue_generation
+          Dimension: tasks
+          Description: The creation of conversational responses or dialogues based on user inputs or prompts.
+          Level: 2
+          Source: depth
+          # of Papers: 58
+          Example Papers: [(78, 'Reuse Your Rewards: Reward Model Transfer for Zero-Shot Cross-Lingual Alignment'), (117, "Be Helpful but Don't Talk too Much - Enhancing Helpfulness in Conversations through Relevance in Multi-Turn Emotional Support"), (188, 'Improving Multi-party Dialogue Generation via Topic and Rhetorical Coherence')]
+          ----------------------------------------
+          Label: content_generation
+          Dimension: tasks
+          Description: The generation of various types of content, including articles, stories, and other written materials.
+          Level: 2
+          Source: depth
+          # of Papers: 339
+          Example Papers: [(8, 'Speaking in Wavelet Domain: A Simple and Efficient Approach to Speed up Speech Diffusion Model'), (24, 'Consolidating Ranking and Relevance Predictions of Large Language Models through Post-Processing'), (27, 'Clustering and Ranking: Diversity-preserved Instruction Selection through Expert-aligned Quality Estimation')]
+          ----------------------------------------
+          Label: text_synthesis
+          Dimension: tasks
+          Description: The process of combining information from various sources to create coherent text.
+          Level: 2
+          Source: depth
+          # of Papers: 86
+          Example Papers: [(8, 'Speaking in Wavelet Domain: A Simple and Efficient Approach to Speed up Speech Diffusion Model'), (53, 'Large Language Models for Data Annotation and Synthesis: A Survey'), (104, 'HELPD: Mitigating Hallucination of LVLMs by Hierarchical Feedback Learning with Vision-enhanced Penalty Decoding')]
+          ----------------------------------------
+          Label: text_style_transfer
+          Dimension: tasks
+          Description: The transformation of text from one style to another while preserving its content.
+          Level: 2
+          Source: depth
+          # of Papers: 13
+          Example Papers: [(116, 'TCSinger: Zero-Shot Singing Voice Synthesis with Style Transfer and Multi-Level Style Control'), (144, 'Reusing Transferable Weight Increments for Low-resource Style Generation'), (240, 'StyleRemix: Interpretable Authorship Obfuscation via Distillation and Perturbation of Style Elements')]
+          ----------------------------------------
+     ----------------------------------------
+     Label: information_extraction
+     Dimension: tasks
+     Description: The task of automatically extracting structured information from unstructured text, such as entities, relationships, and events.
+     Level: 1
+     Source: width
+     # of Papers: 558
+     Example Papers: [(10, "Eyes Don't Lie: Subjective Hate Annotation and Detection with Gaze"), (13, 'A Usage-centric Take on Intent Understanding in E-Commerce'), (15, 'Systematic Biases in LLM Simulations of Debates')]
+     ----------------------------------------
+     Children:
+          Label: entity_extraction
+          Dimension: tasks
+          Description: The task of identifying and classifying key entities from unstructured text into predefined categories.
+          Level: 2
+          Source: depth
+          # of Papers: 35
+          Example Papers: [(94, 'Cross-domain NER with Generated Task-Oriented Knowledge: An Empirical Study from Information Density Perspective'), (351, 'Learning from Natural Language Explanations for Generalizable Entity Matching'), (387, 'Learning to Extract Structured Entities Using Language Models')]
+          ----------------------------------------
+          Label: event_extraction
+          Dimension: tasks
+          Description: The process of identifying and extracting events and their attributes from text data.
+          Level: 2
+          Source: depth
+          # of Papers: 32
+          Example Papers: [(50, 'In-context Contrastive Learning for Event Causality Identification'), (102, 'Event Causality Identification with Synthetic Control'), (281, 'EVEDIT: Event-based Knowledge Editing for Deterministic Knowledge Propagation')]
+          ----------------------------------------
+          Label: relation_extraction
+          Dimension: tasks
+          Description: The task of identifying and extracting relationships between entities in text.
+          Level: 2
+          Source: depth
+          # of Papers: 34
+          Example Papers: [(215, 'External Knowledge-Driven Argument Mining: Leveraging Attention-Enhanced Multi-Network Models'), (313, 'LogicST: A Logical Self-Training Framework for Document-Level Relation Extraction with Incomplete Annotations'), (548, 'MQuinE: a Cure for "Z-paradox" in Knowledge Graph Embedding')]
+          ----------------------------------------
+          Label: fact_extraction
+          Dimension: tasks
+          Description: The process of extracting factual information from text, often for verification or knowledge representation.
+          Level: 2
+          Source: depth
+          # of Papers: 75
+          Example Papers: [(38, 'CoCoLoFa: A Dataset of News Comments with Common Logical Fallacies Written by LLM-Assisted Crowds'), (61, 'RULE: Reliable Multimodal RAG for Factuality in Medical Vision Language Models'), (112, 'Do We Need Language-Specific Fact-Checking Models? The Case of Chinese')]
+          ----------------------------------------
+          Label: document_information_extraction
+          Dimension: tasks
+          Description: The extraction of structured information from entire documents rather than isolated text segments.
+          Level: 2
+          Source: depth
+          # of Papers: 420
+          Example Papers: [(10, "Eyes Don't Lie: Subjective Hate Annotation and Detection with Gaze"), (13, 'A Usage-centric Take on Intent Understanding in E-Commerce'), (22, 'An Experimental Analysis on Evaluating Patent Citations')]
+          ----------------------------------------
+          Label: memory_extraction
+          Dimension: tasks
+          Description: The task of retrieving and structuring memory-related information from unstructured text sources.
+          Level: 2
+          Source: width
+          # of Papers: 2
+          Example Papers: [(121, 'Decoding the Echoes of Vision from fMRI: Memory Disentangling for Past Semantic Information'), (2135, 'Mixed-Session Conversation with Egocentric Memory')]
+          ----------------------------------------
+          Label: impact_analysis
+          Dimension: tasks
+          Description: The process of assessing the effects or implications of certain information extracted from text.
+          Level: 2
+          Source: width
+          # of Papers: 21
+          Example Papers: [(10, "Eyes Don't Lie: Subjective Hate Annotation and Detection with Gaze"), (180, 'From Insights to Actions: The Impact of Interpretability and Analysis Research on NLP'), (255, 'Deciphering Rumors: A Multi-Task Learning Approach with Intent-aware Hierarchical Contrastive Learning')]
+          ----------------------------------------
+          Label: bias_detection
+          Dimension: tasks
+          Description: The task of identifying and analyzing biases present in textual data.
+          Level: 2
+          Source: width
+          # of Papers: 16
+          Example Papers: [(15, 'Systematic Biases in LLM Simulations of Debates'), (412, '"You Gotta be a Doctor, Lin" : An Investigation of Name-Based Bias of Large Language Models in Employment Recommendations'), (473, 'Humans or LLMs as the Judge? A Study on Judgement Bias')]
+          ----------------------------------------
+          Label: data_narration
+          Dimension: tasks
+          Description: The process of generating narratives or summaries from extracted data points.
+          Level: 2
+          Source: width
+          # of Papers: 1
+          Example Papers: [(600, 'DataTales: A Benchmark for Real-World Intelligent Data Narration')]
+          ----------------------------------------
+          Label: clinical_decision_making
+          Dimension: tasks
+          Description: The extraction of relevant information to support decision-making in clinical settings.
+          Level: 2
+          Source: width
+          # of Papers: 3
+          Example Papers: [(758, 'Large Language Models Are Poor Clinical Decision-Makers: A Comprehensive Benchmark'), (1025, 'CasiMedicos-Arg: A Medical Question Answering Dataset Annotated with Explanatory Argumentative Structures'), (1050, 'Fool Me Once? Contrasting Textual and Visual Explanations in a Clinical Decision-Support Setting')]
+          ----------------------------------------
+     ----------------------------------------
+     Label: language_modeling
+     Dimension: tasks
+     Description: The task of developing models that can understand and generate human language, often used for various NLP applications.
+     Level: 1
+     Source: width
+     # of Papers: 2148
+     Example Papers: [(3, 'Prompts have evil twins'), (7, 'When LLMs Meets Acoustic Landmarks: An Efficient Approach to Integrate Speech into Large Language Models for Depression Detection'), (8, 'Speaking in Wavelet Domain: A Simple and Efficient Approach to Speed up Speech Diffusion Model')]
+     ----------------------------------------
+     Children:
+          Label: multimodal_language_modeling
+          Dimension: tasks
+          Description: This cluster focuses on the development and application of language models that integrate multiple modalities, such as text, audio, and visual data.
+          Level: 2
+          Source: depth
+          # of Papers: 143
+          Example Papers: [(7, 'When LLMs Meets Acoustic Landmarks: An Efficient Approach to Integrate Speech into Large Language Models for Depression Detection'), (61, 'RULE: Reliable Multimodal RAG for Factuality in Medical Vision Language Models'), (66, 'EFUF: Efficient Fine-Grained Unlearning Framework for Mitigating Hallucinations in Multimodal Large Language Models')]
+          ----------------------------------------
+          Label: knowledge_injection
+          Dimension: tasks
+          Description: This cluster encompasses techniques and methods for enhancing language models with external knowledge sources to improve their performance and accuracy.
+          Level: 2
+          Source: depth
+          # of Papers: 66
+          Example Papers: [(14, 'Fine-Tuning or Retrieval? Comparing Knowledge Injection in LLMs'), (44, 'DyVo: Dynamic Vocabularies for Learned Sparse Retrieval with Entities'), (61, 'RULE: Reliable Multimodal RAG for Factuality in Medical Vision Language Models')]
+          ----------------------------------------
+          Label: instruction_tuning
+          Dimension: tasks
+          Description: This cluster focuses on the methods and strategies for fine-tuning language models to follow specific instructions and improve their task performance.
+          Level: 2
+          Source: depth
+          # of Papers: 91
+          Example Papers: [(27, 'Clustering and Ranking: Diversity-preserved Instruction Selection through Expert-aligned Quality Estimation'), (42, 'Parameter-Efficient Sparsity Crafting from Dense to Mixture-of-Experts for Instruction Tuning on General Tasks'), (81, 'Towards Tool Use Alignment of Large Language Models')]
+          ----------------------------------------
+          Label: language_model_evaluation
+          Dimension: tasks
+          Description: This cluster includes various methodologies and metrics for assessing the performance and effectiveness of language models.
+          Level: 2
+          Source: depth
+          # of Papers: 822
+          Example Papers: [(14, 'Fine-Tuning or Retrieval? Comparing Knowledge Injection in LLMs'), (17, 'Uncertainty in Language Models: Assessment through Rank-Calibration'), (18, 'RoTBench: A Multi-Level Benchmark for Evaluating the Robustness of Large Language Models in Tool Learning')]
+          ----------------------------------------
+          Label: language_modeling_for_nlp_applications
+          Dimension: tasks
+          Description: This cluster encompasses the application of language modeling techniques specifically tailored for various natural language processing tasks.
+          Level: 2
+          Source: depth
+          # of Papers: 1668
+          Example Papers: [(8, 'Speaking in Wavelet Domain: A Simple and Efficient Approach to Speed up Speech Diffusion Model'), (11, "NumeroLogic: Number Encoding for Enhanced LLMs' Numerical Reasoning"), (12, '"Thinking" Fair and Slow: On the Efficacy of Structured Prompts for Debiasing Language Models')]
+          ----------------------------------------
+          Label: language_model_interpretability
+          Dimension: tasks
+          Description: This cluster focuses on understanding and explaining the decision-making processes of language models to ensure transparency and trustworthiness.
+          Level: 2
+          Source: width
+          # of Papers: 276
+          Example Papers: [(3, 'Prompts have evil twins'), (17, 'Uncertainty in Language Models: Assessment through Rank-Calibration'), (35, 'Evaluating Readability and Faithfulness of Concept-based Explanations')]
+          ----------------------------------------
+          Label: language_model_safety
+          Dimension: tasks
+          Description: This cluster encompasses techniques and strategies aimed at ensuring the safety and robustness of language models against various attacks and biases.
+          Level: 2
+          Source: width
+          # of Papers: 348
+          Example Papers: [(3, 'Prompts have evil twins'), (12, '"Thinking" Fair and Slow: On the Efficacy of Structured Prompts for Debiasing Language Models'), (15, 'Systematic Biases in LLM Simulations of Debates')]
+          ----------------------------------------
+          Label: language_model_evaluation_and_benchmarking
+          Dimension: tasks
+          Description: This cluster includes methodologies and practices for evaluating and benchmarking the performance of language models across different tasks.
+          Level: 2
+          Source: width
+          # of Papers: 224
+          Example Papers: [(43, 'GeoGPT4V: Towards Geometric Multi-modal Large Language Models with Geometric Image Generation'), (55, 'AdaZeta: Adaptive Zeroth-Order Tensor-Train Adaption for Memory-Efficient Large Language Models Fine-Tuning'), (56, 'RoseLoRA: Row and Column-wise Sparse Low-rank Adaptation of Pre-trained Language Model for Knowledge Editing and Fine-tuning')]
+          ----------------------------------------
+          Label: language_model_application_in_social_sciences
+          Dimension: tasks
+          Description: This cluster focuses on the application of language modeling techniques in the field of social sciences, including analysis of social media and computational studies.
+          Level: 2
+          Source: width
+          # of Papers: 56
+          Example Papers: [(15, 'Systematic Biases in LLM Simulations of Debates'), (58, 'HEART-felt Narratives: Tracing Empathy and Narrative Style in Personal Stories with LLMs'), (69, 'AgentReview: Exploring Peer Review Dynamics with LLM Agents')]
+          ----------------------------------------
+          Label: language_modeling_for_reasoning_and_argumentation
+          Dimension: tasks
+          Description: This cluster encompasses tasks related to reasoning, argumentation, and commonsense understanding within language models.
+          Level: 2
+          Source: width
+          # of Papers: 369
+          Example Papers: [(11, "NumeroLogic: Number Encoding for Enhanced LLMs' Numerical Reasoning"), (15, 'Systematic Biases in LLM Simulations of Debates'), (19, 'Learning Planning-based Reasoning by Trajectories Collection and Process Reward Synthesizing')]
+          ----------------------------------------
+     ----------------------------------------
+----------------------------------------

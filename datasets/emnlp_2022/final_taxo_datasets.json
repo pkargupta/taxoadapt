@@ -1,0 +1,1136 @@
+{
+    "label": "natural_language_processing",
+    "description": null,
+    "level": 0,
+    "source": "initial",
+    "example_papers": [
+        [
+            1,
+            "CDConv: A Benchmark for Contradiction Detection in Chinese Conversations"
+        ],
+        [
+            10,
+            "PAIR: Prompt-Aware margIn Ranking for Counselor Reflection Scoring in Motivational Interviewing"
+        ],
+        [
+            18,
+            "Multi-VQG: Generating Engaging Questions for Multiple Images"
+        ],
+        [
+            26,
+            "What Makes Instruction Learning Hard? An Investigation and a New Challenge in a Synthetic Environment"
+        ],
+        [
+            28,
+            "SNaC: Coherence Error Detection for Narrative Summarization"
+        ],
+        [
+            32,
+            "InstructDial: Improving Zero and Few-shot Generalization in Dialogue through Instruction Tuning"
+        ],
+        [
+            37,
+            "Abstract Visual Reasoning with Tangram Shapes"
+        ],
+        [
+            41,
+            "Generative Language Models for Paragraph-Level Question Generation"
+        ],
+        [
+            44,
+            "Crossmodal-3600: A Massively Multilingual Multimodal Evaluation Dataset"
+        ],
+        [
+            50,
+            "DocInfer: Document-level Natural Language Inference using Optimal Evidence Selection"
+        ]
+    ],
+    "paper_ids": [
+        1,
+        10,
+        18,
+        26,
+        28,
+        32,
+        37,
+        41,
+        44,
+        50,
+        57,
+        59,
+        62,
+        74,
+        87,
+        88,
+        92,
+        100,
+        113,
+        116,
+        120,
+        122,
+        124,
+        127,
+        129,
+        131,
+        132,
+        137,
+        147,
+        150,
+        153,
+        155,
+        159,
+        164,
+        171,
+        179,
+        183,
+        190,
+        217,
+        225,
+        227,
+        228,
+        249,
+        251,
+        266,
+        273,
+        287,
+        291,
+        293,
+        297,
+        300,
+        303,
+        304,
+        305,
+        307,
+        319,
+        322,
+        330,
+        334,
+        339,
+        342,
+        343,
+        347,
+        349,
+        352,
+        356,
+        359,
+        372,
+        375,
+        379,
+        384,
+        385,
+        391,
+        400,
+        402,
+        412,
+        415,
+        416,
+        417,
+        420,
+        426,
+        428,
+        431,
+        436,
+        438,
+        446,
+        448,
+        464,
+        468,
+        475,
+        478,
+        480,
+        488,
+        494,
+        496,
+        498,
+        517,
+        518,
+        524,
+        525,
+        530,
+        531,
+        545,
+        548,
+        552,
+        556,
+        563,
+        565,
+        575,
+        579,
+        589,
+        593,
+        595,
+        596,
+        597,
+        599,
+        600,
+        608,
+        609,
+        613,
+        617,
+        624,
+        626,
+        630,
+        636,
+        637,
+        638,
+        640,
+        641,
+        647,
+        648,
+        651,
+        654,
+        658,
+        661,
+        669,
+        671,
+        674,
+        675,
+        676,
+        687,
+        699,
+        702,
+        706,
+        710,
+        713,
+        714,
+        723,
+        730,
+        731,
+        737,
+        743,
+        747,
+        749,
+        750,
+        754,
+        760,
+        770,
+        773,
+        775,
+        780,
+        781,
+        783,
+        786,
+        790,
+        794,
+        795,
+        804,
+        805,
+        806,
+        810,
+        813,
+        817,
+        818,
+        822,
+        824
+    ],
+    "children": [
+        {
+            "label": "text_classification_datasets",
+            "description": "These datasets are designed for training models to categorize text into predefined classes, often used in applications like sentiment analysis, spam detection, and topic categorization.",
+            "level": 1,
+            "source": "initial",
+            "example_papers": [
+                [
+                    26,
+                    "What Makes Instruction Learning Hard? An Investigation and a New Challenge in a Synthetic Environment"
+                ],
+                [
+                    137,
+                    "Stanceosaurus: Classifying Stance Towards Multicultural Misinformation"
+                ],
+                [
+                    147,
+                    "When FLUE Meets FLANG: Benchmarks and Large Pretrained Language Model for Financial Domain"
+                ],
+                [
+                    379,
+                    "Rethinking the Authorship Verification Experimental Setups"
+                ],
+                [
+                    402,
+                    "NewsClaims: A New Benchmark for Claim Detection from News with Attribute Knowledge"
+                ],
+                [
+                    475,
+                    "FigMemes: A Dataset for Figurative Language Identification in Politically-Opinionated Memes"
+                ],
+                [
+                    478,
+                    "ParaTag: A Dataset of Paraphrase Tagging for Fine-Grained Labels, NLG Evaluation, and Data Augmentation"
+                ],
+                [
+                    480,
+                    "FLUTE: Figurative Language Understanding through Textual Explanations"
+                ],
+                [
+                    524,
+                    "Empowering the Fact-checkers! Automatic Identification of Claim Spans on Twitter"
+                ],
+                [
+                    552,
+                    "``It's Not Just Hate'': A Multi-Dimensional Perspective on Detecting Harmful Speech Online"
+                ]
+            ],
+            "paper_ids": [
+                26,
+                137,
+                147,
+                379,
+                402,
+                475,
+                478,
+                480,
+                524,
+                552,
+                608,
+                609,
+                675,
+                676,
+                723,
+                743,
+                790,
+                818
+            ]
+        },
+        {
+            "label": "named_entity_recognition_datasets",
+            "description": "These datasets provide annotated text for training models to identify and classify named entities such as people, organizations, and locations within the text.",
+            "level": 1,
+            "source": "initial",
+            "example_papers": [
+                [
+                    297,
+                    "MasakhaNER 2.0: Africa-centric Transfer Learning for Named Entity Recognition"
+                ],
+                [
+                    416,
+                    "Simple Questions Generate Named Entity Recognition Datasets"
+                ],
+                [
+                    637,
+                    "Unsupervised Entity Linking with Guided Summarization and Multiple-Choice Selection"
+                ],
+                [
+                    675,
+                    "Generative Entity-to-Entity Stance Detection with Knowledge Graph Augmentation"
+                ],
+                [
+                    804,
+                    "MedJEx: A Medical Jargon Extraction Model with Wiki's Hyperlink Span and Contextualized Masked Language Model Score"
+                ]
+            ],
+            "paper_ids": [
+                297,
+                416,
+                637,
+                675,
+                804
+            ]
+        },
+        {
+            "label": "machine_translation_datasets",
+            "description": "These datasets consist of parallel corpora in multiple languages, enabling the training and evaluation of models for translating text from one language to another.",
+            "level": 1,
+            "source": "initial",
+            "example_papers": [
+                [
+                    183,
+                    "LVP-M3: Language-aware Visual Prompt for Multilingual Multimodal Machine Translation"
+                ],
+                [
+                    287,
+                    "MT-GenEval: A Counterfactual and Contextual Dataset for Evaluating Gender Accuracy in Machine Translation"
+                ],
+                [
+                    352,
+                    "WeTS: A Benchmark for Translation Suggestion"
+                ],
+                [
+                    426,
+                    "Open-Domain Sign Language Translation Learned from Online Video"
+                ],
+                [
+                    531,
+                    "DivEMT: Neural Machine Translation Post-Editing Effort Across Typologically Diverse Languages"
+                ],
+                [
+                    648,
+                    "DEMETR: Diagnosing Evaluation Metrics for Translation"
+                ],
+                [
+                    671,
+                    "Exploring Document-Level Literary Machine Translation with Parallel Paragraphs from World Literature"
+                ],
+                [
+                    731,
+                    "Quality Scoring of Source Words in Neural Translation Models"
+                ],
+                [
+                    773,
+                    "GuoFeng: A Benchmark for Zero Pronoun Recovery and Translation"
+                ]
+            ],
+            "paper_ids": [
+                183,
+                287,
+                352,
+                426,
+                531,
+                648,
+                671,
+                731,
+                773
+            ]
+        },
+        {
+            "label": "question_answering_datasets",
+            "description": "These datasets contain questions paired with context passages and corresponding answers, facilitating the development of models that can understand and respond to queries based on provided information.",
+            "level": 1,
+            "source": "initial",
+            "example_papers": [
+                [
+                    18,
+                    "Multi-VQG: Generating Engaging Questions for Multiple Images"
+                ],
+                [
+                    41,
+                    "Generative Language Models for Paragraph-Level Question Generation"
+                ],
+                [
+                    124,
+                    "Improving compositional generalization for multi-step quantitative reasoning in question answering"
+                ],
+                [
+                    150,
+                    "Generating Information-Seeking Conversations from Unlabeled Documents"
+                ],
+                [
+                    228,
+                    "Generating Literal and Implied Subquestions to Fact-check Complex Claims"
+                ],
+                [
+                    249,
+                    "Summarizing Community-based Question-Answer Pairs"
+                ],
+                [
+                    412,
+                    "Transfer Learning with Synthetic Corpora for Spatial Role Labeling and Reasoning"
+                ],
+                [
+                    420,
+                    "ConvFinQA: Exploring the Chain of Numerical Reasoning in Conversational Finance Question Answering"
+                ],
+                [
+                    431,
+                    "Video Question Answering: Datasets, Algorithms and Challenges"
+                ],
+                [
+                    438,
+                    "Teaching Broad Reasoning Skills for Multi-Step QA by Generating Hard Contexts"
+                ]
+            ],
+            "paper_ids": [
+                18,
+                41,
+                124,
+                150,
+                228,
+                249,
+                412,
+                420,
+                431,
+                438,
+                464,
+                468,
+                530,
+                565,
+                597,
+                669,
+                805,
+                810,
+                813,
+                822
+            ]
+        },
+        {
+            "label": "text_generation_datasets",
+            "description": "These datasets are used to train models for generating coherent and contextually relevant text, often sourced from diverse domains such as literature, news articles, or conversational data.",
+            "level": 1,
+            "source": "initial",
+            "example_papers": [
+                [
+                    74,
+                    "SQuALITY: Building a Long-Document Summarization Dataset the Hard Way"
+                ],
+                [
+                    87,
+                    "How well can Text-to-Image Generative Models understand Ethical Natural Language Interventions?"
+                ],
+                [
+                    153,
+                    "SafeText: A Benchmark for Exploring Physical Safety in Language Models"
+                ],
+                [
+                    225,
+                    "CapOnImage: Context-driven Dense-Captioning on Image"
+                ],
+                [
+                    303,
+                    "ExPUNations: Augmenting Puns with Keywords and Explanations"
+                ],
+                [
+                    305,
+                    "Context-Situated Pun Generation"
+                ],
+                [
+                    307,
+                    "Concadia: Towards Image-Based text generation with a Purpose"
+                ],
+                [
+                    322,
+                    "Differentially Private Language Models for Secure Data Sharing"
+                ],
+                [
+                    339,
+                    "Super-NaturalInstructions: Generalization via Declarative Instructions on 1600+ NLP Tasks"
+                ],
+                [
+                    342,
+                    "AEG: Argumentative Essay Generation via A Dual-Decoder Model with Content Planning"
+                ]
+            ],
+            "paper_ids": [
+                74,
+                87,
+                153,
+                225,
+                303,
+                305,
+                307,
+                322,
+                339,
+                342,
+                359,
+                372,
+                384,
+                385,
+                494,
+                496,
+                518,
+                545,
+                556,
+                563,
+                630,
+                654,
+                674,
+                747,
+                749,
+                760,
+                783,
+                786,
+                806,
+                822
+            ]
+        },
+        {
+            "label": "dialogue_analysis_datasets",
+            "description": "These datasets focus on analyzing and understanding dialogues, including conversational structures and interactions.",
+            "level": 1,
+            "source": "width",
+            "example_papers": [
+                [
+                    1,
+                    "CDConv: A Benchmark for Contradiction Detection in Chinese Conversations"
+                ],
+                [
+                    10,
+                    "PAIR: Prompt-Aware margIn Ranking for Counselor Reflection Scoring in Motivational Interviewing"
+                ],
+                [
+                    32,
+                    "InstructDial: Improving Zero and Few-shot Generalization in Dialogue through Instruction Tuning"
+                ],
+                [
+                    122,
+                    "There Is No Standard Answer: Knowledge-Grounded Dialogue Generation with Adversarial Activated Multi-Reference Learning"
+                ],
+                [
+                    155,
+                    "D4: a Chinese Dialogue Dataset for Depression-Diagnosis-Oriented Chat"
+                ],
+                [
+                    159,
+                    "Navigating Connected Memories with a Task-oriented Dialog System"
+                ],
+                [
+                    251,
+                    "How to disagree well: Investigating the dispute tactics used on Wikipedia"
+                ],
+                [
+                    266,
+                    "ProsocialDialog: A Prosocial Backbone for Conversational Agents"
+                ],
+                [
+                    273,
+                    "CGoDial: A Large-Scale Benchmark for Chinese Goal-oriented Dialog Evaluation"
+                ],
+                [
+                    319,
+                    "McQueen: a Benchmark for Multimodal Conversational Query Rewrite"
+                ]
+            ],
+            "paper_ids": [
+                1,
+                10,
+                32,
+                122,
+                155,
+                159,
+                251,
+                266,
+                273,
+                319,
+                343,
+                448,
+                468,
+                488,
+                517,
+                525,
+                548,
+                636,
+                647,
+                713,
+                750,
+                781,
+                817,
+                824
+            ]
+        },
+        {
+            "label": "multilingual_nlp_datasets",
+            "description": "These datasets are designed for natural language processing tasks across multiple languages, facilitating cross-lingual applications.",
+            "level": 1,
+            "source": "width",
+            "example_papers": [
+                [
+                    44,
+                    "Crossmodal-3600: A Massively Multilingual Multimodal Evaluation Dataset"
+                ],
+                [
+                    100,
+                    "A Multilingual Perspective Towards the Evaluation of Attribution Methods in Natural Language Inference"
+                ],
+                [
+                    127,
+                    "AfroLID: A Neural Language Identification Tool for African Languages"
+                ],
+                [
+                    132,
+                    "The (Undesired) Attenuation of Human Biases by Multilinguality"
+                ],
+                [
+                    159,
+                    "Navigating Connected Memories with a Task-oriented Dialog System"
+                ],
+                [
+                    183,
+                    "LVP-M3: Language-aware Visual Prompt for Multilingual Multimodal Machine Translation"
+                ],
+                [
+                    291,
+                    "A Second Wave of UD Hebrew Treebanking and Cross-Domain Parsing"
+                ],
+                [
+                    297,
+                    "MasakhaNER 2.0: Africa-centric Transfer Learning for Named Entity Recognition"
+                ],
+                [
+                    304,
+                    "SLING: Sino Linguistic Evaluation of Large Language Models"
+                ],
+                [
+                    347,
+                    "RuCoLA: Russian Corpus of Linguistic Acceptability"
+                ]
+            ],
+            "paper_ids": [
+                44,
+                100,
+                127,
+                132,
+                159,
+                183,
+                291,
+                297,
+                304,
+                347,
+                356,
+                359,
+                498,
+                518,
+                525,
+                589,
+                596,
+                599,
+                651,
+                699,
+                706,
+                743,
+                754,
+                775,
+                795,
+                824
+            ]
+        },
+        {
+            "label": "semantic_analysis_datasets",
+            "description": "These datasets are used for understanding and interpreting the meanings and nuances of text, often involving sentiment and context analysis.",
+            "level": 1,
+            "source": "width",
+            "example_papers": [
+                [
+                    50,
+                    "DocInfer: Document-level Natural Language Inference using Optimal Evidence Selection"
+                ],
+                [
+                    116,
+                    "Modeling Information Change in Science Communication with Semantically Matched Paraphrases"
+                ],
+                [
+                    227,
+                    "Discovering Differences in the Representation of People using Contextualized Semantic Axes"
+                ],
+                [
+                    291,
+                    "A Second Wave of UD Hebrew Treebanking and Cross-Domain Parsing"
+                ],
+                [
+                    349,
+                    "Towards Knowledge-Intensive Text-to-SQL Semantic Parsing with Formulaic Knowledge"
+                ],
+                [
+                    400,
+                    "Syntactically Rich Discriminative Training: An Effective Method for Open Information Extraction"
+                ],
+                [
+                    446,
+                    "Exploration of the Usage of Color Terms by Color-blind Participants in Online Discussion Platforms"
+                ],
+                [
+                    480,
+                    "FLUTE: Figurative Language Understanding through Textual Explanations"
+                ],
+                [
+                    552,
+                    "``It's Not Just Hate'': A Multi-Dimensional Perspective on Detecting Harmful Speech Online"
+                ],
+                [
+                    575,
+                    "IELM: An Open Information Extraction Benchmark for Pre-Trained Language Models"
+                ]
+            ],
+            "paper_ids": [
+                50,
+                116,
+                227,
+                291,
+                349,
+                400,
+                446,
+                480,
+                552,
+                575,
+                593,
+                595,
+                600,
+                624,
+                626,
+                641,
+                675,
+                699,
+                702,
+                710,
+                737,
+                775,
+                780,
+                794,
+                795,
+                806
+            ]
+        },
+        {
+            "label": "event_detection_datasets",
+            "description": "These datasets are aimed at identifying and classifying events within text, useful for applications in information extraction and summarization.",
+            "level": 1,
+            "source": "width",
+            "example_papers": [
+                [
+                    57,
+                    "Cross-document Event Coreference Search: Task, Dataset and Modeling"
+                ],
+                [
+                    59,
+                    "MAVEN-ERE: A Unified Large-scale Dataset for Event Coreference, Temporal, Causal, and Subevent Relation Extraction"
+                ],
+                [
+                    129,
+                    "Large language models are few-shot clinical information extractors"
+                ],
+                [
+                    190,
+                    "MUSIED: A Benchmark for Event Detection from Multi-Source Heterogeneous Informal Texts"
+                ],
+                [
+                    375,
+                    "PHEE: A Dataset for Pharmacovigilance Event Extraction from Text"
+                ],
+                [
+                    436,
+                    "Title2Event: Benchmarking Open Event Extraction with a Large-scale Chinese Title Dataset"
+                ],
+                [
+                    593,
+                    "POQue: Asking Participant-specific Outcome Questions for a Deeper Understanding of Complex Events"
+                ],
+                [
+                    638,
+                    "Weakly-Supervised Temporal Article Grounding"
+                ],
+                [
+                    641,
+                    "Why Do You Feel This Way? Summarizing Triggers of Emotions in Social Media Posts"
+                ],
+                [
+                    651,
+                    "MEE: A Novel Multilingual Event Extraction Dataset"
+                ]
+            ],
+            "paper_ids": [
+                57,
+                59,
+                129,
+                190,
+                375,
+                436,
+                593,
+                638,
+                641,
+                651,
+                675
+            ]
+        },
+        {
+            "label": "evaluation_datasets",
+            "description": "These datasets are utilized for assessing the performance of various NLP models and methodologies, providing benchmarks for comparison.",
+            "level": 1,
+            "source": "width",
+            "example_papers": [
+                [
+                    28,
+                    "SNaC: Coherence Error Detection for Narrative Summarization"
+                ],
+                [
+                    32,
+                    "InstructDial: Improving Zero and Few-shot Generalization in Dialogue through Instruction Tuning"
+                ],
+                [
+                    74,
+                    "SQuALITY: Building a Long-Document Summarization Dataset the Hard Way"
+                ],
+                [
+                    88,
+                    "Geographic Citation Gaps in NLP Research"
+                ],
+                [
+                    120,
+                    "Linguistic Corpus Annotation for Automatic Text Simplification Evaluation"
+                ],
+                [
+                    147,
+                    "When FLUE Meets FLANG: Benchmarks and Large Pretrained Language Model for Financial Domain"
+                ],
+                [
+                    153,
+                    "SafeText: A Benchmark for Exploring Physical Safety in Language Models"
+                ],
+                [
+                    164,
+                    "Whose Language Counts as High Quality? Measuring Language Ideologies in Text Data Selection"
+                ],
+                [
+                    171,
+                    "How Far are We from Robust Long Abstractive Summarization?"
+                ],
+                [
+                    217,
+                    "UniGeo: Unifying Geometry Logical Reasoning via Reformulating Mathematical Expression"
+                ]
+            ],
+            "paper_ids": [
+                28,
+                32,
+                74,
+                88,
+                120,
+                147,
+                153,
+                164,
+                171,
+                217,
+                273,
+                300,
+                303,
+                304,
+                339,
+                356,
+                379,
+                385,
+                391,
+                415,
+                417,
+                428,
+                478,
+                518,
+                579,
+                613,
+                617,
+                624,
+                630,
+                640,
+                661,
+                699,
+                702,
+                714,
+                723,
+                730,
+                747,
+                749,
+                770,
+                795,
+                822
+            ],
+            "children": [
+                {
+                    "label": "benchmark_datasets",
+                    "description": "Benchmark datasets are collections of data used to evaluate and compare the performance of various NLP models against established standards.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            147,
+                            "When FLUE Meets FLANG: Benchmarks and Large Pretrained Language Model for Financial Domain"
+                        ],
+                        [
+                            217,
+                            "UniGeo: Unifying Geometry Logical Reasoning via Reformulating Mathematical Expression"
+                        ],
+                        [
+                            273,
+                            "CGoDial: A Large-Scale Benchmark for Chinese Goal-oriented Dialog Evaluation"
+                        ],
+                        [
+                            339,
+                            "Super-NaturalInstructions: Generalization via Declarative Instructions on 1600+ NLP Tasks"
+                        ],
+                        [
+                            356,
+                            "DuReader-Retrieval: A Large-scale Chinese Benchmark for Passage Retrieval from Web Search Engine"
+                        ],
+                        [
+                            379,
+                            "Rethinking the Authorship Verification Experimental Setups"
+                        ],
+                        [
+                            391,
+                            "LILA: A Unified Benchmark for Mathematical Reasoning"
+                        ],
+                        [
+                            417,
+                            "TemporalWiki: A Lifelong Benchmark for Training and Evaluating Ever-Evolving Language Models"
+                        ],
+                        [
+                            579,
+                            "Revisiting DocRED - Addressing the False Negative Problem in Relation Extraction"
+                        ],
+                        [
+                            702,
+                            "DiscoSense: Commonsense Reasoning with Discourse Connectives"
+                        ]
+                    ],
+                    "paper_ids": [
+                        147,
+                        217,
+                        273,
+                        339,
+                        356,
+                        379,
+                        391,
+                        417,
+                        579,
+                        702,
+                        747,
+                        795
+                    ]
+                },
+                {
+                    "label": "dialogue_evaluation_datasets",
+                    "description": "Dialogue evaluation datasets are specialized datasets designed to assess the performance of models in dialogue systems and conversational agents.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            32,
+                            "InstructDial: Improving Zero and Few-shot Generalization in Dialogue through Instruction Tuning"
+                        ],
+                        [
+                            273,
+                            "CGoDial: A Large-Scale Benchmark for Chinese Goal-oriented Dialog Evaluation"
+                        ],
+                        [
+                            714,
+                            "FlowEval: A Consensus-Based Dialogue Evaluation Framework Using Segment Act Flows"
+                        ]
+                    ],
+                    "paper_ids": [
+                        32,
+                        273,
+                        714
+                    ]
+                },
+                {
+                    "label": "summarization_datasets",
+                    "description": "Summarization datasets are curated collections of texts used to evaluate the effectiveness of summarization algorithms and techniques.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            28,
+                            "SNaC: Coherence Error Detection for Narrative Summarization"
+                        ],
+                        [
+                            74,
+                            "SQuALITY: Building a Long-Document Summarization Dataset the Hard Way"
+                        ],
+                        [
+                            171,
+                            "How Far are We from Robust Long Abstractive Summarization?"
+                        ],
+                        [
+                            385,
+                            "Questioning the Validity of Summarization Datasets and Improving Their Factual Consistency"
+                        ],
+                        [
+                            723,
+                            "Making Science Simple: Corpora for the Lay Summarisation of Scientific Literature"
+                        ],
+                        [
+                            747,
+                            "ECTSum: A New Benchmark Dataset For Bullet Point Summarization of Long Earnings Call Transcripts"
+                        ],
+                        [
+                            749,
+                            "CiteSum: Citation Text-guided Scientific Extreme Summarization and Domain Adaptation with Limited Supervision"
+                        ]
+                    ],
+                    "paper_ids": [
+                        28,
+                        74,
+                        171,
+                        385,
+                        723,
+                        747,
+                        749
+                    ]
+                },
+                {
+                    "label": "evaluation_metrics",
+                    "description": "Evaluation metrics datasets provide data and methodologies for assessing the quality and performance of NLP models through various metrics.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            171,
+                            "How Far are We from Robust Long Abstractive Summarization?"
+                        ],
+                        [
+                            613,
+                            "Incorporating Relevance Feedback for Information-Seeking Retrieval using Few-Shot Document Re-Ranking"
+                        ],
+                        [
+                            617,
+                            "Detecting Label Errors by Using Pre-Trained Language Models"
+                        ]
+                    ],
+                    "paper_ids": [
+                        171,
+                        613,
+                        617
+                    ]
+                },
+                {
+                    "label": "domain_specific_evaluation_datasets",
+                    "description": "Domain-specific evaluation datasets are tailored datasets that focus on specific fields or topics, such as finance or security, to evaluate model performance in those areas.",
+                    "level": 2,
+                    "source": "depth",
+                    "example_papers": [
+                        [
+                            147,
+                            "When FLUE Meets FLANG: Benchmarks and Large Pretrained Language Model for Financial Domain"
+                        ],
+                        [
+                            153,
+                            "SafeText: A Benchmark for Exploring Physical Safety in Language Models"
+                        ],
+                        [
+                            164,
+                            "Whose Language Counts as High Quality? Measuring Language Ideologies in Text Data Selection"
+                        ],
+                        [
+                            273,
+                            "CGoDial: A Large-Scale Benchmark for Chinese Goal-oriented Dialog Evaluation"
+                        ],
+                        [
+                            300,
+                            "Less is More: Summary of Long Instructions is Better for Program Synthesis"
+                        ],
+                        [
+                            304,
+                            "SLING: Sino Linguistic Evaluation of Large Language Models"
+                        ],
+                        [
+                            379,
+                            "Rethinking the Authorship Verification Experimental Setups"
+                        ],
+                        [
+                            518,
+                            "EUR-Lex-Sum: A Multi- and Cross-lingual Dataset for Long-form Summarization in the Legal Domain"
+                        ],
+                        [
+                            640,
+                            "arXivEdits: Understanding the Human Revision Process in Scientific Writing"
+                        ],
+                        [
+                            661,
+                            "CTL++: Evaluating Generalization on Never-Seen Compositional Patterns of Known Functions, and Compatibility of Neural Representations"
+                        ]
+                    ],
+                    "paper_ids": [
+                        147,
+                        153,
+                        164,
+                        273,
+                        300,
+                        304,
+                        379,
+                        518,
+                        640,
+                        661,
+                        699,
+                        747,
+                        770
+                    ]
+                }
+            ]
+        }
+    ]
+}

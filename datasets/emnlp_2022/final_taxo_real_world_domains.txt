@@ -1,0 +1,164 @@
+Label: natural_language_processing
+Dimension: real_world_domains
+Description: None
+Level: 0
+Source: Initial
+# of Papers: 149
+Example Papers: [(2, 'Transformer Feed-Forward Layers Build Predictions by Promoting Concepts in the Vocabulary Space'), (7, 'Toward Unifying Text Segmentation and Long Document Summarization'), (10, 'PAIR: Prompt-Aware margIn Ranking for Counselor Reflection Scoring in Motivational Interviewing')]
+----------------------------------------
+Children:
+     Label: healthcare
+     Dimension: real_world_domains
+     Description: NLP techniques are applied in healthcare to analyze medical records, assist in clinical decision-making, and improve patient outcomes through automated summarization and information extraction.
+     Level: 1
+     Source: Initial
+     # of Papers: 8
+     Example Papers: [(10, 'PAIR: Prompt-Aware margIn Ranking for Counselor Reflection Scoring in Motivational Interviewing'), (155, 'D4: a Chinese Dialogue Dataset for Depression-Diagnosis-Oriented Chat'), (184, 'PromptEHR: Conditional Electronic Healthcare Records Generation with Prompt Learning')]
+     ----------------------------------------
+     Label: finance
+     Dimension: real_world_domains
+     Description: In the finance sector, NLP is utilized for sentiment analysis of market trends, fraud detection, and automating customer service through chatbots and virtual assistants.
+     Level: 1
+     Source: Initial
+     ----------------------------------------
+     Label: e-commerce
+     Dimension: real_world_domains
+     Description: E-commerce platforms leverage NLP for product recommendation systems, customer feedback analysis, and enhancing user experience through personalized search functionalities.
+     Level: 1
+     Source: Initial
+     # of Papers: 3
+     Example Papers: [(215, 'A Joint Learning Framework for Restaurant Survival Prediction and Explanation'), (608, 'Argument Mining for Review Helpfulness Prediction'), (824, 'JDDC 2.1: A Multimodal Chinese Dialogue Dataset with Joint Tasks of Query Rewriting, Response Generation, Discourse Parsing, and Summarization')]
+     ----------------------------------------
+     Label: legal
+     Dimension: real_world_domains
+     Description: The legal domain employs NLP for document review, contract analysis, and case law research, streamlining processes and improving accuracy in legal practices.
+     Level: 1
+     Source: Initial
+     # of Papers: 6
+     Example Papers: [(50, 'DocInfer: Document-level Natural Language Inference using Optimal Evidence Selection'), (73, 'Deconfounding Legal Judgment Prediction for European Court of Human Rights Cases Towards Better Alignment with Experts'), (165, 'ConReader: Exploring Implicit Relations in Contracts for Contract Clause Extraction')]
+     ----------------------------------------
+     Label: education
+     Dimension: real_world_domains
+     Description: In education, NLP is used for automated grading, personalized learning experiences, and analyzing student feedback to enhance teaching methodologies.
+     Level: 1
+     Source: Initial
+     # of Papers: 5
+     Example Papers: [(10, 'PAIR: Prompt-Aware margIn Ranking for Counselor Reflection Scoring in Motivational Interviewing'), (253, 'Open-ended Knowledge Tracing for Computer Science Education'), (276, 'Automatic Generation of Socratic Subquestions for Teaching Math Word Problems')]
+     ----------------------------------------
+     Label: social_media_analysis
+     Dimension: real_world_domains
+     Description: NLP techniques are applied in social media analysis to extract insights from user-generated content, monitor trends, and detect sentiments across various platforms.
+     Level: 1
+     Source: width
+     # of Papers: 10
+     Example Papers: [(79, 'Affective Idiosyncratic Responses to Music'), (87, 'How well can Text-to-Image Generative Models understand Ethical Natural Language Interventions?'), (218, 'Face-Sensitive Image-to-Emotional-Text Cross-modal Translation for Multimodal Aspect-based Sentiment Analysis')]
+     ----------------------------------------
+     Label: dialogue_systems_development
+     Dimension: real_world_domains
+     Description: This cluster focuses on the development and evaluation of dialogue systems, including chatbots and conversational agents, enhancing user interaction through natural language understanding.
+     Level: 1
+     Source: width
+     # of Papers: 40
+     Example Papers: [(18, 'Multi-VQG: Generating Engaging Questions for Multiple Images'), (35, 'Aligning Recommendation and Conversation via Dual Imitation'), (71, 'Curriculum Prompt Learning with Self-Training for Abstractive Dialogue Summarization')]
+     ----------------------------------------
+     Label: translation_and_multilingual_nlp
+     Dimension: real_world_domains
+     Description: This area encompasses the application of NLP in translation tasks, including multilingual neural machine translation and literary translation, facilitating cross-linguistic communication.
+     Level: 1
+     Source: width
+     # of Papers: 59
+     Example Papers: [(2, 'Transformer Feed-Forward Layers Build Predictions by Promoting Concepts in the Vocabulary Space'), (7, 'Toward Unifying Text Segmentation and Long Document Summarization'), (12, 'The Importance of Being Parameters: An Intra-Distillation Method for Serious Gains')]
+     ----------------------------------------
+     Children:
+          Label: machine_translation
+          Dimension: real_world_domains
+          Description: This cluster focuses on the development and application of algorithms and models for translating text from one language to another.
+          Level: 2
+          Source: depth
+          # of Papers: 28
+          Example Papers: [(2, 'Transformer Feed-Forward Layers Build Predictions by Promoting Concepts in the Vocabulary Space'), (12, 'The Importance of Being Parameters: An Intra-Distillation Method for Serious Gains'), (23, 'Linearizing Transformer with Key-Value Memory')]
+          ----------------------------------------
+          Label: multilingual_neural_machine_translation
+          Dimension: real_world_domains
+          Description: This cluster encompasses the use of neural networks to perform translation across multiple languages, enhancing the capabilities of machine translation systems.
+          Level: 2
+          Source: depth
+          # of Papers: 22
+          Example Papers: [(7, 'Toward Unifying Text Segmentation and Long Document Summarization'), (12, 'The Importance of Being Parameters: An Intra-Distillation Method for Serious Gains'), (23, 'Linearizing Transformer with Key-Value Memory')]
+          ----------------------------------------
+          Label: speech_translation
+          Dimension: real_world_domains
+          Description: This cluster deals with the translation of spoken language, integrating speech recognition and machine translation technologies.
+          Level: 2
+          Source: depth
+          # of Papers: 3
+          Example Papers: [(107, 'SpeechUT: Bridging Speech and Text with Hidden-Unit for Encoder-Decoder Based Speech-Text Pre-training'), (390, 'T-Modules: Translation Modules for Zero-Shot Cross-Modal Machine Translation'), (768, 'Textless Speech Emotion Conversion using Discrete & Decomposed Representations')]
+          ----------------------------------------
+          Label: multimodal_translation
+          Dimension: real_world_domains
+          Description: This cluster explores the translation of content that involves multiple modes of communication, such as text and images, to enhance understanding across languages.
+          Level: 2
+          Source: depth
+          # of Papers: 11
+          Example Papers: [(87, 'How well can Text-to-Image Generative Models understand Ethical Natural Language Interventions?'), (218, 'Face-Sensitive Image-to-Emotional-Text Cross-modal Translation for Multimodal Aspect-based Sentiment Analysis'), (307, 'Concadia: Towards Image-Based text generation with a Purpose')]
+          ----------------------------------------
+          Label: literary_translation
+          Dimension: real_world_domains
+          Description: This cluster focuses on the translation of literary works, emphasizing the preservation of style, tone, and cultural nuances.
+          Level: 2
+          Source: depth
+          # of Papers: 2
+          Example Papers: [(406, "BERT in Plutarch's Shadows"), (671, 'Exploring Document-Level Literary Machine Translation with Parallel Paragraphs from World Literature')]
+          ----------------------------------------
+     ----------------------------------------
+     Label: computational_social_sciences
+     Dimension: real_world_domains
+     Description: NLP is utilized in computational social sciences to analyze social phenomena, public opinion, and societal trends through large-scale text data.
+     Level: 1
+     Source: width
+     # of Papers: 21
+     Example Papers: [(61, 'How Large Language Models are Transforming Machine-Paraphrase Plagiarism'), (79, 'Affective Idiosyncratic Responses to Music'), (83, 'Tracing Semantic Variation in Slang')]
+     ----------------------------------------
+     Label: information_retrieval_and_extraction
+     Dimension: real_world_domains
+     Description: This cluster focuses on the methodologies for information retrieval and extraction, enhancing the ability to find and summarize relevant data from large text corpora.
+     Level: 1
+     Source: width
+     # of Papers: 63
+     Example Papers: [(7, 'Toward Unifying Text Segmentation and Long Document Summarization'), (18, 'Multi-VQG: Generating Engaging Questions for Multiple Images'), (22, 'Certified Error Control of Candidate Set Pruning for Two-Stage Relevance Ranking')]
+     ----------------------------------------
+     Children:
+          Label: text_retrieval_and_extraction
+          Dimension: real_world_domains
+          Description: This cluster focuses on techniques and methodologies for retrieving and extracting relevant text data from large corpora.
+          Level: 2
+          Source: depth
+          # of Papers: 50
+          Example Papers: [(7, 'Toward Unifying Text Segmentation and Long Document Summarization'), (23, 'Linearizing Transformer with Key-Value Memory'), (43, 'Segmenting Numerical Substitution Ciphers')]
+          ----------------------------------------
+          Label: information_retrieval_metrics
+          Dimension: real_world_domains
+          Description: This cluster encompasses methodologies for evaluating the effectiveness of information retrieval systems.
+          Level: 2
+          Source: depth
+          # of Papers: 4
+          Example Papers: [(61, 'How Large Language Models are Transforming Machine-Paraphrase Plagiarism'), (134, 'Near-Negative Distinction: Giving a Second Life to Human Evaluation Datasets'), (189, 'ConvTrans: Transforming Web Search Sessions for Conversational Dense Retrieval')]
+          ----------------------------------------
+          Label: question_answering_and_retrieval
+          Dimension: real_world_domains
+          Description: This cluster focuses on techniques for retrieving information specifically in the context of question answering systems.
+          Level: 2
+          Source: depth
+          # of Papers: 13
+          Example Papers: [(18, 'Multi-VQG: Generating Engaging Questions for Multiple Images'), (61, 'How Large Language Models are Transforming Machine-Paraphrase Plagiarism'), (148, 'Retrieval as Attention: End-to-end Learning of Retrieval and Reading within a Single Transformer')]
+          ----------------------------------------
+          Label: text_classification_and_analysis
+          Dimension: real_world_domains
+          Description: This cluster includes methodologies for classifying and analyzing text data to derive insights.
+          Level: 2
+          Source: depth
+          # of Papers: 6
+          Example Papers: [(61, 'How Large Language Models are Transforming Machine-Paraphrase Plagiarism'), (158, 'Towards Climate Awareness in NLP Research'), (440, 'G-MAP: General Memory-Augmented Pre-trained Language Model for Domain Tasks')]
+          ----------------------------------------
+     ----------------------------------------
+----------------------------------------

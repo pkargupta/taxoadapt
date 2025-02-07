@@ -1,0 +1,558 @@
+Label: natural_language_processing
+Dimension: tasks
+Description: None
+Level: 0
+Source: Initial
+# of Papers: 828
+Example Papers: [(0, 'Generative Knowledge Graph Construction: A Review'), (1, 'CDConv: A Benchmark for Contradiction Detection in Chinese Conversations'), (2, 'Transformer Feed-Forward Layers Build Predictions by Promoting Concepts in the Vocabulary Space')]
+----------------------------------------
+Children:
+     Label: text_classification
+     Dimension: tasks
+     Description: The task of assigning predefined categories to text documents based on their content, often used in spam detection, sentiment analysis, and topic labeling.
+     Level: 1
+     Source: Initial
+     # of Papers: 71
+     Example Papers: [(1, 'CDConv: A Benchmark for Contradiction Detection in Chinese Conversations'), (5, 'Backdoor Attacks in Federated Learning by Rare Embeddings and Gradient Ensembling'), (10, 'PAIR: Prompt-Aware margIn Ranking for Counselor Reflection Scoring in Motivational Interviewing')]
+     ----------------------------------------
+     Children:
+          Label: spam_detection
+          Dimension: tasks
+          Description: This cluster focuses on identifying and filtering out unwanted or harmful messages in text data.
+          Level: 2
+          Source: depth
+          # of Papers: 3
+          Example Papers: [(382, 'Data-Efficient Strategies for Expanding Hate Speech Detection into Under-Resourced Languages'), (552, "``It's Not Just Hate'': A Multi-Dimensional Perspective on Detecting Harmful Speech Online"), (743, 'KOLD: Korean Offensive Language Dataset')]
+          ----------------------------------------
+          Label: zero_shot_and_few_shot_classification
+          Dimension: tasks
+          Description: This cluster encompasses methods that enable classification tasks with minimal labeled data, including zero-shot and few-shot learning techniques.
+          Level: 2
+          Source: depth
+          # of Papers: 24
+          Example Papers: [(17, 'Estimating Soft Labels for Out-of-Domain Intent Detection'), (69, 'Topic-Regularized Authorship Representation Learning'), (72, 'Zero-Shot Text Classification with Self-Training')]
+          ----------------------------------------
+          Label: document_classification
+          Dimension: tasks
+          Description: This cluster involves the categorization of entire documents into predefined classes based on their content.
+          Level: 2
+          Source: depth
+          # of Papers: 45
+          Example Papers: [(1, 'CDConv: A Benchmark for Contradiction Detection in Chinese Conversations'), (10, 'PAIR: Prompt-Aware margIn Ranking for Counselor Reflection Scoring in Motivational Interviewing'), (17, 'Estimating Soft Labels for Out-of-Domain Intent Detection')]
+          ----------------------------------------
+          Label: hierarchical_text_classification
+          Dimension: tasks
+          Description: This cluster focuses on classifying text into a hierarchy of categories, allowing for more structured categorization.
+          Level: 2
+          Source: depth
+          # of Papers: 7
+          Example Papers: [(108, 'Learning Label Modular Prompts for Text Classification in the Wild'), (245, 'HPT: Hierarchy-aware Prompt Tuning for Hierarchical Text Classification'), (251, 'How to disagree well: Investigating the dispute tactics used on Wikipedia')]
+          ----------------------------------------
+          Label: extreme_multi_label_classification
+          Dimension: tasks
+          Description: This cluster deals with classifying text into a very large number of possible labels, often used in multi-label scenarios.
+          Level: 2
+          Source: depth
+          # of Papers: 5
+          Example Papers: [(376, 'OTSeq2Set: An Optimal Transport Enhanced Sequence-to-Set Model for Extreme Multi-label Text Classification'), (380, 'Borrowing Human Senses: Comment-Aware Self-Training for Social Media Multimodal Classification'), (511, 'Multi-Label Intent Detection via Contrastive Task Specialization of Sentence Encoders')]
+          ----------------------------------------
+     ----------------------------------------
+     Label: named_entity_recognition
+     Dimension: tasks
+     Description: The process of identifying and classifying key entities in text, such as names of people, organizations, locations, and other specific terms.
+     Level: 1
+     Source: Initial
+     # of Papers: 45
+     Example Papers: [(1, 'CDConv: A Benchmark for Contradiction Detection in Chinese Conversations'), (33, 'Unsupervised Boundary-Aware Language Model Pretraining for Chinese Sequence Labeling'), (60, 'Entity Extraction in Low Resource Domains with Selective Pre-training of Large Language Models')]
+     ----------------------------------------
+     Children:
+          Label: entity_linking
+          Dimension: tasks
+          Description: Entity linking involves connecting entities mentioned in the text to their corresponding entries in a knowledge base.
+          Level: 2
+          Source: depth
+          # of Papers: 4
+          Example Papers: [(592, 'EDIN: An End-to-end Benchmark and Pipeline for Unknown Entity Discovery and Indexing'), (626, 'Semantic Novelty Detection and Characterization in Factual Text Involving Named Entities'), (637, 'Unsupervised Entity Linking with Guided Summarization and Multiple-Choice Selection')]
+          ----------------------------------------
+          Label: location_entity_recognition
+          Dimension: tasks
+          Description: Location entity recognition focuses specifically on identifying and classifying geographical locations within text.
+          Level: 2
+          Source: depth
+          # of Papers: 1
+          Example Papers: [(88, 'Geographic Citation Gaps in NLP Research')]
+          ----------------------------------------
+          Label: entity_typing
+          Dimension: tasks
+          Description: Entity typing is the task of classifying entities into predefined categories based on their context in the text.
+          Level: 2
+          Source: depth
+          # of Papers: 8
+          Example Papers: [(198, 'Generative Entity Typing with Curriculum Learning'), (235, 'Distilling Causal Effect from Miscellaneous Other-Class for Continual Named Entity Recognition'), (379, 'Rethinking the Authorship Verification Experimental Setups')]
+          ----------------------------------------
+          Label: few-shot_named_entity_recognition
+          Dimension: tasks
+          Description: Few-shot named entity recognition aims to identify entities with very few labeled examples available for training.
+          Level: 2
+          Source: depth
+          # of Papers: 8
+          Example Papers: [(115, 'Robustness of Demonstration-based Learning Under Limited Data Scenario'), (119, 'Style Transfer as Data Augmentation: A Case Study on Named Entity Recognition'), (226, 'SpanProto: A Two-stage Span-based Prototypical Network for Few-shot Named Entity Recognition')]
+          ----------------------------------------
+          Label: cross-lingual_named_entity_recognition
+          Dimension: tasks
+          Description: Cross-lingual named entity recognition deals with identifying entities in texts written in different languages.
+          Level: 2
+          Source: depth
+          # of Papers: 11
+          Example Papers: [(297, 'MasakhaNER 2.0: Africa-centric Transfer Learning for Named Entity Recognition'), (344, 'Wider & Closer: Mixture of Short-channel Distillers for Zero-shot Cross-lingual Named Entity Recognition'), (379, 'Rethinking the Authorship Verification Experimental Setups')]
+          ----------------------------------------
+     ----------------------------------------
+     Label: machine_translation
+     Dimension: tasks
+     Description: The task of automatically translating text from one language to another while preserving its meaning and context.
+     Level: 1
+     Source: Initial
+     # of Papers: 78
+     Example Papers: [(1, 'CDConv: A Benchmark for Contradiction Detection in Chinese Conversations'), (12, 'The Importance of Being Parameters: An Intra-Distillation Method for Serious Gains'), (20, 'Non-Parametric Domain Adaptation for End-to-End Speech Translation')]
+     ----------------------------------------
+     Children:
+          Label: neural_machine_translation
+          Dimension: tasks
+          Description: This cluster focuses on the use of neural network architectures to perform machine translation tasks.
+          Level: 2
+          Source: depth
+          # of Papers: 63
+          Example Papers: [(12, 'The Importance of Being Parameters: An Intra-Distillation Method for Serious Gains'), (23, 'Linearizing Transformer with Key-Value Memory'), (64, 'Information-Transport-based Policy for Simultaneous Translation')]
+          ----------------------------------------
+          Label: multilingual_machine_translation
+          Dimension: tasks
+          Description: This cluster encompasses methods and techniques for translating text across multiple languages.
+          Level: 2
+          Source: depth
+          # of Papers: 26
+          Example Papers: [(12, 'The Importance of Being Parameters: An Intra-Distillation Method for Serious Gains'), (76, 'Multilingual Machine Translation with Hyper-Adapters'), (157, 'CoCoa: An Encoder-Decoder Model for Controllable Code-switched Generation')]
+          ----------------------------------------
+          Label: quality_estimation
+          Dimension: tasks
+          Description: This cluster deals with assessing the quality of machine translation outputs.
+          Level: 2
+          Source: depth
+          # of Papers: 9
+          Example Papers: [(229, 'Machine Translation Robustness to Natural Asemantic Variation'), (287, 'MT-GenEval: A Counterfactual and Contextual Dataset for Evaluating Gender Accuracy in Machine Translation'), (329, 'Competency-Aware Neural Machine Translation: Can Machine Translation Know its Own Translation Quality?')]
+          ----------------------------------------
+          Label: domain_adaptation
+          Dimension: tasks
+          Description: This cluster focuses on adapting machine translation systems to perform well in specific domains or contexts.
+          Level: 2
+          Source: depth
+          # of Papers: 12
+          Example Papers: [(20, 'Non-Parametric Domain Adaptation for End-to-End Speech Translation'), (110, 'Continual Learning of Neural Machine Translation within Low Forgetting Risk Regions'), (151, 'Distill The Image to Nowhere: Inversion Knowledge Distillation for Multimodal Machine Translation')]
+          ----------------------------------------
+          Label: post-editing
+          Dimension: tasks
+          Description: This cluster involves techniques and methods for refining machine translation outputs through human intervention.
+          Level: 2
+          Source: depth
+          # of Papers: 5
+          Example Papers: [(229, 'Machine Translation Robustness to Natural Asemantic Variation'), (352, 'WeTS: A Benchmark for Translation Suggestion'), (510, 'Cross-lingual neural fuzzy matching for exploiting target-language monolingual corpora in computer-aided translation')]
+          ----------------------------------------
+     ----------------------------------------
+     Label: sentiment_analysis
+     Dimension: tasks
+     Description: The task of determining the emotional tone behind a series of words, used to understand the attitudes, opinions, and emotions expressed in text.
+     Level: 1
+     Source: Initial
+     # of Papers: 43
+     Example Papers: [(1, 'CDConv: A Benchmark for Contradiction Detection in Chinese Conversations'), (54, 'Curriculum Knowledge Distillation for Emoji-supervised Cross-lingual Sentiment Analysis'), (79, 'Affective Idiosyncratic Responses to Music')]
+     ----------------------------------------
+     Children:
+          Label: aspect_based_sentiment_analysis
+          Dimension: tasks
+          Description: This cluster focuses on analyzing sentiments based on specific aspects or features within a text.
+          Level: 2
+          Source: depth
+          # of Papers: 13
+          Example Papers: [(211, 'COM-MRC: A COntext-Masked Machine Reading Comprehension Framework for Aspect Sentiment Triplet Extraction'), (218, 'Face-Sensitive Image-to-Emotional-Text Cross-modal Translation for Multimodal Aspect-based Sentiment Analysis'), (288, 'A Span-level Bidirectional Network for Aspect Sentiment Triplet Extraction')]
+          ----------------------------------------
+          Label: emotion_detection
+          Dimension: tasks
+          Description: This cluster encompasses tasks aimed at identifying and classifying emotions expressed in text.
+          Level: 2
+          Source: depth
+          # of Papers: 8
+          Example Papers: [(79, 'Affective Idiosyncratic Responses to Music'), (311, 'Efficient Nearest Neighbor Emotion Classification with BERT-whitening'), (346, 'Supervised Prototypical Contrastive Learning for Emotion Recognition in Conversation')]
+          ----------------------------------------
+          Label: hate_speech_detection
+          Dimension: tasks
+          Description: This cluster is dedicated to identifying and classifying hate speech in various forms of text.
+          Level: 2
+          Source: depth
+          # of Papers: 7
+          Example Papers: [(135, 'ToKen: Task Decomposition and Knowledge Infusion for Few-Shot Hate Speech Detection'), (380, 'Borrowing Human Senses: Comment-Aware Self-Training for Social Media Multimodal Classification'), (552, "``It's Not Just Hate'': A Multi-Dimensional Perspective on Detecting Harmful Speech Online")]
+          ----------------------------------------
+          Label: multimodal_sentiment_analysis
+          Dimension: tasks
+          Description: This cluster focuses on analyzing sentiments using multiple modalities, such as text, audio, and visual data.
+          Level: 2
+          Source: depth
+          # of Papers: 11
+          Example Papers: [(54, 'Curriculum Knowledge Distillation for Emoji-supervised Cross-lingual Sentiment Analysis'), (188, 'Mitigating Inconsistencies in Multimodal Sentiment Analysis under Uncertain Missing Modalities'), (208, 'Curriculum Learning Meets Weakly Supervised Multimodal Correlation Learning')]
+          ----------------------------------------
+          Label: stance_detection
+          Dimension: tasks
+          Description: This cluster involves determining the stance or position expressed in a text towards a particular target.
+          Level: 2
+          Source: depth
+          # of Papers: 4
+          Example Papers: [(192, 'Improving Multi-task Stance Detection with Multi-task Interaction Network'), (469, 'Generative Data Augmentation with Contrastive Learning for Zero-Shot Stance Detection'), (586, 'Beyond prompting: Making Pre-trained Language Models Better Zero-shot Learners by Clustering Representations')]
+          ----------------------------------------
+     ----------------------------------------
+     Label: text_summarization
+     Dimension: tasks
+     Description: The process of creating a concise and coherent summary of a longer text document, capturing the main ideas and essential information.
+     Level: 1
+     Source: Initial
+     # of Papers: 67
+     Example Papers: [(1, 'CDConv: A Benchmark for Contradiction Detection in Chinese Conversations'), (7, 'Toward Unifying Text Segmentation and Long Document Summarization'), (23, 'Linearizing Transformer with Key-Value Memory')]
+     ----------------------------------------
+     Children:
+          Label: extractive_summarization
+          Dimension: tasks
+          Description: Extractive summarization involves selecting and compiling key sentences or phrases from the original text to create a summary.
+          Level: 2
+          Source: depth
+          # of Papers: 10
+          Example Papers: [(7, 'Toward Unifying Text Segmentation and Long Document Summarization'), (196, 'Effective and Efficient Query-aware Snippet Extraction for Web Search'), (269, 'Scientific Paper Extractive Summarization Enhanced by Citation Graphs')]
+          ----------------------------------------
+          Label: abstractive_summarization
+          Dimension: tasks
+          Description: Abstractive summarization generates new sentences that capture the essence of the original text, rather than merely extracting parts of it.
+          Level: 2
+          Source: depth
+          # of Papers: 36
+          Example Papers: [(23, 'Linearizing Transformer with Key-Value Memory'), (29, 'HydraSum: Disentangling Style Features in Text Summarization with Multi-Decoder Models'), (71, 'Curriculum Prompt Learning with Self-Training for Abstractive Dialogue Summarization')]
+          ----------------------------------------
+          Label: narrative_summarization
+          Dimension: tasks
+          Description: Narrative summarization focuses on summarizing stories or narratives while maintaining the plot and character development.
+          Level: 2
+          Source: depth
+          # of Papers: 4
+          Example Papers: [(28, 'SNaC: Coherence Error Detection for Narrative Summarization'), (48, 'SEM-F1: an Automatic Way for Semantic Evaluation of Multi-Narrative Overlap Summaries at Scale'), (74, 'SQuALITY: Building a Long-Document Summarization Dataset the Hard Way')]
+          ----------------------------------------
+          Label: text_simplification
+          Dimension: tasks
+          Description: Text simplification aims to make complex texts easier to read and understand while preserving their original meaning.
+          Level: 2
+          Source: depth
+          # of Papers: 11
+          Example Papers: [(29, 'HydraSum: Disentangling Style Features in Text Summarization with Multi-Decoder Models'), (120, 'Linguistic Corpus Annotation for Automatic Text Simplification Evaluation'), (134, 'Near-Negative Distinction: Giving a Second Life to Human Evaluation Datasets')]
+          ----------------------------------------
+          Label: multimodal_summarization
+          Dimension: tasks
+          Description: Multimodal summarization integrates information from various modalities, such as text and images, to create comprehensive summaries.
+          Level: 2
+          Source: depth
+          # of Papers: 7
+          Example Papers: [(242, 'Few-shot Query-Focused Summarization with Prefix-Merging'), (388, "How ``Multi'' is Multi-Document Summarization?"), (395, 'CTRLsum: Towards Generic Controllable Text Summarization')]
+          ----------------------------------------
+     ----------------------------------------
+     Label: information_extraction
+     Dimension: tasks
+     Description: The process of automatically extracting structured information from unstructured text, including identifying relationships and entities.
+     Level: 1
+     Source: width
+     # of Papers: 211
+     Example Papers: [(0, 'Generative Knowledge Graph Construction: A Review'), (1, 'CDConv: A Benchmark for Contradiction Detection in Chinese Conversations'), (4, 'Graph-based Model Generation for Few-Shot Relation Extraction')]
+     ----------------------------------------
+     Children:
+          Label: entity_extraction
+          Dimension: tasks
+          Description: Entity extraction focuses on identifying and classifying key entities from unstructured text.
+          Level: 2
+          Source: depth
+          # of Papers: 19
+          Example Papers: [(31, 'Guiding Neural Entity Alignment with Compatibility'), (33, 'Unsupervised Boundary-Aware Language Model Pretraining for Chinese Sequence Labeling'), (42, 'A Unified Encoder-Decoder Framework with Entity Memory')]
+          ----------------------------------------
+          Label: relation_extraction
+          Dimension: tasks
+          Description: Relation extraction aims to identify and classify relationships between entities in text.
+          Level: 2
+          Source: depth
+          # of Papers: 35
+          Example Papers: [(4, 'Graph-based Model Generation for Few-Shot Relation Extraction'), (45, 'ReSel: N-ary Relation Extraction from Scientific Text and Tables by Learning to Retrieve and Select'), (59, 'MAVEN-ERE: A Unified Large-scale Dataset for Event Coreference, Temporal, Causal, and Subevent Relation Extraction')]
+          ----------------------------------------
+          Label: event_extraction
+          Dimension: tasks
+          Description: Event extraction involves identifying and classifying events and their arguments from text.
+          Level: 2
+          Source: depth
+          # of Papers: 18
+          Example Papers: [(57, 'Cross-document Event Coreference Search: Task, Dataset and Modeling'), (59, 'MAVEN-ERE: A Unified Large-scale Dataset for Event Coreference, Temporal, Causal, and Subevent Relation Extraction'), (102, 'SubeventWriter: Iterative Sub-event Sequence Generation with Coherence Controller')]
+          ----------------------------------------
+          Label: knowledge_extraction
+          Dimension: tasks
+          Description: Knowledge extraction focuses on deriving structured knowledge from unstructured text sources.
+          Level: 2
+          Source: depth
+          # of Papers: 36
+          Example Papers: [(0, 'Generative Knowledge Graph Construction: A Review'), (30, 'A Good Neighbor, A Found Treasure: Mining Treasured Neighbors for Knowledge Graph Entity Typing'), (38, 'UnifiedSKG: Unifying and Multi-Tasking Structured Knowledge Grounding with Text-to-Text Language Models')]
+          ----------------------------------------
+          Label: document_analysis
+          Dimension: tasks
+          Description: Document analysis focuses on extracting insights and structured information from entire documents, including their content and structure.
+          Level: 2
+          Source: width
+          # of Papers: 17
+          Example Papers: [(10, 'PAIR: Prompt-Aware margIn Ranking for Counselor Reflection Scoring in Motivational Interviewing'), (50, 'DocInfer: Document-level Natural Language Inference using Optimal Evidence Selection'), (120, 'Linguistic Corpus Annotation for Automatic Text Simplification Evaluation')]
+          ----------------------------------------
+          Label: evaluation_methods
+          Dimension: tasks
+          Description: Evaluation methods encompass various techniques for assessing the performance and effectiveness of information extraction systems.
+          Level: 2
+          Source: width
+          # of Papers: 7
+          Example Papers: [(113, 'StoryER: Automatic Story Evaluation via Ranking, Rating and Reasoning'), (120, 'Linguistic Corpus Annotation for Automatic Text Simplification Evaluation'), (130, 'Towards a Unified Multi-Dimensional Evaluator for text generation')]
+          ----------------------------------------
+          Label: dialogue_extraction
+          Dimension: tasks
+          Description: Dialogue extraction involves identifying and extracting relevant information from conversational data.
+          Level: 2
+          Source: width
+          # of Papers: 12
+          Example Papers: [(1, 'CDConv: A Benchmark for Contradiction Detection in Chinese Conversations'), (55, 'Correctable-DST: Mitigating Historical Context Mismatch between Training and Inference for Improved Dialogue State Tracking'), (75, 'MetaASSIST: Robust Dialogue State Tracking with Meta Learning')]
+          ----------------------------------------
+          Label: information_retrieval
+          Dimension: tasks
+          Description: Information retrieval focuses on the process of obtaining information from a large repository based on user queries.
+          Level: 2
+          Source: width
+          # of Papers: 114
+          Example Papers: [(11, 'Co-guiding Net: Achieving Mutual Guidances between Multiple Intent Detection and Slot Filling via Heterogeneous Semantics-Label Graphs'), (17, 'Estimating Soft Labels for Out-of-Domain Intent Detection'), (22, 'Certified Error Control of Candidate Set Pruning for Two-Stage Relevance Ranking')]
+          ----------------------------------------
+          Label: argument_extraction
+          Dimension: tasks
+          Description: Argument extraction aims to identify and extract arguments and their components from text, often used in analyzing discourse.
+          Level: 2
+          Source: width
+          # of Papers: 9
+          Example Papers: [(251, 'How to disagree well: Investigating the dispute tactics used on Wikipedia'), (306, 'Retrieval-Augmented Generative Question Answering for Event Argument Extraction'), (418, 'Bi-Directional Iterative Prompt-Tuning for Event Argument Extraction')]
+          ----------------------------------------
+     ----------------------------------------
+     Label: text_generation
+     Dimension: tasks
+     Description: The task of automatically generating coherent and contextually relevant text based on given prompts or data.
+     Level: 1
+     Source: width
+     # of Papers: 175
+     Example Papers: [(0, 'Generative Knowledge Graph Construction: A Review'), (1, 'CDConv: A Benchmark for Contradiction Detection in Chinese Conversations'), (3, 'Learning to Generate Question by Asking Question: A Primal-Dual Approach with Uncommon Word Generation')]
+     ----------------------------------------
+     Children:
+          Label: dialogue_generation
+          Dimension: tasks
+          Description: This cluster encompasses tasks focused on generating conversational responses and dialogues in various contexts.
+          Level: 2
+          Source: depth
+          # of Papers: 23
+          Example Papers: [(1, 'CDConv: A Benchmark for Contradiction Detection in Chinese Conversations'), (32, 'InstructDial: Improving Zero and Few-shot Generalization in Dialogue through Instruction Tuning'), (105, 'Counterfactual Data Augmentation via Perspective Transition for Open-Domain Dialogues')]
+          ----------------------------------------
+          Label: text_generation_for_specific_formats
+          Dimension: tasks
+          Description: This cluster includes tasks that generate text in specific formats or styles, such as stories, recipes, and headlines.
+          Level: 2
+          Source: depth
+          # of Papers: 85
+          Example Papers: [(25, 'Translation between Molecules and Natural Language'), (38, 'UnifiedSKG: Unifying and Multi-Tasking Structured Knowledge Grounding with Text-to-Text Language Models'), (41, 'Generative Language Models for Paragraph-Level Question Generation')]
+          ----------------------------------------
+          Label: conditional_text_generation
+          Dimension: tasks
+          Description: This cluster focuses on generating text based on specific conditions or prompts, allowing for controlled outputs.
+          Level: 2
+          Source: depth
+          # of Papers: 96
+          Example Papers: [(3, 'Learning to Generate Question by Asking Question: A Primal-Dual Approach with Uncommon Word Generation'), (6, 'Generating Natural Language Proofs with Verifier-Guided Search'), (14, 'RankGen: Improving text generation with Large Ranking Models')]
+          ----------------------------------------
+          Label: knowledge_and_explanation_generation
+          Dimension: tasks
+          Description: This cluster includes tasks that generate knowledge-based content and explanations, enhancing understanding and information dissemination.
+          Level: 2
+          Source: depth
+          # of Papers: 32
+          Example Papers: [(0, 'Generative Knowledge Graph Construction: A Review'), (3, 'Learning to Generate Question by Asking Question: A Primal-Dual Approach with Uncommon Word Generation'), (38, 'UnifiedSKG: Unifying and Multi-Tasking Structured Knowledge Grounding with Text-to-Text Language Models')]
+          ----------------------------------------
+          Label: text_evaluation_and_improvement
+          Dimension: tasks
+          Description: This cluster encompasses tasks aimed at evaluating and improving generated text quality, coherence, and relevance.
+          Level: 2
+          Source: depth
+          # of Papers: 24
+          Example Papers: [(61, 'How Large Language Models are Transforming Machine-Paraphrase Plagiarism'), (88, 'Geographic Citation Gaps in NLP Research'), (130, 'Towards a Unified Multi-Dimensional Evaluator for text generation')]
+          ----------------------------------------
+     ----------------------------------------
+     Label: question_answering
+     Dimension: tasks
+     Description: The task of automatically answering questions posed in natural language by retrieving and synthesizing information from various sources.
+     Level: 1
+     Source: width
+     # of Papers: 146
+     Example Papers: [(1, 'CDConv: A Benchmark for Contradiction Detection in Chinese Conversations'), (3, 'Learning to Generate Question by Asking Question: A Primal-Dual Approach with Uncommon Word Generation'), (9, 'Improving Complex Knowledge Base Question Answering via Question-to-Action and Question-to-Question Alignment')]
+     ----------------------------------------
+     Children:
+          Label: open_domain_question_answering
+          Dimension: tasks
+          Description: This cluster focuses on question answering systems that can handle a wide range of topics and domains without being restricted to a specific context.
+          Level: 2
+          Source: depth
+          # of Papers: 55
+          Example Papers: [(3, 'Learning to Generate Question by Asking Question: A Primal-Dual Approach with Uncommon Word Generation'), (18, 'Multi-VQG: Generating Engaging Questions for Multiple Images'), (41, 'Generative Language Models for Paragraph-Level Question Generation')]
+          ----------------------------------------
+          Label: structured_question_answering
+          Dimension: tasks
+          Description: This cluster encompasses question answering tasks that involve structured data or knowledge bases to derive answers.
+          Level: 2
+          Source: depth
+          # of Papers: 26
+          Example Papers: [(9, 'Improving Complex Knowledge Base Question Answering via Question-to-Action and Question-to-Question Alignment'), (38, 'UnifiedSKG: Unifying and Multi-Tasking Structured Knowledge Grounding with Text-to-Text Language Models'), (121, 'Semantic Framework based Query Generation for Temporal Question Answering over Knowledge Graphs')]
+          ----------------------------------------
+          Label: evaluation_and_reasoning_in_question_answering
+          Dimension: tasks
+          Description: This cluster includes tasks related to the evaluation of question answering systems and reasoning processes involved in answering questions.
+          Level: 2
+          Source: depth
+          # of Papers: 36
+          Example Papers: [(19, 'Tomayto, Tomahto. Beyond Token-level Answer Equivalence for Question Answering Evaluation'), (36, 'QRelScore: Better Evaluating Generated Questions with Deeper Understanding of Context-aware Relevance'), (73, 'Deconfounding Legal Judgment Prediction for European Court of Human Rights Cases Towards Better Alignment with Experts')]
+          ----------------------------------------
+          Label: document_and_contextual_question_answering
+          Dimension: tasks
+          Description: This cluster focuses on question answering tasks that require understanding and synthesizing information from documents or contextual sources.
+          Level: 2
+          Source: depth
+          # of Papers: 26
+          Example Papers: [(36, 'QRelScore: Better Evaluating Generated Questions with Deeper Understanding of Context-aware Relevance'), (50, 'DocInfer: Document-level Natural Language Inference using Optimal Evidence Selection'), (93, 'M3: A Multi-View Fusion and Multi-Decoding Network for Multi-Document Reading Comprehension')]
+          ----------------------------------------
+     ----------------------------------------
+     Label: language_modeling
+     Dimension: tasks
+     Description: The task of developing models that can predict the next word in a sequence, enabling various applications in natural language processing.
+     Level: 1
+     Source: width
+     # of Papers: 451
+     Example Papers: [(1, 'CDConv: A Benchmark for Contradiction Detection in Chinese Conversations'), (2, 'Transformer Feed-Forward Layers Build Predictions by Promoting Concepts in the Vocabulary Space'), (4, 'Graph-based Model Generation for Few-Shot Relation Extraction')]
+     ----------------------------------------
+     Children:
+          Label: pre_training
+          Dimension: tasks
+          Description: Pre-training involves training language models on large datasets to learn general language representations before fine-tuning on specific tasks.
+          Level: 2
+          Source: depth
+          # of Papers: 75
+          Example Papers: [(33, 'Unsupervised Boundary-Aware Language Model Pretraining for Chinese Sequence Labeling'), (34, 'RetroMAE: Pre-Training Retrieval-oriented Language Models Via Masked Auto-Encoder'), (43, 'Segmenting Numerical Substitution Ciphers')]
+          ----------------------------------------
+          Label: sequence_generation
+          Dimension: tasks
+          Description: Sequence generation focuses on generating coherent and contextually relevant sequences of text based on input prompts.
+          Level: 2
+          Source: depth
+          # of Papers: 52
+          Example Papers: [(23, 'Linearizing Transformer with Key-Value Memory'), (36, 'QRelScore: Better Evaluating Generated Questions with Deeper Understanding of Context-aware Relevance'), (38, 'UnifiedSKG: Unifying and Multi-Tasking Structured Knowledge Grounding with Text-to-Text Language Models')]
+          ----------------------------------------
+          Label: language_model_adaptation
+          Dimension: tasks
+          Description: Language model adaptation involves fine-tuning pre-trained models to improve performance on specific tasks or domains.
+          Level: 2
+          Source: depth
+          # of Papers: 265
+          Example Papers: [(2, 'Transformer Feed-Forward Layers Build Predictions by Promoting Concepts in the Vocabulary Space'), (4, 'Graph-based Model Generation for Few-Shot Relation Extraction'), (8, 'The Geometry of Multilingual Language Model Representations')]
+          ----------------------------------------
+          Label: evaluation_metrics
+          Dimension: tasks
+          Description: Evaluation metrics focus on the quantitative assessment of language models' performance across various tasks and datasets.
+          Level: 2
+          Source: width
+          # of Papers: 78
+          Example Papers: [(8, 'The Geometry of Multilingual Language Model Representations'), (13, 'Interpreting Language Models with Contrastive Explanations'), (26, 'What Makes Instruction Learning Hard? An Investigation and a New Challenge in a Synthetic Environment')]
+          ----------------------------------------
+          Label: knowledge_injection
+          Dimension: tasks
+          Description: Knowledge injection involves integrating external knowledge sources into language models to enhance their understanding and reasoning capabilities.
+          Level: 2
+          Source: width
+          # of Papers: 76
+          Example Papers: [(21, 'Prompting for Multimodal Hateful Meme Classification'), (37, 'Abstract Visual Reasoning with Tangram Shapes'), (43, 'Segmenting Numerical Substitution Ciphers')]
+          ----------------------------------------
+          Label: error_detection
+          Dimension: tasks
+          Description: Error detection encompasses identifying and correcting grammatical and contextual errors in generated text.
+          Level: 2
+          Source: width
+          # of Papers: 31
+          Example Papers: [(1, 'CDConv: A Benchmark for Contradiction Detection in Chinese Conversations'), (17, 'Estimating Soft Labels for Out-of-Domain Intent Detection'), (43, 'Segmenting Numerical Substitution Ciphers')]
+          ----------------------------------------
+          Label: bias_analysis
+          Dimension: tasks
+          Description: Bias analysis investigates the presence and impact of biases in language models and their outputs.
+          Level: 2
+          Source: width
+          # of Papers: 54
+          Example Papers: [(1, 'CDConv: A Benchmark for Contradiction Detection in Chinese Conversations'), (17, 'Estimating Soft Labels for Out-of-Domain Intent Detection'), (83, 'Tracing Semantic Variation in Slang')]
+          ----------------------------------------
+          Label: temporal_reasoning
+          Dimension: tasks
+          Description: Temporal reasoning focuses on understanding and generating text that involves time-related concepts and events.
+          Level: 2
+          Source: width
+          # of Papers: 29
+          Example Papers: [(37, 'Abstract Visual Reasoning with Tangram Shapes'), (40, 'When Can Transformers Ground and Compose: Insights from Compositional Generalization Benchmarks'), (82, 'DANLI: Deliberative Agent for Following Natural Language Instructions')]
+          ----------------------------------------
+     ----------------------------------------
+     Label: multimodal_processing
+     Dimension: tasks
+     Description: The integration and processing of multiple forms of data, such as text and images, to enhance understanding and generation capabilities.
+     Level: 1
+     Source: width
+     # of Papers: 147
+     Example Papers: [(1, 'CDConv: A Benchmark for Contradiction Detection in Chinese Conversations'), (15, 'Learning a Grammar Inducer from Massive Uncurated Instructional Videos'), (16, 'Normalized Contrastive Learning for Text-Video Retrieval')]
+     ----------------------------------------
+     Children:
+          Label: multimodal_classification
+          Dimension: tasks
+          Description: This cluster focuses on tasks that involve classifying data from multiple modalities, such as images and text.
+          Level: 2
+          Source: depth
+          # of Papers: 79
+          Example Papers: [(15, 'Learning a Grammar Inducer from Massive Uncurated Instructional Videos'), (21, 'Prompting for Multimodal Hateful Meme Classification'), (24, 'Robustness of Fusion-based Multimodal Classifiers to Cross-Modal Content Dilutions')]
+          ----------------------------------------
+          Label: multimodal_generation
+          Dimension: tasks
+          Description: This cluster encompasses tasks related to generating content from multiple modalities, including text and images.
+          Level: 2
+          Source: depth
+          # of Papers: 20
+          Example Papers: [(18, 'Multi-VQG: Generating Engaging Questions for Multiple Images'), (25, 'Translation between Molecules and Natural Language'), (87, 'How well can Text-to-Image Generative Models understand Ethical Natural Language Interventions?')]
+          ----------------------------------------
+          Label: multimodal_retrieval
+          Dimension: tasks
+          Description: This cluster includes tasks that focus on retrieving relevant information across different modalities.
+          Level: 2
+          Source: depth
+          # of Papers: 19
+          Example Papers: [(16, 'Normalized Contrastive Learning for Text-Video Retrieval'), (189, 'ConvTrans: Transforming Web Search Sessions for Conversational Dense Retrieval'), (202, 'Empowering Dual-Encoder with Query Generator for Cross-Lingual Dense Retrieval')]
+          ----------------------------------------
+          Label: multimodal_reasoning
+          Dimension: tasks
+          Description: This cluster involves tasks that require reasoning across multiple modalities to derive conclusions or insights.
+          Level: 2
+          Source: depth
+          # of Papers: 26
+          Example Papers: [(37, 'Abstract Visual Reasoning with Tangram Shapes'), (40, 'When Can Transformers Ground and Compose: Insights from Compositional Generalization Benchmarks'), (77, 'Z-LaVI: Zero-Shot Language Solver Fueled by Visual Imagination')]
+          ----------------------------------------
+          Label: multimodal_dialogue_systems
+          Dimension: tasks
+          Description: This cluster focuses on dialogue systems that integrate multiple modalities for enhanced interaction.
+          Level: 2
+          Source: depth
+          # of Papers: 18
+          Example Papers: [(1, 'CDConv: A Benchmark for Contradiction Detection in Chinese Conversations'), (75, 'MetaASSIST: Robust Dialogue State Tracking with Meta Learning'), (155, 'D4: a Chinese Dialogue Dataset for Depression-Diagnosis-Oriented Chat')]
+          ----------------------------------------
+     ----------------------------------------
+----------------------------------------
