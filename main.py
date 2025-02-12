@@ -1,5 +1,5 @@
 import os
-os.environ['HF_HOME'] = '/shared/data3/pk36/.cache'
+# os.environ['HF_HOME'] = '/shared/data3/pk36/.cache'
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 import json
 from collections import deque
@@ -18,13 +18,26 @@ from utils import clean_json_string
 def construct_dataset(args):
     if not os.path.exists(args.data_dir):
         os.makedirs(args.data_dir)
-
+    split = 'train'
+    
     if args.dataset == 'emnlp_2024':
         ds = load_dataset("EMNLP/EMNLP2024-papers")
-        split = 'train'
-    else:
+    elif args.dataset == 'emnlp_2022':
         ds = load_dataset("TimSchopf/nlp_taxonomy_data")
         split = 'test'
+    elif args.dataset == 'cvpr_2024':
+        ds = load_dataset("DeepNLP/CVPR-2024-Accepted-Papers")
+    elif args.dataset == 'cvpr_2020':
+        ds = load_dataset("DeepNLP/CVPR-2020-Accepted-Papers")
+    elif args.dataset == 'iclr_2024':
+        ds = load_dataset("DeepNLP/ICLR-2024-Accepted-Papers")
+    elif args.dataset == 'iclr_2021':
+        ds = load_dataset("DeepNLP/ICLR-2021-Accepted-Papers")
+    elif args.dataset == 'icra_2024':
+        ds = load_dataset("DeepNLP/ICRA-2024-Accepted-Papers")
+    else:
+        ds = load_dataset("DeepNLP/ICRA-2020-Accepted-Papers")
+    
     
     internal_collection = {}
 
@@ -32,12 +45,16 @@ def construct_dataset(args):
         internal_count = 0
         id = 0
         for p in tqdm(ds[split]):
+            if ('title' not in p) and ('abstract' not in p):
+                continue
+            
             temp_dict = {"Title": p['title'], "Abstract": p['abstract']}
             formatted_dict = json.dumps(temp_dict)
             i.write(f'{formatted_dict}\n')
             internal_collection[id] = Paper(id, p['title'], p['abstract'], label_opts=args.dimensions, internal=True)
             internal_count += 1
             id += 1
+        print("Total # of Papers: ", internal_count)
     
     return internal_collection, internal_count
 
@@ -217,7 +234,8 @@ if __name__ == "__main__":
     args.dimensions = ["tasks", "datasets", "methodologies", "evaluation_methods", "real_world_domains"]
     # args.dimensions = ["evaluation_methods"]
 
-    args.dataset = "emnlp_2022"
+    args.dataset = "iclr_2021"
+    args.topic = "deep learning"
     args.data_dir = f"datasets/{args.dataset.lower().replace(' ', '_')}"
     args.internal = f"{args.dataset}.txt"
     # args.external = f"{args.dataset}_external.txt"

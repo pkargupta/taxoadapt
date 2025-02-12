@@ -21,7 +21,7 @@ dimension_definitions = {
     'methodologies': """Methodology: a paper that introduces, explains, or refines a method or approach, providing theoretical foundations, implementation details, and empirical evaluations to advance the state-of-the-art or solve specific problems.""",
     'datasets': """Datasets: introduces a new dataset, detailing its creation, structure, and intended use, while providing analysis or benchmarks to demonstrate its relevance and utility. It focuses on advancing research by addressing gaps in existing datasets/performance of SOTA models or enabling new applications in the field.""",
     'evaluation_methods': """Evaluation Methods: a paper that assesses the performance, limitations, or biases of models, methods, or datasets using systematic experiments or analyses. It focuses on benchmarking, comparative studies, or proposing new evaluation metrics or frameworks to provide insights and improve understanding in the field.""",
-    'real_world_domains': """Real-World Domains: demonstrates the use of NLP techniques to solve specific, real-world problems or address specific domain challenges. It focuses on practical implementation, impact, and insights gained from applying NLP methods in various contexts. Examples include: product recommendation systems, medical record summarization, etc."""
+    'real_world_domains': """Real-World Domains: demonstrates the use of techniques to solve specific, real-world problems or address specific domain challenges. It focuses on practical implementation, impact, and insights gained from applying methods in various contexts. Examples include: product recommendation systems, medical record summarization, etc."""
     }
 
 node_dimension_definitions = {
@@ -42,7 +42,7 @@ def multi_dim_prompt(node):
     main_prompt = f'Your root_topic is: {topic}\nA subcategory is a specific division within a broader category that organizes related items or concepts more precisely. Output up to 5 children, subcategories that are types of {node.dimension} which fall under {topic} and generate corresponding sentence-long descriptions for each. Make sure each type is unique to the topics: {topic}, {ancestors}.'
 
     if ('domain' in node.dimension) or ('application' in node.dimension):
-        main_prompt += f'\n Remember that {node.dimension} means a real-world domain category in which an NLP paper can be applied to (for example, news or science could be a subcategory of {node.dimension}).'
+        main_prompt += f'\n Remember that {node.dimension} means a real-world domain category in which a paper can be applied to (for example, news or science could be a subcategory of {node.dimension}).'
 
     json_output_format = f'''Output your taxonomy ONLY in the following JSON format, replacing each label name key with its correct subcategory label name:\n
 {{
@@ -61,7 +61,7 @@ def multi_dim_prompt(node):
     return system_instruction, main_prompt, json_output_format
 
 
-type_cls_system_instruction = """You are a helpful multi-label classification assistant which helps me label NLP papers based on their paper type. They may be more than one.
+type_cls_system_instruction = """You are a helpful multi-label classification assistant which helps me label papers based on their paper type. They may be more than one.
 
 Paper types (type:definition):
 
@@ -69,7 +69,7 @@ Paper types (type:definition):
 2. Methodology: a paper that introduces, explains, or refines a method or approach, providing theoretical foundations, implementation details, and empirical evaluations to advance the state-of-the-art or solve specific problems. 
 3. Datasets: introduces a new dataset, detailing its creation, structure, and intended use, while providing analysis or benchmarks to demonstrate its relevance and utility. It focuses on advancing research by addressing gaps in existing datasets/performance of SOTA models or enabling new applications in the field. 
 4. Evaluation Methods: a paper that assesses the performance, limitations, or biases of models, methods, or datasets using systematic experiments or analyses. It focuses on benchmarking, comparative studies, or proposing new evaluation metrics or frameworks to provide insights and improve understanding in the field. 
-5. Real-World Domains: demonstrates the use of NLP techniques to solve specific, real-world problems or address specific domain challenges. It focuses on practical implementation, impact, and insights gained from applying NLP methods in various contexts. Examples include: product recommendation systems, medical record summarization, etc.
+5. Real-World Domains: demonstrates the use of techniques to solve specific, real-world problems or address specific domain challenges. It focuses on practical implementation, impact, and insights gained from applying methods in various contexts. Examples include: product recommendation systems, medical record summarization, etc.
 """
 
 class TypeClsSchema(BaseModel):
@@ -111,14 +111,14 @@ categories:
 {cats}
 '''
 
-init_enrich_prompt = "You are a helpful assistant that performs taxonomy enrichment using realistic specific keywords and sentences that would be used in NLP research papers. These realistic keywords and sentences will be used to identify research papers which discuss a specific taxonomy node."
+init_enrich_prompt = "You are a helpful assistant that performs taxonomy enrichment using realistic specific keywords and sentences that would be used in research papers. These realistic keywords and sentences will be used to identify research papers which discuss a specific taxonomy node."
 
-init_classify_prompt = "You are a helpful assistant that identifies the class labels for the provided NLP research paper, performing multi-label classification."
+init_classify_prompt = "You are a helpful assistant that identifies the class labels for the provided research paper, performing multi-label classification."
 
-bulk_enrich_prompt = lambda dict_str: f'''I am providing you a JSON which contains a taxonomy detailing concepts for NLP research papers. Each JSON key within the "children" dictionary represents a taxonomy concept node. Can you fill in the "example_key_phrases" and "example_sentences" fields for each concept node (enrichment of both the root node and its children/descendants) that contains these fields? The required fields are already present for you, so you do not need to create any new keys for concepts without them. Here are the instructions for each field under concept A:
+bulk_enrich_prompt = lambda dict_str: f'''I am providing you a JSON which contains a taxonomy detailing concepts for research papers. Each JSON key within the "children" dictionary represents a taxonomy concept node. Can you fill in the "example_key_phrases" and "example_sentences" fields for each concept node (enrichment of both the root node and its children/descendants) that contains these fields? The required fields are already present for you, so you do not need to create any new keys for concepts without them. Here are the instructions for each field under concept A:
 
-1. "example_key_phrases": This is a list (Python-formatted) of 20 key phrases (e.g., SUBTOPICS of the given concept node A) commonly used amongst NLP research papers that EXCLUSIVELY DISCUSS that concept node (concept A's key phrases/subtopics should be highly relevant to its concept A's parent concept, and NOT OR RARELY be mentioned in ANY of its SIBLING concepts B; A and B share the same parent concept). All added key phrases/subtopics should be 1-3 words, lowercase, and have spaces replaced with underscores (e.g., "key_phrase"). Each key phrase should be unique.
-2. "example_sentences": This is a list (Python-formatted) of 10 key sentences that could be used to discuss the concept node A within an NLP research paper. These key sentences should be SPECIFIC, not generic, to Concept A (also relevant to its parents or ancestors), and unable to be used to describe any other sibling concepts. Utilize your knowledge of the concept node A (including the provided corresponding 'description' of node A and its ancestors/parent node) to form your example sentences.
+1. "example_key_phrases": This is a list (Python-formatted) of 20 key phrases (e.g., SUBTOPICS of the given concept node A) commonly used amongst research papers that EXCLUSIVELY DISCUSS that concept node (concept A's key phrases/subtopics should be highly relevant to its concept A's parent concept, and NOT OR RARELY be mentioned in ANY of its SIBLING concepts B; A and B share the same parent concept). All added key phrases/subtopics should be 1-3 words, lowercase, and have spaces replaced with underscores (e.g., "key_phrase"). Each key phrase should be unique.
+2. "example_sentences": This is a list (Python-formatted) of 10 key sentences that could be used to discuss the concept node A within an research paper. These key sentences should be SPECIFIC, not generic, to Concept A (also relevant to its parents or ancestors), and unable to be used to describe any other sibling concepts. Utilize your knowledge of the concept node A (including the provided corresponding 'description' of node A and its ancestors/parent node) to form your example sentences.
 
 ---
 input_taxo:
@@ -149,7 +149,7 @@ Example Output:
 
 parent_prompt = lambda taxo, node: f" and is the subtopic of all of the following topics: [{', '.join(taxo.get_par(node.node_id, node=False))}]" if node.parents[0].node_id != -1 else ""
 
-main_simple_enrich_prompt = lambda taxo, node, sibs: f'''"{node.label}" is a topic in Natural Language Processing (NLP){parent_prompt(taxo, node)}. Please generate 20 realistic key terms and sentences about the '{node.label}' topic that are relevant to '{node.label}' but irrelevant to the topics: {sibs}. The terms should be short (1-3 words), concise, and distinctive to {node.label}. The sentences should have specific details and resemble realistic sentences found in NLP research papers.
+main_simple_enrich_prompt = lambda taxo, node, sibs: f'''"{node.label}" is a topic in {taxo.root.label}{parent_prompt(taxo, node)}. Please generate 20 realistic key terms and sentences about the '{node.label}' topic that are relevant to '{node.label}' but irrelevant to the topics: {sibs}. The terms should be short (1-3 words), concise, and distinctive to {node.label}. The sentences should have specific details and resemble realistic sentences found in {taxo.root.label} research papers.
 
 Your output format should be in the following JSON format (where node_to_enrich, id and description for {node.label} should match their respective values in the input taxonomy 'input_taxo' aka COPIED OVER FROM input_taxo):
 ---
@@ -163,10 +163,10 @@ Your output format should be in the following JSON format (where node_to_enrich,
 ---
 '''
 
-main_long_enrich_prompt = lambda node, sibs, dict_str: f'''I am providing you a JSON which contains a taxonomy detailing concepts in NLP research papers (tag 'input_taxo'). Each JSON key within the "children" dictionary represents a taxonomy concept node. Can you fill in the "example_key_phrases" and "example_sentences" fields for the specified node (tag 'node_to_enrich')? A research paper relevant to 'node_to_enrich' will be relevant to all concept nodes present in the taxonomy path to the node, 'node_to_enrich', as listed in 'path_to_node'. Here are your instructions on how to enrich the fields for node, 'node_to_enrich':
+main_long_enrich_prompt = lambda node, sibs, dict_str: f'''I am providing you a JSON which contains a taxonomy detailing concepts in research papers (tag 'input_taxo'). Each JSON key within the "children" dictionary represents a taxonomy concept node. Can you fill in the "example_key_phrases" and "example_sentences" fields for the specified node (tag 'node_to_enrich')? A research paper relevant to 'node_to_enrich' will be relevant to all concept nodes present in the taxonomy path to the node, 'node_to_enrich', as listed in 'path_to_node'. Here are your instructions on how to enrich the fields for node, 'node_to_enrich':
 
-1. "example_key_phrases": This is a list (Python-formatted) of 20 key, realistic phrases (e.g., SUBTOPICS of the given 'node_to_enrich') commonly written within NLP research papers that EXCLUSIVELY DISCUSS 'node_to_enrich'. 'node_to_enrich's key phrases/subtopics should be highly relevant to all of 'node_to_enrich's ancestors listed in 'path_to_node', and NOT be relevant to ANY other non-ancestor or siblings of 'node_to_enrich' (siblings of 'node_to_enrich' are specified in tag 'siblings' below). All added key phrases/subtopics should be 1-3 words, lowercase, and have spaces replaced with underscores (e.g., "key_phrase"). Each key phrase should be unique.
-2. "example_sentences": This is a list (Python-formatted) of 10 key, realistic sentences that could be written in an NLP research paper to discuss 'node_to_enrich'. These key sentences should be SPECIFIC, not generic, to 'node_to_enrich' (also relevant to its parents or ancestors), and unable to be used to describe any other sibling concepts (tag 'siblings'). Utilize your knowledge of the 'node_to_enrich' (including the provided corresponding 'description' of node A and its ancestors/parent node) to form your example sentences.
+1. "example_key_phrases": This is a list (Python-formatted) of 20 key, realistic phrases (e.g., SUBTOPICS of the given 'node_to_enrich') commonly written within research papers that EXCLUSIVELY DISCUSS 'node_to_enrich'. 'node_to_enrich's key phrases/subtopics should be highly relevant to all of 'node_to_enrich's ancestors listed in 'path_to_node', and NOT be relevant to ANY other non-ancestor or siblings of 'node_to_enrich' (siblings of 'node_to_enrich' are specified in tag 'siblings' below). All added key phrases/subtopics should be 1-3 words, lowercase, and have spaces replaced with underscores (e.g., "key_phrase"). Each key phrase should be unique.
+2. "example_sentences": This is a list (Python-formatted) of 10 key, realistic sentences that could be written in a research paper to discuss 'node_to_enrich'. These key sentences should be SPECIFIC, not generic, to 'node_to_enrich' (also relevant to its parents or ancestors), and unable to be used to describe any other sibling concepts (tag 'siblings'). Utilize your knowledge of the 'node_to_enrich' (including the provided corresponding 'description' of node A and its ancestors/parent node) to form your example sentences.
 
 ---
 node_to_enrich: {node.label}
@@ -191,7 +191,7 @@ Your output format should be in the following JSON format (where node_to_enrich,
 ---
 '''
 
-main_classify_prompt = lambda node, paper: f'''Given the 'title', 'abstract', and 'content' (provided below) of an NLP research paper that uses large language models for graphs, select the class labels (tag 'class_options') that should be assigned to this paper (multi-label classification). If the research paper SHOULD NOT be labeled with any of the classes in 'class_options', then output an empty list. We provide additional descriptions (tag 'class_descriptions') for each class option for your reference.
+main_classify_prompt = lambda node, paper: f'''Given the 'title', 'abstract', and 'content' (provided below) of a research paper that uses large language models for graphs, select the class labels (tag 'class_options') that should be assigned to this paper (multi-label classification). If the research paper SHOULD NOT be labeled with any of the classes in 'class_options', then output an empty list. We provide additional descriptions (tag 'class_descriptions') for each class option for your reference.
 
 ---
 paper_id: {paper.id}
@@ -212,12 +212,12 @@ Your output format should be in the following JSON format:
 ---
 '''
 
-main_enrich_prompt_paper = lambda node, dict_str: f'''I am providing you a JSON which contains a taxonomy detailing concepts for "using llms on graphs" in NLP research papers (tag 'input_taxo'). Each JSON key within the "children" dictionary represents a taxonomy concept node. Can you fill in the "example_key_phrases", "example_sentences", "example_paper_titles", and "example_paper_abstracts" fields for the specified node (tag 'node_to_enrich')? A research paper relevant to 'node_to_enrich' will be relevant to all concept nodes present in the path to 'node_to_enrich', as listed in 'path_to_node'. Here are your instructions on how to enrich the fields for node, 'node_to_enrich':
+main_enrich_prompt_paper = lambda node, dict_str: f'''I am providing you a JSON which contains a taxonomy detailing concepts for "using llms on graphs" in research papers (tag 'input_taxo'). Each JSON key within the "children" dictionary represents a taxonomy concept node. Can you fill in the "example_key_phrases", "example_sentences", "example_paper_titles", and "example_paper_abstracts" fields for the specified node (tag 'node_to_enrich')? A research paper relevant to 'node_to_enrich' will be relevant to all concept nodes present in the path to 'node_to_enrich', as listed in 'path_to_node'. Here are your instructions on how to enrich the fields for node, 'node_to_enrich':
 
-1. "example_key_phrases": This is a list (Python-formatted) of 20 key, realistic phrases (e.g., SUBTOPICS of the given concept node A) commonly written within NLP research papers that EXCLUSIVELY DISCUSS that concept node (node A's key phrases/subtopics should be highly relevant to its node A's parent concept, and NOT be relevant to ANY other non-ancestor or descendants of node A; A and B share the same parent concept). All added key phrases/subtopics should be 1-3 words, lowercase, and have spaces replaced with underscores (e.g., "key_phrase"). Each key phrase should be unique.
-2. "example_sentences": This is a list (Python-formatted) of 10 key, realistic sentences that could be written in an NLP research paper to discuss the concept node A. These key sentences should be SPECIFIC, not generic, to node A (also relevant to its parents or ancestors), and unable to be used to describe any other sibling concepts. Utilize your knowledge of the concept node A (including the provided corresponding 'description' of node A and its ancestors/parent node) to form your example sentences.
-3. "example_paper_titles": This is a list (Python-formatted) of 2 realistic, detailed titles of an NLP research paper that discusses 'node_to_enrich', as well as all nodes in 'path_to_node'. Each title should not be able to be placed under any other node within 'input_taxo' that is not an ancestor or descendant of 'node_to_enrich'. Each title should correspond to the abstract with the same index in "example_paper_abstracts".
-4. "example_paper_abstracts": This is a list (Python-formatted) of 2 realistic, detailed NLP research paper abstracts (paragraph long) that discusses 'node_to_enrich', as well as all nodes in 'path_to_node'. Each abstract should not be able to be placed under any other node within 'input_taxo' that is not an ancestor or descendant of 'node_to_enrich'. Each abstract should correspond to the title with the same index in "example_paper_titles".
+1. "example_key_phrases": This is a list (Python-formatted) of 20 key, realistic phrases (e.g., SUBTOPICS of the given concept node A) commonly written within research papers that EXCLUSIVELY DISCUSS that concept node (node A's key phrases/subtopics should be highly relevant to its node A's parent concept, and NOT be relevant to ANY other non-ancestor or descendants of node A; A and B share the same parent concept). All added key phrases/subtopics should be 1-3 words, lowercase, and have spaces replaced with underscores (e.g., "key_phrase"). Each key phrase should be unique.
+2. "example_sentences": This is a list (Python-formatted) of 10 key, realistic sentences that could be written in an research paper to discuss the concept node A. These key sentences should be SPECIFIC, not generic, to node A (also relevant to its parents or ancestors), and unable to be used to describe any other sibling concepts. Utilize your knowledge of the concept node A (including the provided corresponding 'description' of node A and its ancestors/parent node) to form your example sentences.
+3. "example_paper_titles": This is a list (Python-formatted) of 2 realistic, detailed titles of a research paper that discusses 'node_to_enrich', as well as all nodes in 'path_to_node'. Each title should not be able to be placed under any other node within 'input_taxo' that is not an ancestor or descendant of 'node_to_enrich'. Each title should correspond to the abstract with the same index in "example_paper_abstracts".
+4. "example_paper_abstracts": This is a list (Python-formatted) of 2 realistic, detailed research paper abstracts (paragraph long) that discusses 'node_to_enrich', as well as all nodes in 'path_to_node'. Each abstract should not be able to be placed under any other node within 'input_taxo' that is not an ancestor or descendant of 'node_to_enrich'. Each abstract should correspond to the title with the same index in "example_paper_titles".
 
 ---
 node_to_enrich: {node.label}
@@ -236,8 +236,8 @@ Your output format should be in the following JSON format (where node_to_enrich,
     "description": "{node.description}",
     "example_key_phrases": <list of strings where values are realistic and relevant key phrases/subtopics>,
     "example_sentences": <list of strings where values are sentences>
-    "example_paper_titles": <list of strings where values are realstic NLP research paper titles that are relevant to 'node_to_enrich' and 'path_to_node'>
-    "example_paper_abstracts": <list of strings where values are realstic NLP research paper abstracts that are relevant to 'node_to_enrich' and 'path_to_node'>
+    "example_paper_titles": <list of strings where values are realstic research paper titles that are relevant to 'node_to_enrich' and 'path_to_node'>
+    "example_paper_abstracts": <list of strings where values are realstic research paper abstracts that are relevant to 'node_to_enrich' and 'path_to_node'>
 }}
 ---
 '''
@@ -267,8 +267,8 @@ class ClassifySchema(BaseModel):
 str_schema = {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://example.com/product.schema.json",
-  "title": "Taxonomy NLP Research Concept",
-  "description": "An NLP research concept present within the input taxonomy, input_taxo",
+  "title": "Taxonomy Research Concept",
+  "description": "A research concept present within the input taxonomy, input_taxo",
   "type": "object",
   "properties": {
     "id": {
@@ -280,7 +280,7 @@ str_schema = {
       "type": "string"
     },
     "example_key_phrases": {
-      "description": "20 key phrases (e.g., SUBTOPICS of the given concept node A) commonly used amongst NLP research papers that EXCLUSIVELY DISCUSS that concept node (node A's key phrases/subtopics should be highly relevant to its node A's parent concept, and NOT be relevant to ANY siblings of node A; node A and sibling B share the same parent concept). All added key phrases/subtopics should be 1-3 words, lowercase, and have spaces replaced with underscores (e.g., 'key_phrase'). Each key phrase should be unique.",
+      "description": "20 key phrases (e.g., SUBTOPICS of the given concept node A) commonly used amongst research papers that EXCLUSIVELY DISCUSS that concept node (node A's key phrases/subtopics should be highly relevant to its node A's parent concept, and NOT be relevant to ANY siblings of node A; node A and sibling B share the same parent concept). All added key phrases/subtopics should be 1-3 words, lowercase, and have spaces replaced with underscores (e.g., 'key_phrase'). Each key phrase should be unique.",
       "type": "array",
       "items": {
         "type": "string"
@@ -289,7 +289,7 @@ str_schema = {
       "uniqueItems": True
     },
     "example_sentences": {
-      "description": "10 key sentences that could be used to discuss the concept node A within an NLP research paper. These key sentences should be SPECIFIC, not generic, to node A (also relevant to its parents or ancestors), and unable to be used to describe any other sibling concepts. Utilize your knowledge of the concept node A (including the provided corresponding 'description' of node A and its ancestors/parent node) to form your example sentences.",
+      "description": "10 key sentences that could be used to discuss the concept node A within a research paper. These key sentences should be SPECIFIC, not generic, to node A (also relevant to its parents or ancestors), and unable to be used to describe any other sibling concepts. Utilize your knowledge of the concept node A (including the provided corresponding 'description' of node A and its ancestors/parent node) to form your example sentences.",
       "type": "array",
       "items": {
         "type": "string"
@@ -875,7 +875,7 @@ Your output should be in the following JSON format with a minimum of one subtopi
 
 ######################## DEPTH EXPANSION ########################
 
-depth_system_instruction = """You are an assistant that is performing taxonomy depth expansion, which is defined as adding subcategory nodes deeper to a given root_topic node, these being children concepts/topics which EXCLUSIVELY fall under the specified parent node and not the parent\'s siblings. For example, given a taxonomy of NLP tasks, expanding "text_classification" depth-wise (where its siblings are [\"named_entity_recognition\", \"machine_translation\", and \"question_answering\"]) would create the children nodes, [\"sentiment_analysis\", \"spam_detection\", and \"document_classification\"] (any suitable number of children). On the other hand, \"open_domain_question_answering\" SHOULD NOT be added as it belongs to sibling, \"question_answering\".
+depth_system_instruction = """You are an assistant that is performing taxonomy depth expansion, which is defined as adding subcategory nodes deeper to a given root_topic node, these being children concepts/topics which EXCLUSIVELY fall under the specified parent node and not the parent\'s siblings. For example, given a taxonomy of tasks, expanding "text_classification" depth-wise (where its siblings are [\"named_entity_recognition\", \"machine_translation\", and \"question_answering\"]) would create the children nodes, [\"sentiment_analysis\", \"spam_detection\", and \"document_classification\"] (any suitable number of children). On the other hand, \"open_domain_question_answering\" SHOULD NOT be added as it belongs to sibling, \"question_answering\".
 
 You are provided a parent node and a paper's title & abstract. What subtopic of the parent_node does the paper discuss, which is more specific than the parent node? In other words, they would have a parent-child node relationship within a topical taxonomy.
 """
