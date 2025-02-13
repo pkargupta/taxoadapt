@@ -138,27 +138,22 @@ def main(args):
             with redirect_stdout(f):
                 roots[dim].display(0, indent_multiplier=5)
 
-    print("######## STEP 3: CLASSIFY PAPERS BY DIMENSION (TASK, METHOD, DATASET, EVAL, APPLICATION, etc.) ########")
+    print("######## STEP 3: DO NOT PARTITION THE PAPERS BY DIMENSION!")
 
     args.llm = 'vllm'
     dags = {dim:DAG(root=root, dim=dim) for dim, root in roots.items()}
 
     # do for internal collection
-
-    prompts = [constructPrompt(args, type_cls_system_instruction, type_cls_main_prompt(paper)) for paper in internal_collection.values()]
-    outputs = promptLLM(args=args, prompts=prompts, schema=TypeClsSchema, max_new_tokens=500, json_mode=True, temperature=0.1, top_p=0.99)
-    outputs = [json.loads(clean_json_string(c)) if "```" in c else json.loads(c.strip()) for c in outputs]
-
     for r in roots:
         roots[r].papers = {}
     type_dist = {dim:[] for dim in args.dimensions}
-    for p_id, out in enumerate(outputs):
+
+    for p_id in range(len(internal_collection)):
         internal_collection[p_id].labels = {}
-        for key, val in out.items():
-            if val:
-                type_dist[key].append(internal_collection[p_id])
-                internal_collection[p_id].labels[key] = []
-                roots[key].papers[p_id] = internal_collection[p_id]
+        for dim in args.dimensions:
+            type_dist[dim].append(internal_collection[p_id])
+            internal_collection[p_id].labels[dim] = []
+            roots[dim].papers[p_id] = internal_collection[p_id]
     
     print(str({k:len(v) for k,v in type_dist.items()}))
 

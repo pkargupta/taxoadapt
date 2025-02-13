@@ -818,7 +818,7 @@ Your output should be in the following JSON format:
 
 width_cluster_system_instruction = """You are an clusterer that is performing taxonomy width expansion, which is defined as the process of increasing the number of distinct categories or branches within a taxonomy to capture a broader range of concepts, topics, or entities. It adds new sibling nodes—categories that share the same parent node as existing ones—to broaden the scope of a taxonomy while maintaining its hierarchical structure.
 
-You are choosing your new sibling topic clusters based on which subtopics are covered by papers that discuss the parent node. Your job is to identify unique clusters formed from the input set of paper topics. For each cluster you identify, you must provide a cluster name (in similar format to the paper_topics) as its key, a 1 sentence description of the cluster name, and a list of all the input paper_topics covered within the cluster. Your new topic clusters should have a topic name that is a sibling topic to the existing_siblings."""
+You are choosing your new sibling topic clusters based on which subtopics are covered by papers that discuss the parent node. Your job is to identify unique clusters formed from the input set of paper topics. For each cluster you identify, you must provide a cluster name (in similar format to the paper_topics) as its key, a 1 sentence description of the cluster name, and a list of all the input paper_topics covered within the cluster. Your new topic clusters should have a topic name that is a sibling topic to the existing_siblings BUT DISTINCT. MAKE SURE EVERY SIBLING HAS THE SAME LEVEL OF GRANULARITY/SPECIFICITY. Also make sure that each of your new sibling topic clusters are UNIQUE; they SHOULD NOT currently exist within the existing set of nodes (existing_nodes)."""
 
 class WidthClusterSchema(BaseModel):
    cluster_topic_description: Annotated[str, StringConstraints(strip_whitespace=True, max_length=250)]
@@ -828,7 +828,7 @@ class WidthClusterListSchema(BaseModel):
 
 
 
-def width_cluster_main_prompt(options, node, ancestors, nl='\n'):
+def width_cluster_main_prompt(options, node, ancestors, all_node_labels, nl='\n'):
   out = f"""
 <input>
 <parent_node>
@@ -843,6 +843,11 @@ def width_cluster_main_prompt(options, node, ancestors, nl='\n'):
 <path_to_parent_node>
 {ancestors}
 </path_to_parent_node>
+
+Your new cluster topics SHOULD NOT BE ANY OF THE FOLLOWING:
+<existing_nodes>
+{all_node_labels}
+</existing_nodes>
 
 <existing_siblings>
 {nl.join([f"{c_label}:{nl}{nl}Description of {c_label}: {c.description}{nl}" for c_label, c in node.get_children().items()])}
@@ -920,7 +925,7 @@ Your output should be in the following JSON format:
 
 depth_cluster_system_instruction = """You are an clusterer that is performing taxonomy depth expansion, which is defined as adding subcategory nodes deeper to a given root_topic node, these being children concepts/topics which EXCLUSIVELY fall under the specified parent node and not the parent\'s siblings. For example, given a taxonomy of NLP tasks, expanding "text_classification" depth-wise (where its siblings are [\"named_entity_recognition\", \"machine_translation\", and \"question_answering\"]) would create the children nodes, [\"sentiment_analysis\", \"spam_detection\", and \"document_classification\"] (any suitable number of children). On the other hand, \"open_domain_question_answering\" SHOULD NOT be added as it belongs to sibling, \"question_answering\".
 
-You are choosing your new subtopic clusters based on which subtopics of the parent topic are covered by papers that discuss the parent node. Your job is to identify unique clusters formed from the input set of paper topics. For each cluster you identify, you must provide a cluster name (in similar format to the paper_topics) as its key, a 1 sentence description of the cluster name, and a list of all the input paper_topics covered within the cluster."""
+You are choosing your new subtopic clusters based on which subtopics of the parent topic are covered by papers that discuss the parent node. Your job is to identify unique clusters formed from the input set of paper topics. For each cluster you identify, you must provide a cluster name (in similar format to the paper_topics) as its key, a 1 sentence description of the cluster name, and a list of all the input paper_topics covered within the cluster. MAKE SURE EVERY NEW SUBTOPIC IS DISTINCT AND HAS THE SAME LEVEL OF GRANULARITY/SPECIFICITY. Also make sure that each of your new topic clusters are UNIQUE; they SHOULD NOT currently exist within the existing set of nodes (existing_nodes)."""
 
 class DepthClusterSchema(BaseModel):
    cluster_topic_description: Annotated[str, StringConstraints(strip_whitespace=True, max_length=250)]
@@ -930,7 +935,7 @@ class DepthClusterListSchema(BaseModel):
 
 
 
-def depth_cluster_main_prompt(options, node, ancestors):
+def depth_cluster_main_prompt(options, node, ancestors, all_node_labels):
   out = f"""
 <input>
 <parent_node>
@@ -945,6 +950,11 @@ def depth_cluster_main_prompt(options, node, ancestors):
 <path_to_parent_node>
 {ancestors}
 </path_to_parent_node>
+
+Your new cluster topics SHOULD NOT BE ANY OF THE FOLLOWING:
+<existing_nodes>
+{all_node_labels}
+</existing_nodes>
 
 <paper_topics>
 Below is a dictionary of paper topics, where each key is the candidate node label and value is number of papers which are mapped to that candidate node:

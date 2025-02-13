@@ -12,7 +12,7 @@ from openai import OpenAI
 from keys import openai_key, samba_api_key
 from vllm.sampling_params import GuidedDecodingParams
 
-os.environ["CUDA_VISIBLE_DEVICES"]="0,1,2,3"
+os.environ["CUDA_VISIBLE_DEVICES"]="4,5,6,7"
 os.environ['HF_HOME'] = '/shared/data3/pk36/.cache'
 
 # llama_8b_model = pipeline("text-generation", 
@@ -123,8 +123,8 @@ def promptLlama(prompts, max_new_tokens=1024):
 def initializeLLM(args):
 	args.client = {}
 
-	args.client['vllm'] = LLM(model="meta-llama/Meta-Llama-3.1-8B-Instruct", tensor_parallel_size=4, gpu_memory_utilization=0.9, 
-						   max_num_batched_tokens=2048, max_num_seqs=500, enable_prefix_caching=True)
+	args.client['vllm'] = LLM(model="meta-llama/Llama-3.1-8B-Instruct", tensor_parallel_size=4, gpu_memory_utilization=0.2, 
+						   max_num_batched_tokens=2048, max_model_len=64000, max_num_seqs=50, enable_prefix_caching=True)
 
 	if args.llm == 'samba':
 		args.client[args.llm] = openai.OpenAI(
@@ -134,7 +134,7 @@ def initializeLLM(args):
 	elif args.llm == 'gpt':
 		args.client[args.llm] = OpenAI(api_key=openai_key)
 
-	args.sentence_model = SentenceTransformer('allenai-specter', device='cuda')
+	# args.sentence_model = SentenceTransformer('allenai-specter', device='cuda')
 
 	# bert_model_name = "/home/pk36/Comparative-Summarization/bert_full_ft/checkpoint-8346/"
 	if False:
