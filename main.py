@@ -215,17 +215,14 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--topic', type=str, default='natural language processing')
     parser.add_argument('--dataset', type=str, default='llm_graph')
-    parser.add_argument('--llm', type=str, default='vllm')
+    parser.add_argument('--llm', type=str, default='gpt')
     parser.add_argument('--max_depth', type=int, default=2)
     parser.add_argument('--init_levels', type=int, default=1)
     parser.add_argument('--max_density', type=int, default=40)
-
     args = parser.parse_args()
 
     args.dimensions = ["tasks", "datasets", "methodologies", "evaluation_methods", "real_world_domains"]
 
-    args.dataset = "icra_2020"
-    args.topic = "robotics"
     args.data_dir = f"datasets/{args.dataset.lower().replace(' ', '_')}"
     args.internal = f"{args.dataset}.txt"
 

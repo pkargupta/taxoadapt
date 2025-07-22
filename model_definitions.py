@@ -1,23 +1,12 @@
 from transformers import pipeline
-from sentence_transformers import SentenceTransformer
-# from outlines.serve.vllm import JSONLogitsProcessor
 from vllm import LLM, SamplingParams
 import numpy as np
 import torch
-from transformers import BertTokenizer, BertModel
-import os
 from tqdm import tqdm
 import openai
 from openai import OpenAI
 from keys import openai_key, samba_api_key
 from vllm.sampling_params import GuidedDecodingParams
-
-# llama_8b_model = pipeline("text-generation", 
-#                     model="meta-llama/Meta-Llama-3.1-8B-Instruct",
-#                     model_kwargs={"torch_dtype": torch.bfloat16},
-#                     device_map='auto')
-
-# STATIC EMBEDDING COMPUTATION HELPER FUNCTIONS
 
 # map each term in text to word_id
 def get_vocab_idx(split_text: str, tok_lens):
@@ -68,13 +57,6 @@ def chunkify(text, token_lens, length=512):
 	
 	return chunks
 
-def bertEncode(text, taxo, layers = [-4, -3, -2, -1]):
-    # get indices and frequencies for each term in data
-    data_idx = get_vocab_idx(text, taxo.token_lens)
-    # compute contextualized word embeddings
-    encoded_data = bert_tokenizer.encode_plus(" ".join(text).replace("_", " "), return_tensors="pt").to(device)
-    get_hidden_states(encoded_data, data_idx, bert_model, layers, taxo.static_emb)
-
 def constructPrompt(args, init_prompt, main_prompt):
 	if (args.llm == 'samba') or (args.llm == 'gpt'):
 		return [
@@ -96,13 +78,6 @@ def initializeLLM(args):
 		)
 	elif args.llm == 'gpt':
 		args.client[args.llm] = OpenAI(api_key=openai_key)
-
-	if False:
-		bert_model_name = "bert-base-uncased"
-		args.bert_tokenizer = BertTokenizer.from_pretrained(bert_model_name)
-		args.device = torch.device("cuda")
-		args.bert_model = BertModel.from_pretrained(bert_model_name, output_hidden_states=True, device_map='auto')#.to(device)
-		args.bert_model.eval()
 	
 	return args
 
