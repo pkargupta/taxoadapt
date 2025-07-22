@@ -230,9 +230,9 @@ if __name__ == "__main__":
     args.dimensions = ["tasks", "datasets", "methodologies", "evaluation_methods", "real_world_domains"]
     # args.dimensions = ["evaluation_methods"]
 
-    args.dataset = "iclr_2024"
-    args.topic = "deep learning"
-    args.data_dir = f"datasets/{args.dataset.lower().replace(' ', '_')}"
+    args.dataset = "emnlp_2022"
+    args.topic = "natural language processing"
+    args.data_dir = f"datasets/{args.dataset.lower().replace(' ', '_')}_nodim"
     args.internal = f"{args.dataset}.txt"
     # args.external = f"{args.dataset}_external.txt"
     # args.groundtruth = "groundtruth.txt"

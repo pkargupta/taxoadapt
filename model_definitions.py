@@ -123,8 +123,8 @@ def promptLlama(prompts, max_new_tokens=1024):
 def initializeLLM(args):
 	args.client = {}
 
-	args.client['vllm'] = LLM(model="meta-llama/Llama-3.1-8B-Instruct", tensor_parallel_size=4, gpu_memory_utilization=0.2, 
-						   max_num_batched_tokens=2048, max_model_len=64000, max_num_seqs=50, enable_prefix_caching=True)
+	args.client['vllm'] = LLM(model="deepseek-ai/DeepSeek-R1-Distill-Llama-8B", tensor_parallel_size=4, gpu_memory_utilization=0.95, 
+						   max_num_batched_tokens=4096, max_num_seqs=1000, enable_prefix_caching=True)
 
 	if args.llm == 'samba':
 		args.client[args.llm] = openai.OpenAI(

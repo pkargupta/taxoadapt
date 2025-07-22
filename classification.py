@@ -3,7 +3,6 @@ from typing_extensions import Annotated
 from pydantic.types import StringConstraints
 
 class ClassifySchema(BaseModel):
-    paper_id: Annotated[int, Field(strict=True, gt=-1)]
     explanation: Annotated[str, StringConstraints(strip_whitespace=True, max_length=250)]
     class_labels: conset(str, min_length=0, max_length=10)
 
@@ -26,7 +25,6 @@ Here is some additional information about each class option:
 Your output format should be in the following JSON format:
 ---
 {{
-    paper_title: {paper.title}
     explanation: <1 sentence, step-by-step explanation>
     class_labels: <list of the paper's assigned class labels or 'None' if the paper should not be mapped to any of these classes>
 }}

@@ -1,4 +1,4 @@
-from pydantic import BaseModel, conset, StringConstraints, Field
+from pydantic import BaseModel, conset, conlist, StringConstraints, Field
 from typing_extensions import Annotated
 from typing import Dict
 
@@ -15,7 +15,7 @@ class EnrichSchema(BaseModel):
     id: Annotated[str, StringConstraints(strip_whitespace=True)]
     commonsense_key_phrases: conset(str, min_length=20, max_length=50)
     commonsense_sentences: conset(str, min_length=10, max_length=50)
-
+# NLP
 dimension_definitions = {
     'tasks': """Task: we assume that all papers are associated with a specific task(s). Always output "Task" as one of the paper types unless you are absolutely sure the paper does not address any task.""",
     'methodologies': """Methodology: a paper that introduces, explains, or refines a method or approach, providing theoretical foundations, implementation details, and empirical evaluations to advance the state-of-the-art or solve specific problems.""",
@@ -24,6 +24,20 @@ dimension_definitions = {
     'real_world_domains': """Real-World Domains: demonstrates the use of techniques to solve specific, real-world problems or address specific domain challenges. It focuses on practical implementation, impact, and insights gained from applying methods in various contexts. Examples include: product recommendation systems, medical record summarization, etc."""
     }
 
+# bio
+# dimension_definitions = {
+#     'experimental_methods': """Experimental Methods: a paper that introduces, explains, or significantly refines experimental techniques, protocols, laboratory methods, or biological assays, providing detailed descriptions and validations to improve accuracy, reproducibility, or insight in biological research.""",
+
+#     'datasets': """Datasets: a paper that introduces new biological datasets (e.g., genomic sequences, imaging data, ecological observations), detailing their generation, structure, annotation, and intended use, and provides initial analyses or benchmarks demonstrating their value in addressing gaps or enabling new biological insights.""",
+
+#     'theoretical_advances': """Theoretical Advances: a paper that proposes new biological theories, models, frameworks, or conceptual insights, supported by rigorous analysis, modeling, or experimental validation, aimed at improving fundamental understanding of biological systems.""",
+    
+#     'applications': """Applications: a paper which demonstrates practical use of biological knowledge or techniques to address real-world problems in domains such as biomedicine (therapies, diagnostics, drug development), agriculture (crop improvement, pest control), or conservation (species protection, ecosystem management), focusing on practical impact and applied outcomes.""",
+
+#     'evaluation_methods': """Evaluation Methods: a paper which systematically evaluates biological techniques, datasets, or computational methods, using benchmarking, comparative analyses, or novel evaluation metrics, to provide deeper insights into their effectiveness, limitations, or biases, thereby enhancing understanding and guiding future research."""
+# }
+
+# NLP
 node_dimension_definitions = {
     'tasks': """Defines and categorizes research efforts aimed at solving specific problems or objectives within a given field, such as classification, prediction, or optimization.""",
     'methodologies': """Types of techniques, models, or approaches used to address various challenges, including algorithmic innovations, frameworks, and optimization strategies.""",
@@ -31,6 +45,17 @@ node_dimension_definitions = {
     'evaluation_methods': """Types of methods for assessing the performance of models, datasets, or techniques, including new metrics, benchmarking techniques, or comparative performance studies.""",
     'real_world_domains': """Types of practical or industry-specific domains in which techniques and methodologies can be applied, exploring implementation, impact, and challenges of real-world problems."""
 }
+# node_dimension_definitions = {
+#     'experimental_methods': """Types of experimental techniques, protocols, laboratory procedures, or biological assays introduced or significantly refined, detailing their design, validation, and implementation to improve accuracy, reproducibility, or effectiveness in biological research.""",
+
+#     'datasets': """Types of biological datasets introduced (e.g., genomic, proteomic, imaging, ecological data), describing their creation, structure, annotation, and intended use, accompanied by initial analyses or benchmarks demonstrating their utility in enabling novel insights or addressing research gaps.""",
+
+#     'theoretical_advances': """Types of new biological theories, conceptual frameworks, or models proposed, supported by rigorous analytical, mathematical, or empirical validation, aimed at enhancing fundamental understanding of biological systems or phenomena.""",
+    
+#     'applications': """Types of practical applications of biological research or techniques in domains such as biomedicine (therapeutics, diagnostics), agriculture (crop improvement, pest management), or conservation biology (species protection, ecosystem management), emphasizing real-world impact, feasibility, and applied outcomes.""",
+
+#     'evaluation_methods': """Types of systematic approaches for evaluating biological methods, datasets, or computational techniques through benchmarking, comparative analysis, or novel performance metrics, aimed at identifying strengths, weaknesses, biases, or effectiveness, thus informing and guiding future research directions."""
+# }
 
   
 def multi_dim_prompt(node):
@@ -72,6 +97,17 @@ Paper types (type:definition):
 5. Real-World Domains: demonstrates the use of techniques to solve specific, real-world problems or address specific domain challenges. It focuses on practical implementation, impact, and insights gained from applying methods in various contexts. Examples include: product recommendation systems, medical record summarization, etc.
 """
 
+# type_cls_system_instruction = """You are a helpful multi-label classification assistant which helps me label papers based on their paper type. They may be more than one.
+
+# Paper types (type:definition):
+
+# 1. Experimental Methods: a paper which introduces, explains, or significantly refines experimental techniques, protocols, laboratory methods, or biological assays, providing detailed descriptions and validations to improve accuracy, reproducibility, or insight in biological research.
+# 2. Datasets: a paper that introduces new biological datasets (e.g., genomic sequences, imaging data, ecological observations), detailing their generation, structure, annotation, and intended use, and provides initial analyses or benchmarks demonstrating their value in addressing gaps or enabling new biological insights.
+# 3. Theoretical Advances: a paper which proposes new biological theories, models, frameworks, or conceptual insights, supported by rigorous analysis, modeling, or experimental validation, aimed at improving fundamental understanding of biological systems. 
+# 4. Applications: a paper that demonstrates practical use of biological knowledge or techniques to address real-world problems in domains such as biomedicine (therapies, diagnostics, drug development), agriculture (crop improvement, pest control), or conservation (species protection, ecosystem management), focusing on practical impact and applied outcomes. 
+# 5. Evaluation Methods: A paper which systematically evaluates biological techniques, datasets, or computational methods, using benchmarking, comparative analyses, or novel evaluation metrics, to provide deeper insights into their effectiveness, limitations, or biases, thereby enhancing understanding and guiding future research.
+# """
+
 class TypeClsSchema(BaseModel):
   tasks: bool
   methodologies: bool
@@ -79,6 +115,12 @@ class TypeClsSchema(BaseModel):
   evaluation_methods: bool
   real_world_domains: bool
 
+# class TypeClsSchema(BaseModel):
+#   experimental_methods: bool
+#   datasets: bool
+#   theoretical_advances: bool
+#   applications: bool
+#   evaluation_methods: bool
 
 def type_cls_main_prompt(paper):
    out = f"""Given the following paper title and abstract, can you output a Pythonic list of all paper type labels relevant to this paper. 
@@ -96,6 +138,23 @@ Your output should be in the following JSON format:
 }}
 """
    return out
+
+# def type_cls_main_prompt(paper):
+#    out = f"""Given the following paper title and abstract, can you output a Pythonic list of all paper type labels relevant to this paper. 
+
+# "Title": "{paper.title}"
+# "Abstract": "{paper.abstract}"
+
+# Your output should be in the following JSON format:
+# {{
+#   "experimental_methods": <return True if the paper focuses on an experimental method, False otherwise>,
+#   "datasets": <return True if the paper is a Dataset paper, False otherwise>,
+#   "theoretical_advances": <return True if the paper focuses on advancing theory, False otherwise>,
+#   "applications": <return True if the paper is a paper focused on application, False otherwise>,
+#   "evaluation_methods": <return True if the paper focuses on an evaluation method, False otherwise>,
+# }}
+# """
+#    return out
 
 
 def baseline_prompt(paper, node):
@@ -397,14 +456,14 @@ existing_subtopics: probabilistic_modeling
 
 Input Candidate Dictionary:
 {{
-	"hidden_markov_models": 15,
-	"naive_bayes_classification": 12,
-	"conditional_random_fields": 8,
-	"bayesian_networks": 9,
-	"maximum_entropy_models": 6,
-	"latent_dirichlet_allocation": 10,
-	"gaussian_mixture_models": 7,
-	"markov_chain_monte_carlo": 5
+    "hidden_markov_models": 15,
+    "naive_bayes_classification": 12,
+    "conditional_random_fields": 8,
+    "bayesian_networks": 9,
+    "maximum_entropy_models": 6,
+    "latent_dirichlet_allocation": 10,
+    "gaussian_mixture_models": 7,
+    "markov_chain_monte_carlo": 5
 }}
 </example_input>
 
@@ -434,18 +493,18 @@ Reduced variables: 8 -> 2.
 
 <example_final_output>
 {{
-	"subtopics_of_statistical_approaches": [
-		{{
-			"mapped_papers": 28,
-			"subtopic_label": "sequence_modeling",
-			"subtopic_description": "A task focused on modeling sequences using Markov-based approaches, such as hidden Markov models and conditional random fields."
-		}},
-		{{
-			"mapped_papers": 17,
-			"subtopic_label": "topic_modeling",
-			"subtopic_description": "A task focused on identifying topics in text using mixture models, such as latent Dirichlet allocation and Gaussian mixture models."
-		}}
-	]
+    "subtopics_of_statistical_approaches": [
+        {{
+            "mapped_papers": 28,
+            "subtopic_label": "sequence_modeling",
+            "subtopic_description": "A task focused on modeling sequences using Markov-based approaches, such as hidden Markov models and conditional random fields."
+        }},
+        {{
+            "mapped_papers": 17,
+            "subtopic_label": "topic_modeling",
+            "subtopic_description": "A task focused on identifying topics in text using mixture models, such as latent Dirichlet allocation and Gaussian mixture models."
+        }}
+    ]
 }}
 </example_final_output>
 </example_2>
@@ -821,10 +880,13 @@ width_cluster_system_instruction = """You are an clusterer that is performing ta
 You are choosing your new sibling topic clusters based on which subtopics are covered by papers that discuss the parent node. Your job is to identify unique clusters formed from the input set of paper topics. For each cluster you identify, you must provide a cluster name (in similar format to the paper_topics) as its key, a 1 sentence description of the cluster name, and a list of all the input paper_topics covered within the cluster. Your new topic clusters should have a topic name that is a sibling topic to the existing_siblings BUT DISTINCT. MAKE SURE EVERY SIBLING HAS THE SAME LEVEL OF GRANULARITY/SPECIFICITY. Also make sure that each of your new sibling topic clusters are UNIQUE; they SHOULD NOT currently exist within the existing set of nodes (existing_nodes)."""
 
 class WidthClusterSchema(BaseModel):
-   cluster_topic_description: Annotated[str, StringConstraints(strip_whitespace=True, max_length=250)]
+    label: Annotated[str, StringConstraints(strip_whitespace=True)]
+    description: Annotated[str, StringConstraints(strip_whitespace=True)]
+    covered_paper_topics: conlist(str, min_length=1, max_length=20)
+
 
 class WidthClusterListSchema(BaseModel):
-   new_cluster_topics: Dict[str, WidthClusterSchema]
+   new_cluster_topics: conlist(WidthClusterSchema, min_length=1, max_length=10)
 
 
 
@@ -868,13 +930,18 @@ Your output should be in the following JSON format with a minimum of one subtopi
   "new_cluster_topics":
   [
     {{
-    "sub-{node.dimension}_label": <string sub-{node.dimension} label at the same level of depth/specificity as the other topics in existing_siblings>,
-    "sub-{node.dimension}_description": <string sub-{node.dimension} sentence-long description>,
+    "label": <string sub-{node.dimension} label at the same level of depth/specificity as the other topics in existing_siblings>,
+    "description": <string sub-{node.dimension} sentence-long description>,
     "covered_paper_topics": <list of all the input paper_topics covered within this sub-{node.dimension}>
     }},
     ...
   ]
 }}
+
+---
+
+Your output JSON:
+
 """
   return out
 
@@ -928,10 +995,12 @@ depth_cluster_system_instruction = """You are an clusterer that is performing ta
 You are choosing your new subtopic clusters based on which subtopics of the parent topic are covered by papers that discuss the parent node. Your job is to identify unique clusters formed from the input set of paper topics. For each cluster you identify, you must provide a cluster name (in similar format to the paper_topics) as its key, a 1 sentence description of the cluster name, and a list of all the input paper_topics covered within the cluster. MAKE SURE EVERY NEW SUBTOPIC IS DISTINCT AND HAS THE SAME LEVEL OF GRANULARITY/SPECIFICITY. Also make sure that each of your new topic clusters are UNIQUE; they SHOULD NOT currently exist within the existing set of nodes (existing_nodes)."""
 
 class DepthClusterSchema(BaseModel):
-   cluster_topic_description: Annotated[str, StringConstraints(strip_whitespace=True, max_length=250)]
+    label: Annotated[str, StringConstraints(strip_whitespace=True, max_length=250)]
+    description: Annotated[str, StringConstraints(strip_whitespace=True, max_length=250)]
+    covered_paper_topics: conlist(str, min_length=1, max_length=20)
 
 class DepthClusterListSchema(BaseModel):
-   new_cluster_topics: Dict[str, WidthClusterSchema]
+    new_cluster_topics: conlist(DepthClusterSchema, min_length=1, max_length=10)
 
 
 
@@ -971,14 +1040,16 @@ Your output should be in the following JSON format with a minimum of one subtopi
   "new_cluster_topics":
   [
     {{
-      "sub-{node.dimension}_label": <string sub-{node.dimension} label at the deeper level of depth/specificity as the parent_node, {node.label}>,
-      "sub-{node.dimension}_description": <string sub-{node.dimension} sentence-long description>,
+      "label": <string sub-{node.dimension} label at the deeper level of depth/specificity as the parent_node, {node.label}>,
+      "description": <string sub-{node.dimension} sentence-long description>,
       "covered_paper_topics": <list of all the input paper_topics covered within this sub-{node.dimension}>
     }},
     ...
   ]
 }}
+---
+
+Your output JSON:
+
 """
   return out
-
-

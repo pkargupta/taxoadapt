@@ -1,6 +1,6 @@
 import os
-os.environ['HF_HOME'] = '/shared/data3/pk36/.cache'
-os.environ["VLLM_ATTENTION_BACKEND"] = "XFORMERS"
+# os.environ['HF_HOME'] = '/shared/data3/pk36/.cache'
+# os.environ["VLLM_ATTENTION_BACKEND"] = "XFORMERS"
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 import json
 from collections import deque
@@ -12,7 +12,7 @@ from model_definitions import initializeLLM, promptLLM, constructPrompt
 from prompts import multi_dim_prompt, NodeListSchema, type_cls_system_instruction, type_cls_main_prompt, TypeClsSchema
 from taxonomy import Node, DAG
 from datasets import load_dataset
-from expansion import expandNodeWidth, expandNodeDepth
+from no_cluster_expansion import expandNodeWidth, expandNodeDepth
 from paper import Paper
 from utils import clean_json_string
 
@@ -235,9 +235,9 @@ if __name__ == "__main__":
     args.dimensions = ["tasks", "datasets", "methodologies", "evaluation_methods", "real_world_domains"]
     # args.dimensions = ["evaluation_methods"]
 
-    args.dataset = "iclr_2024"
-    args.topic = "deep learning"
-    args.data_dir = f"datasets/{args.dataset.lower().replace(' ', '_')}"
+    args.dataset = "emnlp_2024"
+    args.topic = "natural language processing"
+    args.data_dir = f"datasets/{args.dataset.lower().replace(' ', '_')}_nolabel"
     args.internal = f"{args.dataset}.txt"
     # args.external = f"{args.dataset}_external.txt"
     # args.groundtruth = "groundtruth.txt"

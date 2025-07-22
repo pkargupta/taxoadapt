@@ -37,7 +37,7 @@ def expandNodeWidth(args, node, id2node, label2node):
         return [] 
     
     exp_prompts = [constructPrompt(args, width_system_instruction, width_main_prompt(paper, node, ancestors)) for paper in unlabeled_papers.values()]
-    exp_outputs = promptLLM(args=args, prompts=exp_prompts, schema=WidthExpansionSchema, max_new_tokens=300, json_mode=True, temperature=0.1, top_p=0.99)
+    exp_outputs = promptLLM(args=args, prompts=exp_prompts, schema=WidthExpansionSchema, max_new_tokens=300, json_mode=True, temperature=0.6, top_p=0.99)
     exp_outputs = [json.loads(clean_json_string(c))['new_subtopic_label'].replace(' ', '_').lower() 
                    if "```" in c else json.loads(c.strip())['new_subtopic_label'].replace(' ', '_').lower() 
                    for c in exp_outputs]
@@ -52,14 +52,19 @@ def expandNodeWidth(args, node, id2node, label2node):
     all_node_labels = ", ".join(list(label2node.keys()))
 
     # FILTERING OF EXPANSION OUTPUTS
-    args.llm = 'gpt'
+    args.llm = 'vllm' # originally gpt
     clustered_prompt = [constructPrompt(args, width_cluster_system_instruction, width_cluster_main_prompt(freq_options, node, ancestors, all_node_labels))]
     success = False
     attempts = 0
     while (not success) and (attempts < 5):
         try:
-            cluster_topics = promptLLM(args=args, prompts=clustered_prompt, schema=WidthClusterListSchema, max_new_tokens=3000, json_mode=True, temperature=0.1, top_p=0.99)[0]
-            cluster_outputs = json.loads(clean_json_string(cluster_topics)) if "```" in cluster_topics else json.loads(cluster_topics.strip())
+            cluster_topics = promptLLM(args=args, prompts=clustered_prompt, schema=WidthClusterListSchema, max_new_tokens=3000, json_mode=True, temperature=0.6, top_p=0.99)[0]
+            if type(cluster_topics) == str:
+                cluster_outputs = json.loads(clean_json_string(cluster_topics)) if "```" in cluster_topics else json.loads(cluster_topics.strip())
+            else:
+                cluster_outputs = [json.loads(clean_json_string(c)) if "```" in c else json.loads(c.strip()) for c in cluster_topics]
+            
+            # cluster_outputs = json.loads(clean_json_string(cluster_topics)) if "```" in cluster_topics else json.loads(cluster_topics.strip())
             success = True
         except Exception as e:
             success = False
@@ -80,8 +85,8 @@ def expandNodeWidth(args, node, id2node, label2node):
     dim = node.dimension
 
     for subtopic_cluster in cluster_outputs:
-        sibling_label = subtopic_cluster[f"sub-{node.dimension}_label"]
-        sibling_desc = subtopic_cluster[f"sub-{node.dimension}_description"]
+        sibling_label = subtopic_cluster[f"label"]
+        sibling_desc = subtopic_cluster[f"description"]
         mod_key = sibling_label.replace(' ', '_').lower()
         mod_full_key = sibling_label.replace(' ', '_').lower() + f"_{dim}"
         
@@ -128,7 +133,7 @@ def expandNodeDepth(args, node, id2node, label2node):
     args.llm = 'vllm'
     subtopic_prompts = [constructPrompt(args, depth_system_instruction, depth_main_prompt(paper, node, ancestors)) 
                    for paper in node.papers.values()]
-    subtopic_outputs = promptLLM(args=args, prompts=subtopic_prompts, schema=DepthExpansionSchema, max_new_tokens=300, json_mode=True, temperature=0.1, top_p=0.99)
+    subtopic_outputs = promptLLM(args=args, prompts=subtopic_prompts, schema=DepthExpansionSchema, max_new_tokens=300, json_mode=True, temperature=0.6, top_p=0.99)
 
     subtopic_outputs = [json.loads(clean_json_string(c))['new_subtopic_label'].replace(' ', '_').lower() 
                    if "```" in c else json.loads(c.strip())['new_subtopic_label'].replace(' ', '_').lower() 
@@ -145,7 +150,7 @@ def expandNodeDepth(args, node, id2node, label2node):
 
     all_node_labels = ", ".join(list(label2node.keys()))
 
-    args.llm = 'gpt'
+    args.llm = 'vllm' # originally gpt
 
     prompts = [constructPrompt(args, depth_cluster_system_instruction, depth_cluster_main_prompt(freq_options, node, ancestors, all_node_labels))]
 
@@ -153,8 +158,12 @@ def expandNodeDepth(args, node, id2node, label2node):
     attempts = 0
     while (not success) and (attempts < 5):
         try:
-            cluster_topics = promptLLM(args=args, prompts=prompts, schema=DepthClusterListSchema, max_new_tokens=3000, json_mode=True, temperature=0.1, top_p=0.99)[0]
-            cluster_outputs = json.loads(clean_json_string(cluster_topics)) if "```" in cluster_topics else json.loads(cluster_topics.strip())
+            cluster_topics = promptLLM(args=args, prompts=prompts, schema=DepthClusterListSchema, max_new_tokens=3000, json_mode=True, temperature=0.6, top_p=0.99)[0]
+            if type(cluster_topics) == str:
+                cluster_outputs = json.loads(clean_json_string(cluster_topics)) if "```" in cluster_topics else json.loads(cluster_topics.strip())
+            else:
+                cluster_outputs = [json.loads(clean_json_string(c)) if "```" in c else json.loads(c.strip()) for c in cluster_topics]
+            # cluster_outputs = json.loads(clean_json_string(cluster_topics)) if "```" in cluster_topics else json.loads(cluster_topics.strip())
             success = True
         except Exception as e:
             success = False
@@ -172,8 +181,8 @@ def expandNodeDepth(args, node, id2node, label2node):
     dim = node.dimension
 
     for subtopic_cluster in cluster_outputs:
-        child_label = subtopic_cluster[f"sub-{node.dimension}_label"].replace(' ', '_').lower()
-        child_desc = subtopic_cluster[f"sub-{node.dimension}_description"]
+        child_label = subtopic_cluster[f"label"].replace(' ', '_').lower()
+        child_desc = subtopic_cluster[f"description"]
         child_full_label = child_label + f"_{dim}"
 
         if child_label == node.dimension:

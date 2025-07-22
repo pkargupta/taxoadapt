@@ -1,7 +1,7 @@
 import os
 os.environ['HF_HOME'] = '/shared/data3/pk36/.cache'
-os.environ["VLLM_ATTENTION_BACKEND"] = "XFORMERS"
-os.environ["TOKENIZERS_PARALLELISM"] = "false"
+# os.environ["VLLM_ATTENTION_BACKEND"] = "XFORMERS"
+# os.environ["TOKENIZERS_PARALLELISM"] = "false"
 import json
 from collections import deque
 from contextlib import redirect_stdout
@@ -225,7 +225,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--topic', type=str, default='natural language processing')
     parser.add_argument('--dataset', type=str, default='llm_graph')
-    parser.add_argument('--llm', type=str, default='gpt')
+    parser.add_argument('--llm', type=str, default='vllm')
     parser.add_argument('--max_depth', type=int, default=2)
     parser.add_argument('--init_levels', type=int, default=1)
     parser.add_argument('--max_density', type=int, default=40)
@@ -235,8 +235,8 @@ if __name__ == "__main__":
     args.dimensions = ["tasks", "datasets", "methodologies", "evaluation_methods", "real_world_domains"]
     # args.dimensions = ["evaluation_methods"]
 
-    args.dataset = "iclr_2024"
-    args.topic = "deep learning"
+    args.dataset = "icra_2020"
+    args.topic = "robotics"
     args.data_dir = f"datasets/{args.dataset.lower().replace(' ', '_')}"
     args.internal = f"{args.dataset}.txt"
     # args.external = f"{args.dataset}_external.txt"
