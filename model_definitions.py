@@ -12,9 +12,6 @@ from openai import OpenAI
 from keys import openai_key, samba_api_key
 from vllm.sampling_params import GuidedDecodingParams
 
-os.environ["CUDA_VISIBLE_DEVICES"]="4,5,6,7"
-os.environ['HF_HOME'] = '/shared/data3/pk36/.cache'
-
 # llama_8b_model = pipeline("text-generation", 
 #                     model="meta-llama/Meta-Llama-3.1-8B-Instruct",
 #                     model_kwargs={"torch_dtype": torch.bfloat16},
@@ -86,44 +83,10 @@ def constructPrompt(args, init_prompt, main_prompt):
 	else:
 		return init_prompt + "\n\n" + main_prompt
 
-def promptLlama(prompts, max_new_tokens=1024):
-
-    terminators = [
-        llama_8b_model.tokenizer.eos_token_id,
-        llama_8b_model.tokenizer.convert_tokens_to_ids("<|eot_id|>")
-    ]
-
-    llama_8b_model.tokenizer.padding_side = 'left'
-    llama_8b_model.tokenizer.pad_token_id = llama_8b_model.tokenizer.eos_token_id
-
-    if type(prompts) == list:
-        outputs = llama_8b_model(
-            prompts,
-            max_new_tokens=max_new_tokens,
-            eos_token_id=terminators,
-            do_sample=True,
-            top_p=0.95,
-            pad_token_id=llama_8b_model.tokenizer.eos_token_id,
-            batch_size=len(prompts))
-
-        message = [o[0]['generated_text'][len(prompts[o_id]):] for o_id, o in enumerate(outputs)]
-
-    else:
-        outputs = llama_8b_model(
-            prompts,
-            max_new_tokens=max_new_tokens,
-            eos_token_id=terminators,
-            do_sample=False,
-            pad_token_id=llama_8b_model.tokenizer.eos_token_id)
-
-        message = outputs[0]['generated_text'][len(prompts):]
-
-    return message
-
 def initializeLLM(args):
 	args.client = {}
 
-	args.client['vllm'] = LLM(model="deepseek-ai/DeepSeek-R1-Distill-Llama-8B", tensor_parallel_size=4, gpu_memory_utilization=0.95, 
+	args.client['vllm'] = LLM(model="meta-llama/Meta-Llama-3.1-8B-Instruct", tensor_parallel_size=4, gpu_memory_utilization=0.95, 
 						   max_num_batched_tokens=4096, max_num_seqs=1000, enable_prefix_caching=True)
 
 	if args.llm == 'samba':
@@ -134,9 +97,6 @@ def initializeLLM(args):
 	elif args.llm == 'gpt':
 		args.client[args.llm] = OpenAI(api_key=openai_key)
 
-	# args.sentence_model = SentenceTransformer('allenai-specter', device='cuda')
-
-	# bert_model_name = "/home/pk36/Comparative-Summarization/bert_full_ft/checkpoint-8346/"
 	if False:
 		bert_model_name = "bert-base-uncased"
 		args.bert_tokenizer = BertTokenizer.from_pretrained(bert_model_name)
@@ -164,7 +124,6 @@ def promptLlamaVLLM(args, prompts, schema=None, max_new_tokens=1024, temperature
     if schema is None:
         sampling_params = SamplingParams(temperature=temperature, top_p=top_p, max_tokens=max_new_tokens)
     else:
-        # logits_processor = JSONLogitsProcessor(schema=schema, llm=args.client['vllm'].llm_engine)
         guided_decoding_params = GuidedDecodingParams(json=schema.model_json_schema())
         sampling_params = SamplingParams(temperature=temperature, top_p=top_p, max_tokens=max_new_tokens, 
                                     guided_decoding=guided_decoding_params)

@@ -52,7 +52,7 @@ def expandNodeWidth(args, node, id2node, label2node):
     all_node_labels = ", ".join(list(label2node.keys()))
 
     # FILTERING OF EXPANSION OUTPUTS
-    args.llm = 'vllm' # originally gpt
+    args.llm = 'gpt'
     clustered_prompt = [constructPrompt(args, width_cluster_system_instruction, width_cluster_main_prompt(freq_options, node, ancestors, all_node_labels))]
     success = False
     attempts = 0
@@ -150,7 +150,7 @@ def expandNodeDepth(args, node, id2node, label2node):
 
     all_node_labels = ", ".join(list(label2node.keys()))
 
-    args.llm = 'vllm' # originally gpt
+    args.llm = 'gpt'
 
     prompts = [constructPrompt(args, depth_cluster_system_instruction, depth_cluster_main_prompt(freq_options, node, ancestors, all_node_labels))]
 

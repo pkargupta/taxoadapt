@@ -1,7 +1,4 @@
 import os
-os.environ['HF_HOME'] = '/shared/data3/pk36/.cache'
-# os.environ["VLLM_ATTENTION_BACKEND"] = "XFORMERS"
-# os.environ["TOKENIZERS_PARALLELISM"] = "false"
 import json
 from collections import deque
 from contextlib import redirect_stdout
@@ -201,13 +198,6 @@ def main(args):
             print(f'(DEPTH EXPANSION) new {len(new_children)} children for {curr_node.label} ({curr_node.dimension}) are: {str((new_children))}')
             if (len(new_children) > 0) and success:
                 queue.append(curr_node)
-            # classify
-            # curr_node.classify_node(args, label2node, visited)
-            # add children to queue if constraints are met
-            # for child_label, child_node in curr_node.children.items():
-            #     c_papers = label2node[child_label + f"_{curr_node.dimension}"].papers
-            #     if (child_node.level < args.max_depth) and (len(c_papers) > args.min_density):
-            #         queue.append(child_node)
     
     print("######## STEP 5: SAVE THE TAXONOMY ########")
     for dim in args.dimensions:
@@ -233,14 +223,10 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     args.dimensions = ["tasks", "datasets", "methodologies", "evaluation_methods", "real_world_domains"]
-    # args.dimensions = ["evaluation_methods"]
 
     args.dataset = "icra_2020"
     args.topic = "robotics"
     args.data_dir = f"datasets/{args.dataset.lower().replace(' ', '_')}"
     args.internal = f"{args.dataset}.txt"
-    # args.external = f"{args.dataset}_external.txt"
-    # args.groundtruth = "groundtruth.txt"
-
 
     main(args)
