@@ -9,12 +9,11 @@ Official implementation for [ACL 2025](https://2025.aclweb.org/) main track pape
 TaxoAdapt is a framework that dynamically adapts an LLM-generated taxonomy to a given corpus across multiple dimensions. TaxoAdapt performs iterative hierarchical classification, expanding both the taxonomy width and depth based on corpus' topical distribution. We demonstrate its state-of-the-art performance across a diverse set of computer science conferences over the years to showcase its ability to structure and capture the evolution of scientific fields. As a multidimensional method, TaxoAdapt generates taxonomies that are 26.51% more granularity-preserving and 50.41% more coherent than the most competitive baselines judged by LLMs.
 
 ## Contents
-  - [Contents](#contents)
   - [Setup](#setup)
     - [Arguments](#arguments)
   - [Custom Dataset](#custom-dataset)
   - [Video](#video)
-  - [📖 Citations](#-citations)
+  - [📖 Citation](#-citation)
 
 ## Setup
 We use `python=3.8`, `torch=2.4.0`, and a two NVIDIA RTX A6000s. Other packages can be installed using:
@@ -49,9 +48,9 @@ The following are the primary arguments for EpiMine (defined in run.py; modify a
 We provide all segmented articles for each key event in `episode_dataset/[theme]/[key_event]/[key_event]_segmented_raw.txt`. We also provide all episode-annotated articles in `groundtruth/[key_event]_groundtruth.txt`. All episode descriptions (used for article episode annotation) are provided in `groundtruth/key_event_episode_descriptions.xlsx`.
 
 ## Video
-You can find a video explanation of the TaxoAdapt framework and its results on YouTube: [TaxoAdapt Video](https://www.youtube.com/watch?v=example).
+You can find a video explanation of the TaxoAdapt framework and its results on YouTube: [TaxoAdapt Video](https://youtu.be/dKUeSm9GoyU).
 
-## 📖 Citations
+## 📖 Citation
 Please cite the paper and star this repo if you use TaxoAdapt and find it interesting/useful, thanks! Feel free to open an issue if you have any questions.
 
 ```bibtex
