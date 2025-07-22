@@ -8,11 +8,14 @@ def get_json_files(eval_json_path: str) -> dict:
 
 # taxonomy.py
 
-def get_claim(eval_json: dict) -> str:
-    return eval_json['aspect_name']
+def get_root(eval_json: dict) -> str:
+    return eval_json['label']
+
+def get_aspect(eval_json: dict) -> str:
+    return eval_json['label']
 
 def get_taxonomy(taxonomy_json: dict, level: int = 0) -> str:
-    expression = "  " * level + f"- {taxonomy_json['aspect_name']}\n"
+    expression = "  " * level + f"- {taxonomy_json['label']}\n"
     if 'children' in taxonomy_json:
         for child in taxonomy_json['children']:
             expression += get_taxonomy(child, level + 1)
@@ -20,7 +23,7 @@ def get_taxonomy(taxonomy_json: dict, level: int = 0) -> str:
 
 def present_taxonomy(taxonomy_json: dict, level: int = 0) -> str:
     """Recursively returns a string presentation of the taxonomy tree."""
-    expression = "  " * level + f"- {taxonomy_json['aspect_name']}\n"
+    expression = "  " * level + f"- {taxonomy_json['label']}\n"
     if 'children' in taxonomy_json:
         for child in taxonomy_json['children']:
             expression += present_taxonomy(child, level + 1)
@@ -32,7 +35,7 @@ def get_paths(node: dict, current_path: list = None) -> list:
     """
     if current_path is None:
         current_path = []
-    new_path = current_path + [node["aspect_name"]]
+    new_path = current_path + [node["label"]]
     if "children" not in node or not node["children"]:
         return [" -> ".join(new_path)]
     paths = []
@@ -48,9 +51,9 @@ def get_levels(node) -> list:
     """
     result = []
     if isinstance(node, dict):
-        if 'children' in node and isinstance(node['children'], list):
-            parent_name = node.get('aspect_name')
-            siblings = [child.get('aspect_name') for child in node['children'] if 'aspect_name' in child]
+        if 'children' in node and isinstance(node['children'], list) and len(node['children']) > 0:
+            parent_name = node.get('label')
+            siblings = [child.get('label') for child in node['children'] if 'label' in child]
             result.append({"parent": parent_name, "siblings": siblings})
             for child in node['children']:
                 result.extend(get_levels(child))
@@ -74,24 +77,24 @@ def get_all_nodes(tree: dict) -> list:
     traverse(tree)
     return nodes
 
-def node_name2segments(data: dict) -> dict:
+def node_name2titles(data: dict) -> dict:
     """
     Given a node dictionary with an aspect and its mapped segments,
     return a dictionary with the aspect_name and the list of selected segments.
     """
-    aspect_name = data.get("aspect_name", "")
-    mapped_segs = data.get("mapped_segs", [])
-    collected_indices = []
-    perspectives = data.get("perspectives", {})
-    for key, value in perspectives.items():
-        if isinstance(value, dict) and "perspective_segments" in value:
-            segments = value.get("perspective_segments", [])
-            if isinstance(segments, list):
-                collected_indices.extend(segments)
-    unique_indices = sorted(set(collected_indices))
-    if len(unique_indices) == len(mapped_segs):
-        selected_segments = mapped_segs
-    else:
-        print(f"In aspect {aspect_name}, only {len(unique_indices)} out of {len(mapped_segs)} segments are selected.")
-        selected_segments = [mapped_segs[i] for i in unique_indices if 0 <= i < len(mapped_segs)]
-    return {"aspect_name": aspect_name, "segments": selected_segments}
+    node_name = data.get("label", "")
+    indices = data.get("paper_ids", [])
+#     collected_indices = []
+#     perspectives = data.get("perspectives", {})
+#     for key, value in perspectives.items():
+#         if isinstance(value, dict) and "perspective_segments" in value:
+#             segments = value.get("perspective_segments", [])
+#             if isinstance(segments, list):
+#                 collected_indices.extend(segments)
+#     unique_indices = sorted(set(collected_indices))
+#     if len(unique_indices) == len(mapped_segs):
+#         selected_segments = mapped_segs
+#     else:
+#         print(f"In aspect {aspect_name}, only {len(unique_indices)} out of {len(mapped_segs)} segments are selected.")
+#         selected_segments = [mapped_segs[i] for i in unique_indices if 0 <= i < len(mapped_segs)]
+    return {"label": node_name, "indices": indices}
