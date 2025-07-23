@@ -2,11 +2,14 @@ from transformers import pipeline
 from vllm import LLM, SamplingParams
 import numpy as np
 import torch
+import os
 from tqdm import tqdm
 import openai
 from openai import OpenAI
-from keys import openai_key, samba_api_key
 from vllm.sampling_params import GuidedDecodingParams
+
+openai_key = os.getenv('OPENAI_API_KEY')
+
 
 # map each term in text to word_id
 def get_vocab_idx(split_text: str, tok_lens):
@@ -58,7 +61,7 @@ def chunkify(text, token_lens, length=512):
 	return chunks
 
 def constructPrompt(args, init_prompt, main_prompt):
-	if (args.llm == 'samba') or (args.llm == 'gpt'):
+	if (args.llm == 'gpt'):
 		return [
             {"role": "system", "content": init_prompt},
             {"role": "user", "content": main_prompt}]
@@ -71,12 +74,7 @@ def initializeLLM(args):
 	args.client['vllm'] = LLM(model="meta-llama/Meta-Llama-3.1-8B-Instruct", tensor_parallel_size=4, gpu_memory_utilization=0.95, 
 						   max_num_batched_tokens=4096, max_num_seqs=1000, enable_prefix_caching=True)
 
-	if args.llm == 'samba':
-		args.client[args.llm] = openai.OpenAI(
-		    api_key=samba_api_key,
-		    base_url="https://api.sambanova.ai/v1",
-		)
-	elif args.llm == 'gpt':
+	if args.llm == 'gpt':
 		args.client[args.llm] = OpenAI(api_key=openai_key)
 	
 	return args
@@ -110,22 +108,8 @@ def promptLlamaVLLM(args, prompts, schema=None, max_new_tokens=1024, temperature
 
     return outputs
 
-def promptLlamaSamba(args, prompts, schema=None, max_new_tokens=1024, temperature=0.1, top_p=0.99):
-	outputs = []
-	if len(prompts) == 1:
-		for messages in prompts:
-			response = args.client['samba'].chat.completions.create(model='Meta-Llama-3.1-70B-Instruct', stream=False, messages=messages, temperature=temperature, top_p=top_p, max_tokens=max_new_tokens)
-			outputs.append(response.choices[0].message.content)
-	else:
-		for messages in tqdm(prompts):
-			response = args.client['samba'].chat.completions.create(model='Meta-Llama-3.1-70B-Instruct', stream=False, messages=messages, temperature=temperature, top_p=top_p, max_tokens=max_new_tokens)
-			outputs.append(response.choices[0].message.content)
-	return outputs
-
 def promptLLM(args, prompts, schema=None, max_new_tokens=1024, json_mode=True, temperature=0.1, top_p=0.99):
-	if args.llm == 'samba':
-		return promptLlamaSamba(args, prompts, schema, max_new_tokens, temperature, top_p)
-	elif args.llm == 'gpt':
+	if args.llm == 'gpt':
 		return promptGPT(args, prompts, schema, max_new_tokens, json_mode, temperature, top_p)
 	else:
 		return promptLlamaVLLM(args, prompts, schema, max_new_tokens, temperature, top_p)

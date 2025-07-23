@@ -21,9 +21,13 @@ We use `python=3.8`, `torch=2.4.0`, and a two NVIDIA RTX A6000s. Other packages 
 pip install -r requirements.txt
 ```
 
+To run the code with the default parameters, you can run the following command in the terminal:
 ```
 python main.py
 ```
+In order to run the code, you need to have a valid OpenAI API key and set it as an environment variable `OPENAI_API_KEY`. You can do this in your terminal as follows:
+```export OPENAI_API_KEY='your_openai_api_key'```
+
 ### Arguments
 The following are the primary arguments for TaxoAdapt (defined in main.py; modify as needed):
 
