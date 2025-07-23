@@ -21,34 +21,33 @@ We use `python=3.8`, `torch=2.4.0`, and a two NVIDIA RTX A6000s. Other packages 
 pip install -r requirements.txt
 ```
 
-In `main.py`, we define the list of `themes` (e.g., terrorism, natural_disasters, and politics) and `titles` (e.g., 2019_hk_legislative), which the former is simply used for the sake of input/output organization and the latter corresponds to the name of the input key event corpus. In order to run the following command after modifying the arguments as needed. The ground-truth episodes are defined within `run.py` as well.
-
 ```
 python main.py
 ```
 ### Arguments
-The following are the primary arguments for EpiMine (defined in run.py; modify as needed):
+The following are the primary arguments for TaxoAdapt (defined in main.py; modify as needed):
 
-- `theme` $\rightarrow$ theme of key event
-- `title` $\rightarrow$ key event to mine episodes for
-- `gpu` $\rightarrow$ GPU to use; refer to nvidia-smi
-- `output_dir` $\rightarrow$ default='final_output'; where to save the detected episodes.
-- `lm_type` $\rightarrow$ default=`bbu`; used for computing word embeddings (`bbu` is bert-base-uncased)
-- `layer` $\rightarrow$ default=12; last layer of BERT 
-- `emb_dim` $\rightarrow$ default=768; Sentence and document embedding dimensions (default based on bert-base-uncased).
-- `batch_size` $\rightarrow$ default=32; Batch size of episodes to segments to process (just for efficiency purposes).
-- `doc_thresh` $\rightarrow$ default=0.25; Top articles to consider for candidate episode estimation.
-- `vocab_min_occurrence` $\rightarrow$ default=1; Minimum frequency to be added into vocabulary.
-- `eval_top` $\rightarrow$ default=5; Number of segments to consider for evaluation.
-- `num` $\rightarrow$ default=5; Number of ground truth episodes for theme/key event.
-- `trials` $\rightarrow$ default=10
-- `api_key` $\rightarrow$ Anthropic API Key
+- `topic` $\rightarrow$ this is the topic of the corpus, e.g., "natural language processing", "robotics", etc.
+- `dataset` $\rightarrow$ this is the name of the dataset, e.g., "llm_graph", "icra_2020", etc. The huggingface dataset should be added to the `construct_dataset` function in `main.py` (see below).
+- `llm` $\rightarrow$ this is the LLM to be used for initial taxonomy construction, e.g., "gpt", "vllm", etc. You can replace the vLLM model in the `initializeLLM` function and the GPT model version in the `promptGPT` function of `model_definitions.py`.
+- `max_depth` $\rightarrow$ this is the maximum depth of each taxonomy to be constructed.
+- `init_levels` $\rightarrow$ this is the number of initial levels to be constructed in the initial taxonomy.
+- `max_density` $\rightarrow$ this is the maximum density of papers to be mapped to a node (or unmapped papers at a parent node) in the taxonomies. If a leaf node has more than `max_density` papers, it will trigger depth expansion at that node. If a parent node has more than `max_density` papers that are unmapped to any of its children, it will trigger width expansion at that node.
+
+In `main.py`, we define the different dimensions of research for a specific topic, each of which will be constructed as a separate taxonomy. You can modify the dimensions in the `args.dimensions` list.
 
 ## Custom Dataset
-We provide all segmented articles for each key event in `episode_dataset/[theme]/[key_event]/[key_event]_segmented_raw.txt`. We also provide all episode-annotated articles in `groundtruth/[key_event]_groundtruth.txt`. All episode descriptions (used for article episode annotation) are provided in `groundtruth/key_event_episode_descriptions.xlsx`.
+To use a custom dataset, you need to add it to the `construct_dataset` function in `main.py`. You may add it as follows:
+
+```python
+elif args.dataset == 'dataset_name':
+        ds = load_dataset("huggingface_dataset_name")
+```
+We assume that the dataset has a `title` and `abstract` field for each paper. If not, you can modify the function to extract the relevant fields from your dataset.
 
 ## Video
 You can find a video explanation of the TaxoAdapt framework and its results on YouTube: [TaxoAdapt Video](https://youtu.be/dKUeSm9GoyU).
+
 
 ## 📖 Citation
 Please cite the paper and star this repo if you use TaxoAdapt and find it interesting/useful, thanks! Feel free to open an issue if you have any questions.
